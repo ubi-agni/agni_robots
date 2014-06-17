@@ -64,7 +64,7 @@ Visualization Manager:
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
       Name: RobotModelRH
-      Robot Description: /rh/robot_description
+      Robot Description: /rh/sh_description
       TF Prefix: /rh
       Update Interval: 0
       Value: false
@@ -239,7 +239,7 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModelLH
-      Robot Description: /lh/robot_description
+      Robot Description: /lh/sh_description
       TF Prefix: /lh
       Update Interval: 0
       Value: true
@@ -283,7 +283,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.59385
+      Distance: 1.23428
       Focal Point:
         X: 0.108353
         Y: 0.00625875

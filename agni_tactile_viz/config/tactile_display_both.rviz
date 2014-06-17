@@ -209,7 +209,7 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModelRH
-      Robot Description: /rh/robot_description
+      Robot Description: /rh/sh_description
       TF Prefix: /rh
       Update Interval: 0
       Value: true
@@ -384,7 +384,7 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModelLH
-      Robot Description: /lh/robot_description
+      Robot Description: /lh/sh_description
       TF Prefix: /lh
       Update Interval: 0
       Value: true
@@ -428,11 +428,11 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.59385
+      Distance: 0.801882
       Focal Point:
-        X: 0.108353
-        Y: 0.00625875
-        Z: 0.287626
+        X: 0.0665563
+        Y: -0.0274224
+        Z: 0.23139
       Name: Current View
       Near Clip Distance: 0.01
       Pitch: 0.130203
