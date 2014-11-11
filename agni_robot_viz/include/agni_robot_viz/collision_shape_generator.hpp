@@ -38,17 +38,20 @@ class CollisionShapeGenerator
     //moveit_msgs::DisplayRobotState getCollisionShape(shape_msgs::SolidPrimitive &shape);
     void getCollisionShape(visualization_msgs::MarkerArray &arr);
     void updatePosition(const sensor_msgs::JointStatePtr &msg);
-    
+    void init(const std::string &move_group, const std::vector<std::string> &link_names );
 
   protected:
     
-    void init();
+   
     
 
     robot_model_loader::RobotModelLoader robot_model_loader;
     robot_model::RobotModelPtr robot_model;
     robot_state::RobotStatePtr kinematic_state;
     robot_model::JointModelGroup* joint_model_group;
+    std::string move_group_;
+    std::vector<std::string> link_names_;
+    bool initialized_;
   };//end class
 
 

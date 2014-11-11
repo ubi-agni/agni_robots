@@ -1,0 +1,6 @@
+filter_primitive:
+  move_group: "left_hand"
+  links : #"all"
+    - "all"
+    - "l_palm"
+    
