@@ -12,7 +12,6 @@
 
 
 
-#include <ros/ros.h>
 // MoveIt!
 #include <moveit/robot_model_loader/robot_model_loader.h>
 #include <moveit/robot_model/robot_model.h>
@@ -41,9 +40,6 @@ class CollisionShapeGenerator
     void init(const std::string &move_group, const std::vector<std::string> &link_names );
 
   protected:
-    
-   
-    
 
     robot_model_loader::RobotModelLoader robot_model_loader;
     robot_model::RobotModelPtr robot_model;

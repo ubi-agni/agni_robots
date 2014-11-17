@@ -14,67 +14,16 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   visualization_msgs
+  
 )
 
+set(rst-converters_DIR /vol/famula/nightly/share/rst-converters0.11)
+
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
-
-
-## Uncomment this if the package has a setup.py. This macro ensures
-## modules and global scripts declared therein get installed
-## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
-
-################################################
-## Declare ROS messages, services and actions ##
-################################################
-
-## To declare and build messages, services or actions from within this
-## package, follow these steps:
-## * Let MSG_DEP_SET be the set of packages whose message types you use in
-##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
-## * In the file package.xml:
-##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependencies might have been
-##     pulled in transitively but can be declared for certainty nonetheless:
-##     * add a build_depend tag for "message_generation"
-##     * add a run_depend tag for "message_runtime"
-## * In this file (CMakeLists.txt):
-##   * add "message_generation" and every package in MSG_DEP_SET to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * add "message_runtime" and every package in MSG_DEP_SET to
-##     catkin_package(CATKIN_DEPENDS ...)
-##   * uncomment the add_*_files sections below as needed
-##     and list every .msg/.srv/.action file to be processed
-##   * uncomment the generate_messages entry below
-##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
-
-## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
-
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
-
-## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
-
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   geometry_msgs#   moveit_msgs#   shape_msgs#   visualization_msgs
-# )
+find_package(RSB REQUIRED)
+find_package(RSC REQUIRED)
+find_package(RST REQUIRED COMPONENTS sandbox)
+find_package(rst-converters REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
@@ -89,6 +38,7 @@ catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES agni_robot_viz
   CATKIN_DEPENDS geometry_msgs moveit_core moveit_ros_planning moveit_msgs roscpp tf std_msgs visualization_msgs eigen_conversions
+  DEPENDS RSB RSC RST
 #  DEPENDS system_lib
 )
 
@@ -100,25 +50,36 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  include ${catkin_INCLUDE_DIRS}
+  include ${catkin_INCLUDE_DIRS} ${RSB_INCLUDE_DIRS} ${RSC_INCLUDE_DIRS} ${RST_INCLUDE_DIRS} ${RSTSANDBOX_INCLUDE_DIRS} ${RST_CONVERTERS_INCLUDE_DIRS}
 )
+
+ADD_DEFINITIONS(${RST_CFLAGS} ${RSTSANDBOX_CFLAGS} ${RST_CONVERTERS_CFLAGS})
 
 ## Declare a cpp library
-# add_library(agni_robot_viz
-#   src/${PROJECT_NAME}/agni_robot_viz.cpp
-# )
+add_library(libcollision_shape_generator src/collision_shape_generator.cpp)
+add_dependencies(libcollision_shape_generator ${catkin_EXPORTED_TARGETS})
+target_link_libraries(libcollision_shape_generator ${catkin_LIBRARIES})
 
 ## Declare a cpp executable
-add_executable(collision_shape_generator src/collision_shape_generator.cpp)
-
-## Add cmake target dependencies of the executable/library
-## as an example, message headers may need to be generated before nodes
-add_dependencies(collision_shape_generator agni_robot_viz_generate_messages_cpp)
-
-## Specify libraries to link a library or executable target against
-target_link_libraries(collision_shape_generator
-   ${catkin_LIBRARIES}
+add_executable(collision_shape_generator_ros src/collision_shape_generator_ros.cpp)
+add_dependencies(collision_shape_generator_ros 
+    agni_robot_viz_generate_messages_cpp
+    libcollision_shape_generator)
+target_link_libraries(collision_shape_generator_ros
+  libcollision_shape_generator
+   ${catkin_LIBRARIES} 
 )
+
+## Declare a cpp executable
+add_executable(collision_shape_generator_rsb src/collision_shape_generator_rsb.cpp)
+add_dependencies(collision_shape_generator_rsb 
+    agni_robot_viz_generate_messages_cpp
+    libcollision_shape_generator)
+target_link_libraries(collision_shape_generator_rsb
+  libcollision_shape_generator
+   ${catkin_LIBRARIES} ${RSB_LIBRARIES} ${RSC_LIBRARIES} ${RST_LIBRARIES} ${RSTSANDBOX_LIBRARIES} ${RST_CONVERTERS_LIBRARIES}
+)
+
 
 #############
 ## Install ##
@@ -134,8 +95,9 @@ target_link_libraries(collision_shape_generator
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-install(TARGETS collision_shape_generator 
+install(TARGETS collision_shape_generator_ros 
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
 ## Mark executables and/or libraries for installation
