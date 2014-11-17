@@ -102,13 +102,13 @@
   
   <struct name="Properties" type="PropertyBag">
     <simple name="number_of_joints" type="int"><value>7</value></simple>
-    <simple name="joint0_name" type="string"><value>right_arm_0_joint</value></simple>
-    <simple name="joint1_name" type="string"><value>right_arm_1_joint</value></simple>
-    <simple name="joint2_name" type="string"><value>right_arm_2_joint</value></simple>
-    <simple name="joint3_name" type="string"><value>right_arm_3_joint</value></simple>
-    <simple name="joint4_name" type="string"><value>right_arm_4_joint</value></simple>
-    <simple name="joint5_name" type="string"><value>right_arm_5_joint</value></simple>
-    <simple name="joint6_name" type="string"><value>right_arm_6_joint</value></simple>
+    <simple name="joint0_name" type="string"><value>ra_arm_0_joint</value></simple>
+    <simple name="joint1_name" type="string"><value>ra_arm_1_joint</value></simple>
+    <simple name="joint2_name" type="string"><value>ra_arm_2_joint</value></simple>
+    <simple name="joint3_name" type="string"><value>ra_arm_3_joint</value></simple>
+    <simple name="joint4_name" type="string"><value>ra_arm_4_joint</value></simple>
+    <simple name="joint5_name" type="string"><value>ra_arm_5_joint</value></simple>
+    <simple name="joint6_name" type="string"><value>ra_arm_6_joint</value></simple>
   </struct>
   
   <struct name="Ports" type="PropertyBag">
@@ -259,13 +259,13 @@
   
   <struct name="Properties" type="PropertyBag">
     <simple name="number_of_joints" type="int"><value>7</value></simple>
-    <simple name="joint0_name" type="string"><value>right_arm_0_joint</value></simple>
-    <simple name="joint1_name" type="string"><value>right_arm_1_joint</value></simple>
-    <simple name="joint2_name" type="string"><value>right_arm_2_joint</value></simple>
-    <simple name="joint3_name" type="string"><value>right_arm_3_joint</value></simple>
-    <simple name="joint4_name" type="string"><value>right_arm_4_joint</value></simple>
-    <simple name="joint5_name" type="string"><value>right_arm_5_joint</value></simple>
-    <simple name="joint6_name" type="string"><value>right_arm_6_joint</value></simple>
+    <simple name="joint0_name" type="string"><value>ra_arm_0_joint</value></simple>
+    <simple name="joint1_name" type="string"><value>ra_arm_1_joint</value></simple>
+    <simple name="joint2_name" type="string"><value>ra_arm_2_joint</value></simple>
+    <simple name="joint3_name" type="string"><value>ra_arm_3_joint</value></simple>
+    <simple name="joint4_name" type="string"><value>ra_arm_4_joint</value></simple>
+    <simple name="joint5_name" type="string"><value>ra_arm_5_joint</value></simple>
+    <simple name="joint6_name" type="string"><value>ra_arm_6_joint</value></simple>
   </struct>
   
   <struct name="Ports" type="PropertyBag">

@@ -311,7 +311,7 @@ right_arm:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-  projection_evaluator: joints(right_arm_0_joint,right_arm_1_joint)
+  projection_evaluator: joints(ra_arm_0_joint,ra_arm_1_joint)
   longest_valid_segment_fraction: 0.05
 flobi_eyes:
   planner_configs:
@@ -326,7 +326,7 @@ flobi_eyes:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-  projection_evaluator: joints(floby_eyes_left_lr_joint,floby_eyes_left_ud_joint)
+  projection_evaluator: joints(flobi_eyes_left_lr_joint,flobi_eyes_left_ud_joint)
   longest_valid_segment_fraction: 0.05
 both_hands:
   planner_configs:

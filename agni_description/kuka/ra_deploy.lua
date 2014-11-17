@@ -73,7 +73,7 @@ JntPub = d:getPeer("JntPub")
 sched_order=JntPub:getProperty("joint_names")
 sched_order:get():resize(7)
 for i=0,6,1 do 
-sched_order[i]="right_arm_"..i.."_joint"
+sched_order[i]="ra_"..i.."_joint"
 end 
 JntPub:configure()
 

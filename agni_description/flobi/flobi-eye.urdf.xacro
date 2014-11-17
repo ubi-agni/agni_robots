@@ -13,7 +13,7 @@
 	<!-- prefix -->
   <macro name="flobi-eye" params="prefix name parent *origin">
 		    
-     <joint name="${prefix}floby_eyes_${name}_lr_joint" type="revolute">
+     <joint name="${prefix}flobi_eyes_${name}_lr_joint" type="revolute">
       <insert_block name="origin" />
       <axis xyz="0 0 -1"/>
       <limit lower="${-20 * M_PI / 180}" upper="${+20 * M_PI / 180}"
@@ -32,7 +32,7 @@
       </inertial>
     </link>
     
-     <joint name="${prefix}floby_eyes_${name}_ud_joint" type="revolute">
+     <joint name="${prefix}flobi_eyes_${name}_ud_joint" type="revolute">
       <origin xyz="0 0 ${flobi_elem_eyes_z_offset}" rpy="0 0 0"/>
       <axis xyz="0 -1 0"/>
       <limit lower="${-20 * M_PI / 180}" upper="${+20 * M_PI / 180}"

@@ -13,11 +13,11 @@
   <!-- origin is the position of the robot in this frame -->
   <xacro:macro name="rightpa10shadow" params="parent *origin prefix controller">
     <!-- KUKA arm -->
-    <xacro:pa10c_arm name="right_"/>
-    <joint name="right_frame_placement" type="fixed">
+    <xacro:pa10c_arm name="ra_"/>
+    <joint name="ra_frame_placement" type="fixed">
        <insert_block name="origin" />
       <parent link="${parent}"/>
-      <child link="right_arm_base_link"/>
+      <child link="ra_arm_base_link"/>
     </joint>  
     
     <xacro:if value="${controller}">  
@@ -31,12 +31,12 @@
     
     <xacro:if value="${prefix}">
       <!-- Shadow Hands --> 
-      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix="r_"  />
+      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix="rh_"  />
       
       <!-- Link arm and hand -->  
-      <joint name="right_arm_hand_mount" type="fixed">
-        <parent link="right_arm_hand_mount"/>
-        <child link="r_forearm"/>
+      <joint name="ra_arm_hand_mount" type="fixed">
+        <parent link="ra_arm_hand_mount"/>
+        <child link="rh_forearm"/>
         <origin xyz="0 0 0.0151" rpy="0 0 1.5707" />
       </joint>
     </xacro:if>  
@@ -44,8 +44,8 @@
       <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix=""  />
       <!-- Shadow Hands --> 
       <!-- Link arm and hand -->  
-      <joint name="right_arm_hand_mount" type="fixed">
-        <parent link="right_arm_hand_mount"/>
+      <joint name="ra_arm_hand_mount" type="fixed">
+        <parent link="ra_arm_hand_mount"/>
         <child link="forearm"/>
         <origin xyz="0 0 0.0151" rpy="0 0 1.5707" />
       </joint>

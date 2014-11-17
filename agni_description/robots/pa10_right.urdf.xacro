@@ -6,11 +6,11 @@
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand_muscle.urdf.xacro" />
 
   <!-- arms -->
-  <xacro:pa10_arm name="right_"/>
+  <xacro:pa10_arm name="ra_"/>
 
   <!-- Shadow Hands -->
-  <joint name="right_arm_hand_mount" type="fixed">
-    <parent link="right_arm_7_link"/>
+  <joint name="ra_arm_hand_mount" type="fixed">
+    <parent link="ra_arm_7_link"/>
     <child link="forearm"/>
     <origin xyz="0 0 0" rpy="0 0 0" />
   </joint>

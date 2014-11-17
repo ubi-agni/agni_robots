@@ -14,7 +14,7 @@
 	<!-- if neutral is 0 then gender is considered, 0 for male, 1 for female -->
   <macro name="flobi" params="prefix neutral gender parent *origin">
 
-		<joint name="${prefix}floby_base_joint" type="fixed">
+		<joint name="${prefix}flobi_base_joint" type="fixed">
       <insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${prefix}flobi_neck_base_link"/>
@@ -43,7 +43,7 @@
       </collision>
     </link>
      -->
-    <joint name="${prefix}floby_neck_pan_joint" type="revolute">
+    <joint name="${prefix}flobi_neck_pan_joint" type="revolute">
       <origin xyz="0 0 0.0" rpy="0 0 0"/>
       <axis xyz="0 0 -1"/>
       <limit lower="${-90 * M_PI / 180}" upper="${+90 * M_PI / 180}"
@@ -63,7 +63,7 @@
       </inertial>
     </link>
 
-    <joint name="${prefix}floby_neck_tilt_joint" type="revolute">
+    <joint name="${prefix}flobi_neck_tilt_joint" type="revolute">
       <origin xyz="0 0 ${flobi_elem_neck_beam_length}" rpy="0 0 0"/>
       <axis xyz="0 -1 0"/>
       <limit lower="${-40 * M_PI / 180}" upper="${+40 * M_PI / 180}"
@@ -82,7 +82,7 @@
       </inertial>
     </link>
 
-    <joint name="${prefix}floby_neck_roll_joint" type="revolute">
+    <joint name="${prefix}flobi_neck_roll_joint" type="revolute">
       <origin xyz="0 0 ${flobi_elem_neck_tilt_length}" rpy="0 0 0"/>
       <axis xyz="1 0 0"/>
       <limit lower="${-25 * M_PI / 180}" upper="${+25 * M_PI / 180}"
