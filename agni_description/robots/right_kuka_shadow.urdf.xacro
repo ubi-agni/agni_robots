@@ -23,7 +23,7 @@
     
     <xacro:if value="${controller}">  
     <!-- add controllers -->
-    <xacro:right_lwr_arm_gazebo_controller namespace="rk" port="49940"/>
+    <xacro:right_lwr_arm_gazebo_controller namespace="ra" port="49940"/>
       <xacro:shadow_gazebo_controller_manager namespace="rh" />
     </xacro:if>  
 
