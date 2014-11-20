@@ -17,13 +17,14 @@
 	</include>
 	
 	<!-- Controllers for the hand -->
-  <include file="$(find agni_description)/launch/hand_controllers.launch">
+        <include file="$(find agni_description)/launch/hand_controllers.launch">
 		<arg name="namespace" value="$(arg namespace)" />
 		<arg name="use_prefix" value="$(arg use_prefix)"/>
 	</include>
+        <!-- joint_state_publishers controller -->
 	<include file="$(find ros_ethercat_model)/launch/joint_state_publisher.launch"/>
 
-  <node pkg="robot_state_publisher" type="state_publisher"
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
         name="robot_state_publisher_full_pos">
     <!--<remap from="joint_states" to="joint_states" />-->
     <param name="publish_frequency" type="double" value="20.0" />

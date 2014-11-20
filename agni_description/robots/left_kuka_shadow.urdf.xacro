@@ -22,8 +22,8 @@
     </joint>  
     
     <xacro:if value="${controller}">  
-    <!-- add controllers -->
-    <xacro:left_lwr_arm_gazebo_controller namespace="la" port="49940"/>
+      <!-- add controllers -->
+      <xacro:left_lwr_arm_gazebo_controller namespace="la" port="49938"/>
       <xacro:shadow_gazebo_controller_manager namespace="lh" />
     </xacro:if>  
 

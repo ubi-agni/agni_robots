@@ -27,7 +27,7 @@
       <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
     </include>
-    
+    <!-- robot_state_publisher can work with data coming from different sources at different times -->
     <node pkg="topic_tools" type="relay"
         name="$(arg arm_type)_joint_state_merger"
         args="/ra/joint_states /right/joint_states" >
@@ -47,6 +47,9 @@
    
   <!-- Controllers for the hand -->
   <group ns="rh"> 
+    <!-- joint_state_publishers controller -->
+    <include file="$(find ros_ethercat_model)/launch/joint_state_publisher.launch"/>
+    <!-- motor controllers -->
     <include file="$(find agni_description)/launch/hand_controllers.launch">
       <arg name="namespace" value="rh" />
       <arg name="use_prefix" value="$(arg use_prefix)"/>

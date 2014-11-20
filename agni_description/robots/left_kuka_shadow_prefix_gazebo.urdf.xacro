@@ -4,8 +4,8 @@
   <xacro:include filename="$(find agni_description)/robots/left_kuka_shadow.urdf.xacro" />
   <xacro:include filename="$(find agni_description)/calibration/default_cal.xml"/>
   
-  <link name="world" />
-  <!-- KUKA Shadow arm and hand  -->
+  <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
+  <link name="world" /> 
   <xacro:leftkukashadow parent="world" prefix="true" controller="true">
     <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
 				rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
