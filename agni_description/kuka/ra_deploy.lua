@@ -4,16 +4,20 @@ require "rttros"
 tc=rtt.getTC()
 d=tc:getPeer("Deployer")
 
+-- ROS integration
 d:import("rtt_rosnode")
+d:import("rtt_roscomm")
+d:import("rtt_sensor_msgs")
+d:import("rtt_diagnostic_msgs")
 
 -- Start of user code imports
 d:import("lwr_fri")
 d:import("oro_joint_state_publisher")
 d:import("rtt_control_msgs")
 
-d:import("FLWRFilter")
-d:import("SMotionManager")
-d:import("SLogSaver")
+d:import("flwr_filter")
+d:import("s_motion_manager")
+d:import("s_log_saver")
 
 -- End of user code
 
@@ -38,10 +42,7 @@ d:loadComponent("FRIRA", "FRIComponent")
 --d:setActivity("FRI", 0.001, 80, rtt.globals.ORO_SCHED_RT)
 d:setActivity("FRIRA", 0, 80, rtt.globals.ORO_SCHED_RT)
 FRIRA = d:getPeer("FRIRA")
-
---FRIRA:getProperty("fri_port"):set(49938) -- for real right arm
-FRIRA:getProperty("fri_port"):set(49940) -- for real left arm
-
+FRIRA:getProperty("fri_port"):set(49940) -- for real right arm
 FRIRA:configure()
 
 
@@ -79,7 +80,10 @@ JntPub:configure()
 
 d:connect("FRIRA.RobotState", "LWRDiag.RobotState", rtt.Variable("ConnPolicy"))
 d:connect("FRIRA.FRIState", "LWRDiag.FRIState", rtt.Variable("ConnPolicy"))
-d:connect("FRIRA.JointPosition", "JntPub.msrJntPos", rtt.Variable("ConnPolicy"))
+d:connect("FRIRA.JointPosition", "JntPub.JointPosition", rtt.Variable("ConnPolicy"))
+d:connect("FRIRA.JointVelocity", "JntPub.JointVelocity", rtt.Variable("ConnPolicy"))
+d:connect("FRIRA.JointTorque", "JntPub.JointEffort", rtt.Variable("ConnPolicy"))
+
 
 d:connect("FRIRA.RobotState", "FilterRA.RobotState", rtt.Variable("ConnPolicy"))
 d:connect("FRIRA.FRIState", "FilterRA.FRIState", rtt.Variable("ConnPolicy"))
@@ -96,9 +100,11 @@ d:connect("FilterRA.Log", "LogRA.Log", rtt.Variable("ConnPolicy"))
 
 
 -- ROS in out
-d:stream("LWRDiag.Diagnostics",rtt.provides("ros"):topic("diagnostics"))
+ros=rtt.provides("ros")
+d:stream("LWRDiag.Diagnostics",ros:topic("diagnostics"))
 
-d:stream("JntPub.joints_state",rtt.provides("ros"):topic("joint_states"))
+d:stream("JntPub.joint_state",ros:topic("joint_states"))
+
 --d:stream("FRIRA.KRL_CMD",rtt.provides("ros"):topic("lwr_arm_controller/fri_set_mode"))
 --d:stream("FRIRA.CartesianWrench",rtt.provides("ros"):topic("cartesian_wrench"))
 --d:stream("FilterRA.Log",rtt.provides("ros"):topic("log"))

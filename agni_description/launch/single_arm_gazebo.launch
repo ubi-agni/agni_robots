@@ -22,7 +22,7 @@
 	</include>	
 
 
-  <node pkg="robot_state_publisher" type="state_publisher"
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
         name="robot_state_publisher_full_pos">
     <param name="publish_frequency" type="double" value="10.0" />
 		
