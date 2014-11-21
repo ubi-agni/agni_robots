@@ -7,6 +7,6 @@
   
   <xacro:shadow_gazebo_controller_manager namespace="rh" />
   
-  <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix="r_"  />
+  <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix="rh_"  />
    
 </robot>
