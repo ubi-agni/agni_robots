@@ -40,7 +40,7 @@
         <include file="$(find agni_description)/launch/right_arm_gazebo.launch">
             <arg name="arm_type" value="$(arg ARM)"/>
         </include>
-        <node name="right_arm_static" pkg="tf" type="static_transform_publisher"   args="/$(arg ARM)_frame /right/world 0 0 0 0 0 0 100"/>
+        <node name="right_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /right/world 100"/>
 		</group>	
 	</group>	
 	<group unless="$(arg RA)">
@@ -48,7 +48,7 @@
         <include file="$(find agni_description)/launch/left_arm_gazebo.launch">
             <arg name="arm_type" value="$(arg ARM)"/>
         </include>
-        <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="/$(arg ARM)_frame /left/world 0 0 0 0 0 0 100"/>
+        <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0  /$(arg ARM)_frame /left/world 100"/>
 	</group>		
   
  

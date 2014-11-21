@@ -22,7 +22,8 @@
   <!-- Load the general right robot_description, spawn it, merge joint_states -->
   <group ns="right">
     <include file="$(find agni_description)/launch/single_arm_and_hand_gazebo_no_controllers.launch" >
-      <!-- <arg name="init_pose" value="-x -0.5 -y 0 -z 0.05" />-->
+      <!--<arg name="init_args" value="-x -0.5 -y 0 -z 0.05" /> -->
+      <arg name="init_args" value="-J right_S1 1.57 -J right_S2 1.18 -J right_S3 0.0 -J right_E1 -1.40 -J right_E2 -.40 -J right_W1 -1.48  -J right_W2 0 " />
       <arg name="namespace" value="right"/>
       <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>

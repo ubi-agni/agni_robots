@@ -33,6 +33,12 @@
       <inertia ixx="0.0193" ixy="0" ixz="0" iyy="0.0193" iyz="0" izz="0.0184"/>
     </inertial>
   </link>
+  <gazebo reference="${name}arm_base_link">
+    <material>LightGrey</material>
+    <selfCollide>false</selfCollide>
+  </gazebo>
+  
+  
   <link name="${name}arm_1_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -63,10 +69,11 @@
       <origin xyz="0 0 0.148" rpy="0 0 0"/>
       <inertia ixx="0.145" ixy="0" ixz="0" iyy="0.145" iyz="0" izz="0.049"/>
     </inertial>
-  </link>
+  </link> 
+  
   <link name="${name}arm_2_link">
     <visual>
-      <origin xyz="0 0 -0.315" rpy="0 0 0"/>
+      <origin xyz="0 0 -0.315" rpy="0 0 3.1415"/>
       <geometry>
         <mesh filename="package://agni_description/pa10/meshes/pa-7a/link2_mesh.dae" scale="1 1 1" />
       </geometry>
@@ -223,6 +230,14 @@
     <limit lower="${-177/180*M_PI}" upper="${177/180*M_PI}" effort="100" velocity="1" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}S1_transmission">
+    <actuator name="${name}S1_actuator" />
+    <joint name="${name}S1">
+    </joint>  
+  </transmission>
+
+
+
   <joint name="${name}S2" type="revolute">
     <parent link="${name}arm_1_link"/>
     <child  link="${name}arm_2_link"/>
@@ -231,6 +246,12 @@
     <limit lower="${-91/180*M_PI}" upper="${+91/180*M_PI}" effort="100" velocity="1" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}S2_transmission">
+    <actuator name="${name}S2_actuator" />
+    <joint name="${name}S2">
+    </joint>  
+  </transmission>
+
   <joint name="${name}S3" type="revolute">
     <parent link="${name}arm_2_link"/>
     <child  link="${name}arm_3_link"/>
@@ -239,6 +260,12 @@
     <limit lower="${-174/180*M_PI}" upper="${174/180*M_PI}" effort="100" velocity="2" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}S3_transmission">
+    <actuator name="${name}S3_actuator" />
+    <joint name="${name}S3">
+    </joint>  
+  </transmission>
+    
   <joint name="${name}E1" type="revolute">
     <parent link="${name}arm_3_link"/>
     <child  link="${name}arm_4_link"/>
@@ -247,6 +274,12 @@
     <limit lower="${-137/180*M_PI}" upper="${137/180*M_PI}" effort="100" velocity="2" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}E1_transmission">
+    <actuator name="${name}E1_actuator" />
+    <joint name="${name}E1">
+    </joint>  
+  </transmission>
+
   <joint name="${name}E2" type="revolute">
     <parent link="${name}arm_4_link"/>
     <child  link="${name}arm_5_link"/>
@@ -255,6 +288,12 @@
     <limit lower="${-255/180*M_PI}" upper="${255/180*M_PI}" effort="100" velocity="6.28" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}E2_transmission">
+    <actuator name="${name}E2_actuator" />
+    <joint name="${name}E2">
+    </joint>  
+  </transmission>
+
   <joint name="${name}W1" type="revolute">
     <parent link="${name}arm_5_link"/>
     <child  link="${name}arm_6_link"/>
@@ -263,6 +302,13 @@
     <limit lower="${-165/180*M_PI}" upper="${165/180*M_PI}" effort="100" velocity="6.28" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <!-- <transmission type="transmission_interface/SimpleTransmission" name="${name}W1_transmission"> -->
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}W1_transmission">
+    <actuator name="${name}W1_actuator" />
+    <joint name="${name}W1">
+    </joint>  
+  </transmission>
+
   <joint name="${name}W2" type="revolute">
     <parent link="${name}arm_6_link"/>
     <child  link="${name}arm_7_link"/>
@@ -271,6 +317,11 @@
     <limit lower="${-359/180*M_PI}" upper="${359/180*M_PI}" effort="100" velocity="6.28" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}W2_transmission">
+    <actuator name="${name}W2_actuator" />
+    <joint name="${name}W2">
+    </joint>  
+  </transmission>
 
   <joint name="${name}arm_hand_fixed_joint" type="fixed">
 	 <parent link="${name}arm_7_link"/>

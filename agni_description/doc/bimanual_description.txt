@@ -1,0 +1,23 @@
+Describe  2 arms + 2 hands + 1 frame in REAL world and in SIM
+-------------------------------------------------------------
+
+- linking all the robots together is not possible now requires all joint and links in a single <robot>
+- right/left distinction should be possible, just linking them to the world with a calibration of the base
+
+at right :
+/right/robot_description : for planning and spawning (so that the hand and arm are physically linked together)
+/ra/joint_states : in real world we have a separate js per robot, so create them in sim too
+/ra/robot_description : what is this needed for ?
+/rh/joint_states : in real world we have a separate js per robot, so create them in sim too
+/rh/robot_description : in sim what is this needed for ? / in real loaded by default by the shadow driver with name rh/sh_description : 
+
+
+
+there are 3 namespaces per side, right/ra/rh
+
+when spawning the left/right side, the groupNS is left/right, but the namespace for hand and arm controllers should be ra/la and rh/lf
+hand controllers need ns:rh 
+kuka gazebo bringup needs ns:ra
+
+
+

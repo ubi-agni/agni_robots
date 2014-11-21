@@ -1,0 +1,7 @@
+<launch>
+	<arg name="namespace" default="right"/>
+        <include file="$(find agni_description)/pa10/arm_controllers_prefix.launch">
+                <arg name="namespace" value="$(arg namespace)" />
+        </include>
+	
+</launch>
