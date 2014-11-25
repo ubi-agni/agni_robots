@@ -32,6 +32,7 @@ ros::Publisher robot_state_publisher;
 // callback function receiving joint_states and generating collision primitives
 void callback(const sensor_msgs::JointStatePtr &msg)
 {
+  ROS_DEBUG("received a joint_state ");
   visualization_msgs::MarkerArray markerarray;
   Informer<rst::geometry::Primitive3DFloatSet>::DataPtr prim_set(new rst::geometry::Primitive3DFloatSet());
   

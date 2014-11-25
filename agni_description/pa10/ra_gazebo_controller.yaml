@@ -1,6 +1,6 @@
 ra_S1_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_S1
+  joint: ra_S1
   pid:
     p: 50.0
     deadband: 0.0
@@ -13,7 +13,7 @@ ra_S1_position_controller:
 
 ra_S2_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_S2
+  joint: ra_S2
   pid:
     p: 50.0
     deadband: 0.0
@@ -27,7 +27,7 @@ ra_S2_position_controller:
 
 ra_S3_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_S3
+  joint: ra_S3
   pid:
     p: 50.0
     deadband: 0.0
@@ -41,7 +41,7 @@ ra_S3_position_controller:
 
 ra_E1_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_E1
+  joint: ra_E1
   pid:
     p: 50.0
     deadband: 0.0
@@ -55,7 +55,7 @@ ra_E1_position_controller:
 
 ra_E2_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_E2
+  joint: ra_E2
   pid:
     p: 50.0
     deadband: 0.0
@@ -69,7 +69,7 @@ ra_E2_position_controller:
 
 ra_W1_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_W1
+  joint: ra_W1
   pid:
     p: 50.0
     deadband: 0.0
@@ -83,7 +83,7 @@ ra_W1_position_controller:
 
 ra_W2_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: right_W2
+  joint: ra_W2
   pid:
     p: 50.0
     deadband: 0.0

@@ -1,6 +1,6 @@
 la_S1_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_S1
+  joint: la_S1
   pid:
     p: 50.0
     deadband: 0.0
@@ -13,7 +13,7 @@ la_S1_position_controller:
 
 la_S2_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_S2
+  joint: la_S2
   pid:
     p: 50.0
     deadband: 0.0
@@ -27,7 +27,7 @@ la_S2_position_controller:
 
 la_S3_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_S3
+  joint: la_S3
   pid:
     p: 50.0
     deadband: 0.0
@@ -41,7 +41,7 @@ la_S3_position_controller:
 
 la_E1_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_E1
+  joint: la_E1
   pid:
     p: 50.0
     deadband: 0.0
@@ -55,7 +55,7 @@ la_E1_position_controller:
 
 la_E2_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_E2
+  joint: la_E2
   pid:
     p: 50.0
     deadband: 0.0
@@ -69,7 +69,7 @@ la_E2_position_controller:
 
 la_W1_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_W1
+  joint: la_W1
   pid:
     p: 50.0
     deadband: 0.0
@@ -83,7 +83,7 @@ la_W1_position_controller:
 
 la_W2_position_controller:
   type: sr_mechanism_controllers/SrhJointPositionController
-  joint: left_W2
+  joint: la_W2
   pid:
     p: 50.0
     deadband: 0.0
