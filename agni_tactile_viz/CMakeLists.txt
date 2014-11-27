@@ -28,6 +28,9 @@ install(TARGETS agni_tactile_viz
 #  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 #  FILES_MATCHING PATTERN "*.hpp"
 #)
+install(PROGRAMS nodes/tactile_test_sensors.py
+         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 install(DIRECTORY config/
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config)
