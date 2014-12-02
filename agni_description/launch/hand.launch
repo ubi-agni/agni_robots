@@ -1,21 +1,24 @@
 <launch>
-	<!-- start gazebo with an empty plane -->
+  <arg name="SIM" default="true"/>
+  
+  <group if="$(arg SIM)"> 
+    <!-- start gazebo with an empty plane -->
 	
-  <!-- Gazebo world file to load. -->
-  <arg name="world_name" default="$(find sr_description)/other/worlds/shadowhand.world" />
-  <arg name="gui" default="true"/>
+    <!-- Gazebo world file to load. -->
+    <arg name="world_name" default="$(find sr_description)/other/worlds/shadowhand.world" />
+    <arg name="gui" default="true"/>
 
-  <!-- Gazebo world file to load. -->
-  <!-- We want gazebo to stay in the root namespace but the nodes below to be
-  relative. Can then launch this inside a namespace to namespace the hand. -->
-  <group ns="/">
+    <!-- Gazebo world file to load. -->
+    <!-- We want gazebo to stay in the root namespace but the nodes below to be
+    relative. Can then launch this inside a namespace to namespace the hand. -->
+    <group ns="/">
       <!-- We reuse the logic in empty_world.launch, changing only the name of the world to be launched -->
       <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(arg world_name)"/>
         <arg name="gui" value="$(arg gui)"/>
       </include>
-  </group>
-     
+    </group>
+  </group>    
   <!-- include our robots -->
   <arg name="RH" default="1"/>
   <arg name="LH" default="0"/>
@@ -23,21 +26,24 @@
   <group if="$(arg RH)">
 		<group if="$(arg LH)">
 			  <!-- BOTH hands -->
-			  <include file="$(find agni_description)/launch/both_hand_gazebo.launch">
+			  <include file="$(find agni_description)/launch/both_hand.launch">
 				 	<arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+          <arg name="sim" value="$(arg SIM)"/>
 				</include>
 		</group>	
 		<group unless="$(arg LH)">
 				<!-- RIGHT hand only -->
-				<include file="$(find agni_description)/launch/right_hand_gazebo.launch">
+				<include file="$(find agni_description)/launch/right_hand.launch">
 					<arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+          <arg name="sim" value="$(arg SIM)"/>
 				</include>
 		</group>	
 	</group>	
 	<group unless="$(arg RH)">
 			<!-- LEFT hand only -->
-			  <include file="$(find agni_description)/launch/left_hand_gazebo.launch">
+			  <include file="$(find agni_description)/launch/left_hand.launch">
 					<arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+          <arg name="sim" value="$(arg SIM)"/>
 				</include>
 	</group>		
   

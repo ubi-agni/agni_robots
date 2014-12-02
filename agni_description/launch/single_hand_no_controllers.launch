@@ -1,0 +1,28 @@
+<launch>
+  <arg name="namespace" default="rh"/>
+  <arg name="use_prefix" default="0"/>
+  <arg name="init_args" default="-x 0 -y 0 -z 0"/>
+  <arg name="sim" default="true"/>
+  
+        <!-- load robot_description -->
+        <include file="$(find agni_description)/launch/sr_upload.launch">
+                        <arg name="namespace" value="$(arg namespace)" />
+                        <arg name="use_prefix" value="$(arg use_prefix)"/>
+        </include>
+
+        <param name="tf_prefix" value="$(arg namespace)" />
+
+        <group if="$(arg sim)">
+                <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
+                        <arg name="init_args" value="$(arg init_args)" />
+                        <arg name="robot_name" value="$(arg namespace)_ubi_motor_hand" />
+                </include>
+        </group>   
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
+        name="robot_state_publisher_full_pos">
+    <!--<remap from="joint_states" to="joint_states" />-->
+    <param name="publish_frequency" type="double" value="20.0" />
+  </node>
+
+</launch>

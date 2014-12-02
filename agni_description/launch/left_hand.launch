@@ -1,0 +1,20 @@
+<launch>
+	<arg name="use_prefix" default="0"/>
+  <arg name="sim" default="true"/>
+  <group ns="lh">
+    <include file="$(find agni_description)/launch/single_hand_no_controllers.launch" >
+      <arg name="init_args" value="-x 0.2 -y 0 -z 0" />
+      <arg name="namespace" value="lh"/>
+      <arg name="use_prefix" value="$(arg use_prefix)"/>
+      <arg name="sim" value="$(arg sim)"/>
+    </include>
+	</group>
+  <!-- drivers and/or controllers for the hand -->
+  <include file="$(find agni_description)/launch/sr_bringup.launch">
+    <arg name="namespace" value="lh" />
+    <arg name="use_prefix" value="$(arg use_prefix)"/>
+    <arg name="sim" value="$(arg sim)"/>
+  </include>
+  
+  
+</launch>

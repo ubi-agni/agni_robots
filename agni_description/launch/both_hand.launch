@@ -1,0 +1,12 @@
+<launch>
+	<arg name="use_prefix" default="0"/>
+  <arg name="sim" default="true"/>
+  <include file="$(find agni_description)/launch/right_hand.launch">
+		<arg name="use_prefix" value="$(arg use_prefix)"/>
+    <arg name="sim" value="$(arg sim)"/>
+  </include>
+  <include file="$(find agni_description)/launch/left_hand.launch">
+		<arg name="use_prefix" value="$(arg use_prefix)"/>
+    <arg name="sim" value="$(arg sim)"/>
+  </include>
+</launch>

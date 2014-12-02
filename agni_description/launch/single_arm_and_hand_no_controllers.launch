@@ -2,6 +2,7 @@
   <arg name="namespace" default="right"/>
   <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
+  <arg name="sim" default="true"/>
   <arg name="init_args" default=""/>
 
   <!-- load robot_description -->
@@ -12,12 +13,14 @@
         </include>
  
         <param name="tf_prefix" value="$(arg namespace)"/>
-        <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
-                <!--  the pose is defined in the urdf relative to world already frame -->
-                <arg name="init_args" value="$(arg init_args)" />
-                <arg name="robot_name" value="$(arg namespace)_$(arg arm_type)_shadow" />
-        </include>
         
+        <group if="$(arg sim)">
+          <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
+                  <!--  the pose is defined in the urdf relative to world already frame -->
+                  <arg name="init_args" value="$(arg init_args)" />
+                  <arg name="robot_name" value="$(arg namespace)_$(arg arm_type)_shadow" />
+          </include>   
+        </group>   
         <node pkg="robot_state_publisher" type="robot_state_publisher"
                                 name="robot_state_publisher_full_pos">
                 <param name="publish_frequency" type="double" value="10.0" />

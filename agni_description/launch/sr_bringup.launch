@@ -1,0 +1,42 @@
+<launch>
+  <arg name="use_prefix" default="0"/>
+	<arg name="namespace" default="rh"/>
+  <arg name="sim" default="true"/>
+	 
+  <group if="$(arg sim)"> 
+    <!-- we need ns here -->
+    <group ns="$(arg namespace)">
+      <!-- joint_state_publishers controller -->
+      <include file="$(find ros_ethercat_model)/launch/joint_state_publisher.launch"/>
+      <!-- motor controllers -->
+      <include file="$(find agni_description)/launch/hand_controllers.launch">
+        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="use_prefix" value="$(arg use_prefix)"/>
+      </include>
+    </group>  
+  </group>  
+  
+  <group unless="$(arg sim)"> 
+    <!-- ns is already contained in sr_rh|lhand.launch -->
+   
+       <group if="$(arg use_prefix)">
+          <include file="$(find sr_ethercat_hand_config)/launch/sr_$(arg namespace)and.launch" >
+            <arg name="robot_description" value="$(find agni_description)/robots/$(arg namespace)_ubi_motor_hand_prefix.urdf.xacro" />
+          </include>
+      </group>
+      <group unless="$(arg use_prefix)">
+        <include file="$(find sr_ethercat_hand_config)/launch/sr_$(arg namespace)and.launch" >
+            <arg name="robot_description" value="$(find agni_description)/robots/$(arg namespace)_ubi_motor_hand.urdf.xacro" />
+          </include>
+      </group>
+    
+    <!-- ns is already contained in the controller.launch -->
+    <include file="$(find sr_ethercat_hand_config)/launch/controllers/sr_edc_mixed_position_velocity_controllers.launch" >
+			<arg name="set_namespace" value="1"/>
+			<arg name="config_dir" value="$(arg namespace)/" />
+			<arg name="namespace" value="$(arg namespace)" />
+		</include>
+
+  </group>
+    
+</launch>

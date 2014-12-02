@@ -1,6 +1,7 @@
 <launch>
   <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
+  <arg name="sim" default="true"/>
   <!-- upload parameters on the correct namespaces 
   must be done before gazebo spawner to have the plugin controller manager
   load on the sub namespaces -->
@@ -12,7 +13,8 @@
     </include>  
   </group> 
   
-  <group ns="rh">
+  <!-- load hand description only in sim, in real, the drivers is loading it -->
+  <group if="$(arg sim)" ns="rh">
     <include file="$(find agni_description)/launch/sr_upload.launch" >
       <arg name="namespace" value="rh"/>
       <arg name="use_prefix" value="$(arg use_prefix)"/>
@@ -21,12 +23,12 @@
   
   <!-- Load the general right robot_description, spawn it, merge joint_states -->
   <group ns="right">
-    <include file="$(find agni_description)/launch/single_arm_and_hand_gazebo_no_controllers.launch" >
-      <!--<arg name="init_args" value="-x -0.5 -y 0 -z 0.05" /> -->
-      <arg name="init_args" value="-J right_S1 1.57 -J right_S2 1.18 -J right_S3 0.0 -J right_E1 -1.40 -J right_E2 -.40 -J right_W1 -1.48  -J right_W2 0 " />
+    <include file="$(find agni_description)/launch/single_arm_and_hand_no_controllers.launch" >
+      <!-- <arg name="init_pose" value="-x -0.5 -y 0 -z 0.05" />-->
       <arg name="namespace" value="right"/>
       <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="sim" value="$(arg sim)"/>
     </include>
     <!-- robot_state_publisher can work with data coming from different sources at different times -->
     <node pkg="topic_tools" type="relay"
@@ -39,22 +41,20 @@
     </node>
   </group>
   
-  <!-- Controllers for the arm -->
+  <!-- drivers and/or controllers the arm -->
   <group ns="ra">
-    <include file="$(find agni_description)/launch/$(arg arm_type)_gazebo_bringup.launch" >
+    <include file="$(find agni_description)/launch/$(arg arm_type)_bringup.launch" >
       <arg name="namespace" value="ra"/>
+      <arg name="sim" value="$(arg sim)"/>
     </include>  
   </group> 
    
-  <!-- Controllers for the hand -->
-  <group ns="rh"> 
-    <!-- joint_state_publishers controller -->
-    <include file="$(find ros_ethercat_model)/launch/joint_state_publisher.launch"/>
-    <!-- motor controllers -->
-    <include file="$(find agni_description)/launch/hand_controllers.launch">
-      <arg name="namespace" value="rh" />
-      <arg name="use_prefix" value="$(arg use_prefix)"/>
-    </include>
-  </group> 
+  <!-- drivers and/or controllers for the hand -->
+  <include file="$(find agni_description)/launch/sr_bringup.launch">
+    <arg name="namespace" value="rh" />
+    <arg name="use_prefix" value="$(arg use_prefix)"/>
+    <arg name="sim" value="$(arg sim)"/>
+  </include>
+ 
   
 </launch>

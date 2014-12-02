@@ -1,12 +1,15 @@
 <launch>
   <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
-  <include file="$(find agni_description)/launch/right_arm_and_hand_gazebo.launch">
+  <arg name="sim" default="true"/>
+  <include file="$(find agni_description)/launch/right_arm_and_hand.launch">
     <arg name="use_prefix" value="$(arg use_prefix)"/>
     <arg name="arm_type" value="$(arg arm_type)"/>
+    <arg name="sim" value="$(arg sim)"/>
   </include>
-  <include file="$(find agni_description)/launch/left_arm_and_hand_gazebo.launch">
+  <include file="$(find agni_description)/launch/left_arm_and_hand.launch">
     <arg name="use_prefix" value="$(arg use_prefix)"/>
     <arg name="arm_type" value="$(arg arm_type)"/>
+    <arg name="sim" value="$(arg sim)"/>
   </include>
 </launch>

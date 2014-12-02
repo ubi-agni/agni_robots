@@ -1,9 +1,9 @@
 right_pa10_arm_controller:
   joints:
-    - right_arm_0_joint
-    - right_arm_1_joint
-    - right_arm_2_joint
-    - right_arm_3_joint
-    - right_arm_4_joint
-    - right_arm_5_joint
-    - right_arm_6_joint
+    - ra_arm_0_joint
+    - ra_arm_1_joint
+    - ra_arm_2_joint
+    - ra_arm_3_joint
+    - ra_arm_4_joint
+    - ra_arm_5_joint
+    - ra_arm_6_joint

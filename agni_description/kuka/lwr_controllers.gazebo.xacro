@@ -7,11 +7,11 @@
 		<gazebo> 
 			<plugin name="left_lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>
-				<robotPrefix>left</robotPrefix>
+				<robotPrefix>la</robotPrefix>
 				<robotNamespace>${namespace}</robotNamespace>
 				<remotePort>${port}</remotePort>
-				<baseLink>left_arm_base_link</baseLink>
-				<toolLink>left_arm_hand_mount</toolLink>
+				<baseLink>la_arm_base_link</baseLink>
+				<toolLink>la_arm_hand_mount</toolLink>
 				<la_arm_0_joint>0.0</la_arm_0_joint>
 				<la_arm_1_joint>0</la_arm_1_joint>
 				<la_arm_2_joint>0.0</la_arm_2_joint>
@@ -29,11 +29,11 @@
 		<gazebo> 
 			<plugin name="right_lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>
-				<robotPrefix>right</robotPrefix>
+				<robotPrefix>ra</robotPrefix>
 				<robotNamespace>${namespace}</robotNamespace>
 				<remotePort>${port}</remotePort>
-				<baseLink>right_arm_base_link</baseLink>
-				<toolLink>right_arm_hand_mount</toolLink>
+				<baseLink>ra_arm_base_link</baseLink>
+				<toolLink>ra_arm_hand_mount</toolLink>
 				<ra_arm_0_joint>0.0</ra_arm_0_joint>
 				<ra_arm_1_joint>0</ra_arm_1_joint>
 				<ra_arm_2_joint>0.0</ra_arm_2_joint>
