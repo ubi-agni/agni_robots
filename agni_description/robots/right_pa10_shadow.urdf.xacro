@@ -31,12 +31,12 @@
     
     <xacro:if value="${prefix}">
       <!-- Shadow Hands --> 
-      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix="r_"  />
+      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="true" eli="false" reflect="1.0" prefix="rh_"  />
       
       <!-- Link arm and hand -->  
       <joint name="ra_arm_hand_mount" type="fixed">
         <parent link="ra_arm_hand_mount"/>
-        <child link="r_forearm"/>
+        <child link="rh_forearm"/>
         <origin xyz="0 0 0.0151" rpy="0 0 1.5707" />
       </joint>
     </xacro:if>  
