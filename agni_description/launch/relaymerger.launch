@@ -1,0 +1,20 @@
+<launch>
+  <arg name="arm_type" default="kuka"/>
+  <node pkg="topic_tools" type="relay"
+        name="la_$(arg arm_type)_joint_state_merger"
+        args="/la/joint_states /joint_states" >
+  </node>
+  <node pkg="topic_tools" type="relay"
+      name="lh_shadow_joint_state_merger"
+      args="/lh/joint_states /joint_states" >
+  </node>
+  
+  <node pkg="topic_tools" type="relay"
+      name="ra_$(arg arm_type)_joint_state_merger"
+      args="/ra/joint_states /joint_states" >
+  </node>
+  <node pkg="topic_tools" type="relay"
+      name="rh_shadow_joint_state_merger"
+      args="/rh/joint_states /joint_states" >
+  </node>     
+</launch>

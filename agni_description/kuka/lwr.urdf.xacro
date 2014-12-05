@@ -44,7 +44,7 @@
     </link>
 
     <gazebo reference="${name}arm_base_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_0_joint" type="revolute">
@@ -93,7 +93,7 @@
     </link>
 
     <gazebo reference="${name}arm_1_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_1_joint" type="revolute">
@@ -143,7 +143,7 @@
     </link>
 
     <gazebo reference="${name}arm_2_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_2_joint" type="revolute">
@@ -193,7 +193,7 @@
     </link>
 
     <gazebo reference="${name}arm_3_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_3_joint" type="revolute">
@@ -243,7 +243,7 @@
     </link>
 
     <gazebo reference="${name}arm_4_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_4_joint" type="revolute">
@@ -293,7 +293,7 @@
     </link>
 
     <gazebo reference="${name}arm_5_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_5_joint" type="revolute">
@@ -343,7 +343,7 @@
     </link>
 
     <gazebo reference="${name}arm_6_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_6_joint" type="revolute">
@@ -391,7 +391,7 @@
     </link>
 
     <gazebo reference="${name}arm_7_link">
-      <material value="kuka-lwr.material"/>
+      <!--<material value="kuka-lwr.material"/>-->
     </gazebo>
 
     <joint name="${name}arm_hand_fixed_joint" type="fixed">

@@ -1,5 +1,7 @@
 <launch>
 	<arg name="namespace" default="ra"/>
+  <arg name="sim" default="true"/>
+  <!-- Currently no difference between simulated and real kuka -->
 	 
 	<!-- Controllers for the kuka -->
   <!-- controller parameter for Kuka-->
