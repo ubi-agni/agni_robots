@@ -23,7 +23,7 @@ plannerh_configs:
     type: geometric::PRMstar
     
 left_armhand:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -36,7 +36,7 @@ left_armhand:
     - PRMkConfigDefault
     - PRMstarkConfigDefault
 right_armhand:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -49,7 +49,7 @@ right_armhand:
     - PRMkConfigDefault
     - PRMstarkConfigDefault
 left_hand:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -64,7 +64,7 @@ left_hand:
   projection_evaluator: joints(lh_WRJ2,lh_WRJ1)
   longest_valid_segment_fraction: 0.05
 right_hand:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -79,7 +79,7 @@ right_hand:
   projection_evaluator: joints(rh_WRJ2,rh_WRJ1)
   longest_valid_segment_fraction: 0.05
 left_fingers:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -94,7 +94,7 @@ left_fingers:
   projection_evaluator: joints(lh_FFJ4,lh_FFJ3)
   longest_valid_segment_fraction: 0.05
 right_fingers:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -109,7 +109,7 @@ right_fingers:
   projection_evaluator: joints(rh_FFJ4,rh_FFJ3)
   longest_valid_segment_fraction: 0.05
 upper_body:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -122,7 +122,7 @@ upper_body:
     - PRMkConfigDefault
     - PRMstarkConfigDefault
 right_first_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -137,7 +137,7 @@ right_first_finger:
   projection_evaluator: joints(rh_FFJ4,rh_FFJ3)
   longest_valid_segment_fraction: 0.05
 right_middle_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -152,7 +152,7 @@ right_middle_finger:
   projection_evaluator: joints(rh_MFJ4,rh_MFJ3)
   longest_valid_segment_fraction: 0.05
 right_ring_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -167,7 +167,7 @@ right_ring_finger:
   projection_evaluator: joints(rh_RFJ4,rh_RFJ3)
   longest_valid_segment_fraction: 0.05
 right_little_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -182,7 +182,7 @@ right_little_finger:
   projection_evaluator: joints(rh_LFJ5,rh_LFJ4)
   longest_valid_segment_fraction: 0.05
 right_thumb:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -197,7 +197,7 @@ right_thumb:
   projection_evaluator: joints(rh_THJ5,rh_THJ4)
   longest_valid_segment_fraction: 0.05
 left_first_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -212,7 +212,7 @@ left_first_finger:
   projection_evaluator: joints(lh_FFJ4,lh_FFJ3)
   longest_valid_segment_fraction: 0.05
 left_middle_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -227,7 +227,7 @@ left_middle_finger:
   projection_evaluator: joints(lh_MFJ4,lh_MFJ3)
   longest_valid_segment_fraction: 0.05
 left_ring_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -242,7 +242,7 @@ left_ring_finger:
   projection_evaluator: joints(lh_RFJ4,lh_RFJ3)
   longest_valid_segment_fraction: 0.05
 left_little_finger:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -257,7 +257,7 @@ left_little_finger:
   projection_evaluator: joints(lh_LFJ5,lh_LFJ4)
   longest_valid_segment_fraction: 0.05
 left_thumb:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -272,7 +272,7 @@ left_thumb:
   projection_evaluator: joints(lh_THJ5,lh_THJ4)
   longest_valid_segment_fraction: 0.05
 left_arm:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -287,7 +287,7 @@ left_arm:
   projection_evaluator: joints(la_S1,la_S2)
   longest_valid_segment_fraction: 0.05
 right_arm:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -302,7 +302,7 @@ right_arm:
   projection_evaluator: joints(ra_S1,ra_S2)
   longest_valid_segment_fraction: 0.05
 both_hands:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -317,7 +317,7 @@ both_hands:
   projection_evaluator: joints(lh_WRJ2,lh_WRJ1)
   longest_valid_segment_fraction: 0.05
 both_armhand:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -330,7 +330,7 @@ both_armhand:
     - PRMkConfigDefault
     - PRMstarkConfigDefault
 both_arms:
-  plannerh_configs:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
