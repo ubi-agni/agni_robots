@@ -56,17 +56,17 @@ include_directories(
 ADD_DEFINITIONS(${RST_CFLAGS} ${RSTSANDBOX_CFLAGS} ${RST_CONVERTERS_CFLAGS})
 
 ## Declare a cpp library
-add_library(libcollision_shape_generator src/collision_shape_generator.cpp)
-add_dependencies(libcollision_shape_generator ${catkin_EXPORTED_TARGETS})
-target_link_libraries(libcollision_shape_generator ${catkin_LIBRARIES})
+add_library(collision_shape_generator src/collision_shape_generator.cpp)
+add_dependencies(collision_shape_generator ${catkin_EXPORTED_TARGETS})
+target_link_libraries(collision_shape_generator ${catkin_LIBRARIES})
 
 ## Declare a cpp executable
 add_executable(collision_shape_generator_ros src/collision_shape_generator_ros.cpp)
 add_dependencies(collision_shape_generator_ros 
     agni_robot_viz_generate_messages_cpp
-    libcollision_shape_generator)
+    collision_shape_generator)
 target_link_libraries(collision_shape_generator_ros
-  libcollision_shape_generator
+  collision_shape_generator
    ${catkin_LIBRARIES} 
 )
 
@@ -74,9 +74,9 @@ target_link_libraries(collision_shape_generator_ros
 add_executable(collision_shape_generator_rsb src/collision_shape_generator_rsb.cpp)
 add_dependencies(collision_shape_generator_rsb 
     agni_robot_viz_generate_messages_cpp
-    libcollision_shape_generator)
+    collision_shape_generator)
 target_link_libraries(collision_shape_generator_rsb
-  libcollision_shape_generator
+  collision_shape_generator
    ${catkin_LIBRARIES} ${RSB_LIBRARIES} ${RSC_LIBRARIES} ${RST_LIBRARIES} ${RSTSANDBOX_LIBRARIES} ${RST_CONVERTERS_LIBRARIES}
 )
 
@@ -95,10 +95,19 @@ target_link_libraries(collision_shape_generator_rsb
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-install(TARGETS collision_shape_generator_ros 
+install(TARGETS collision_shape_generator_ros collision_shape_generator_rsb collision_shape_generator
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
+
+
+
+install(DIRECTORY config/
+   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config)
+
+install(DIRECTORY launch/
+   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch)
+
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS agni_robot_viz agni_robot_viz_node
