@@ -19,6 +19,9 @@ CollisionShapeGenerator::~CollisionShapeGenerator()
 
 }
 
+//! Initialize the internal robot model and kinematics
+//! \param move_group Name of the move group considered in the kinematics
+//! \param link_names vector of link names considered in the kinematics (should belong to the move_group)
 void CollisionShapeGenerator::init(const std::string &move_group, const std::vector<std::string> &link_names ) 
 {
   move_group_ = move_group;
@@ -43,6 +46,8 @@ void CollisionShapeGenerator::init(const std::string &move_group, const std::vec
   initialized_=true;
 }
 
+//! Update the internal kinematic model posture
+//! \param msg a JointState describing the current posture
 void CollisionShapeGenerator::updatePosition(const sensor_msgs::JointStatePtr &msg)
 {
   if (initialized_)
@@ -51,6 +56,8 @@ void CollisionShapeGenerator::updatePosition(const sensor_msgs::JointStatePtr &m
   }
 }
 
+//! Compute the collision shapes for the current posture
+//! \param arr an array of markers as the output
 void CollisionShapeGenerator::getCollisionShape(visualization_msgs::MarkerArray &arr)
 {
   if (initialized_)

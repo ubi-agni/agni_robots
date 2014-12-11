@@ -1,5 +1,6 @@
 <launch>
-  <node pkg="topic_tools" type="throttle" name="slower_js" args="messages /joint_states 10 /joint_states_slow" output="screen"/>
+  <arg name="rate" default="10"/>
+  <node pkg="topic_tools" type="throttle" name="slower_js" args="messages /joint_states $(arg rate) /joint_states_slow" output="screen"/>
   <node pkg="agni_robot_viz" type="collision_shape_generator_rsb" name="collision_shape_generator"  output="screen" > 
         <rosparam file="$(find agni_robot_viz)/config/pa10_setup_filter.yaml" command="load"/>
         <remap from="joint_states" to="/joint_states_slow"/>

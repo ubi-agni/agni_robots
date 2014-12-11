@@ -13,11 +13,15 @@
 CollisionShapeGenerator *csg;
 ros::Publisher robot_state_publisher;
 
+// callback function receiving joint_states and generating collision primitives
 void callback(const sensor_msgs::JointStatePtr &msg)
 {
     visualization_msgs::MarkerArray markerarray;
+    // update the kinematics to current robot_state
     csg->updatePosition(msg);
+    // get collision shape markers
     csg->getCollisionShape(markerarray);
+    // publish to ROS
     robot_state_publisher.publish( markerarray );
 }
 
@@ -25,7 +29,10 @@ int loadParams(ros::NodeHandle &nh, std::string &move_group, std::vector<std::st
 {
   nh.param("collision_shape_generator/filter_primitive/move_group", move_group, std::string("upper_body"));
   ROS_INFO("using move_group %s",move_group.c_str());
+  
   link_names.clear();
+  
+  //parse the config file
   using namespace XmlRpc;
   XmlRpc::XmlRpcValue param_xmlrpc;
   if(nh.getParam("collision_shape_generator/filter_primitive/links",param_xmlrpc))
@@ -71,6 +78,7 @@ int loadParams(ros::NodeHandle &nh, std::string &move_group, std::vector<std::st
 
 int main(int argc, char** argv)
 {
+  // init ROS
   ros::init(argc, argv, "collision_shape_generator");
   ros::NodeHandle nh, nh_tilde("~");
   std::string move_group;

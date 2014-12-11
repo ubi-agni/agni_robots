@@ -38,7 +38,9 @@ void callback(const sensor_msgs::JointStatePtr &msg)
   
   uint64_t usec = msg->header.stamp.sec * 1000000 + msg->header.stamp.nsec / 1000;
 
+  // update the kinematics to current robot_state
   csg->updatePosition(msg);
+  // get collision shape markers
   csg->getCollisionShape(markerarray);
   
   // convert the marker array to a protobuf object
@@ -46,7 +48,7 @@ void callback(const sensor_msgs::JointStatePtr &msg)
     rst::geometry::Primitive3DFloat *s = prim_set->add_primitives();
     s->mutable_timestamp()->set_time(usec);
     bool unknown_type=false;
-    switch(markerarray.markers[0].type){
+    switch(markerarray.markers[i].type){
       
       case visualization_msgs::Marker::CYLINDER :
         s->set_type(rst::geometry::Primitive3DFloat_PrimitiveType_CYLINDER);
@@ -60,10 +62,13 @@ void callback(const sensor_msgs::JointStatePtr &msg)
         s->set_type(rst::geometry::Primitive3DFloat_PrimitiveType_CUBE);
         break;
       default:
-      // only process known types
+        // unknown types must be converted to known type in a later step
         unknown_type=true;
         break;
     }
+    
+    s->set_description(markerarray.markers[i].text);
+    
     if(!unknown_type)
     {
       s->mutable_pose()->mutable_translation()->set_x(markerarray.markers[i].pose.position.x);
@@ -76,11 +81,28 @@ void callback(const sensor_msgs::JointStatePtr &msg)
       s->mutable_scale()->set_x(markerarray.markers[i].scale.x);
       s->mutable_scale()->set_y(markerarray.markers[i].scale.y);
       s->mutable_scale()->set_z(markerarray.markers[i].scale.z);
-      s->set_description(markerarray.markers[i].text);
+    }
+    else 
+    {
+      // unknow types are approximated by a cube but that differs from the bounding box (not computing the bounding box yet)
+      s->set_type(rst::geometry::Primitive3DFloat_PrimitiveType_CUBE);
+      s->mutable_pose()->mutable_translation()->set_x(markerarray.markers[i].pose.position.x);
+      s->mutable_pose()->mutable_translation()->set_y(markerarray.markers[i].pose.position.y);
+      s->mutable_pose()->mutable_translation()->set_z(markerarray.markers[i].pose.position.z);
+      s->mutable_pose()->mutable_rotation()->set_qx(markerarray.markers[i].pose.orientation.x);
+      s->mutable_pose()->mutable_rotation()->set_qy(markerarray.markers[i].pose.orientation.y);
+      s->mutable_pose()->mutable_rotation()->set_qz(markerarray.markers[i].pose.orientation.z);
+      s->mutable_pose()->mutable_rotation()->set_qw(markerarray.markers[i].pose.orientation.w);
+      // DIRTY HACK doubling the scale to get fake cube object fit a little better the mesh. 
+      s->mutable_scale()->set_x(markerarray.markers[i].scale.x*2);
+      s->mutable_scale()->set_y(markerarray.markers[i].scale.y*2);
+      s->mutable_scale()->set_z(markerarray.markers[i].scale.z*2);
     }
   }
+  // publish to RSB
   informer->publish(prim_set);
-
+  
+  // publish to ROS
   robot_state_publisher.publish( markerarray );
 }
 
@@ -88,7 +110,10 @@ int loadParams(ros::NodeHandle &nh, std::string &move_group, std::vector<std::st
 {
   nh.param("collision_shape_generator/filter_primitive/move_group", move_group, std::string("upper_body"));
   ROS_INFO("using move_group %s",move_group.c_str());
+  
   link_names.clear();
+  
+  //parse the config file
   using namespace XmlRpc;
   XmlRpc::XmlRpcValue param_xmlrpc;
   if(nh.getParam("collision_shape_generator/filter_primitive/links",param_xmlrpc))
@@ -134,6 +159,7 @@ int loadParams(ros::NodeHandle &nh, std::string &move_group, std::vector<std::st
 
 int main(int argc, char** argv)
 {
+  // init RSB
   // converter cannot be in global !!!
   boost::shared_ptr< rsb::converter::ProtocolBufferConverter<rst::geometry::Primitive3DFloatSet> >
         converter(new rsb::converter::ProtocolBufferConverter<rst::geometry::Primitive3DFloatSet>());
@@ -144,18 +170,23 @@ int main(int argc, char** argv)
   
   informer = factory.createInformer<rst::geometry::Primitive3DFloatSet> ("/nirobots/primitivesetScope");
   
+  // init ROS
   ros::init(argc, argv, "collision_shape_generator");
   ros::NodeHandle nh, nh_tilde("~");
   std::string move_group;
   std::vector<std::string> link_names;
+  
+  // load config file
   if(loadParams(nh,move_group,link_names)==0)
   {
     robot_state_publisher = nh.advertise<visualization_msgs::MarkerArray>( "robot_collision_shape", 1 );
+    // instantiate the generator and initialize it
     csg = new CollisionShapeGenerator();
     csg->init(move_group,link_names);
     
     ros::Subscriber sub = nh.subscribe("joint_states",1,callback);
-
+    
+    // generate shapes on joint state reception
     ros::spin();
 
     delete csg;
