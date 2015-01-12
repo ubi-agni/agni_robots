@@ -1,6 +1,6 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 78
+    Help Height: 81
     Name: Displays
     Property Tree Widget:
       Expanded:
@@ -12,7 +12,7 @@ Panels:
         - /MarkerRH1/Namespaces1
         - /MarkerLH1
       Splitter Ratio: 0.446809
-    Tree Height: 825
+    Tree Height: 801
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -93,147 +93,147 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        ffdistal:
+        lh_ffdistal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ffknuckle:
+        lh_ffknuckle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ffmiddle:
+        lh_ffmiddle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ffproximal:
+        lh_ffproximal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        fftip:
+        lh_fftip:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        forearm:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        lfdistal:
+        lh_forearm:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lfknuckle:
+        lh_lfdistal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lfmetacarpal:
+        lh_lfknuckle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lfmiddle:
+        lh_lfmetacarpal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lfproximal:
+        lh_lfmiddle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lftip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        mfdistal:
+        lh_lfproximal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mfknuckle:
+        lh_lftip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lh_mfdistal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mfmiddle:
+        lh_mfknuckle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mfproximal:
+        lh_mfmiddle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mftip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        palm:
+        lh_mfproximal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rfdistal:
+        lh_mftip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lh_palm:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rfknuckle:
+        lh_rfdistal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rfmiddle:
+        lh_rfknuckle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rfproximal:
+        lh_rfmiddle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rftip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        thbase:
+        lh_rfproximal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        thdistal:
+        lh_rftip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lh_thbase:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        thhub:
+        lh_thdistal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        thmiddle:
+        lh_thhub:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        thproximal:
+        lh_thmiddle:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        thtip:
+        lh_thproximal:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        wrist:
+          Value: true
+        lh_thtip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lh_wrist:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -263,7 +263,8 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
-    Fixed Frame: /lh/forearm
+    Fixed Frame: lh/lh_forearm
+    Frame Rate: 30
   Name: root
   Tools:
     - Class: rviz/Interact
@@ -283,7 +284,12 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.59385
+      Distance: 0.573204
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
       Focal Point:
         X: 0.108353
         Y: 0.00625875
@@ -298,10 +304,10 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1131
+  Height: 1112
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000246000003c8fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000041000003c8000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002bbfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000002bb000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007800000003efc0100000002fb0000000800540069006d00650100000000000007800000028000fffffffb0000000800540069006d0065010000000000000450000000000000000000000534000003c800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000246000003b3fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000043000003b3000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002bbfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000002bb000000b300fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007800000003efc0100000002fb0000000800540069006d00650100000000000007800000023a00fffffffb0000000800540069006d0065010000000000000450000000000000000000000534000003b300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -312,4 +318,4 @@ Window Geometry:
     collapsed: false
   Width: 1920
   X: 0
-  Y: 25
+  Y: 33

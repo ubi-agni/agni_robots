@@ -38,6 +38,7 @@ std::vector<int>          vShadowTipID2MyTipID(5);
 int  flip = 1;
 
 std::string tf_prefix = "";
+std::string frame_prefix = "";
 
 struct tactile_marker{
 	std::string name;
@@ -165,7 +166,7 @@ void publish_all_markers()
 			//if(val > 0.01)
 			//{
 				std::size_t h = abs(string_hash(tf_prefix+vTactileData[iFinger].markers[i].fingerPrefix+vTactileData[iFinger].markers[i].name));
-				publish_marker(h,tf_prefix+vTactileData[iFinger].markers[i].fingerPrefix+"distal", val,vTactileData[iFinger].markers[i].meshpath); 
+				publish_marker(h,tf_prefix+frame_prefix+vTactileData[iFinger].markers[i].fingerPrefix+"distal", val,vTactileData[iFinger].markers[i].meshpath); 
 			//}
 		}
 		// middle 
@@ -175,7 +176,7 @@ void publish_all_markers()
 			//if(val > 0.01)
 			//{
 				std::size_t h = abs(string_hash(tf_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix+vMidProxTactileData[iFinger].midmarkers[i].name));
-				publish_marker(h,tf_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix + "middle", val,vMidProxTactileData[iFinger].midmarkers[i].meshpath); 
+				publish_marker(h,tf_prefix+frame_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix + "middle", val,vMidProxTactileData[iFinger].midmarkers[i].meshpath); 
 			//}
 		}
 		// proximal
@@ -185,7 +186,7 @@ void publish_all_markers()
 			//if(val > 0.01)
 			//{
 				std::size_t h = abs(string_hash(tf_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix+vMidProxTactileData[iFinger].proxmarkers[i].name));
-				publish_marker(h,tf_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix + "proximal", val,vMidProxTactileData[iFinger].proxmarkers[i].meshpath); 
+				publish_marker(h,tf_prefix+frame_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix + "proximal", val,vMidProxTactileData[iFinger].proxmarkers[i].meshpath); 
 			//}
 		}
 		
@@ -202,7 +203,7 @@ void publish_all_markers()
 		//if(val > 0.01)
 		//{
 			std::size_t h = string_hash(tf_prefix+vAuxSpiTactileData[0].markers[i].name);
-			publish_marker(h,tf_prefix+"palm", val,vAuxSpiTactileData[0].markers[i].meshpath); 
+			publish_marker(h,tf_prefix+frame_prefix+"palm", val,vAuxSpiTactileData[0].markers[i].meshpath); 
 		//}
 	}
 	//palm extras
@@ -213,9 +214,9 @@ void publish_all_markers()
 		//{
 			std::size_t h = string_hash(tf_prefix+vPalmExtrasData[0].markers[i].name);
 			if (i==3)
-				publish_marker(h,tf_prefix+"palm", val,vPalmExtrasData[0].markers[i].meshpath); 
+				publish_marker(h,tf_prefix+frame_prefix+"palm", val,vPalmExtrasData[0].markers[i].meshpath); 
 			else
-				publish_marker(h,tf_prefix+"lfmetacarpal", val,vPalmExtrasData[0].markers[i].meshpath); 
+				publish_marker(h,tf_prefix+frame_prefix+"lfmetacarpal", val,vPalmExtrasData[0].markers[i].meshpath); 
 		//}
 	}
 	
@@ -444,10 +445,16 @@ int main( int argc, char** argv )
 		flip = -1;
 		ROS_INFO("Flipping meshes");
 	}
+  // get private params
 	if (nh_priv.hasParam("tf_prefix"))
 		nh_priv.getParam("tf_prefix", tf_prefix);
 	else 
 		ROS_WARN("Did not find tf_prefix");
+  
+  if (nh_priv.hasParam("frame_prefix"))
+		nh_priv.getParam("frame_prefix", frame_prefix);
+	else 
+		ROS_WARN("Did not find frame_prefix");
 		
 	
 	ROS_INFO_STREAM("using " << ns << " namespace" << " using tf_prefix " << tf_prefix);

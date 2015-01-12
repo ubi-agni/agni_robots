@@ -16,10 +16,10 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   
 )
-
-set(rst-converters_DIR /vol/famula/nightly/share/rst-converters0.11)
-
 ## System dependencies are found with CMake's conventions
+# tell cmake where to find RSB and friends
+list(APPEND CMAKE_PREFIX_PATH $ENV{FAMULA_PATH})
+
 find_package(RSB REQUIRED)
 find_package(RSC REQUIRED)
 find_package(RST REQUIRED COMPONENTS sandbox)
@@ -80,6 +80,26 @@ target_link_libraries(collision_shape_generator_rsb
    ${catkin_LIBRARIES} ${RSB_LIBRARIES} ${RSC_LIBRARIES} ${RST_LIBRARIES} ${RSTSANDBOX_LIBRARIES} ${RST_CONVERTERS_LIBRARIES}
 )
 
+ # Set ${target} with RPATH built in so that we can install it suid
+   set_target_properties(collision_shape_generator_rsb PROPERTIES SKIP_BUILD_RPATH FALSE)
+   
+   # Set the install RPATH to the install path
+   set(RPATH "${CMAKE_INSTALL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}")
+
+   # If LD_LIBRARY_PATH is set, add it to the install RPATH
+   #  this works in a normal catkin environment, but fails if the user unsets
+   #  their LD_LIBRARY_PATH manually for some reason
+   if(DEFINED ENV{LD_LIBRARY_PATH})
+      set(RPATH "${RPATH}:$ENV{LD_LIBRARY_PATH}")
+   endif()
+
+   message("Install RPATH for collision_shape_generator_rsb is ${RPATH}")
+
+   # Apply our computed RPATH to the target
+  set_target_properties(collision_shape_generator_rsb PROPERTIES INSTALL_RPATH ${RPATH})
+
+   # Don't use the final RPATH in devel space
+  set_target_properties(collision_shape_generator_rsb PROPERTIES BUILD_WITH_INSTALL_RPATH FALSE)
 
 #############
 ## Install ##

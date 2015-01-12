@@ -3,26 +3,41 @@
   <arg name="RH" default="1"/>
   <arg name="LH" default="0"/>
   <arg name="FIXED" default="0"/>
+  <arg name="USE_PREFIX" default="1"/>
   <group if="$(arg RH)">
     <group if="$(arg LH)">
         <!-- BOTH hands -->
         <include file="$(find agni_tactile_viz)/launch/single_hand_tactile_viz.launch" >
           <arg name="namespace" value="lh"/>
           <arg name="fixed" value="$(arg FIXED)"/>
+          <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
         </include>
         <include file="$(find agni_tactile_viz)/launch/single_hand_tactile_viz.launch" >
           <arg name="namespace" value="rh"/>
           <arg name="fixed" value="$(arg FIXED)"/>
+          <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
         </include>
         <group if="$(arg FIXED)">
 					<node pkg="rviz" type="rviz" name="tactile_rviz" args="-d $(find agni_tactile_viz)/config/tactile_display_both_fixed.rviz" output="screen" />
-					<node pkg="tf" type="static_transform_publisher" name="baselinkrh" args="-0.2 0 0 0 0 0 /base /rh/fixed/forearm 100"/>
-					<node pkg="tf" type="static_transform_publisher" name="baselinklh" args="0.2 0 0 0 0 0 /base /lh/fixed/forearm 100"/>
+          <group if="$(arg USE_PREFIX)">
+            <node pkg="tf" type="static_transform_publisher" name="baselinkrh" args="-0.2 0 0 0 0 0 /base /rh/fixed/rh_forearm 100"/>
+            <node pkg="tf" type="static_transform_publisher" name="baselinklh" args="0.2 0 0 0 0 0 /base /lh/fixed/lh_forearm 100"/>
+          </group> 
+          <group unless="$(arg USE_PREFIX)">  
+            <node pkg="tf" type="static_transform_publisher" name="baselinkrh" args="-0.2 0 0 0 0 0 /base /rh/fixed/forearm 100"/>
+            <node pkg="tf" type="static_transform_publisher" name="baselinklh" args="0.2 0 0 0 0 0 /base /lh/fixed/forearm 100"/>
+          </group> 
 				</group> 
 				<group unless="$(arg FIXED)">
 					<node pkg="rviz" type="rviz" name="tactile_rviz" args="-d $(find agni_tactile_viz)/config/tactile_display_both.rviz" output="screen" />
-					<node pkg="tf" type="static_transform_publisher" name="baselinkrh" args="-0.2 0 0 0 0 0 /base /rh/forearm 100"/>
-					<node pkg="tf" type="static_transform_publisher" name="baselinklh" args="0.2 0 0 0 0 0 /base /lh/forearm 100"/>
+          <group if="$(arg USE_PREFIX)">
+            <node pkg="tf" type="static_transform_publisher" name="baselinkrh" args="-0.2 0 0 0 0 0 /base /rh/rh_forearm 100"/>
+            <node pkg="tf" type="static_transform_publisher" name="baselinklh" args="0.2 0 0 0 0 0 /base /lh/lh_forearm 100"/>
+          </group> 
+          <group unless="$(arg USE_PREFIX)">  
+            <node pkg="tf" type="static_transform_publisher" name="baselinkrh" args="-0.2 0 0 0 0 0 /base /rh/forearm 100"/>
+            <node pkg="tf" type="static_transform_publisher" name="baselinklh" args="0.2 0 0 0 0 0 /base /lh/forearm 100"/>
+          </group> 
 				</group>  	
     </group>  
     <group unless="$(arg LH)">
@@ -30,6 +45,7 @@
         <include file="$(find agni_tactile_viz)/launch/single_hand_tactile_viz.launch" >
           <arg name="namespace" value="rh"/>
           <arg name="fixed" value="$(arg FIXED)"/>
+          <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
         </include>
         <group if="$(arg FIXED)">
 					<node pkg="rviz" type="rviz" name="tactile_rviz" args="-d $(find agni_tactile_viz)/config/tactile_display_right_fixed.rviz" output="screen" />
@@ -44,6 +60,7 @@
         <include file="$(find agni_tactile_viz)/launch/single_hand_tactile_viz.launch" >
           <arg name="namespace" value="lh"/>
           <arg name="fixed" value="$(arg FIXED)"/>
+          <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
         </include>
         <group if="$(arg FIXED)">
 					<node pkg="rviz" type="rviz" name="tactile_rviz" args="-d $(find agni_tactile_viz)/config/tactile_display_left_fixed.rviz" output="screen" />
