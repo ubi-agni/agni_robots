@@ -100,10 +100,10 @@ void CollisionShapeGenerator::getCollisionShape(visualization_msgs::MarkerArray 
             std::cerr<<"missing scale"<<std::endl;
             continue;
           }
-          // make the marker a little larger to get a margin
-          mark.scale.x*=1.5;
-          mark.scale.y*=1.5;
-          mark.scale.z*=1.5;
+          // make the marker 1:1 scale, padding should be done outside
+          mark.scale.x=1.0;
+          mark.scale.y=1.0;
+          mark.scale.z=1.0;
           tf::poseEigenToMsg(kinematic_state->getCollisionBodyTransform(lm, j), mark.pose);
         }
         //if(mark.type == visualization_msgs::Marker::MESH_RESOURCE && mark.type != visualization_msgs::Marker::TRIANGLE_LIST)
