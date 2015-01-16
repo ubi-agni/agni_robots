@@ -14,6 +14,9 @@ catkin_package(
 #add_dependencies(test_sr_description_urdf ${catkin_EXPORTED_TARGETS})
 #target_link_libraries(test_sr_description_urdf ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${GTEST_LIBRARIES} pthread)
 
+install(DIRECTORY doc/
+   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/doc)
+
 install(DIRECTORY kuka/
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/kuka)
 
