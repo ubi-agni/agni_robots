@@ -90,8 +90,11 @@ target_link_libraries(collision_shape_generator_rsb
    #  this works in a normal catkin environment, but fails if the user unsets
    #  their LD_LIBRARY_PATH manually for some reason
    if(DEFINED ENV{LD_LIBRARY_PATH})
-      set(RPATH "${RPATH}:$ENV{LD_LIBRARY_PATH}")
+      list(APPEND RPATH "$ENV{LD_LIBRARY_PATH}")
    endif()
+   list(APPEND RPATH "${RSB_CONFIG_DIR}/../../lib")
+   list(APPEND RPATH "${RSC_CONFIG_DIR}/../../lib")
+   list(APPEND RPATH "${RST_CONFIG_DIR}/../../lib")
 
    message("Install RPATH for collision_shape_generator_rsb is ${RPATH}")
 
