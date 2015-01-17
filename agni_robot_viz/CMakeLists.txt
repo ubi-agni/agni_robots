@@ -16,9 +16,6 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   
 )
-## System dependencies are found with CMake's conventions
-# tell cmake where to find RSB and friends
-list(APPEND CMAKE_PREFIX_PATH $ENV{FAMULA_PATH})
 
 find_package(RSB REQUIRED)
 find_package(RSC REQUIRED)
