@@ -8,6 +8,12 @@
  */
 
 #include <agni_robot_viz/collision_shape_generator.hpp>
+#include <geometric_shapes/shapes.h>
+#include <geometric_shapes/shape_operations.h>
+#include <Eigen/Geometry>
+#include <eigen_conversions/eigen_msg.h>
+#include <tf_conversions/tf_eigen.h>
+#include <tf/tf.h>
 
 CollisionShapeGenerator::CollisionShapeGenerator() :robot_model_loader("robot_description")
 {
@@ -83,6 +89,8 @@ void CollisionShapeGenerator::getCollisionShape(visualization_msgs::MarkerArray 
       for (std::size_t j = 0 ; j < lm->getShapes().size() ; ++j)
       {
         visualization_msgs::Marker mark;
+        tf::Transform mesh_offset;
+        
         mark.header.frame_id = robot_model->getModelFrame();
         mark.header.stamp = tm;
         mark.ns="robot";
@@ -92,18 +100,82 @@ void CollisionShapeGenerator::getCollisionShape(visualization_msgs::MarkerArray 
         // we prefer using the collision shape
         if (lm->getShapes().size() > 0)
         {
-          if (!shapes::constructMarkerFromShape(lm->getShapes()[j].get(), mark))
-            continue;
-          // if the object is invisible (0 volume) we skip it
-          if (fabs(mark.scale.x * mark.scale.y * mark.scale.z) < std::numeric_limits<float>::epsilon())
+          if (lm->getShapes()[j].get()->type == shapes::MESH)
           {
-            std::cerr<<"missing scale"<<std::endl;
-            continue;
+            //std::cerr<<"creating a bbox"<<std::endl;
+            // find a bounding box 
+            const shapes::Mesh *mesh = static_cast<const shapes::Mesh*>(lm->getShapes()[j].get());
+            Eigen::Vector3d center,dim;
+            if (mesh->vertex_count > 1)
+            {
+              std::vector<double> vmin(3, std::numeric_limits<double>::max());
+              std::vector<double> vmax(3, -std::numeric_limits<double>::max());
+              for (unsigned int i = 0; i < mesh->vertex_count ; ++i)
+              {
+                unsigned int i3 = i * 3;
+                for (unsigned int k = 0 ; k < 3 ; ++k)
+                {
+                  unsigned int i3k = i3 + k;
+                  if (mesh->vertices[i3k] > vmax[k])
+                  vmax[k] = mesh->vertices[i3k];
+                  if (mesh->vertices[i3k] < vmin[k])
+                  vmin[k] = mesh->vertices[i3k];
+                }
+              }
+              dim=Eigen::Vector3d(vmax[0] - vmin[0], vmax[1] - vmin[1], vmax[2] - vmin[2]);
+              center=Eigen::Vector3d((vmax[0] + vmin[0])*0.5, (vmax[1] + vmin[1])*0.5, (vmax[2] + vmin[2])*0.5);
+              //std::cerr<<"center z"<< center[2]<<std::endl;
+           /* if (mesh->vertex_count > 1)
+            {
+              double mx = std::numeric_limits<double>::max();
+              Eigen::Vector3d min( mx, mx, mx);
+              Eigen::Vector3d max(-mx, -mx, -mx);
+              unsigned int cnt = mesh->vertex_count * 3;
+              for (unsigned int i = 0; i < cnt ; i+=3)
+              {
+                Eigen::Vector3d v(mesh->vertices[i+0], mesh->vertices[i+1], mesh->vertices[i+2]);
+                min = min.cwiseMin(v);
+                max = max.cwiseMax(v);
+              }
+            
+              center = (min + max) * 0.5;
+              dim = (max - min);*/
+          
+            }
+            mark.type = visualization_msgs::Marker::CUBE;
+            mark.scale.x=dim[0];
+            mark.scale.y=dim[1];
+            mark.scale.z=dim[2];
+            
+            mesh_offset= tf::Transform (tf::Quaternion (0.0,0.0,0.0,1.0).normalize(),
+                        tf::Vector3 (center[0], center[1], center[2]));
           }
-          tf::poseEigenToMsg(kinematic_state->getCollisionBodyTransform(lm, j), mark.pose);
+          else
+          {
+            //std::cerr<<"construc from shape type "<<lm->getShapes()[j].get()->type << std::endl;
+            if (!shapes::constructMarkerFromShape(lm->getShapes()[j].get(), mark))
+              continue;
+            // if the object is invisible (0 volume) we skip it
+            if (fabs(mark.scale.x * mark.scale.y * mark.scale.z) < std::numeric_limits<float>::epsilon())
+            {
+              std::cerr<<"missing scale"<<std::endl;
+              continue;
+            }
+            mesh_offset.setIdentity(); 	
+            
+          }
+          // first get the link pose
+          tf::Transform link_pose;
+          tf::poseEigenToTF (kinematic_state->getCollisionBodyTransform(lm, j) , link_pose);
+          // apply the local mesh transform (if any)
+          link_pose*=mesh_offset;
+          mesh_offset.setRotation (mesh_offset.getRotation().normalize());
+          // store that into the marker
+          tf::poseTFToMsg(link_pose,mark.pose);
+          //if(mark.type == visualization_msgs::Marker::MESH_RESOURCE && mark.type != visualization_msgs::Marker::TRIANGLE_LIST)
+          arr.markers.push_back(mark);
         }
-        //if(mark.type == visualization_msgs::Marker::MESH_RESOURCE && mark.type != visualization_msgs::Marker::TRIANGLE_LIST)
-        arr.markers.push_back(mark);
+      
       }
     }
     //robot_state::robotStateToRobotStateMsg(*kinematic_state, msg.state);

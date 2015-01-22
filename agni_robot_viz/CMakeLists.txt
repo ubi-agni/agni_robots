@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_ros_planning
   moveit_msgs
   eigen_conversions
+  tf_conversions
   tf
   roscpp
   std_msgs
@@ -34,7 +35,7 @@ find_package(rst-converters REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES agni_robot_viz
-  CATKIN_DEPENDS geometry_msgs moveit_core moveit_ros_planning moveit_msgs roscpp tf std_msgs visualization_msgs eigen_conversions
+  CATKIN_DEPENDS geometry_msgs moveit_core moveit_ros_planning moveit_msgs roscpp tf std_msgs visualization_msgs eigen_conversions tf_conversions
   DEPENDS RSB RSC RST
 #  DEPENDS system_lib
 )

@@ -24,7 +24,6 @@
 #include <moveit_msgs/DisplayRobotState.h>
 //#include <shape_msgs/SolidPrimitive.h>
 #include <visualization_msgs/MarkerArray.h>
-#include <geometric_shapes/shape_operations.h>
 #include <sensor_msgs/JointState.h>
 // PI
 #include <boost/math/constants/constants.hpp>
