@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot name="poking_stick" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find agni_description)/urdf/materials.urdf.xacro"/>
+
+  <link name="poking_stick">
+
+     <visual>
+    <origin xyz="0 0 0" 
+          rpy="0 0 0"/>
+    <geometry>
+        <mesh scale="0.001 0.001 0.001" 
+					 filename="package://agni_description/models/meshes/poking_stick.dae"/>
+    </geometry>
+   </visual> 
+     	 <!-- 
+   <collision>
+      <origin xyz="0 0 0" 
+          rpy="0 0 0"/>
+      <geometry><box size="${width+2*thickness} ${0.01} ${height+0.4+2*thickness}"/></geometry>
+    </collision>-->
+  </link>
+  
+  <gazebo reference="poking_stick">
+  </gazebo>
+</robot>
