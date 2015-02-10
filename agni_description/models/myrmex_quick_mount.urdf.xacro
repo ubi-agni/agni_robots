@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+  <xacro:macro name="myrmex_quick_mount" params="">
   <link name="myrmex_quick_mount">
 
      <visual>
@@ -21,4 +21,5 @@
   
   <gazebo reference="myrmex_quick_mount">
   </gazebo>
+    </xacro:macro>
 </robot>

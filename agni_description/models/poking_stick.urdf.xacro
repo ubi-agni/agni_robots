@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <robot name="poking_stick" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find agni_description)/urdf/materials.urdf.xacro"/>
-
+  <xacro:macro name="poking_stick" params="">
   <link name="poking_stick">
 
      <visual>
@@ -23,4 +22,5 @@
   
   <gazebo reference="poking_stick">
   </gazebo>
+  </xacro:macro>
 </robot>
