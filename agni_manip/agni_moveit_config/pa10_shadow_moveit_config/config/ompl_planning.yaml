@@ -1,4 +1,4 @@
-plannerh_configs:
+planner_configs:
   SBLkConfigDefault:
     type: geometric::SBL
   ESTkConfigDefault:
@@ -22,7 +22,7 @@ plannerh_configs:
   PRMstarkConfigDefault:
     type: geometric::PRMstar
     
-left_armhand:
+left_armpalm:
   planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
@@ -35,7 +35,7 @@ left_armhand:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-right_armhand:
+right_armpalm:
   planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
