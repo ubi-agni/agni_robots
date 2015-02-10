@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="myrmex_quick_mount">
+
+     <visual>
+    <origin xyz="0 0 0" 
+          rpy="0 0 0"/>
+    <geometry>
+        <mesh scale="0.001 0.001 0.001" 
+					 filename="package://agni_description/models/meshes/myrmex_quick_mount.dae"/>
+    </geometry>
+   </visual> 
+     	 <!-- 
+   <collision>
+      <origin xyz="0 0 0" 
+          rpy="0 0 0"/>
+      <geometry><box size="${width+2*thickness} ${0.01} ${height+0.4+2*thickness}"/></geometry>
+    </collision>-->
+  </link>
+  
+  <gazebo reference="myrmex_quick_mount">
+  </gazebo>
+</robot>
