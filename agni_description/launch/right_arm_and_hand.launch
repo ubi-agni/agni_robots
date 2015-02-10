@@ -2,6 +2,7 @@
   <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
   <arg name="sim" default="true"/>
+  <arg name="side" default="right"/>
   <!-- upload parameters on the correct namespaces 
   must be done before gazebo spawner to have the plugin controller manager
   load on the sub namespaces -->
@@ -10,6 +11,7 @@
     <include file="$(find agni_description)/launch/arm_upload.launch" >
       <arg name="namespace" value="ra"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="reflect" value="1"/>
     </include>  
   </group> 
   
@@ -41,7 +43,7 @@
     </node>
   </group>
   
-  <!-- drivers and/or controllers the arm -->
+  <!-- drivers and/or controllers for the arm -->
   <group ns="ra">
     <include file="$(find agni_description)/launch/$(arg arm_type)_bringup.launch" >
       <arg name="namespace" value="ra"/>

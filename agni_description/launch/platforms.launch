@@ -1,0 +1,134 @@
+<launch>
+  <arg name="ARM" default="kuka"/>
+  <arg name="FLOBI" default="false"/>
+  <arg name="SIM" default="true"/>
+  <arg name="USE_PREFIX" default="true"/>
+  <arg name="R" default="1"/>
+  <arg name="L" default="1"/>
+  <arg name="R_EE" default="shadow_motor"/>
+  <arg name="L_EE" default="shadow_motor"/>
+  
+ <!-- arguments R and L to select left or right or both arm and hand -->
+
+  <group if="$(arg SIM)">
+    <!-- start gazebo with an empty plane -->
+    <!-- Gazebo world file to load. -->
+    <arg name="world_name" default="$(find sr_description)/other/worlds/shadowhand.world" />
+    <arg name="gui" default="true"/>
+  
+    <!-- We want gazebo to stay in the root namespace but the nodes below to be
+    relative. Can then launch this inside a namespace to namespace the hand. -->
+    <group ns="/">
+        <!-- We reuse the logic in empty_world.launch, changing only the name of the world to be launched -->
+      <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="gui" value="$(arg gui)"/>
+      </include>
+    </group>
+  </group>
+  
+  <!-- load frame description -->
+  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" />
+  
+  <!-- set robot description for combined table + robot arm and end-effector -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE::=$(arg R_EE) L_EE::=$(arg L_EE)'" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <group if="$(arg SIM)">
+    <!-- spawn the support model -->
+    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param frame -model frame" respawn="false" output="screen" />
+  </group>
+   
+  <!-- include our robots -->
+  <arg name="R" default="1"/>
+  <arg name="L" default="0"/>
+  <arg name="USE_PREFIX" default="1"/>
+  <group if="$(arg R)">
+    <group if="$(arg L)">
+      <!-- BOTH arms & hands -->
+      <include file="$(find agni_description)/launch/both_arm_and_hand.launch">
+        <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+        <arg name="arm_type" value="$(arg ARM)"/>
+        <arg name="sim" value="$(arg SIM)"/>
+      </include>
+      <node name="right_arm_static" pkg="tf" type="static_transform_publisher"  args="0 0 0 0 0 0 /$(arg ARM)_frame /right/world  100"/>
+      <node name="left_arm_static" pkg="tf" type="static_transform_publisher"  args="0 0 0 0 0 0 /$(arg ARM)_frame /left/world  100"/>
+      <node pkg="topic_tools" type="relay"
+        name="right_joint_state_merger"
+        args="/right/joint_states /joint_states" >
+      </node>
+      <node pkg="topic_tools" type="relay"
+        name="left_joint_state_merger"
+        args="/left/joint_states /joint_states" >
+      </node>
+      <node pkg="robot_state_publisher" type="robot_state_publisher"
+                                name="robot_state_publisher_bimanual">
+          <param name="publish_frequency" type="double" value="10.0" />
+      </node>
+    </group>  
+    <group unless="$(arg L)">
+      <!-- RIGHT arm & hand only -->
+      <include file="$(find agni_description)/launch/right_arm_and_hand.launch">
+        <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+        <arg name="arm_type" value="$(arg ARM)"/>
+        <arg name="sim" value="$(arg SIM)"/>
+      </include>
+      <node name="right_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /right/world  100"/>
+      <node pkg="topic_tools" type="relay"
+        name="right_joint_state_merger"
+        args="/right/joint_states /joint_states" >
+      </node>
+    </group>  
+  </group>  
+  <group unless="$(arg R)">
+    <!-- LEFT arm & hand only -->
+    <include file="$(find agni_description)/launch/left_arm_and_hand.launch">
+      <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+      <arg name="arm_type" value="$(arg ARM)"/>
+      <arg name="sim" value="$(arg SIM)"/>
+    </include>
+    <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /left/world 100"/>
+    <node pkg="topic_tools" type="relay"
+        name="left_joint_state_merger"
+        args="/left/joint_states /joint_states" >
+    </node>
+  </group>    
+  
+
+
+
+
+  <group if="$(arg FLOBI)"> 
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/both_kuka_shadow_flobi.urdf.xacro'" />
+  </group>
+  <group unless="$(arg FLOBI)"> 
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/both_$(arg ARM)_shadow.urdf.xacro'" />
+  </group>
+
+  <!-- publish joint values, open gui if use_gui=True -->
+  <group if="$(arg JSP)"> 
+    <node name="joint_publisher"
+          pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="use_gui" value="True"/>
+    </node>
+  </group>
+    
+  <!-- publish transforms of all robot links -->
+    <node name="state_publisher" 
+          pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="10.0"/>
+    </node>
+
+</launch>

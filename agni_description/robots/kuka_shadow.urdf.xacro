@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot name="kuka_shadow"
+     xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <!-- all necessary includes must be done before including this one (arm and hand) -->
+  
+   <xacro:macro name="arm_ee" params="parent arm right *origin use_prefix prefix controller">
+   <!-- KUKA arm -->
+      <xacro:r_arm name="${prefix}a_" origin=/>
+      
+      
+      <xacro:kuka_lwr_arm name="${prefix}a_" reflect="${1-2*right}" tool_name=""/>
+      <joint name="${prefix}a_frame_placement" type="fixed">
+         <insert_block name="origin" />
+        <parent link="${parent}"/>
+        <child link="${prefix}a_arm_base_link"/>
+      </joint>  
+      
+      <xacro:if value="${controller}">  
+        <!-- add controllers -->
+        <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+        
+      </xacro:if>   
+    
+      <xacro:if value="${use_prefix}">
+        <!-- Shadow Hands --> 
+        <xacro:if value="${right}">
+          <xacro:r_ee controller="${controller}" prefix="${prefix}h"  />
+        </xacro:if> 
+        <xacro:unless value="${right}">
+          <xacro:l_ee controller="${controller}" prefix="${prefix}h"  /> 
+        </xacro:unless>   
+      <!-- Link arm and hand -->  
+      <joint name="${prefix}a_arm_hand_mount" type="fixed">
+        <parent link="${prefix}a_arm_hand_mount"/>
+        <child link="${prefix}h_forearm"/>
+        <origin xyz="0 0 0.0151" rpy="0 0 0" />
+      </joint>
+    </xacro:if>  
+    <xacro:unless value="${use_prefix}">
+        <!-- Shadow Hands --> 
+        <xacro:if value="${right}">
+          <xacro:r_ee controller="${controller}" prefix=""  />
+        </xacro:if> 
+        <xacro:unless value="${right}">
+          <xacro:l_ee controller="${controller}" prefix=""  /> 
+        </xacro:unless>   
+        
+
+      <!-- Link arm and hand -->  
+      <joint name="${prefix}a_arm_hand_mount" type="fixed">
+        <parent link="${prefix}a_arm_hand_mount"/>
+        <child link="forearm"/>
+        <origin xyz="0 0 0.0151" rpy="0 0 0" />
+      </joint>
+    </xacro:unless>  
+    
+
+    </xacro:macro>    
+</robot>

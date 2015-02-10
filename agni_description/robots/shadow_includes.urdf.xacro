@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot name="kuka"
+		 xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find agni_description)/urdf/sr_gazebo.urdf.xacro" /> 
+  <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.urdf.xacro" />
+  
+</robot>  
