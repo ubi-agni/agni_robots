@@ -3,21 +3,35 @@
 
   <xacro:macro name="poking_stick" params="">
   <link name="poking_stick">
-
-     <visual>
-    <origin xyz="0 0 0" 
-          rpy="0 0 0"/>
-    <geometry>
-        <mesh scale="0.001 0.001 0.001" 
-					 filename="package://agni_description/models/meshes/poking_stick.dae"/>
-    </geometry>
-   </visual> 
-     	 <!-- 
-   <collision>
+    <visual>
       <origin xyz="0 0 0" 
           rpy="0 0 0"/>
-      <geometry><box size="${width+2*thickness} ${0.01} ${height+0.4+2*thickness}"/></geometry>
-    </collision>-->
+      <geometry>
+        <mesh scale="0.001 0.001 0.001" 
+					 filename="package://agni_description/models/meshes/poking_stick.dae"/>
+      </geometry>
+    </visual> 
+    <collision>
+      <origin xyz="0 0 0.0075" 
+          rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.06725" length="0.015"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 0.08875" 
+          rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.0075" length="0.1475"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 0.1625" 
+          rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0075"/>
+      </geometry>
+    </collision>
   </link>
   
   <gazebo reference="poking_stick">
