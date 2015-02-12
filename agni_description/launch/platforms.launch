@@ -5,8 +5,8 @@
   <arg name="USE_PREFIX" default="true"/>
   <arg name="R" default="1"/>
   <arg name="L" default="1"/>
-  <arg name="R_EE" default="shadow_motor"/>
-  <arg name="L_EE" default="shadow_motor"/>
+  <arg name="R_EE" default="right_shadow_motor"/>
+  <arg name="L_EE" default="left_shadow_motor"/>
   
  <!-- arguments R and L to select left or right or both arm and hand -->
 
@@ -27,8 +27,8 @@
     </group>
   </group>
   
-  <!-- load frame description -->
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" />
+  <!-- load frame description
+  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" /> -->
   
   <!-- set robot description for combined table + robot arm and end-effector -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE::=$(arg R_EE) L_EE::=$(arg L_EE)'" />

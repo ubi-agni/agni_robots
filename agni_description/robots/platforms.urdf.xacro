@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<robot name="$(arg ARM)_$(arg R_EE)_flobi"
-     xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="toto" xmlns:xacro="http://www.ros.org/wiki/xacro">
      
   <xacro:arg name="ARM" default="kuka"/>
+  <xacro:arg name="R" default="1"/>
+  <xacro:arg name="L" default="1"/>
   <xacro:arg name="R_EE" default="right_shadow_motor"/>
   <xacro:arg name="L_EE" default="left_shadow_motor"/>
   <xacro:arg name="FLOBI" default="0"/>
@@ -20,6 +21,8 @@
               height="${cal_frame_height}" tableHeight="${cal_frame_table_height}"/>
 
   arm and hand -->
+    <xacro:frame-half prefix="kuka" thickness="0.09" width="1.92" depth="1.82"
+              height="1.26" tableHeight="1.00"/>
 
   <xacro:if value="$(arg R)">
     <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="$(arg R_EE)" ee_base_link="${r_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">

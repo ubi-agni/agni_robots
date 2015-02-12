@@ -15,7 +15,7 @@
   <xacro:property name="cal_right_ee_pitch" value="0.0" />
   <xacro:property name="cal_right_ee_roll" value="0.0" />
 
-  <xacro:macro name="right_shadow_motor" params="prefix">
+  <xacro:macro name="right_shadow_motor_ee" params="prefix">
     <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix="${prefix}"  />
   </xacro:macro>
 

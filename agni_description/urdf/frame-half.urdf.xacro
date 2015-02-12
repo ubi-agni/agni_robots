@@ -6,7 +6,7 @@
 
 <xacro:include filename="$(find agni_description)/urdf/util.urdf.xacro"/>
 <xacro:include filename="$(find agni_description)/urdf/materials.urdf.xacro"/>
-<xacro:include filename="$(find agni_description)/calibration/default_cal.xml"/>
+<xacro:include filename="$(find agni_description)/calibration/kuka_cal.xml"/>
 
   <property name="cos30"     value="0.866025404" />
   <property name="sin30"     value="0.5" />

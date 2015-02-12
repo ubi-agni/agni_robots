@@ -21,7 +21,7 @@
 
       <xacro:if value="${use_prefix}">
         <!-- Effector -->
-        <xacro:call macro="${ee_macro}" prefix="${prefix}h_"/>
+        <xacro:call macro="${ee_macro}_ee" prefix="${prefix}h_"/>
         <!-- Link arm and effector -->
       <joint name="${prefix}a_arm_hand_mount" type="fixed">
         <parent link="${prefix}a_arm_hand_mount"/>
@@ -31,7 +31,7 @@
     </xacro:if>  
     <xacro:unless value="${use_prefix}">
         <!-- Effector -->
-        <xacro:call macro="${ee_macro}" prefix=""/>
+        <xacro:call macro="${ee_macro}_ee" prefix=""/>
 
       <!-- Link arm and hand -->  
       <joint name="${prefix}a_arm_hand_mount" type="fixed">

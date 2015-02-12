@@ -1,0 +1,41 @@
+<launch>
+  <arg name="ARM" default="kuka"/>
+  <arg name="FLOBI" default="false"/>
+  <arg name="USE_PREFIX" default="true"/>
+  <arg name="R" default="1"/>
+  <arg name="L" default="1"/>
+  <arg name="R_EE" default="right_shadow_motor"/>
+  <arg name="L_EE" default="left_shadow_motor"/>
+  <arg name="JSP" default="false"/>
+  
+  <!-- set robot description for combined table + robot arm and end-effector  -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE:=$(arg R_EE) L_EE:=$(arg L_EE)" />
+  
+  <!--<include file="$(find agni_description)/launch/plaforms_load.launch" >
+        <arg name="ARM" value="$(arg USE_PREFIX)"/>
+        <arg name="FLOBI" value="$(arg USE_PREFIX)"/>
+        <arg name="USE_PREFIX" value="$(arg USE_PREFIX)"/>
+        <arg name="R" value="$(arg USE_PREFIX)"/>
+        <arg name="L" value="$(arg USE_PREFIX)"/>
+        <arg name="R_EE" value="$(arg USE_PREFIX)"/>
+        <arg name="L_EE" value="$(arg USE_PREFIX)"/>
+  </include>
+  <node name="platforms_load" pkg="xacro" type="xacro.py" args="'$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE:=$(arg R_EE) L_EE:=$(arg L_EE)" />
+  -->
+  <!-- publish joint values, open gui if use_gui=True -->
+  <group if="$(arg JSP)"> 
+    <node name="joint_publisher"
+          pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="use_gui" value="True"/>
+    </node>
+  </group>
+    
+  <!-- publish transforms of all robot links -->
+    <node name="state_publisher" 
+          pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="10.0"/>
+    </node>
+
+
+
+</launch>
