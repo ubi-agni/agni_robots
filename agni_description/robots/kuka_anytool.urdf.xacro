@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot name="kuka_shadow"
+     xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <!-- all necessary includes must be done before including this one (arm and hand) -->
+  
+   <xacro:macro name="arm_ee" params="parent arm is_right ee_macro ee_base_link use_prefix prefix controller *origin *ee_offset ">
+   <!-- KUKA arm -->     
+      <xacro:kuka_lwr_arm name="${prefix}a_" reflect="${1-2*is_right}" tool_name=""/>
+      <joint name="${prefix}a_frame_placement" type="fixed">
+         <insert_block name="origin" />
+        <parent link="${parent}"/>
+        <child link="${prefix}a_arm_base_link"/>
+      </joint>  
+      
+      <xacro:if value="${controller}">  
+        <!-- add controllers -->
+        <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+        
+      </xacro:if>   
+
+      <xacro:if value="${use_prefix}">
+        <!-- Effector -->
+        <xacro:call macro="${ee_macro}" prefix="${prefix}h_"/>
+        <!-- Link arm and effector -->
+      <joint name="${prefix}a_arm_hand_mount" type="fixed">
+        <parent link="${prefix}a_arm_hand_mount"/>
+        <child link="${prefix}h_${ee_base_link}"/>
+        <insert_block name="ee_offset" />
+      </joint>
+    </xacro:if>  
+    <xacro:unless value="${use_prefix}">
+        <!-- Effector -->
+        <xacro:call macro="${ee_macro}" prefix=""/>
+
+      <!-- Link arm and hand -->  
+      <joint name="${prefix}a_arm_hand_mount" type="fixed">
+        <parent link="${prefix}a_arm_hand_mount"/>
+        <child link="${ee_base_link}"/>
+        <insert_block name="ee_offset" />
+      </joint>
+    </xacro:unless>  
+    
+    </xacro:macro>    
+</robot>

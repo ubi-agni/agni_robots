@@ -1,12 +1,18 @@
 <?xml version="1.0"?>
 <robot name="$(arg ARM)_$(arg R_EE)_flobi"
      xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_$(arg R_EE).urdf.xacro" /> 
-  <xacro:include filename="$(find agni_description)/$(arg ARM)/$(arg ARM)_includes.urdf.xacro" />   
-  <xacro:include filename="$(find agni_description)/robots/$(arg R_EE)_includes.urdf.xacro" /> 
-  <xacro:include filename="$(find agni_description)/robots/$(arg L_EE)_includes.urdf.xacro" /> 
+     
+  <xacro:arg name="ARM" default="kuka"/>
+  <xacro:arg name="R_EE" default="right_shadow_motor"/>
+  <xacro:arg name="L_EE" default="left_shadow_motor"/>
+  <xacro:arg name="FLOBI" default="0"/>
+    
+  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_anytool.urdf.xacro" /> 
+  <xacro:include filename="$(find agni_description)/$(arg ARM)/$(arg ARM).urdf.xacro" />   
+  <xacro:include filename="$(find agni_description)/robots/$(arg R_EE)_ee.urdf.xacro" /> 
+  <xacro:include filename="$(find agni_description)/robots/$(arg L_EE)_ee.urdf.xacro" /> 
   
-  <xacro:include filename="$(find agni_description)/calibration/default_cal.xml"/>
+  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
   <xacro:include filename="$(find agni_description)/urdf/frame-half.urdf.xacro"/>
  
   <!-- 
@@ -16,15 +22,19 @@
   arm and hand -->
 
   <xacro:if value="$(arg R)">
-    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" use_prefix="$(arg USE_PREFIX)" controller="false">
+    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="$(arg R_EE)" ee_base_link="${r_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
       <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
       rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
+      <origin xyz="${cal_right_ee_x} ${cal_right_ee_y} ${cal_right_ee_z}"
+      rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
     </xacro:arm_ee>
   </xacro:if>
   <xacro:if value="$(arg L)">
-    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="l" is_right="0" use_prefix="$(arg USE_PREFIX)" controller="false">
+    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="l" is_right="0" ee_macro="$(arg L_EE)" ee_base_link="${l_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
       <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
           rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
+      <origin xyz="${cal_left_ee_x} ${cal_left_ee_y} ${cal_left_ee_z}"
+      rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
     </xacro:arm_ee>
   </xacro:if>
   <xacro:if value="$(arg FLOBI)">
