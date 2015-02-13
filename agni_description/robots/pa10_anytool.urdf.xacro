@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
-<robot name="kuka_anytool"
+<robot name="pa10_anytool"
      xmlns:xacro="http://www.ros.org/wiki/xacro">
   
   <!-- all necessary includes for end-effectors must be done outside -->
  
-  <xacro:include filename="$(find agni_description)/kuka/kuka.urdf.xacro"/>
-  <xacro:include filename="$(find agni_description)/kuka/lwr_controllers.gazebo.xacro"/>  
+  <xacro:include filename="$(find agni_description)/pa10/pa10-a.urdf.xacro"/> 
+  <xacro:include filename="$(find agni_description)/pa10/pa10-c.urdf.xacro"/> 
+  <xacro:include filename="$(find agni_description)/pa10/pa10_shadow_controller_manager.xacro"/> 
+  <xacro:include filename="$(find agni_description)/calibration/pa10_cal.xml"/>
+
  
   <!-- arm_ee macro with the params
          * parent : where it is attached
@@ -20,17 +23,26 @@
          * *ee_offset : second block for the end-effector offset -->
   
   <xacro:macro name="arm_ee" params="parent arm is_right ee_macro ee_base_link use_prefix prefix controller *origin *ee_offset ">
-  <!-- KUKA arm -->     
-    <xacro:kuka_lwr_arm name="${prefix}a_" reflect="${-1+2*is_right}" tool_name=""/>
+  <!-- PA10 arm -->  
+    <xacro:if value="${is_right}" >
+      <xacro:call macro="pa10c_arm" name="${prefix}a_"/>
+    </xacro:if>
+    <xacro:unless value="${is_right}" >
+      <xacro:call macro="pa10a_arm" name="${prefix}a_"/>
+    </xacro:unless>
+    
     <joint name="${prefix}a_frame_placement" type="fixed">
        <insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${prefix}a_arm_base_link"/>
     </joint>  
-
+  
     <xacro:if value="${controller}">  
       <!-- add controllers -->
-      <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+       <!-- add controllers -->
+      <!-- pa10 controllers HERE 
+      <xacro:pa10_gazebo_controller_manager namespace="${prefix}a"/> ros-hydro-gazebo-ros-control missing-->
+      <xacro:pa10_shadow_gazebo_controller_manager namespace="${prefix}a"/>
     </xacro:if>   
 
     <xacro:if value="${use_prefix}">

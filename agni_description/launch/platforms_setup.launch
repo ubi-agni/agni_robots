@@ -4,24 +4,51 @@
   <arg name="USE_PREFIX" default="true"/>
   <arg name="R" default="1"/>
   <arg name="L" default="1"/>
-  <arg name="R_EE" default="right_shadow_motor"/>
-  <arg name="L_EE" default="left_shadow_motor"/>
+  <arg name="R_EE_TYPE" default="shadow_motor"/>
+  <arg name="L_EE_TYPE" default="shadow_motor"/>
+  <arg name="R_EE_SIDE" default="right"/>
+  <arg name="L_EE_SIDE" default="left"/>
   <arg name="JSP" default="false"/>
   
-  <!-- set robot description for combined table + robot arm and end-effector  -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE:=$(arg R_EE) L_EE:=$(arg L_EE)" />
+  <!-- JSP for joint_state_publisher gui -->
+  <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
+       Is mandatory if using two hands -->
+  <!-- ARM to select the arm type. 
+       files called <ARM>.urdf.xacro and <ARM>_cal.xml should exist and provide
+       - offset of the base relatively to the <ARM>_frame
+       - arm_ee macro with the params
+         * parent : where it is attached
+         * arm : arm type
+         * is_right : 1 if arm is the right one
+         * ee_macro : name of the end-effector macro
+         * ee_base_link : name of the base_link of the end-effector to link to
+         * use_prefix : should we use prefix for the end-effector
+         * prefix : the prefix (for instance "r")
+         * controller : should the controllers be loaded or not
+         * *origin : first block for the base offset
+         * *ee_offset : second block for the end-effector offset -->
+  <!-- FLOBI to select if flobi should be added to the setup -->
+  <!-- R and L to select left or right or both arm and hand -->
+  <!-- R_EE_TYPE and L_EE_TYPE are the names of the end-effectors
+       mounted on right and left arms respectively -->
+  <!-- R_EE_SIDE and L_EE_SIDE are the variants of the end-effectors 
+       for right and left arms respectively
+       Note a left hand can be mounted on the right arm 
+       with R_EE_SIDE:=left --> 
+  <!-- file called right_<R_EE_TYPE>_ee.urdf.xacro should exist and provide 
+        - a macro called <R_EE_SIDE>_<R_EE_TYPE>
+        - a property r_ee_base_link with the name of the attachement link 
+          for this end-effector type 
+          
+        - offset properties cal_right_ee_x|y|z|yaw|pitch|roll of the mounting
+          part of this effector when attached at the right arm 
+       The same for left
+          -->
   
-  <!--<include file="$(find agni_description)/launch/plaforms_load.launch" >
-        <arg name="ARM" value="$(arg USE_PREFIX)"/>
-        <arg name="FLOBI" value="$(arg USE_PREFIX)"/>
-        <arg name="USE_PREFIX" value="$(arg USE_PREFIX)"/>
-        <arg name="R" value="$(arg USE_PREFIX)"/>
-        <arg name="L" value="$(arg USE_PREFIX)"/>
-        <arg name="R_EE" value="$(arg USE_PREFIX)"/>
-        <arg name="L_EE" value="$(arg USE_PREFIX)"/>
-  </include>
-  <node name="platforms_load" pkg="xacro" type="xacro.py" args="'$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE:=$(arg R_EE) L_EE:=$(arg L_EE)" />
-  -->
+  <!-- set robot description for combined table + robot arm and end-effector  -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) 
+                                             FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE_TYPE:=$(arg R_EE_TYPE) L_EE_TYPE:=$(arg L_EE_TYPE) R_EE_SIDE:=$(arg R_EE_SIDE) L_EE_SIDE:=$(arg L_EE_SIDE)" />
+                                             
   <!-- publish joint values, open gui if use_gui=True -->
   <group if="$(arg JSP)"> 
     <node name="joint_publisher"

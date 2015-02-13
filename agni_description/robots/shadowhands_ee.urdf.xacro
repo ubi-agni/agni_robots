@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="left_shadow_motor"
+		 xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find agni_description)/urdf/sr_gazebo.urdf.xacro" /> 
+  <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.urdf.xacro" />
+
+  <xacro:macro name="right_shadow_motor" params="prefix">
+    <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix="${prefix}"  />
+  </xacro:macro>
+  <xacro:macro name="left_shadow_motor" params="prefix">
+    <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="-1.0" prefix="${prefix}"  />
+  </xacro:macro>
+  <xacro:macro name="right_shadow_muscle" params="prefix">
+    <xacro:shadowhand muscletrans="true" muscle="true" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix="${prefix}"  />
+  </xacro:macro>
+  <xacro:macro name="left_shadow_muscle" params="prefix">
+    <xacro:shadowhand muscletrans="true" muscle="true" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="-1.0" prefix="${prefix}"  />
+  </xacro:macro>
+
+
+</robot>  

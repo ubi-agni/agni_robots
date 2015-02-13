@@ -4,42 +4,80 @@
   <xacro:arg name="ARM" default="kuka"/>
   <xacro:arg name="R" default="1"/>
   <xacro:arg name="L" default="1"/>
-  <xacro:arg name="R_EE" default="right_shadow_motor"/>
-  <xacro:arg name="L_EE" default="left_shadow_motor"/>
+  <xacro:arg name="R_EE_TYPE" default="shadow_motor"/>
+  <xacro:arg name="L_EE_TYPE" default="shadow_motor"/>
+  <xacro:arg name="R_EE_SIDE" default="right"/>
+  <xacro:arg name="L_EE_SIDE" default="left"/>
   <xacro:arg name="FLOBI" default="0"/>
-    
-  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_anytool.urdf.xacro" /> 
-  <xacro:include filename="$(find agni_description)/$(arg ARM)/$(arg ARM).urdf.xacro" />   
-  <xacro:include filename="$(find agni_description)/robots/$(arg R_EE)_ee.urdf.xacro" /> 
-  <xacro:include filename="$(find agni_description)/robots/$(arg L_EE)_ee.urdf.xacro" /> 
+  <xacro:arg name="USE_PREFIX" default="true"/>
   
+  <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
+       Is mandatory if using two hands -->
+  <!-- ARM to select the arm type. 
+       files called <ARM>.urdf.xacro and <ARM>_cal.xml should exist and provide
+       - offset of the base relatively to the <ARM>_frame
+       - arm_ee macro with the params
+         * parent : where it is attached
+         * arm : arm type
+         * is_right : 1 if arm is the right one
+         * ee_macro : name of the end-effector macro
+         * ee_base_link : name of the base_link of the end-effector to link to
+         * use_prefix : should we use prefix for the end-effector
+         * prefix : the prefix (for instance "r")
+         * controller : should the controllers be loaded or not
+         * *origin : first block for the base offset
+         * *ee_offset : second block for the end-effector offset -->
+  <!-- FLOBI to select if flobi should be added to the setup -->
+  <!-- R and L to select left or right or both arm and hand -->
+  <!-- R_EE_TYPE and L_EE_TYPE are the names of the end-effectors
+       mounted on right and left arms respectively -->
+  <!-- R_EE_SIDE and L_EE_SIDE are the variants of the end-effectors 
+       for right and left arms respectively
+       Note a left hand can be mounted on the right arm 
+       with R_EE_SIDE:=left --> 
+  <!-- file called right_<R_EE_TYPE>_ee.urdf.xacro should exist and provide 
+        - a macro called <R_EE_SIDE>_<R_EE_TYPE>
+        - a property r_ee_base_link with the name of the attachement link 
+          for this end-effector type 
+          
+        - offset properties cal_right_ee_x|y|z|yaw|pitch|roll of the mounting
+          part of this effector when attached at the right arm 
+       The same for left
+          -->
+  
+  <!-- arm with end-effector -->
+  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_anytool.urdf.xacro" /> 
+  <!-- arm calibration -->
   <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
-  <xacro:include filename="$(find agni_description)/urdf/frame-half.urdf.xacro"/>
+  <!-- right end-effector -->
+  <xacro:include filename="$(find agni_description)/robots/right_$(arg R_EE_TYPE)_ee.urdf.xacro" /> 
+  <!-- left enf-effector -->
+  <xacro:include filename="$(find agni_description)/robots/left_$(arg L_EE_TYPE)_ee.urdf.xacro" /> 
+  <!-- frame -->
+  <xacro:include filename="$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro"/>
  
-  <!-- 
-  <xacro:frame-half prefix="$(arg ARM)" thickness="${cal_frame_thick}" width="${cal_frame_width}" depth="${cal_frame_depth}"
-              height="${cal_frame_height}" tableHeight="${cal_frame_table_height}"/>
+  <!-- frame generation -->
+  <xacro:call macro="$(arg ARM)_frame" prefix="$(arg ARM)" />
 
-  arm and hand -->
-    <xacro:frame-half prefix="kuka" thickness="0.09" width="1.92" depth="1.82"
-              height="1.26" tableHeight="1.00"/>
-
+  <!-- right arm with a right end-effector (can be of type left if needed, but must profide r_ee_base_link and cal_right_ee_x|y|z|yaw|pitch|roll) -->
   <xacro:if value="$(arg R)">
-    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="$(arg R_EE)" ee_base_link="${r_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
+    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="$(arg R_EE_SIDE)_$(arg R_EE_TYPE)" ee_base_link="${r_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
       <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
       rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
       <origin xyz="${cal_right_ee_x} ${cal_right_ee_y} ${cal_right_ee_z}"
       rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
     </xacro:arm_ee>
   </xacro:if>
+  <!--left arm with a left end-effector (can be of type right if needed, but must profide l_ee_base_link and cal_left_ee_x|y|z|yaw|pitch|roll) -->
   <xacro:if value="$(arg L)">
-    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="l" is_right="0" ee_macro="$(arg L_EE)" ee_base_link="${l_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
+    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="l" is_right="0" ee_macro="$(arg L_EE_SIDE)_$(arg L_EE_TYPE)" ee_base_link="${l_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
       <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
           rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
       <origin xyz="${cal_left_ee_x} ${cal_left_ee_y} ${cal_left_ee_z}"
       rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
     </xacro:arm_ee>
   </xacro:if>
+  <!-- flobi -->
   <xacro:if value="$(arg FLOBI)">
     <xacro:flobi prefix="" neutral="1" gender="0" parent="$(arg ARM)_frame" >
       <origin xyz="0 ${cal_right_arm_y} ${cal_right_arm_z+mount_triangle_length/2*sin60+0.01}" rpy="0 0 ${-M_PI/2}"/>
