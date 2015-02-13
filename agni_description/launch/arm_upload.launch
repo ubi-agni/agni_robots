@@ -1,9 +1,9 @@
 <launch>
 	<!-- load description of the arm into robot_description -->
-	<arg name="namespace" default="ra"/>
+	<arg name="namespace" default="r"/>
   <arg name="arm_type" default="kuka"/>
-  <arg name="reflect" default="1"/>
+  <arg name="is_right" default="1"/>
 	
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg arm_type)_gazebo.urdf.xacro namespace:=$(arg namespace) reflect:=$(arg reflect)'" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg arm_type)_gazebo.urdf.xacro' namespace:=$(arg namespace) is_right:=$(arg is_right)" />
 </launch>

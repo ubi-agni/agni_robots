@@ -4,12 +4,28 @@
   <xacro:include filename="$(find agni_description)/urdf/sr_gazebo.urdf.xacro" /> 
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.urdf.xacro" />
 
-  <xacro:macro name="right_shadow_motor" params="prefix">
-    <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix="${prefix}"  />
+  <xacro:macro name="right_shadow_motor" params="prefix use_prefix" >
+    <xacro:if value="${use_prefix}">
+      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix="${prefix}h_"  />
+      <xacro:shadow_gazebo_controller_manager namespace="${prefix}h" />
+    </xacro:if>
+    <xacro:unless value="${use_prefix}">
+      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix=""  />
+      <xacro:shadow_gazebo_controller_manager namespace="" />
+    </xacro:unless>
   </xacro:macro>
-  <xacro:macro name="left_shadow_motor" params="prefix">
-    <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="-1.0" prefix="${prefix}"  />
+
+  <xacro:macro name="left_shadow_motor" params="prefix use_prefix" >
+    <xacro:if value="${use_prefix}">
+      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="-1.0" prefix="${prefix}h_"  />
+      <xacro:shadow_gazebo_controller_manager namespace="${prefix}h" />
+    </xacro:if>
+    <xacro:unless value="${use_prefix}">
+      <xacro:shadowhand muscletrans="false" muscle="false" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="-1.0" prefix=""  />
+      <xacro:shadow_gazebo_controller_manager namespace="" />
+    </xacro:unless>
   </xacro:macro>
+  
   <xacro:macro name="right_shadow_muscle" params="prefix">
     <xacro:shadowhand muscletrans="true" muscle="true" bio="false" ubi="$(arg USE_UBI)" eli="false" reflect="1.0" prefix="${prefix}"  />
   </xacro:macro>

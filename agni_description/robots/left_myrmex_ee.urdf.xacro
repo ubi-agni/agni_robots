@@ -13,9 +13,9 @@
   <xacro:property name="l_ee_base_link" value="myrmex_quick_mount" />
   
   <xacro:macro name="right_myrmex" params="prefix" >
-    <xacro:myrmex_quick_mount prefix="${prefix}" />
+    <xacro:myrmex_quick_mount prefix="${prefix}h_" />
   </xacro:macro>
   <xacro:macro name="left_myrmex" params="prefix" >
-    <xacro:myrmex_quick_mount prefix="${prefix}" />
+    <xacro:myrmex_quick_mount prefix="${prefix}h_" />
   </xacro:macro>
 </robot>

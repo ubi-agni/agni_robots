@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="frame"
+		 xmlns:xacro="http://www.ros.org/wiki/xacro">
+     
+  <xacro:arg name="ARM" default="kuka"/> 
+  
+  <xacro:include filename="$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro"/>
+
+  <xacro:call macro="$(arg ARM)_frame" prefix="$(arg ARM)" />
+	
+
+</robot>  

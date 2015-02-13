@@ -8,8 +8,9 @@
   
   <group ns="la">
     <include file="$(find agni_description)/launch/arm_upload.launch" >
-      <arg name="namespace" value="la"/>
+      <arg name="namespace" value="l"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="is_right" value="0"/>
     </include>  
   </group> 
     
@@ -27,6 +28,7 @@
       <arg name="namespace" value="left"/>
       <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="is_right" value="0"/>
       <arg name="sim" value="$(arg sim)"/>
     </include>
     

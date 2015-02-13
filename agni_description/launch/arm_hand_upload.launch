@@ -3,7 +3,10 @@
 	<arg name="namespace" default="right"/>
   <arg name="arm_type" default="kuka"/>
 	<arg name="use_prefix" default="0"/>
+  <arg name="is_right" default="1"/>
   <!-- load robot_description -->
-  <param if="$(arg use_prefix)" name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg namespace)_$(arg arm_type)_shadow_prefix_gazebo.urdf.xacro'" />
-  <param unless="$(arg use_prefix)" name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg namespace)_$(arg arm_type)_shadow_gazebo.urdf.xacro'" />
+  <param if="$(arg use_prefix)" name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/arm_hand_gazebo.urdf.xacro' 
+          ARM:=$(arg arm_type) USE_PREFIX:=$(arg use_prefix) IS_RIGHT:=$(arg is_right)" />
+  
 </launch>
+ 

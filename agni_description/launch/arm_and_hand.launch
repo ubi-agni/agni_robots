@@ -1,8 +1,11 @@
 <launch>
   <arg name="SIM" default="true"/>
-  
+  <arg name="FLOBI" default="false"/>
   <!-- arguments R and L to select left or right or both arm and hand -->
-
+  <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
+       Is mandatory if using two hands -->
+  <!-- FLOBI to select if flobi should be added to the setup -->
+       
   <group if="$(arg SIM)">
     <!-- start gazebo with an empty plane -->
     <!-- Gazebo world file to load. -->
@@ -22,12 +25,13 @@
   
   <!-- load frame description -->
   <arg name="ARM" default="kuka"/>
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" />
+  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' ARM:=$(arg ARM)" />
   
   
-  <!-- set robot description for combined table + 2 robot arm and hand -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/both_$(arg ARM)_shadow.urdf.xacro'" />
-
+  <!-- set robot description for combined table + robot arm and end-effector  -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) 
+                                             FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE_TYPE:=shadow_motor L_EE_TYPE:=shadow_motor R_EE_SIDE:=right L_EE_SIDE:=left" />
+ 
   <group if="$(arg SIM)">
     <!-- spawn the support model -->
     <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param frame -model frame" respawn="false" output="screen" />

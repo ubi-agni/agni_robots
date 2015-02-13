@@ -22,7 +22,7 @@
   
   <!-- load frame description -->
   <arg name="ARM" default="kuka"/>
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" />
+  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro'" />
 
   <group if="$(arg SIM)">
     <!-- spawn the support model -->

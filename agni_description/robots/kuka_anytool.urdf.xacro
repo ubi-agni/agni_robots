@@ -30,12 +30,17 @@
 
     <xacro:if value="${controller}">  
       <!-- add controllers -->
-      <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+        <xacro:if value="${is_right}" >
+          <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+        </xacro:if>   
+        <xacro:unless value="${is_right}" >
+          <xacro:left_lwr_arm_gazebo_controller namespace="${prefix}a" port="49938"/>
+        </xacro:unless>   
     </xacro:if>   
 
     <xacro:if value="${use_prefix}">
       <!-- Effector -->
-      <xacro:call macro="${ee_macro}" prefix="${prefix}h_"/>
+      <xacro:call macro="${ee_macro}" prefix="${prefix}" use_prefix="${use_prefix}"/>
       <!-- Link arm and effector -->
     <joint name="${prefix}a_arm_hand_mount" type="fixed">
       <parent link="${prefix}a_arm_hand_mount"/>
@@ -45,7 +50,7 @@
     </xacro:if>  
     <xacro:unless value="${use_prefix}">
       <!-- Effector -->
-      <xacro:call macro="${ee_macro}" prefix=""/>
+      <xacro:call macro="${ee_macro}" prefix="" use_prefix="${use_prefix}"/>
     <!-- Link arm and hand -->
     <joint name="${prefix}a_arm_hand_mount" type="fixed">
       <parent link="${prefix}a_arm_hand_mount"/>

@@ -28,7 +28,7 @@
   </group>
   
   <!-- load frame description
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" /> -->
+  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro'" /> -->
   
   <!-- set robot description for combined table + robot arm and end-effector -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE::=$(arg R_EE) L_EE::=$(arg L_EE)'" />

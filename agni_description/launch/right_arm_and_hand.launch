@@ -2,16 +2,15 @@
   <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
   <arg name="sim" default="true"/>
-  <arg name="side" default="right"/>
   <!-- upload parameters on the correct namespaces 
   must be done before gazebo spawner to have the plugin controller manager
   load on the sub namespaces -->
   
   <group ns="ra">
     <include file="$(find agni_description)/launch/arm_upload.launch" >
-      <arg name="namespace" value="ra"/>
+      <arg name="namespace" value="r"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
-      <arg name="reflect" value="1"/>
+      <arg name="is_right" value="1"/>
     </include>  
   </group> 
   
@@ -30,6 +29,7 @@
       <arg name="namespace" value="right"/>
       <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="is_right" value="1"/>
       <arg name="sim" value="$(arg sim)"/>
     </include>
     <!-- robot_state_publisher can work with data coming from different sources at different times -->

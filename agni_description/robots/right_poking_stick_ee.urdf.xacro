@@ -13,9 +13,9 @@
   <xacro:property name="r_ee_base_link" value="poking_stick" />
   
   <xacro:macro name="right_poking_stick" params="prefix" >
-    <xacro:poking_stick prefix="${prefix}" />
+    <xacro:poking_stick prefix="${prefix}h_" />
   </xacro:macro>
   <xacro:macro name="left_poking_stick" params="prefix" >
-    <xacro:poking_stick prefix="${prefix}" />
+    <xacro:poking_stick prefix="${prefix}h_" />
   </xacro:macro>
 </robot>
