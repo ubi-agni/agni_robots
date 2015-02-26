@@ -10,7 +10,7 @@
   <xacro:property name="cal_right_ee_x" value="0.0" />
   <xacro:property name="cal_right_ee_y" value="0.0" />
   <xacro:property name="cal_right_ee_z" value="0.0151" />
-  <xacro:property name="cal_right_ee_yaw" value="0.0" />
+  <xacro:property name="cal_right_ee_yaw" value="1.5707" />
   <xacro:property name="cal_right_ee_pitch" value="0.0" />
   <xacro:property name="cal_right_ee_roll" value="0.0" />
 
