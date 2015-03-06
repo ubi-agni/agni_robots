@@ -1,24 +1,24 @@
 <launch>	
 	<arg name="namespace" default="rh"/>
-	
+	<arg name="controller_type" default="mixed_position_velocity_controller"/>
 	<rosparam file="$(find agni_description)/config/$(arg namespace)_hand_controller_gazebo.yaml" command="load"/>
 	
 	
   <group if="$(optenv ONE_FINGER 0)">
     <node name="spawn_gazebo_hand_controllers"
 	  pkg="controller_manager" type="spawner" respawn="false" output="screen"
-	  args="--shutdown-timeout=1.0 sh_$(arg namespace)_mfj0_mixed_position_velocity_controller sh_$(arg namespace)_mfj3_mixed_position_velocity_controller sh_$(arg namespace)_mfj4_mixed_position_velocity_controller" />
+	  args="--shutdown-timeout=1.0 sh_$(arg namespace)_mfj0_$(arg controller_type) sh_$(arg namespace)_mfj3_$(arg controller_type) sh_$(arg namespace)_mfj4_$(arg controller_type)" />
   </group>
   <group unless="$(optenv ONE_FINGER 0)">
     <group if="$(optenv THREE_FINGER 0)">
       <node name="spawn_gazebo_hand_controllers"
 	    pkg="controller_manager" type="spawner" respawn="false" output="screen"
-	    args="--shutdown-timeout=1.0 sh_$(arg namespace)_ffj0_mixed_position_velocity_controller sh_$(arg namespace)_ffj3_mixed_position_velocity_controller sh_$(arg namespace)_ffj4_mixed_position_velocity_controller sh_$(arg namespace)_rfj0_mixed_position_velocity_controller sh_$(arg namespace)_rfj3_mixed_position_velocity_controller sh_$(arg namespace)_rfj4_mixed_position_velocity_controller sh_$(arg namespace)_thj1_mixed_position_velocity_controller sh_$(arg namespace)_thj2_mixed_position_velocity_controller sh_$(arg namespace)_thj3_mixed_position_velocity_controller sh_$(arg namespace)_thj4_mixed_position_velocity_controller sh_$(arg namespace)_thj5_mixed_position_velocity_controller sh_$(arg namespace)_wrj1_mixed_position_velocity_controller sh_$(arg namespace)_wrj2_mixed_position_velocity_controller" />
+	    args="--shutdown-timeout=1.0 sh_$(arg namespace)_ffj0_$(arg controller_type) sh_$(arg namespace)_ffj3_$(arg controller_type) sh_$(arg namespace)_ffj4_$(arg controller_type) sh_$(arg namespace)_rfj0_$(arg controller_type) sh_$(arg namespace)_rfj3_$(arg controller_type) sh_$(arg namespace)_rfj4_$(arg controller_type) sh_$(arg namespace)_thj1_$(arg controller_type) sh_$(arg namespace)_thj2_$(arg controller_type) sh_$(arg namespace)_thj3_$(arg controller_type) sh_$(arg namespace)_thj4_$(arg controller_type) sh_$(arg namespace)_thj5_$(arg controller_type) sh_$(arg namespace)_wrj1_$(arg controller_type) sh_$(arg namespace)_wrj2_$(arg controller_type)" />
     </group>
     <group unless="$(optenv THREE_FINGER 0)">
       <node name="spawn_gazebo_hand_controllers"
 	    pkg="controller_manager" type="spawner" respawn="false" output="screen"
-	    args="--shutdown-timeout=1.0 sh_$(arg namespace)_ffj0_mixed_position_velocity_controller sh_$(arg namespace)_ffj3_mixed_position_velocity_controller sh_$(arg namespace)_ffj4_mixed_position_velocity_controller sh_$(arg namespace)_mfj0_mixed_position_velocity_controller sh_$(arg namespace)_mfj3_mixed_position_velocity_controller sh_$(arg namespace)_mfj4_mixed_position_velocity_controller sh_$(arg namespace)_rfj0_mixed_position_velocity_controller sh_$(arg namespace)_rfj3_mixed_position_velocity_controller sh_$(arg namespace)_rfj4_mixed_position_velocity_controller sh_$(arg namespace)_lfj0_mixed_position_velocity_controller sh_$(arg namespace)_lfj3_mixed_position_velocity_controller sh_$(arg namespace)_lfj4_mixed_position_velocity_controller sh_$(arg namespace)_lfj5_mixed_position_velocity_controller sh_$(arg namespace)_thj1_mixed_position_velocity_controller sh_$(arg namespace)_thj2_mixed_position_velocity_controller sh_$(arg namespace)_thj3_mixed_position_velocity_controller sh_$(arg namespace)_thj4_mixed_position_velocity_controller sh_$(arg namespace)_thj5_mixed_position_velocity_controller sh_$(arg namespace)_wrj1_mixed_position_velocity_controller sh_$(arg namespace)_wrj2_mixed_position_velocity_controller" />
+	    args="--shutdown-timeout=1.0 sh_$(arg namespace)_ffj0_$(arg controller_type) sh_$(arg namespace)_ffj3_$(arg controller_type) sh_$(arg namespace)_ffj4_$(arg controller_type) sh_$(arg namespace)_mfj0_$(arg controller_type) sh_$(arg namespace)_mfj3_$(arg controller_type) sh_$(arg namespace)_mfj4_$(arg controller_type) sh_$(arg namespace)_rfj0_$(arg controller_type) sh_$(arg namespace)_rfj3_$(arg controller_type) sh_$(arg namespace)_rfj4_$(arg controller_type) sh_$(arg namespace)_lfj0_$(arg controller_type) sh_$(arg namespace)_lfj3_$(arg controller_type) sh_$(arg namespace)_lfj4_$(arg controller_type) sh_$(arg namespace)_lfj5_$(arg controller_type) sh_$(arg namespace)_thj1_$(arg controller_type) sh_$(arg namespace)_thj2_$(arg controller_type) sh_$(arg namespace)_thj3_$(arg controller_type) sh_$(arg namespace)_thj4_$(arg controller_type) sh_$(arg namespace)_thj5_$(arg controller_type) sh_$(arg namespace)_wrj1_$(arg controller_type) sh_$(arg namespace)_wrj2_$(arg controller_type)" />
     </group>
   </group>
 </launch>
