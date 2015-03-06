@@ -9,7 +9,7 @@
   <group if="$(arg SIM)">
     <!-- start gazebo with an empty plane -->
     <!-- Gazebo world file to load. -->
-    <arg name="world_name" default="$(find sr_description)/other/worlds/shadowhand.world" />
+    <arg name="world_name" default="$(find agni_description)/models/agni.world" />
     <arg name="gui" default="true"/>
   
     <!-- We want gazebo to stay in the root namespace but the nodes below to be
@@ -23,12 +23,12 @@
     </group>
   </group>
   
-  <!-- load frame description -->
+  <!-- load frame description  
+   -->
   <arg name="ARM" default="kuka"/>
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' ARM:=$(arg ARM)" />
+  <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' ARM:=$(arg ARM)" />
   <!-- load camera description -->
   <param name="camera_description" command="$(find icl_config_parser_py)/scripts/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
-  
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) 
@@ -36,7 +36,7 @@
  
   <group if="$(arg SIM)">
     <!-- spawn the support model -->
-    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param frame -model frame" respawn="false" output="screen" />
+    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
     <!-- spawn the camera model -->
     <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model icl_camera" respawn="false" output="screen" />
   </group>
@@ -83,17 +83,19 @@
     </group>  
   </group>  
   <group unless="$(arg R)">
-    <!-- LEFT arm & hand only -->
-    <include file="$(find agni_description)/launch/left_arm_and_hand.launch">
-      <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
-      <arg name="arm_type" value="$(arg ARM)"/>
-      <arg name="sim" value="$(arg SIM)"/>
-    </include>
-    <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /left/world 100"/>
-    <node pkg="topic_tools" type="relay"
-        name="left_joint_state_merger"
-        args="/left/joint_states /joint_states" >
-    </node>
+    <group if="$(arg L)">
+      <!-- LEFT arm & hand only -->
+      <include file="$(find agni_description)/launch/left_arm_and_hand.launch">
+        <arg name="use_prefix" value="$(arg USE_PREFIX)"/>
+        <arg name="arm_type" value="$(arg ARM)"/>
+        <arg name="sim" value="$(arg SIM)"/>
+      </include>
+      <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /left/world 100"/>
+      <node pkg="topic_tools" type="relay"
+          name="left_joint_state_merger"
+          args="/left/joint_states /joint_states" >
+      </node>
+    </group>  
   </group>    
   
  

@@ -27,8 +27,13 @@
 </xacro:macro>
 
 <xacro:macro name="frame-half" params="prefix thickness width depth height tableHeight">
-
+  <link name="world"/>
   <link name="${prefix}_frame">
+    <inertial>
+      <mass value="100.0" />
+      <origin xyz="0 1.2 0.3" rpy="0 0 0"/>
+      <inertia ixx="4.0" ixy="0" ixz="0" iyy="4.0" iyz="0" izz="4.0"/>
+    </inertial>
    <!-- horizontal front bar-->
    <xacro:bar thickness="${thickness}" len="${width}">
     <origin xyz="0 ${thickness/2} ${-thickness/2}" rpy="0 ${-M_PI/2} 0"/>
@@ -159,8 +164,15 @@
   </link>
   
   <gazebo reference="${prefix}_frame">
-      <material value="kuka-lwr.material"/>
+      <material value="Gazebo/Grey"/>
   </gazebo>
+  <joint name="${prefix}_frame_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="world"/>
+      <child link="${prefix}_frame"/>
+  </joint>
+  
+  
 </xacro:macro>
 
 </root>
