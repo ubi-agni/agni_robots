@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+	<section id="camera">
+		<data id="name" type="string"></data>
+		<data id="position" type="Vec">| 16.8067 |
+| 1275.77 |
+| 1053.3 |
+| 1 |</data>
+		<data id="norm" type="Vec">| -0.00937218 |
+| -0.752417 |
+| -0.65862 |
+| 1 |</data>
+		<data id="up" type="Vec">| 0.0182175 |
+| 0.658411 |
+| -0.752438 |
+| 1 |</data>
+		<data id="f" type="float">1</data>
+		<data id="principal-point-offset" type="Point32f">(157.182,126.208)</data>
+		<data id="sampling-resolution-x" type="float">289.5</data>
+		<data id="sampling-resolution-y" type="float">290.368</data>
+		<data id="skew" type="float">0.872628</data>
+		<section id="render-params">
+			<data id="chip-size" type="Size">320x240</data>
+			<data id="clip-z-near" type="float">1</data>
+			<data id="clip-z-far" type="float">10000</data>
+			<data id="viewport" type="Rect">(0,0)320x240</data>
+			<data id="viewport-z-min" type="float">0</data>
+			<data id="viewport-z-max" type="float">1</data>
+		</section>
+		<data id="for-direct-embedding-in-C++" type="string">
+Camera(Vec(16.8067,1275.77,1053.3,1),
+       Vec(-0.00937218,-0.752417,-0.65862,1),
+       Vec(0.0182175,0.658411,-0.752438,1),
+      1, Point32f(157.182,126.208),289.5,290.368,
+      0.872628, Camera::RenderParams(Size(320,240),
+                         1,10000, 
+                         Rect(0,0,320,240),
+                         0,1));
+</data>
+	</section>
+</config>

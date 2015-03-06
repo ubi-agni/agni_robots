@@ -23,6 +23,8 @@
   <!-- load frame description -->
   <arg name="ARM" default="kuka"/>
   <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" />
+  <!-- load camera description -->
+  <param name="camera_description" command="$(find icl_config_parser_py)/scripts/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
   
   
   <!-- set robot description for combined table + 2 robot arm and hand -->
@@ -31,6 +33,8 @@
   <group if="$(arg SIM)">
     <!-- spawn the support model -->
     <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param frame -model frame" respawn="false" output="screen" />
+    <!-- spawn the camera model -->
+    <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model icl_camera" respawn="false" output="screen" />
   </group>
    
   <!-- include our robots -->
