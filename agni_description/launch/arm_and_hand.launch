@@ -24,7 +24,7 @@
   <arg name="ARM" default="kuka"/>
   <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg ARM)_frame.urdf.xacro'" />
   <!-- load camera description -->
-  <param name="camera_description" command="$(find icl_config_parser_py)/scripts/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
+  <param name="camera_description" command="$(find icl_config_parser_py)/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
   
   
   <!-- set robot description for combined table + 2 robot arm and hand -->
