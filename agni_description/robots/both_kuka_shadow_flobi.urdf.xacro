@@ -5,7 +5,7 @@
   <xacro:include filename="$(find agni_description)/robots/left_kuka_shadow.urdf.xacro" />
   <xacro:include filename="$(find agni_description)/calibration/default_cal.xml"/>
   <xacro:include filename="$(find agni_description)/urdf/frame-half.urdf.xacro"/>
-  <xacro:include filename="$(find flobi_sim)/data/flobi_sim/defs/xacro/flobiv3.urdf.xacro" />
+  <xacro:include filename="$(find flobi_sim)/ros/defs/xacro/flobiv3.urdf.xacro" />
 
   
   <xacro:frame-half prefix="kuka" thickness="0.09" width="1.92" depth="1.82"
