@@ -494,7 +494,7 @@
         <joint name="flobi_eyes_right_lr_joint" value="0" />
         <joint name="flobi_eyes_right_ud_joint" value="0" />
         <joint name="flobi_neck_pan_joint" value="0" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="0" />
     </group_state>
     <group_state name="flobi_scene" group="flobi">
@@ -503,7 +503,7 @@
         <joint name="flobi_eyes_right_lr_joint" value="0" />
         <joint name="flobi_eyes_right_ud_joint" value="-0.18" />
         <joint name="flobi_neck_pan_joint" value="0" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="-0.2745" />
     </group_state>
     <group_state name="flobi_look_left_hand" group="flobi">
@@ -512,7 +512,7 @@
         <joint name="flobi_eyes_right_lr_joint" value="-0.2392" />
         <joint name="flobi_eyes_right_ud_joint" value="0" />
         <joint name="flobi_neck_pan_joint" value="-0.653" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="-0.2745" />
     </group_state>
     <group_state name="flobi_look_right_hand" group="flobi">
@@ -521,7 +521,7 @@
         <joint name="flobi_eyes_right_lr_joint" value="0.2392" />
         <joint name="flobi_eyes_right_ud_joint" value="0" />
         <joint name="flobi_neck_pan_joint" value="0.653" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="-0.2745" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
