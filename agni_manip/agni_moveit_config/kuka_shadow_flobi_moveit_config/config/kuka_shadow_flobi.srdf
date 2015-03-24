@@ -10,7 +10,7 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="left_armhand">
-        <joint name="left_frame_placement" />
+        <joint name="la_frame_placement" />
         <joint name="la_arm_0_joint" />
         <joint name="la_arm_1_joint" />
         <joint name="la_arm_2_joint" />
@@ -25,7 +25,7 @@
         <chain base_link="la_arm_base_link" tip_link="lh_palm" />
     </group>
     <group name="right_armhand">
-        <joint name="right_frame_placement" />
+        <joint name="ra_frame_placement" />
         <joint name="ra_arm_0_joint" />
         <joint name="ra_arm_1_joint" />
         <joint name="ra_arm_2_joint" />
@@ -43,10 +43,10 @@
         <joint name="flobi_base_joint" />
         <joint name="flobi_neck_pan_joint" />
         <joint name="flobi_neck_tilt_joint" />
-        <joint name="flobi_neck_rollh_joint" />
-        <joint name="flobi_eyes_left_lrh_joint" />
+        <joint name="flobi_neck_roll_joint" />
+        <joint name="flobi_eyes_left_lr_joint" />
         <joint name="flobi_eyes_left_ud_joint" />
-        <joint name="flobi_eyes_right_lrh_joint" />
+        <joint name="flobi_eyes_right_lr_joint" />
         <joint name="flobi_eyes_right_ud_joint" />
     </group>
     <group name="left_hand">
@@ -489,39 +489,39 @@
         <joint name="rh_WRJ2" value="0" />
     </group_state>
     <group_state name="flobi_home" group="flobi">
-        <joint name="flobi_eyes_left_lrh_joint" value="0" />
+        <joint name="flobi_eyes_left_lr_joint" value="0" />
         <joint name="flobi_eyes_left_ud_joint" value="0" />
-        <joint name="flobi_eyes_right_lrh_joint" value="0" />
+        <joint name="flobi_eyes_right_lr_joint" value="0" />
         <joint name="flobi_eyes_right_ud_joint" value="0" />
         <joint name="flobi_neck_pan_joint" value="0" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="0" />
     </group_state>
     <group_state name="flobi_scene" group="flobi">
-        <joint name="flobi_eyes_left_lrh_joint" value="0" />
+        <joint name="flobi_eyes_left_lr_joint" value="0" />
         <joint name="flobi_eyes_left_ud_joint" value="-0.18" />
-        <joint name="flobi_eyes_right_lrh_joint" value="0" />
+        <joint name="flobi_eyes_right_lr_joint" value="0" />
         <joint name="flobi_eyes_right_ud_joint" value="-0.18" />
         <joint name="flobi_neck_pan_joint" value="0" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="-0.2745" />
     </group_state>
     <group_state name="flobi_look_left_hand" group="flobi">
-        <joint name="flobi_eyes_left_lrh_joint" value="-0.2353" />
+        <joint name="flobi_eyes_left_lr_joint" value="-0.2353" />
         <joint name="flobi_eyes_left_ud_joint" value="0" />
-        <joint name="flobi_eyes_right_lrh_joint" value="-0.2392" />
+        <joint name="flobi_eyes_right_lr_joint" value="-0.2392" />
         <joint name="flobi_eyes_right_ud_joint" value="0" />
         <joint name="flobi_neck_pan_joint" value="-0.653" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="-0.2745" />
     </group_state>
     <group_state name="flobi_look_right_hand" group="flobi">
-        <joint name="flobi_eyes_left_lrh_joint" value="0.2353" />
+        <joint name="flobi_eyes_left_lr_joint" value="0.2353" />
         <joint name="flobi_eyes_left_ud_joint" value="0" />
-        <joint name="flobi_eyes_right_lrh_joint" value="0.2392" />
+        <joint name="flobi_eyes_right_lr_joint" value="0.2392" />
         <joint name="flobi_eyes_right_ud_joint" value="0" />
         <joint name="flobi_neck_pan_joint" value="0.653" />
-        <joint name="flobi_neck_rollh_joint" value="0" />
+        <joint name="flobi_neck_roll_joint" value="0" />
         <joint name="flobi_neck_tilt_joint" value="-0.2745" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->

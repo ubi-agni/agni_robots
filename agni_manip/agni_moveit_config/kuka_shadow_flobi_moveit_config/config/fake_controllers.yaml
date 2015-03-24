@@ -1,4 +1,4 @@
-controllerh_list:
+controller_list:
   - name: fake_left_armhand_controller
     joints:
       - la_arm_0_joint
