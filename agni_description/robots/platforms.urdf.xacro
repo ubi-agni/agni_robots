@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="toto" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="platform" xmlns:xacro="http://www.ros.org/wiki/xacro">
      
   <xacro:arg name="ARM" default="kuka"/>
   <xacro:arg name="R" default="1"/>
@@ -55,12 +55,15 @@
   <xacro:include filename="$(find agni_description)/robots/left_$(arg L_EE_TYPE)_ee.urdf.xacro" /> 
   <!-- frame -->
   <xacro:include filename="$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro"/>
- 
+  <!-- flobi -->
+  <xacro:include filename="$(find flobi_sim)/defs/xacro/flobiv3.urdf.xacro" />
+  
   <!-- frame generation -->
   <xacro:call macro="$(arg ARM)_frame" prefix="$(arg ARM)" />
 
-  <!-- right arm with a right end-effector (can be of type left if needed, but must profide r_ee_base_link and cal_right_ee_x|y|z|yaw|pitch|roll) -->
+ 
   <xacro:if value="$(arg R)">
+    <!-- right arm with a right end-effector (can be of type left if needed, but must profide r_ee_base_link and cal_right_ee_x|y|z|yaw|pitch|roll) -->
     <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="$(arg R_EE_SIDE)_$(arg R_EE_TYPE)" ee_base_link="${r_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
       <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
       rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
@@ -68,8 +71,9 @@
       rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
     </xacro:arm_ee>
   </xacro:if>
-  <!--left arm with a left end-effector (can be of type right if needed, but must profide l_ee_base_link and cal_left_ee_x|y|z|yaw|pitch|roll) -->
+  
   <xacro:if value="$(arg L)">
+    <!--left arm with a left end-effector (can be of type right if needed, but must profide l_ee_base_link and cal_left_ee_x|y|z|yaw|pitch|roll) -->
     <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="l" is_right="0" ee_macro="$(arg L_EE_SIDE)_$(arg L_EE_TYPE)" ee_base_link="${l_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
       <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
           rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
@@ -77,8 +81,9 @@
       rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
     </xacro:arm_ee>
   </xacro:if>
-  <!-- flobi -->
+  
   <xacro:if value="$(arg FLOBI)">
+    <!-- flobi -->
     <xacro:flobi prefix="" neutral="1" gender="0" parent="$(arg ARM)_frame" >
       <origin xyz="0 ${cal_right_arm_y} ${cal_right_arm_z+mount_triangle_length/2*sin60+0.01}" rpy="0 0 ${-M_PI/2}"/>
     </xacro:flobi>
