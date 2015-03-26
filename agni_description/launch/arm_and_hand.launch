@@ -1,11 +1,16 @@
 <launch>
   <arg name="SIM" default="true"/>
+  <arg name="ARM" default="kuka"/>
   <arg name="FLOBI" default="false"/>
+  <arg name="R" default="1"/>
+  <arg name="L" default="0"/>
+  <arg name="USE_PREFIX" default="1"/>
   <!-- arguments R and L to select left or right or both arm and hand -->
   <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
        Is mandatory if using two hands -->
+  <!-- ARM [kuka|pa10]-->
   <!-- FLOBI to select if flobi should be added to the setup -->
-       
+  
   <group if="$(arg SIM)">
     <!-- start gazebo with an empty plane -->
     <!-- Gazebo world file to load. -->
@@ -23,9 +28,7 @@
     </group>
   </group>
   
-  <!-- load frame description  
-   -->
-  <arg name="ARM" default="kuka"/>
+  <!-- load frame description  -->
   <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' ARM:=$(arg ARM)" />
   <!-- load camera description -->
   <param name="camera_description" command="$(find icl_config_parser_py)/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
@@ -42,9 +45,7 @@
   </group>
    
   <!-- include our robots -->
-  <arg name="R" default="1"/>
-  <arg name="L" default="0"/>
-  <arg name="USE_PREFIX" default="1"/>
+
   <group if="$(arg R)">
     <group if="$(arg L)">
       <!-- BOTH arms & hands -->

@@ -1,9 +1,12 @@
 <launch>
 	<!-- load description of the arm into robot_description -->
-	<arg name="namespace" default="r"/>
   <arg name="arm_type" default="kuka"/>
+  <arg name="namespace" default="r"/>
+  <arg name="sim" default="1"/>
   <arg name="is_right" default="1"/>
 	
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg arm_type)_gazebo.urdf.xacro' namespace:=$(arg namespace) is_right:=$(arg is_right)" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/arm_gazebo.urdf.xacro' 
+          ARM:=$(arg arm_type) SIM:=$(arg sim) IS_RIGHT:=$(arg is_right) NAMESPACE:=$(arg namespace)" />
+  
 </launch>

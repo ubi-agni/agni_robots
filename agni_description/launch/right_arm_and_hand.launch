@@ -11,6 +11,7 @@
       <arg name="namespace" value="r"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
       <arg name="is_right" value="1"/>
+      <arg name="sim" value="$(arg sim)"/>
     </include>  
   </group> 
   

@@ -12,6 +12,7 @@
     <arg name="arm_type" value="$(arg arm_type)"/>
     <arg name="is_right" value="$(arg is_right)"/>
     <arg name="use_prefix" value="$(arg use_prefix)"/>
+    <arg name="sim" value="$(arg sim)"/>
   </include>
 
   <param name="tf_prefix" value="$(arg namespace)"/>

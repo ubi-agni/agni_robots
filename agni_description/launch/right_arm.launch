@@ -3,9 +3,10 @@
   <arg name="sim" default="true"/>
   <group ns="ra">
     <include file="$(find agni_description)/launch/single_arm_no_controllers.launch" >
-      <arg name="init_args" value="-x 0.5 -y 0 -z 0.05" />
-      <arg name="namespace" value="ra"/>
+      <arg name="init_args" value="" />
+      <arg name="namespace" value="r"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="is_right" value="1"/>
       <arg name="sim" value="$(arg sim)"/>
     </include>
     

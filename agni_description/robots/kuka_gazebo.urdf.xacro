@@ -1,29 +1,32 @@
 <?xml version="1.0"?>
-<robot name="$(arg namespace)_kuka"
+<robot name="$(arg namespace)a_kuka"
 		 xmlns:xacro="http://www.ros.org/wiki/xacro">
-   
-  <xacro:arg name="namespace" default="r"/>
-  <xacro:arg name="is_right" default="1"/>
-  <xacro:arg name="gazebo" default="1"/> 
-   
+      
   <xacro:include filename="$(find agni_description)/kuka/kuka.urdf.xacro"/>
   <xacro:include filename="$(find agni_description)/kuka/lwr_controllers.gazebo.xacro"/>  
  
-  <!-- KUKA arm -->     
-  <xacro:if value="$(arg is_right)" >
-    <xacro:kuka_lwr_arm name="$(arg namespace)a_" reflect="1" tool_name=""/>
-    <xacro:if value="$(arg gazebo)"> 
+  <!-- KUKA arm -->    
+  <xacro:macro name="arm_noee" params="parent arm is_right prefix controller *origin">    
+    <xacro:if value="${is_right}" >
+      <xacro:kuka_lwr_arm name="${prefix}a_" reflect="1" tool_name=""/>
+      <xacro:if value="${controller}"> 
        <!-- add controllers -->
-      <xacro:right_lwr_arm_gazebo_controller namespace="$(arg namespace)a" port="49940"/>
-    </xacro:if>  
-  </xacro:if>   
-  <xacro:unless value="$(arg is_right)" >
-    <xacro:kuka_lwr_arm name="$(arg namespace)a_" reflect="-1" tool_name=""/>
-    <xacro:if value="$(arg gazebo)"> 
-       <!-- add controllers -->
-      <xacro:left_lwr_arm_gazebo_controller namespace="$(arg namespace)a" port="49938"/>
+      <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49938"/>
+      </xacro:if>    
     </xacro:if>    
-  </xacro:unless>   
-      
+    <xacro:unless value="${is_right}" >
+      <xacro:kuka_lwr_arm name="${prefix}a_" reflect="-1" tool_name=""/>
+      <xacro:if value="${controller}"> 
+       <!-- add controllers -->
+      <xacro:left_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+      </xacro:if>    
+    </xacro:unless>  
 
+    <joint name="${prefix}a_frame_placement" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${prefix}a_arm_base_link"/>
+    </joint>  
+
+  </xacro:macro>
 </robot>

@@ -11,9 +11,11 @@
       <arg name="namespace" value="l"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
       <arg name="is_right" value="0"/>
+      <arg name="sim" value="$(arg sim)"/>
     </include>  
   </group> 
-    
+  
+  <!-- load hand description only in sim, in real, the drivers is loading it -->  
   <group ns="lh">
     <include file="$(find agni_description)/launch/sr_upload.launch" >
       <arg name="namespace" value="lh"/>

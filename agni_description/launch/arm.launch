@@ -1,12 +1,15 @@
 <launch>
   <arg name="SIM" default="true"/>
-  
+  <arg name="ARM" default="kuka"/>
+  <arg name="RA" default="1"/>
+  <arg name="LA" default="0"/>
   <!-- arguments RA and LA to select left or right or both arm -->
+  <!-- ARM [kuka|pa10]-->
 
   <group if="$(arg SIM)">
     <!-- start gazebo with an empty plane -->
     <!-- Gazebo world file to load. -->
-    <arg name="world_name" default="$(find sr_description)/other/worlds/shadowhand.world" />
+    <arg name="world_name" default="$(find agni_description)/models/agni.world" />
     <arg name="gui" default="true"/>
 
     <!-- We want gazebo to stay in the root namespace but the nodes below to be
@@ -21,16 +24,13 @@
   </group>
   
   <!-- load frame description -->
-  <arg name="ARM" default="kuka"/>
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro'" />
+  <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' ARM:=$(arg ARM)" />
 
   <group if="$(arg SIM)">
-    <!-- spawn the support model -->
-    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param frame -model frame" respawn="false" output="screen" />
+   <!-- spawn the support model -->
+   <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
   </group>
   <!-- include our robots -->
-  <arg name="RA" default="1"/>
-  <arg name="LA" default="0"/>
   <group if="$(arg RA)">
 		<group if="$(arg LA)">
 			  <!-- BOTH arms -->
