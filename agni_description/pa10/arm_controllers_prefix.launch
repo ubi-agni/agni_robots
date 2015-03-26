@@ -3,6 +3,6 @@
 		 
   <node name="spawn_gazebo_arm_controllers"
   pkg="controller_manager" type="spawner" respawn="false" output="screen"
-  args="$(arg namespace)_S1_position_controller $(arg namespace)_S2_position_controller $(arg namespace)_S3_position_controller $(arg namespace)_E1_position_controller $(arg namespace)_E2_position_controller $(arg namespace)_W1_position_controller $(arg namespace)_W2_position_controller" />
+  args="--shutdown-timeout=1.0 $(arg namespace)_S1_position_controller $(arg namespace)_S2_position_controller $(arg namespace)_S3_position_controller $(arg namespace)_E1_position_controller $(arg namespace)_E2_position_controller $(arg namespace)_W1_position_controller $(arg namespace)_W2_position_controller" />
 
 </launch>

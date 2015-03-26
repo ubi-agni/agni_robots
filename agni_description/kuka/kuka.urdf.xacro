@@ -60,6 +60,10 @@
       <parent link="${name}arm_base_link"/>
       <child link="${name}arm_1_link"/>
     </joint>
+    <gazebo reference="${name}arm_0_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_0_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_0_motor"/>
@@ -72,7 +76,7 @@
       <inertial>
         <mass value="${arm_elem_link_mass}"/>
         <origin rpy="0 0 0" xyz="0 0 0.130"/>
-        <cuboid_inertia_def length="0.12" width="0.06" height="0.260"
+        <cuboid_inertia_def length="0.260" width="0.06" height="0.12"
                             mass="${arm_elem_link_mass}"/>
       </inertial>
 
@@ -109,6 +113,10 @@
       <parent link="${name}arm_1_link"/>
       <child link="${name}arm_2_link"/>
     </joint>
+    <gazebo reference="${name}arm_1_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_1_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_1_motor"/>
@@ -120,8 +128,8 @@
     <link name="${name}arm_2_link">
       <inertial>
         <mass value="${arm_elem_link_mass}"/>
-        <origin rpy="0 0 0" xyz="0 0.06 ${0.130 - 0.06}"/>
-        <cuboid_inertia_def length="0.12" width="0.06" height="0.260"
+        <origin rpy="0 0 0" xyz="0 -0.06 ${0.130 - 0.06}"/>
+        <cuboid_inertia_def length="0.260" width="0.06" height="0.12"
                             mass="${arm_elem_link_mass}"/>
       </inertial>
 
@@ -159,6 +167,10 @@
       <parent link="${name}arm_2_link"/>
       <child link="${name}arm_3_link"/>
     </joint>
+    <gazebo reference="${name}arm_2_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_2_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_2_motor"/>
@@ -170,8 +182,8 @@
     <link name="${name}arm_3_link">
       <inertial>
         <mass value="${arm_elem_link_mass}"/>
-        <origin rpy="0 0 0" xyz="0 0.06 0.130"/>
-        <cuboid_inertia_def length="0.12" width="0.06" height="0.260"
+        <origin rpy="0 0 0" xyz="0 -0.06 0.130"/>
+        <cuboid_inertia_def length="0.260" width="0.06" height="0.12"
                             mass="${arm_elem_link_mass}"/>
       </inertial>
 
@@ -209,6 +221,10 @@
       <parent link="${name}arm_3_link"/>
       <child link="${name}arm_4_link"/>
     </joint>
+    <gazebo reference="${name}arm_3_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_3_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_3_motor"/>
@@ -220,8 +236,8 @@
     <link name="${name}arm_4_link">
       <inertial>
         <mass value="${arm_elem_link_mass}"/>
-        <origin rpy="0 0 0" xyz="0 -0.06 ${0.130 - 0.06}"/>
-        <cuboid_inertia_def length="0.12" width="0.06" height="0.2600"
+        <origin rpy="0 0 0" xyz="0 0.06 ${0.130 - 0.06}"/>
+        <cuboid_inertia_def length="0.260" width="0.06" height="0.12"
                             mass="${arm_elem_link_mass}"/>
       </inertial>
 
@@ -259,6 +275,10 @@
       <parent link="${name}arm_4_link"/>
       <child link="${name}arm_5_link"/>
     </joint>
+    <gazebo reference="${name}arm_4_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_4_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_4_motor"/>
@@ -271,7 +291,7 @@
       <inertial>
         <mass value="${arm_elem_link_mass}"/>
         <origin rpy="0 0 0" xyz="0 0 0.124"/>
-        <cuboid_inertia_def length="0.12" width="0.06" height="0.248"
+        <cuboid_inertia_def length="0.248" width="0.06" height="0.12"
                             mass="${arm_elem_link_mass}"/>
       </inertial>
 
@@ -309,6 +329,10 @@
       <parent link="${name}arm_5_link"/>
       <child link="${name}arm_6_link"/>
     </joint>
+    <gazebo reference="${name}arm_5_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_5_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_5_motor"/>
@@ -320,7 +344,7 @@
     <link name="${name}arm_6_link">
       <inertial>
         <mass value="${arm_elem_ball_link_mass}"/>
-        <origin rpy="0 0 0" xyz="0 0 0.0625"/>
+        <origin rpy="0 0 0" xyz="0 0 0.0"/>
         <cuboid_inertia_def length="0.125" width="0.125" height="0.125"
                             mass="${arm_elem_ball_link_mass}"/>
       </inertial>
@@ -359,6 +383,10 @@
       <parent link="${name}arm_6_link"/>
       <child link="${name}arm_7_link"/>
     </joint>
+    <gazebo reference="${name}arm_6_joint">
+      <provideFeedback>1</provideFeedback>
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
 
     <transmission name="${name}arm_6_trans" type="pr2_mechanism_model/SimpleTransmission">
       <actuator name="${name}arm_6_motor"/>
@@ -371,7 +399,7 @@
       <inertial>
         <mass value="${arm_elem_end_link_mass}"/>
         <origin xyz="0 0 0"/>
-        <cuboid_inertia_def length="1" width="1" height="1"
+        <cuboid_inertia_def length="0.02" width="0.06" height="0.06"
                             mass="${arm_elem_end_link_mass}"/>
       </inertial>
       <visual>

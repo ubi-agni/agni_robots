@@ -227,6 +227,10 @@
     <limit lower="${-177/180*M_PI}" upper="${177/180*M_PI}" effort="100" velocity="1" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}S1">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}S1_transmission">
     <actuator name="${name}S1_actuator" />
     <joint name="${name}S1">
@@ -241,6 +245,10 @@
     <limit lower="${-94/180*M_PI}" upper="${+94/180*M_PI}" effort="100" velocity="1" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}S2">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}S2_transmission">
     <actuator name="${name}S2_actuator" />
     <joint name="${name}S2">
@@ -255,6 +263,10 @@
     <limit lower="${-174/180*M_PI}" upper="${174/180*M_PI}" effort="100" velocity="2" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}S3">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}S3_transmission">
     <actuator name="${name}S3_actuator" />
     <joint name="${name}S3">
@@ -269,6 +281,10 @@
     <limit lower="${-137/180*M_PI}" upper="${137/180*M_PI}" effort="100" velocity="2" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}E1">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}E1_transmission">
     <actuator name="${name}E1_actuator" />
     <joint name="${name}E1">
@@ -283,6 +299,10 @@
     <limit lower="${-255/180*M_PI}" upper="${255/180*M_PI}" effort="100" velocity="6.28" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}E2">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}E2_transmission">
     <actuator name="${name}E2_actuator" />
     <joint name="${name}E2">
@@ -297,6 +317,10 @@
     <limit lower="${-165/180*M_PI}" upper="${165/180*M_PI}" effort="100" velocity="6.28" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}W1">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <!-- <transmission type="transmission_interface/SimpleTransmission" name="${name}W1_transmission"> -->
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}W1_transmission">
     <actuator name="${name}W1_actuator" />
@@ -312,6 +336,10 @@
     <limit lower="${-255/180*M_PI}" upper="${255/180*M_PI}" effort="100" velocity="6.28" />
     <dynamics damping="0.2" friction="0" />
   </joint>
+  <gazebo reference="${name}W2">
+    <provideFeedback>1</provideFeedback>
+    <implicitSpringDamper>1</implicitSpringDamper>
+  </gazebo>
   <transmission type="sr_mechanism_model/SimpleTransmission" name="${name}W2_transmission">
     <actuator name="${name}W2_actuator" />
     <joint name="${name}W2">

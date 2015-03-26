@@ -42,7 +42,7 @@ d:loadComponent("FRIRA", "FRIComponent")
 --d:setActivity("FRI", 0.001, 80, rtt.globals.ORO_SCHED_RT)
 d:setActivity("FRIRA", 0, 80, rtt.globals.ORO_SCHED_RT)
 FRIRA = d:getPeer("FRIRA")
-FRIRA:getProperty("fri_port"):set(49940) -- for real right arm
+FRIRA:getProperty("fri_port"):set(49938)
 FRIRA:configure()
 
 

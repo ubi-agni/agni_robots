@@ -42,7 +42,7 @@ d:loadComponent("FRILA", "FRIComponent")
 --d:setActivity("FRI", 0.001, 80, rtt.globals.ORO_SCHED_RT)
 d:setActivity("FRILA", 0, 80, rtt.globals.ORO_SCHED_RT)
 FRILA = d:getPeer("FRILA")
-FRILA:getProperty("fri_port"):set(49938) -- for real left arm
+FRILA:getProperty("fri_port"):set(49940)
 FRILA:configure()
 
 
