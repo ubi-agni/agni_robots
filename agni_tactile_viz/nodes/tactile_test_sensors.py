@@ -12,10 +12,10 @@ class AgniTactileTestSensors():
       
       
       
-      pub1 = rospy.Publisher('tactile', UBI0All)
-      pub2 = rospy.Publisher('palm_extras', Float64MultiArray)
-      pub3 = rospy.Publisher('tactile_mid_prox', MidProxDataAll)
-      pub4 = rospy.Publisher('tactile_aux_spi', AuxSpiData)
+      pub1 = rospy.Publisher('tactile', UBI0All, queue_size=1)
+      pub2 = rospy.Publisher('palm_extras', Float64MultiArray, queue_size=1)
+      pub3 = rospy.Publisher('tactile_mid_prox', MidProxDataAll, queue_size=1)
+      pub4 = rospy.Publisher('tactile_aux_spi', AuxSpiData, queue_size=1)
       
       ubiall = UBI0All()
       ubiall.tactiles=[]
@@ -55,10 +55,12 @@ class AgniTactileTestSensors():
       r = rospy.Rate(100) # 100hz
       
       while not rospy.is_shutdown():
-        
+        ubiall.header.stamp = rospy.get_rostime()
         pub1.publish(ubiall)
         pub2.publish(palmextras)
+        midproxall.header.stamp = rospy.get_rostime()
         pub3.publish(midproxall)
+        auxspi.header.stamp = rospy.get_rostime()
         pub4.publish(auxspi)
         r.sleep()
 
@@ -66,4 +68,3 @@ class AgniTactileTestSensors():
 # start the script
 if __name__ == "__main__":
     agnitestsensor = AgniTactileTestSensors()
-  
