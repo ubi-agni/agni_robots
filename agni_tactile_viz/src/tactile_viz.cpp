@@ -126,11 +126,11 @@ void publish_marker(unsigned int id, std::string framesuffix,  float pressure, s
 		marker.mesh_resource = mesh_resource;
 		// Set the scale of the marker
 		if ( mesh_resource.find("palm")!=std::string::npos || mesh_resource.find("meta")!=std::string::npos)
-			marker.scale.x = flip*0.001;
+			marker.scale.x = flip*0.00101;
 		else
-			marker.scale.x = 0.001;
-		marker.scale.y = 0.001;
-		marker.scale.z = 0.001;
+			marker.scale.x = 0.00101;
+		marker.scale.y = 0.00101;
+		marker.scale.z = 0.00101;
 	}
 
 	// Set the marker action.  Options are ADD and DELETE
@@ -165,8 +165,8 @@ void publish_all_markers()
 			val = vTactileData[iFinger].markers[i].val;
 			//if(val > 0.01)
 			//{
-				std::size_t h = abs(string_hash(tf_prefix+vTactileData[iFinger].markers[i].fingerPrefix+vTactileData[iFinger].markers[i].name));
-				publish_marker(h,tf_prefix+frame_prefix+vTactileData[iFinger].markers[i].fingerPrefix+"distal", val,vTactileData[iFinger].markers[i].meshpath); 
+				std::size_t h = string_hash(tf_prefix+vTactileData[iFinger].markers[i].fingerPrefix+vTactileData[iFinger].markers[i].name);
+				publish_marker(abs((int)h),tf_prefix+frame_prefix+vTactileData[iFinger].markers[i].fingerPrefix+"distal", val,vTactileData[iFinger].markers[i].meshpath); 
 			//}
 		}
 		// middle 
@@ -175,8 +175,8 @@ void publish_all_markers()
 			val = vMidProxTactileData[iFinger].midmarkers[i].val;
 			//if(val > 0.01)
 			//{
-				std::size_t h = abs(string_hash(tf_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix+vMidProxTactileData[iFinger].midmarkers[i].name));
-				publish_marker(h,tf_prefix+frame_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix + "middle", val,vMidProxTactileData[iFinger].midmarkers[i].meshpath); 
+				std::size_t h = string_hash(tf_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix+vMidProxTactileData[iFinger].midmarkers[i].name);
+				publish_marker(abs((int)h),tf_prefix+frame_prefix+vMidProxTactileData[iFinger].midmarkers[i].fingerPrefix + "middle", val,vMidProxTactileData[iFinger].midmarkers[i].meshpath); 
 			//}
 		}
 		// proximal
@@ -185,8 +185,8 @@ void publish_all_markers()
 			val = vMidProxTactileData[iFinger].proxmarkers[i].val;
 			//if(val > 0.01)
 			//{
-				std::size_t h = abs(string_hash(tf_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix+vMidProxTactileData[iFinger].proxmarkers[i].name));
-				publish_marker(h,tf_prefix+frame_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix + "proximal", val,vMidProxTactileData[iFinger].proxmarkers[i].meshpath); 
+				std::size_t h = string_hash(tf_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix+vMidProxTactileData[iFinger].proxmarkers[i].name);
+				publish_marker(abs((int)h),tf_prefix+frame_prefix+vMidProxTactileData[iFinger].proxmarkers[i].fingerPrefix + "proximal", val,vMidProxTactileData[iFinger].proxmarkers[i].meshpath); 
 			//}
 		}
 		
@@ -203,7 +203,7 @@ void publish_all_markers()
 		//if(val > 0.01)
 		//{
 			std::size_t h = string_hash(tf_prefix+vAuxSpiTactileData[0].markers[i].name);
-			publish_marker(h,tf_prefix+frame_prefix+"palm", val,vAuxSpiTactileData[0].markers[i].meshpath); 
+			publish_marker(abs((int)h),tf_prefix+frame_prefix+"palm", val,vAuxSpiTactileData[0].markers[i].meshpath); 
 		//}
 	}
 	//palm extras
@@ -214,9 +214,9 @@ void publish_all_markers()
 		//{
 			std::size_t h = string_hash(tf_prefix+vPalmExtrasData[0].markers[i].name);
 			if (i==3)
-				publish_marker(h,tf_prefix+frame_prefix+"palm", val,vPalmExtrasData[0].markers[i].meshpath); 
+				publish_marker(abs((int)h),tf_prefix+frame_prefix+"palm", val,vPalmExtrasData[0].markers[i].meshpath); 
 			else
-				publish_marker(h,tf_prefix+frame_prefix+"lfmetacarpal", val,vPalmExtrasData[0].markers[i].meshpath); 
+				publish_marker(abs((int)h),tf_prefix+frame_prefix+"lfmetacarpal", val,vPalmExtrasData[0].markers[i].meshpath); 
 		//}
 	}
 	
@@ -247,16 +247,18 @@ void init_markers()
 		}
 		
 		marker.name = "inactive";
-		marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_mid_l.stl";
+		marker.meshpath = "";
 		vMidProxTactileData[iFinger].midmarkers.resize(4,marker);
+		marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_mid_l.stl";
 		marker.name = "mid_l";
 		vMidProxTactileData[iFinger].midmarkers[0] = marker;
 		marker.name = "mid_r";
 		marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_mid_r.stl";
 		vMidProxTactileData[iFinger].midmarkers[1] = marker;
 		marker.name = "inactive";
-		marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_prox_r.stl";
+		marker.meshpath = "";
 		vMidProxTactileData[iFinger].proxmarkers.resize(4,marker);
+		marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_prox_r.stl";
 		marker.name = "prox_r";
 		vMidProxTactileData[iFinger].proxmarkers[0] = marker;
 		marker.name = "prox_m";
@@ -269,6 +271,7 @@ void init_markers()
 	}
 	marker.fingerPrefix="";
 	marker.name = "inactive";
+	marker.meshpath = "";
 	vAuxSpiTactileData[0].markers.resize(16);
 	marker.name = "palm_up_r";
 	marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_palm_up_r.stl";
@@ -296,6 +299,7 @@ void init_markers()
 	vAuxSpiTactileData[0].markers[7] = marker;
 	
 	marker.name = "inactive";
+	marker.meshpath = "";
 	vPalmExtrasData[0].markers.resize(4);
 	marker.name = "metac_upper";
 	marker.meshpath = "package://sr_description/hand/model/ubi_tactiles/tax_metac_upper.stl";
