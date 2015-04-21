@@ -8,11 +8,11 @@
   
   <property name="arm_elem_base_mass" value="2.0"/>
   <property name="arm_elem_link_mass" value="2.0"/>
-  <property name="arm_elem_ball_link_mass" value="2.0"/>
-  <property name="arm_elem_end_link_mass" value="2.0"/>
+  <property name="arm_elem_ball_link_mass" value="1.0"/>
+  <property name="arm_elem_end_link_mass" value="0.2"/>
   <property name="safety_controller_k_pos" value="100" />
   <property name="safety_controller_k_vel" value="2" />
-  <property name="joint_damping" value="0.1" />
+  <property name="joint_damping" value="1.0" />
 
   <property name="arm_velocity_scale_factor" value="1"/>
 
@@ -36,9 +36,9 @@
         <material name="Orange"/>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_base_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_base_convex.stl" scale="0.9 0.9 0.9"/>
         </geometry>
       </collision>
     </link>
@@ -91,7 +91,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_a_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_a_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -145,7 +145,7 @@
       <collision>
         <origin xyz="0 0 0.2" rpy="${M_PI} 0 ${M_PI}"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_b_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_b_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -199,7 +199,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_a_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_a_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -253,7 +253,7 @@
       <collision>
         <origin xyz="0 0 0.2" rpy="0 ${M_PI} ${M_PI}"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_b_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_b_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -307,7 +307,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_last_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_last_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -361,7 +361,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_wrist_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_wrist_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -413,7 +413,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 ${reflect * -1/4 * M_PI  +  M_PI}"/>
         <geometry>
-          <mesh filename="package://agni_description/kuka/meshes/convex/arm_flanche${tool_name}_convex.stl"/>
+          <mesh filename="package://agni_description/kuka/meshes/convex/arm_flanche${tool_name}_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>

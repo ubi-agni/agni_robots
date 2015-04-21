@@ -31,10 +31,10 @@
     <xacro:if value="${controller}">  
       <!-- add controllers -->
         <xacro:if value="${is_right}" >
-          <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
+          <xacro:right_lwr_arm_gazebo_controller namespace="${prefix}a" port="49938"/>
         </xacro:if>   
         <xacro:unless value="${is_right}" >
-          <xacro:left_lwr_arm_gazebo_controller namespace="${prefix}a" port="49938"/>
+          <xacro:left_lwr_arm_gazebo_controller namespace="${prefix}a" port="49940"/>
         </xacro:unless>   
     </xacro:if>   
 

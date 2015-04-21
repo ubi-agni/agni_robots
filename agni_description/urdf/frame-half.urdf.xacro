@@ -121,7 +121,7 @@
    <collision>
      <origin xyz="${cal_left_arm_x-cos30*0.01} ${cal_left_arm_y} ${cal_left_arm_z-sin30*0.01}"
         rpy="0 ${M_PI/3} 0"/>
-    <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
+    <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
    <visual>
@@ -133,7 +133,7 @@
     <collision>
        <origin xyz="${cal_right_arm_x+cos30*0.01} ${cal_right_arm_y} ${cal_right_arm_z-sin30*0.01}"
         rpy="0 ${-M_PI/3} 0"/>
-    <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
+    <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
    <visual>
@@ -145,7 +145,7 @@
    <collision>
       <origin xyz="0 ${cal_right_arm_y} ${cal_right_arm_z-sin30*0.02-mount_triangle_length/2*sin60-0.01}"
         rpy="0 0 0"/>
-    <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
+    <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
   <!-- table plane -->
