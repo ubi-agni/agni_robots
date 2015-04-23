@@ -40,8 +40,11 @@ d:loadComponent("Grasp", "GazeboAttachController")
 d:setActivity("Grasp", 0, 20, rtt.globals.ORO_SCHED_RT)
 Grasp = d:getPeer("Grasp")
 
-Grasp:getProperty("ref_model_name"):set("r_kuka")
+-- FIXME: retrieving the arm name is a problem,
+-- as this deployer is used for arm and arm+hand with different model names
+Grasp:getProperty("ref_model_name"):set("right_kuka_shadow")
 Grasp:getProperty("ref_link_name"):set("ra_arm_7_link")
+-- TODO: the target model should be included in the attach call
 Grasp:getProperty("tgt_model_name"):set("coke_can")
 Grasp:getProperty("tgt_link_name"):set("link")
 Grasp:configure()

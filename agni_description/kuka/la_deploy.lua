@@ -7,6 +7,7 @@ d=tc:getPeer("Deployer")
 -- ROS integration
 d:import("rtt_rosnode")
 d:import("rtt_roscomm")
+d:import("rtt_std_msgs")
 d:import("rtt_sensor_msgs")
 d:import("rtt_diagnostic_msgs")
 
@@ -18,6 +19,8 @@ d:import("rtt_control_msgs")
 d:import("flwr_filter")
 d:import("s_motion_manager")
 d:import("s_log_saver")
+
+d:import("gazebo_attach_controller")
 
 -- End of user code
 
@@ -31,6 +34,20 @@ local cp=rtt.Variable("ConnPolicy")
 function conn2ros(depl, port, topic)
    depl:stream(port,rtt.provides("ros"):topic(topic))
 end
+
+
+d:loadComponent("Grasp", "GazeboAttachController")
+d:setActivity("Grasp", 0, 20, rtt.globals.ORO_SCHED_RT)
+Grasp = d:getPeer("Grasp")
+
+-- FIXME: retrieving the arm name is a problem,
+-- as this deployer is used for arm and arm+hand with different model names
+Grasp:getProperty("ref_model_name"):set("left_kuka_shadow")
+Grasp:getProperty("ref_link_name"):set("la_arm_7_link")
+-- TODO: the target model should be included in the attach call
+Grasp:getProperty("tgt_model_name"):set("coke_can")
+Grasp:getProperty("tgt_link_name"):set("link")
+Grasp:configure()
 
 
 d:loadComponent("LWRDiag", "FRIDiagnostics")
@@ -108,6 +125,10 @@ d:stream("JntPub.joint_state",rtt.provides("ros"):topic("joint_states"))
 --d:stream("FRILA.CartesianWrench",rtt.provides("ros"):topic("cartesian_wrench"))
 --d:stream("FilterLA.Log",rtt.provides("ros"):topic("log"))
 
+d:stream("Grasp.Attach",ros:topic("/gazebo_attach"))
+d:stream("Grasp.Attached",ros:topic("/gazebo_attached"))
+
+
 -- Start of user code usercode
 FRILA:start()
 LWRDiag:start()
@@ -115,5 +136,6 @@ JntPub:start()
 FilterLA:start()
 LogLA:start()
 MotionManager:start()
+Grasp:start()
 
 print("finished starting")
