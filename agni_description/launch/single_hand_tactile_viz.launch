@@ -1,0 +1,7 @@
+<launch>
+  <arg name="namespace" default=""/>
+	<group ns="$(arg namespace)">
+			<node pkg="tactile_marker_publisher" type="tactile_marker_publisher" name="$(arg namespace)_tactile_viz" output="screen">
+			</node>
+	</group>
+</launch>
