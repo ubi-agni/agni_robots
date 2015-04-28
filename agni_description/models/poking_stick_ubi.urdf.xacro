@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <robot name="poking_stick_ubi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:include filename="$(find sr_description)/hand/xacro/finger/distal/distal.tactile.xacro" />
 
   <xacro:macro name="poking_stick_ubi" params="prefix">
   <link name="${prefix}poking_stick">
@@ -50,6 +52,10 @@
       </geometry>
     </collision>
   </link>
+  
+  <!-- tactile marker mapping description -->
+  <xacro:distal_tactile bio="false" ubi="true" eli="false" prefix="${prefix}" link_prefix="ff" finger_number="0"/>
+  
   <gazebo reference="${prefix}poking_stick">
   </gazebo>
   </xacro:macro>
