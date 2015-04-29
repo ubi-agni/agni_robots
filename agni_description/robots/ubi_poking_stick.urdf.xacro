@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot name="$(arg prefix)ubi_poking_stick"
+		 xmlns:xacro="http://www.ros.org/wiki/xacro">
+     
+   <xacro:arg name="prefix" default="rh_"/>
+   <xacro:include filename="$(find agni_description)/models/poking_stick_ubi.urdf.xacro" />
+   <xacro:include filename="$(find sr_description)/hand/xacro/finger/distal/distal.tactile.xacro" />
+  
+  <xacro:poking_stick_ubi prefix="$(arg prefix)"/>
+  <!-- tactile marker mapping description -->
+  <xacro:distal_tactile bio="false" ubi="true" eli="false" prefix="$(arg prefix)" link_prefix="ff" finger_number="0"/>
+
+</robot>
