@@ -2,14 +2,8 @@
 	<arg name="namespace" default="ra"/>
   <arg name="sim" default="true"/>
   <!-- Currently no difference between simulated and real kuka -->
-	 
-	<!-- Controllers for the kuka -->
-  <!-- controller parameter for Kuka-->
+  
+  <!-- only load parameters here -->
   <rosparam command="load" file="$(find agni_description)/kuka/$(arg namespace)_controllers.yaml" />
- 
-  <!-- load controllers for kuka-->
-  <!-- load controllers -->
-  <node name="$(arg namespace)_lwr_arm_controller" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T $(arg namespace) -e " args=" -i $(find agni_description)/kuka/$(arg namespace)_deploy.lua --">
-  </node> 
     
 </launch>

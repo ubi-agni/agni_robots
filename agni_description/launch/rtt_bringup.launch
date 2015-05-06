@@ -1,0 +1,10 @@
+<launch>
+  <arg name="namespace" default="ra"/>
+	<arg name="deploy" default="$(find agni_description)/kuka/ra_deploy.lua"/>
+  
+  <!-- load controllers for kuka-->
+  <!-- load controllers -->
+  <node name="$(arg namespace)_lwr_arm_controller" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T $(arg namespace) -e " args=" -i $(arg deploy) $(find agni_description)">
+  </node> 
+    
+</launch>
