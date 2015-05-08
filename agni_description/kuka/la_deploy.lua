@@ -38,12 +38,12 @@ MotionManager = d:getPeer("MotionManager")
 MotionManager:configure()
 
 require("kuka")
-la_kuka = KukaControllers.create("la",49940)
-la_kuka:init(d)
-la_kuka:deploy(d)
-la_kuka:connectIn(d,"FilteredJointPosition","MotionManager.DesiredJointPosLA")
-la_kuka:connectOut(d,"JointPosition","MotionManager.FRIRealJointPosLA")
-la_kuka:connectOut(d,"Log","LogLA.Log")
+la_kuka = KukaControllers("la",49940)
+la_kuka.init(d)
+la_kuka.deploy(d)
+la_kuka.connectIn(d,"FilteredJointPosition","MotionManager.DesiredJointPosLA")
+la_kuka.connectOut(d,"JointPosition","MotionManager.FRIRealJointPosLA")
+la_kuka.connectOut(d,"Log","LogLA.Log")
 
 
 -- ROS in out
@@ -52,7 +52,7 @@ d:stream("Grasp.Attach",ros:topic("/gazebo_attach"))
 d:stream("Grasp.Attached",ros:topic("/gazebo_attached"))
 
 
-la_kuka:start()
+la_kuka.start()
 LogLA:start()
 MotionManager:start()
 
