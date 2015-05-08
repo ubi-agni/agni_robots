@@ -1,6 +1,9 @@
 KukaControllers = {}
 KukaControllers.__index = KukaControllers
 
+--toto = false
+--kukacontrollers_imports_done=false
+
 function KukaControllers.create(namespace,port)
    local k = {}             -- our new object
    setmetatable(k,KukaControllers)  -- make KukaControllers handle lookup
@@ -13,14 +16,14 @@ end
        
 function KukaControllers:deploy(d)
   -- deploy diagnostics
-  diagname = self.namespace.."LWRDiag"
+  local diagname = self.namespace.."LWRDiag"
   d:loadComponent(diagname, "FRIDiagnostics")
   d:setActivity(diagname, 0.01, 2, rtt.globals.ORO_SCHED_RT)
   self.diag = d:getPeer(diagname)
   self.diag:configure()
   
   -- deploy FRI and advertize its input/output
-  friname = self.namespace.."FRI"
+  local friname = self.namespace.."FRI"
   d:loadComponent(friname, "FRIComponent")
   d:setActivity(friname, 0, 80, rtt.globals.ORO_SCHED_RT)
   self.fri = d:getPeer(friname)
@@ -30,7 +33,7 @@ function KukaControllers:deploy(d)
   self.out_portmap['JointPosition'] = friname..".JointPosition"
 
   -- deploy joint state publisher
-  jspname = self.namespace.."JntPub"
+  local jspname = self.namespace.."JntPub"
   d:loadComponent(jspname, "JointStatePublisher")
   d:setActivity(jspname, 0.01, 10, rtt.globals.ORO_SCHED_RT)
   self.jsp = d:getPeer(jspname)
@@ -42,7 +45,7 @@ function KukaControllers:deploy(d)
   self.jsp:configure()
 
   -- deploy the filter and advertize its input/output
-  filtername = self.namespace.."Filter"
+  local filtername = self.namespace.."Filter"
   d:loadComponent(filtername, "FLWRFilter")
   d:setActivity(filtername, 0, 70, rtt.globals.ORO_SCHED_RT)
   self.filter = d:getPeer(filtername)
@@ -72,9 +75,9 @@ function KukaControllers:deploy(d)
 end
 
 function KukaControllers:start()
+  self.fri:start()
   self.diag:start()
   self.jsp:start()
-  self.fri:start()
   self.filter:start()
   self.running=true
 end
@@ -82,13 +85,13 @@ end
 function KukaControllers:stop()
   self.diag:stop()
   self.jsp:stop()
-  self.fri:stop()
   self.filter:stop()
+  self.fri:stop()
   self.running=false
 end
 
 function KukaControllers:connectIn(d,intype,peerportname)
-  previous_running=self.running
+  local previous_running=self.running
   if self.running then
     self.stop()
   end
@@ -104,7 +107,7 @@ function KukaControllers:connectIn(d,intype,peerportname)
 end
 
 function KukaControllers:connectOut(d,outtype,peerportname)
-  previous_running=self.running
+  local previous_running=self.running
   if self.running then
     self.stop()
   end
@@ -120,16 +123,21 @@ function KukaControllers:connectOut(d,outtype,peerportname)
 end
 
 function KukaControllers:init(d)
-
-  -- ROS integration
-  d:import("rtt_rosnode")
-  d:import("rtt_roscomm")
-  d:import("rtt_std_msgs")
-  d:import("rtt_sensor_msgs")
-  d:import("rtt_diagnostic_msgs")
-
-  d:import("lwr_fri")
-  d:import("oro_joint_state_publisher")
-  d:import("flwr_filter")
+  --if kukacontrollers_imports_done~=true then
+     -- ROS integration
+    d:import("rtt_rosnode")
+    d:import("rtt_roscomm")
+    d:import("rtt_std_msgs")
+    d:import("rtt_sensor_msgs")
+    d:import("rtt_diagnostic_msgs")
+    
+    d:import("lwr_fri")
+    d:import("oro_joint_state_publisher")
+    d:import("flwr_filter")
+    print ("Importing kuka required components")
+    kukacontrollers_imports_done=true
+ --else
+    --print ("Components already imported")
+ --end
 
 end

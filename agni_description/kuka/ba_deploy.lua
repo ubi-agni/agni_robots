@@ -1,6 +1,12 @@
 require "rttlib"
 require "rttros"
 
+local pathOfThisFile = ...
+print("path of this file :"..pathOfThisFile)
+package.path = pathOfThisFile..'/kuka/?.lua;' .. package.path 
+
+require("kuka")
+
 tc=rtt.getTC()
 d=tc:getPeer("Deployer")
 
@@ -11,6 +17,8 @@ d:import("rtt_std_msgs")
 d:import("rtt_sensor_msgs")
 d:import("rtt_diagnostic_msgs")
 d:import("rtt_control_msgs")
+d:import("rtt_dot_service")
+--d:loadService("Deployer","dot")
 
 -- Start of user code imports
 d:import("s_motion_manager")
@@ -18,10 +26,6 @@ d:import("s_log_saver")
 d:import("gazebo_attach_controller")
 
 
-local pathOfThisFile = ...
-print("path of this file :"..pathOfThisFile)
-
-package.path = pathOfThisFile..'/kuka/?.lua;' .. package.path 
 
 d:loadComponent("Grasp", "GazeboAttachController")
 d:setActivity("Grasp", 0, 20, rtt.globals.ORO_SCHED_RT)
@@ -42,7 +46,7 @@ d:setActivity("MotionManager", 0.001, 60, rtt.globals.ORO_SCHED_RT)
 MotionManager = d:getPeer("MotionManager")
 MotionManager:configure()
 
-require("kuka")
+
 la_kuka = KukaControllers.create("la",49940)
 la_kuka:init(d)
 la_kuka:deploy(d)
@@ -51,7 +55,7 @@ la_kuka:connectOut(d,"JointPosition","MotionManager.FRIRealJointPosLA")
 la_kuka:connectOut(d,"Log","LogLA.Log")
 
 ra_kuka = KukaControllers.create("ra",49938)
-ra_kuka:init(d)
+--ra_kuka:init(d) -- IF THIS IS CALLED A SECOND TIME, bind sockets break and cannot open to the wanted port but opens to random port
 ra_kuka:deploy(d)
 ra_kuka:connectIn(d,"FilteredJointPosition","MotionManager.DesiredJointPosRA")
 ra_kuka:connectOut(d,"JointPosition","MotionManager.FRIRealJointPosRA")
