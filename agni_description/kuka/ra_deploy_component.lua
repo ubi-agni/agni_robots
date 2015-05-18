@@ -34,6 +34,7 @@ d:addPeer(name, "Deployer")
 local kuka_controller = d:getPeer(name)
 -- add service lua to new component named name
 d:loadService(name,"Lua")
+-- add controller services -- 
 d:loadService(name,"controllerService")
 
  
@@ -45,15 +46,10 @@ kuka_controller:getProperty("namespace"):set(prefix)
 kuka_controller:getProperty("port"):set(49938)
 kuka_controller:configure()
 
--- add Connect services -- DOES NOT WORK.
---kuka_controller:exec_file(pathOfThisFile.."connect_services.lua")
---kuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosLA")
---kuka_controller:connectOut(d,"JointPosition","MotionManager.FRIRealJointPosLA")
---kuka_controller:connectOut(d,"Log","LogLA.Log")
-
-d:connect(prefix.."FRI.JointPosition", "MotionManager.FRIRealJointPosRA", rtt.Variable("ConnPolicy"))
-d:connect("MotionManager.DesiredJointPosRA", prefix.."Filter.DesiredJointPos", rtt.Variable("ConnPolicy"))
-d:connect(prefix.."Filter.Log", "LogRA.Log", rtt.Variable("ConnPolicy"))
+-- connect the component
+kuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosRA")
+kuka_controller:provides("controllerService"):connectOut("JNTPOS","MotionManager.FRIRealJointPosRA")
+kuka_controller:provides("controllerService"):connectOut("LOG","LogRA.Log")
 
 -- stat the component
 kuka_controller:start()

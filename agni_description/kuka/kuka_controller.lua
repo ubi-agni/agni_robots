@@ -134,10 +134,14 @@ end
  
 function startHook()
   -- stop all peers except Deployer
+  local d=tc:getPeer("Deployer")
   local peers=tc:getPeers()
   for _,peername in pairs(peers) do
     if peername~="Deployer" then
-      tc:getPeer(peername):start()
+      p=d:getPeer(peername)
+      if p then
+        p:start()
+      end
     end
   end
   --self.running=true
@@ -147,10 +151,17 @@ end
 
 function stopHook()
   -- stop all peers except Deployer
+  local d=tc:getPeer("Deployer")
   local peers=tc:getPeers()
   for _,peername in pairs(peers) do
     if peername~="Deployer" then
-      tc:getPeer(peername):stop()
+      p=d:getPeer(peername)
+      if p then
+        p:stop()
+      else --already removed
+        print (tc:getName().." removing already unloaded "..peername)
+        tc:removePeer(peername)
+      end
     end
   end
   --self.running=false
@@ -162,22 +173,29 @@ end
 -- automatically cleaned up. This means this must be done manually for
 -- long living components:
 function cleanupHook()
+  print ("Cleaning up "..tc:getName())
   -- unload all peers except Deployer
   local d=tc:getPeer("Deployer")
   local peers=tc:getPeers()
-  
+    
   for _,peername in pairs(peers) do
     if peername~="Deployer" then
-      d:getPeer(peername):cleanup()
-    end
-  end
-  for _,peername in pairs(peers) do
-    if peername~="Deployer" then
-      d:unloadComponent(peername)
+      p=d:getPeer(peername)
+      if p then
+        print (tc:getName().." cleaning up "..peername)
+        p:cleanup()
+      else --already removed
+        print (tc:getName().." removing already unloaded "..peername)
+        tc:removePeer(peername)
+      end
     end
   end
 
+  -- should not unload the component here, otherwise kickout function crash
+  -- due to not refreshing the peer list after cleaning up
+
   rttlib.tc_cleanup()
+  print ("Cleaned up "..tc:getName())
    
 end
 

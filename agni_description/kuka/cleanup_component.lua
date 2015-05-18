@@ -9,28 +9,6 @@ elseif tcName=="Deployer" then
 		d=tc
 end
 -- stop, cleanup and unload all the components
-d:kickOutAll()
--- stop all peers except lua
---local peers=tc:getPeers()
---for _,peername in pairs(peers) do
-  --if peername~="lua" then
-    --d:getPeer(peername):stop()
-  --end
---end
-
-
---for _,peername in pairs(peers) do
-  --if peername~="lua" then
-    --d:getPeer(peername):cleanup()
-  --end
---end
-
-
---for _,peername in pairs(peers) do
-  --if peername~="lua" then
-    --d:unloadComponent(peername)
-  --end
---end
-
+d:kickOutAll() --crashes if one component already unloaded other components within its cleanup hook
 
 print("finished cleaning up")
