@@ -13,21 +13,29 @@ require("kuka")
 tc=rtt.getTC()
 tcName=tc:getName()
 print (tcName)
-if tcName=="lua" then
-		d=tc:getPeer("Deployer")
-elseif tcName=="Deployer" then
+-- find the deployer
+-- script might be started from deployer directly or from any other component, hopefully having a deployer as peer
+if tcName=="Deployer" then
 		d=tc
+else
+		d=tc:getPeer("Deployer")
+    -- TODO complain and exit if deployer not found
 end
 
 local prefix="ra"
 
--- create LuaComponents
-d:loadComponent(prefix.."kuka_controller", "OCL::LuaComponent")
-d:addPeer(prefix.."kuka_controller", "Deployer")
---... and get references to them
-local kuka_controller = d:getPeer(prefix.."kuka_controller")
---add service lua 
-d:loadService(prefix.."kuka_controller","Lua")
+d:import("agni_rtt_services")
+
+-- create LuaComponent
+name = prefix.."kuka_controller"
+d:loadComponent(name, "OCL::LuaComponent")
+d:addPeer(name, "Deployer")
+-- ... and get a handle to it
+local kuka_controller = d:getPeer(name)
+-- add service lua to new component named name
+d:loadService(name,"Lua")
+d:loadService(name,"controllerService")
+
  
 -- load the Lua hooks
 kuka_controller:exec_file(pathOfThisFile.."kuka_controller.lua")
@@ -39,7 +47,7 @@ kuka_controller:configure()
 
 -- add Connect services -- DOES NOT WORK.
 --kuka_controller:exec_file(pathOfThisFile.."connect_services.lua")
---kuka_controller:connectIn(d,"FilteredJointPosition","MotionManager.DesiredJointPosLA")
+--kuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosLA")
 --kuka_controller:connectOut(d,"JointPosition","MotionManager.FRIRealJointPosLA")
 --kuka_controller:connectOut(d,"Log","LogLA.Log")
 

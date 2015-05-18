@@ -1,0 +1,12 @@
+byte io_type
+byte UNKNOWN=0
+byte JNTPOS=1
+byte JNTVEL=2
+byte JNTTRQ=3
+byte CARTPOS=11
+byte CARTVEL=12
+byte CARTFOR=13
+byte FILJNTPOS=101
+byte FILJNTVEL=102
+byte FILJNTTRQ=103
+

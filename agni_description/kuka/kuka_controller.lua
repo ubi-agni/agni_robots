@@ -5,14 +5,14 @@ fri = 0
 diag = 0
 jsp = 0
 filter = 0
-in_portmap = {}
-out_portmap = {}
   
 iface_spec = {
    ports={},
    properties={
       { name='namespace', datatype='string', desc="namespace as prefix" },
       { name='port', datatype='int', desc="port on which FRI listens" },
+      { name='in_portmap', datatype='agni_rtt_services/ControlIOMap', desc="input port mapping" },
+      { name='out_portmap', datatype='agni_rtt_services/ControlIOMap', desc="output port mapping" },
    }
 }
  
@@ -20,9 +20,6 @@ iface_spec = {
 iface=rttlib.create_if(iface_spec)
 
 function configureHook()
-  iface=rttlib.create_if(iface_spec)
-  namespace = iface.props.namespace:get()
-  port = iface.props.port:get()
   
   local d=tc:getPeer("Deployer")
   tcName=tc:getName()
@@ -30,7 +27,15 @@ function configureHook()
   d:import("lwr_fri")
   d:import("oro_joint_state_publisher")
   d:import("flwr_filter")
+  d:import("agni_rtt_services")
   
+  iface=rttlib.create_if(iface_spec)
+  namespace = iface.props.namespace:get()
+  port = iface.props.port:get()
+  local in_portmap={}
+  local out_portmap={}
+  
+ 
   diagname = namespace.."LWRDiag"
   d:loadComponent(diagname, "FRIDiagnostics")
   d:setActivity(diagname, 0.01, 2, rtt.globals.ORO_SCHED_RT)
@@ -49,8 +54,9 @@ function configureHook()
   -- add fri to the parent component peers
   d:addPeer(tcName, friname)  
   
-  in_portmap['JointPosition'] = friname..".JointPositionCommand"
-  out_portmap['JointPosition'] = friname..".JointPosition"
+  
+  in_portmap['JNTPOS'] = friname..".JointPositionCommand"
+  out_portmap['JNTPOS'] = friname..".JointPosition"
 
   -- deploy joint state publisher
   jspname = namespace.."JntPub"
@@ -73,11 +79,19 @@ function configureHook()
   filter = d:getPeer(filtername)
   filter:getProperty("FREQUENCY"):set(1.0)
   filter:configure()
-  in_portmap['FilteredJointPosition'] = filtername..".DesiredJointPos"
-  out_portmap['Log'] = filtername..".Log"
+  
+  
+  in_portmap['FILJNTPOS'] = filtername..".DesiredJointPos"
+  out_portmap['LOG'] = filtername..".Log"
   -- add filter to the parent component peers
   d:addPeer(tcName, filtername) 
         
+        
+  -- store the mapping in the properties
+  
+  storeMapping("in_portmap",in_portmap)
+  storeMapping("out_portmap",out_portmap)
+  
       
   d:connect(friname..".RobotState", diagname..".RobotState", rtt.Variable("ConnPolicy"))
   d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
@@ -98,40 +112,25 @@ function configureHook()
   return true
 end
 
-function connectIn(intype,peerportname)
-    local d=tc:getPeer("Deployer")
-    local previous_running=tc:isActive()
-    if tc:isActive() then
-      stopHook()
-    end
-    if in_portmap[intype] then
-      d:connect(in_portmap[intype], peerportname, rtt.Variable("ConnPolicy"))
-    else
-      print ("this type is not supported in this controller")
-    end
-   
-    if tc:isActive() ~= previous_running then
-      startHook()
-    end
-end
+-- convert table into property of type ControlIOMap
+function storeMapping(propname,mymap)
 
-function connectOut(outtype,peerportname)
-    local d=tc:getPeer("Deployer")
-    local previous_running=tc:isActive()
-    if tc:isActive() then
-      stopHook()
-    end
-    if out_portmap[outtype] then
-      d:connect(out_portmap[outtype], peerportname, rtt.Variable("ConnPolicy"))
-    else
-      print ("this type is not supported in this controller")
-    end
-   
-    if tc:isActive() ~= previous_running then
-      startHook()
-    end
+  portmap = tc:getProperty(propname):get() 
+  local count = 0
+  -- count entries
+  for _ in pairs(mymap) do count = count + 1 end
+  portmap.type:resize(count)
+  portmap.portname:resize(count)
+  count = 0
+  count = 0
+  -- assign entries
+  for k,v in pairs(mymap) do 
+    portmap.type[count]=k
+    portmap.portname[count]=v
+    count=count+1
+  end
+  
 end
-
  
 function startHook()
   -- stop all peers except Deployer
@@ -166,6 +165,12 @@ function cleanupHook()
   -- unload all peers except Deployer
   local d=tc:getPeer("Deployer")
   local peers=tc:getPeers()
+  
+  for _,peername in pairs(peers) do
+    if peername~="Deployer" then
+      d:getPeer(peername):cleanup()
+    end
+  end
   for _,peername in pairs(peers) do
     if peername~="Deployer" then
       d:unloadComponent(peername)

@@ -24,9 +24,18 @@
       <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(arg world_name)"/>
         <arg name="gui" value="$(arg gui)"/>
-      </include>
+      </include>      
     </group>
   </group>
+  
+  
+  <!-- rtt deployement environment -->
+  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/kuka/deploy.lua">
+  </node> 
+  
+  <!-- motion manager and logger rtt deployement -->
+  <node pkg="rosservice" type="rosservice" name="motion_manager_deployer" args="call --wait /rtt_environment/Deployer/run_lua_script $(find agni_description)/kuka/scripted_deploy.lua"/>   
+ 
   
   <!-- load frame description  -->
   <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' ARM:=$(arg ARM)" />
