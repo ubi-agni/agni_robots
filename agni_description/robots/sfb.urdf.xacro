@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="SIM" default="1"/> 
+  
+  <!-- arm with end-effector 
+  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_anytool.urdf.xacro" /> -->
+  <!-- arm calibration -->
+  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>-->
+  <!-- end-effector -->
+  <xacro:include filename="$(find agni_description)/robots/shadow_hand.urdf.xacro" /> 
+ 
+  <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
+  <link name="world" /> 
+  <!-- arm and hand 
+  <xacro:if value="$(arg IS_RIGHT)" >
+    <xacro:arm_ee parent="world" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="right_shadow_motor" ee_base_link="forearm" use_prefix="$(arg USE_PREFIX)" controller="$(arg SIM)">
+      <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
+      rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
+      <origin xyz="${cal_right_ee_x} ${cal_right_ee_y} ${cal_right_ee_z}"
+      rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
+    </xacro:arm_ee>
+  </xacro:if>
+  <xacro:unless value="$(arg IS_RIGHT)" >
+    <xacro:arm_ee parent="world" arm="$(arg ARM)" prefix="l" is_right="0" ee_macro="left_shadow_motor" ee_base_link="forearm" use_prefix="$(arg USE_PREFIX)" controller="$(arg SIM)">
+      <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
+          rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
+      <origin xyz="${cal_left_ee_x} ${cal_left_ee_y} ${cal_left_ee_z}"
+      rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
+    </xacro:arm_ee>
+  </xacro:unless>-->
+  
+  <xacro:call macro="shadow_hand" model="motor" side="right" tactile="bio" prefix="lh">
+  </xacro:call>
+   <!-- 
+  <xacro:call macro="shadow_hand" model="motor" side="left" tactile="bio" prefix="lh">
+  </xacro:call>-->
+  
+</robot>
