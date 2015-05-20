@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot name="arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ARM" default="kuka"/>
+  <xacro:arg name="SIDE" default="right"/>
+  <xacro:arg name="SIM" default="1"/> 
+  
+  <!-- arm calibration -->
+  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_arm.urdf.xacro"/>
+  <xacro:property name="side" value="$(arg SIDE)"/> 
+  <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
+  <link name="world" />
+  <!-- arm -->
+  <xacro:call macro="$(arg ARM)_arm" parent="world" side="${side}" controller="$(arg SIM)" >
+    <origin xyz="${cal_arm_x.get(side,0.0)} ${cal_arm_y.get(side,0.0)} ${cal_arm_z.get(side,0.0)}"
+      rpy="${cal_arm_roll.get(side,0.0)} ${cal_arm_pitch.get(side,0.0)} ${cal_arm_yaw.get(side,0.0)}"/>
+  </xacro:call>
+</robot>

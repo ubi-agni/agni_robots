@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="$(arg SIDE)_$(arg ARM)_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ARM" default="kuka"/>
+  <xacro:arg name="SIDE" default="right"/>
+  <xacro:arg name="SIM" default="1"/> 
+  <xacro:arg name="HANDMODEL" default="motor"/>
+  <xacro:arg name="TACTILE" default=""/>
+
+  <xacro:property name="side" value="$(arg SIDE)"/>  
+  <xacro:property name="arm"  value="$(arg ARM)" />
+  <!-- arm -->
+  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_arm.urdf.xacro" /> 
+  <!-- arm calibration -->
+  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
+  <!-- end-effector -->
+  <xacro:include filename="$(find agni_description)/robots/shadow_hand_ee.urdf.xacro" /> 
+  <!-- end-effector calibration -->
+  <xacro:include filename="$(find agni_description)/calibration/shadow_hand_$(arg HANDMODEL)_cal.xml"/>
+  
+   <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
+  <link name="world" /> 
+  
+  <!-- arm and hand -->
+  <!-- Arm -->
+  <xacro:call macro="$(arg ARM)_arm" parent="world" side="${side}" controller="$(arg SIM)">
+    <origin xyz="${cal_arm_x[side]} ${cal_arm_y[side]} ${cal_arm_z[side]}"
+      rpy="${cal_arm_roll[side]} ${cal_arm_pitch[side]} ${cal_arm_yaw[side]}"/>
+  </xacro:call>
+                
+  <!-- Effector -->
+  <xacro:property name="arm_prefix" value="${'ra' if side=='right' else 'la'}"/> 
+  <xacro:property name="ee_prefix" value="${'rh' if side=='right' else 'lh'}"/> 
+  <xacro:call macro="shadow_hand" model="$(arg HANDMODEL)" tactile="$(arg TACTILE)" side="${side}" prefix="${ee_prefix}"/>         
+  
+  <!-- Link arm and effector -->
+  <joint name="ra_arm_hand_mount" type="fixed">
+    <parent link="${arm_prefix}_${arm_mount[arm]}"/> 
+    <child link="${ee_prefix}_${ee_mount['shadow_hand']}"/>
+    <origin xyz="${cal_ee_x['shadow_hand'][side]} ${cal_ee_y['shadow_hand'][side]} ${cal_ee_z['shadow_hand'][side]}"
+  rpy="${cal_ee_roll['shadow_hand'][side]} ${cal_ee_pitch['shadow_hand'][side]} ${cal_ee_yaw['shadow_hand'][side]}"/>
+  </joint>
+</robot>

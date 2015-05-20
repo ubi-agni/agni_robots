@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
   
-  <xacro:macro name="myrmex_quick_mount" params="prefix">
+  <xacro:macro name="myrmex_quick_mount" params="prefix tactile">
   <link name="${prefix}myrmex_quick_mount">
     <visual>
       <origin xyz="0 0 0" 

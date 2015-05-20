@@ -1,7 +1,9 @@
 <launch>
 	<arg name="namespace" default="rh"/>
-	<arg name="use_prefix" default="0"/>
+	<arg name="model" default="motor"/>
+  <arg name="side" default="right"/>
+  <arg name="tactile" default=""/>
   <!-- load robot_description -->
-	<param if="$(arg use_prefix)" name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg namespace)_ubi_motor_hand_prefix.urdf.xacro'" />  
-	<param unless="$(arg use_prefix)" name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/$(arg namespace)_ubi_motor_hand.urdf.xacro'" />  	
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/shadow_hands.urdf.xacro' 
+  MODEL:=$(arg model) SIDE:=$(arg side)  TACTILE:=$(arg tactile) PREFIX:=$(arg namespace) " /> 
 </launch>

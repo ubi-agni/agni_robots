@@ -1,13 +1,13 @@
 <launch>
 	<!-- load description of arm+hand into robot_description -->
-	<arg name="namespace" default="right"/>
+	<arg name="side" default="right"/>
   <arg name="arm_type" default="kuka"/>
-	<arg name="use_prefix" default="0"/>
+	<arg name="hand_model" default="motor"/>
   <arg name="sim" default="1"/>
-  <arg name="is_right" default="1"/>
+  <arg name="tactile" default=""/>
   <!-- load robot_description -->
-  <param if="$(arg use_prefix)" name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/arm_hand_gazebo.urdf.xacro' 
-          ARM:=$(arg arm_type) SIM:=$(arg sim) USE_PREFIX:=$(arg use_prefix) IS_RIGHT:=$(arg is_right)" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/arms_hands.urdf.xacro' 
+          ARM:=$(arg arm_type) SIM:=$(arg sim) TACTILE:=$(arg tactile) HANDMODEL:=$(arg hand_model) SIDE:=$(arg side)" />
   
 </launch>
  

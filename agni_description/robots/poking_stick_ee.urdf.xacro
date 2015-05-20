@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="ee_mount"  value="${dict(poking_stick='poking_stick')}" />
+  <!-- default ee cal (so that the dict exists) but key right and left should be set at top level-->
+  <xacro:property name="cal_ee_x" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_y" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_z" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_yaw" value="${dict(default= 0.0)}" /> 
+  <xacro:property name="cal_ee_pitch" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_roll" value="${dict(default= 0.0)}" />
+
+  
+  <xacro:macro name="poking_stick" params="model:='-' tactile:='-' side prefix:=rh" >
+    <xacro:include filename="$(find agni_description)/models/poking_stick.urdf.xacro" /> 
+    <xacro:poking_stick prefix="${prefix}_" tactile="${tactile}" />
+    <xacro:if value="${tactile!='-'}">
+      <xacro:include filename="$(find sr_description)/hand/xacro/finger/distal/distal.tactile.xacro" />
+      <!-- tactile marker mapping description -->
+      <xacro:distal_tactile bio="${'bio' in tactile}" ubi="${'ubi' in tactile}" eli="${'eli' in tactile}" prefix="{prefix}" link_prefix="ff" finger_number="0"/>
+    </xacro:if>
+  </xacro:macro>
+</robot>

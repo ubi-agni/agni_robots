@@ -1,13 +1,21 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  
+
+  
+  <!-- default port value. do not modify here. 
+       If not correct, redefine your own property and pass the values through macro param -->
+  <xacro:property name="port" value="${dict( right=49938, left=49940)}"/>
+  
   <!-- namespace must be set up according to launch file namespace -->
-  <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) -->
-  <macro name="left_lwr_arm_gazebo_controller" params="namespace port">
+  <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) --> 
+  <xacro:macro name="left_lwr_arm_gazebo_controller" params="namespace port:=$port['left']">
+    <xacro:property name="prefix"  value="${'' if namespace=='' else namespace+'_'}" />
 		<gazebo> 
 			<plugin name="left_lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>
-				<robotPrefix>la</robotPrefix>
+				<robotPrefix>${prefix}</robotPrefix>
 				<robotNamespace>${namespace}</robotNamespace>
 				<remotePort>${port}</remotePort>
 				<baseLink>la_arm_base_link</baseLink>
@@ -21,11 +29,11 @@
 				<la_arm_6_joint>0</la_arm_6_joint>
 			</plugin>
 		</gazebo>  
-	</macro>
+	</xacro:macro>
 	
 	<!-- namespace must be set up according to launch file namespace -->
   <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) -->
-  <macro name="right_lwr_arm_gazebo_controller" params="namespace port">
+  <xacro:macro name="right_lwr_arm_gazebo_controller" params="namespace port:=$port['right']">
 		<gazebo> 
 			<plugin name="right_lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>
@@ -43,6 +51,6 @@
 				<ra_arm_6_joint>0</ra_arm_6_joint>
 			</plugin>
 		</gazebo>  
-	</macro>
+	</xacro:macro>
 	
 </robot>

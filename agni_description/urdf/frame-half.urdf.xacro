@@ -8,9 +8,6 @@
 <xacro:include filename="$(find agni_description)/urdf/materials.urdf.xacro"/>
 <xacro:include filename="$(find agni_description)/calibration/kuka_cal.xml"/>
 
-  <property name="cos30"     value="0.866025404" />
-  <property name="sin30"     value="0.5" />
-  <property name="sin60"     value="0.866025404" />
   <property name="mount_triangle_length"     value="0.26" />
   
 
@@ -113,37 +110,37 @@
 
   <!-- kuka mount triangle -->
    <visual>
-     <origin xyz="${cal_left_arm_x-cos30*0.01} ${cal_left_arm_y} ${cal_left_arm_z-sin30*0.01}"
+     <origin xyz="${cal_arm_x['left']-cos(30/180.0*pi)*0.01} ${cal_arm_y['left']} ${cal_arm_z['left']-sin(30/180.0*pi)*0.01}"
         rpy="0 ${M_PI/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
     <material name="Silver"/>
    </visual>  
    <collision>
-     <origin xyz="${cal_left_arm_x-cos30*0.01} ${cal_left_arm_y} ${cal_left_arm_z-sin30*0.01}"
+     <origin xyz="${cal_arm_x['left']-cos(30/180.0*pi)*0.01} ${cal_arm_y['left']} ${cal_arm_z['left']-sin(30/180.0*pi)*0.01}"
         rpy="0 ${M_PI/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
    <visual>
-     <origin xyz="${cal_right_arm_x+cos30*0.01} ${cal_right_arm_y} ${cal_right_arm_z-sin30*0.01}"
+     <origin xyz="${cal_arm_x['right']+cos(30/180.0*pi)*0.01} ${cal_arm_y['right']} ${cal_arm_z['right']-sin(30/180.0*pi)*0.01}"
         rpy="0 ${-M_PI/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
     <material name="Silver"/>
    </visual>  
     <collision>
-       <origin xyz="${cal_right_arm_x+cos30*0.01} ${cal_right_arm_y} ${cal_right_arm_z-sin30*0.01}"
+       <origin xyz="${cal_arm_x['right']+cos(30/180.0*pi)*0.01} ${cal_arm_y['right']} ${cal_arm_z['right']-sin(30/180.0*pi)*0.01}"
         rpy="0 ${-M_PI/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
    <visual>
-     <origin xyz="0 ${cal_right_arm_y} ${cal_right_arm_z-sin30*0.02-mount_triangle_length/2*sin60-0.01}"
+     <origin xyz="0 ${cal_arm_y['right']} ${cal_arm_z['right']-sin(30/180.0*pi)*0.02-mount_triangle_length/2*sin(60/180.0*pi)-0.01}"
         rpy="0 0 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
     <material name="Silver"/>
    </visual> 
    <collision>
-      <origin xyz="0 ${cal_right_arm_y} ${cal_right_arm_z-sin30*0.02-mount_triangle_length/2*sin60-0.01}"
+      <origin xyz="0 ${cal_arm_y['right']} ${cal_arm_z['right']-sin(30/180.0*pi)*0.02-mount_triangle_length/2*sin(60/180.0*pi)-0.01}"
         rpy="0 0 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  

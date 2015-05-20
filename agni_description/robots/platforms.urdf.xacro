@@ -3,13 +3,17 @@
      
   <xacro:arg name="ARM" default="kuka"/>
   <xacro:arg name="R" default="1"/>
-  <xacro:arg name="L" default="1"/>
-  <xacro:arg name="R_EE_TYPE" default="shadow_motor"/>
-  <xacro:arg name="L_EE_TYPE" default="shadow_motor"/>
+  <xacro:arg name="L" default="0"/>
+  <xacro:arg name="R_EE_TYPE" default="-"/>
+  <xacro:arg name="R_EE_MODEL" default="-"/>
   <xacro:arg name="R_EE_SIDE" default="right"/>
+  <xacro:arg name="R_EE_TACTILE" default="-"/>
+  <xacro:arg name="L_EE_TYPE" default="-"/>
+  <xacro:arg name="L_EE_MODEL" default=""/>
   <xacro:arg name="L_EE_SIDE" default="left"/>
+  <xacro:arg name="L_EE_TACTILE" default="-"/>
   <xacro:arg name="FLOBI" default="0"/>
-  <xacro:arg name="USE_PREFIX" default="true"/>
+  <xacro:arg name="SIM" default="1"/>
   
   <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
        Is mandatory if using two hands -->
@@ -31,61 +35,99 @@
   <!-- R and L to select left or right or both arm and hand -->
   <!-- R_EE_TYPE and L_EE_TYPE are the names of the end-effectors
        mounted on right and left arms respectively -->
+  <!-- R_EE_MODEL and L_EE_MODEL are the model of the end-effectors
+       mounted on right and left arms respectively -->
   <!-- R_EE_SIDE and L_EE_SIDE are the variants of the end-effectors 
        for right and left arms respectively
        Note a left hand can be mounted on the right arm 
        with R_EE_SIDE:=left --> 
-  <!-- file called right_<R_EE_TYPE>_ee.urdf.xacro should exist and provide 
-        - a macro called <R_EE_SIDE>_<R_EE_TYPE>
-        - a property r_ee_base_link with the name of the attachement link 
+  <!-- R_EE_TACTILE and L_EE_TACTILE define the type of tactile system of the end-effectors
+       mounted on right and left arms respectively -->
+  <!-- file called right_<R_EE_TYPE>.urdf.xacro should exist and provide 
+        - a macro called <R_EE_TYPE> taking parameters model, tactile, side and prefix
+        - a property as a dictionary ee_mount['<R_EE_TYPE>'] with the name of the attachement link 
           for this end-effector type 
-          
-        - offset properties cal_right_ee_x|y|z|yaw|pitch|roll of the mounting
-          part of this effector when attached at the right arm 
-       The same for left
+        - offset properties as a dictionary cal_ee_x|y|z|yaw|pitch|roll['<R_EE_TYPE>']['left|right'] 
+          of the mounting part of this effector when attached on the arm
           -->
   
-  <!-- arm with end-effector -->
-  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_anytool.urdf.xacro" /> 
-  <!-- arm calibration -->
-  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
-  <!-- right end-effector -->
-  <xacro:include filename="$(find agni_description)/robots/right_$(arg R_EE_TYPE)_ee.urdf.xacro" /> 
-  <!-- left enf-effector -->
-  <xacro:include filename="$(find agni_description)/robots/left_$(arg L_EE_TYPE)_ee.urdf.xacro" /> 
+  <xacro:include filename="$(find sr_description)/materials.urdf.xacro" />
+  
+  <!-- arm -->
+  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_arm.urdf.xacro" /> 
   <!-- frame -->
   <xacro:include filename="$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro"/>
-  <!-- flobi -->
-  <xacro:include filename="$(find flobi_sim)/defs/xacro/flobiv3.urdf.xacro" />
-  
+  <!-- arm calibration -->
+  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
   <!-- frame generation -->
   <xacro:call macro="$(arg ARM)_frame" prefix="$(arg ARM)" />
-
  
   <xacro:if value="$(arg R)">
-    <!-- right arm with a right end-effector (can be of type left if needed, but must profide r_ee_base_link and cal_right_ee_x|y|z|yaw|pitch|roll) -->
-    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="r" is_right="1" ee_macro="$(arg R_EE_SIDE)_$(arg R_EE_TYPE)" ee_base_link="${r_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
-      <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
-      rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
-      <origin xyz="${cal_right_ee_x} ${cal_right_ee_y} ${cal_right_ee_z}"
-      rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
-    </xacro:arm_ee>
+    <!-- Arm -->
+    <xacro:property name="arm"  value="$(arg ARM)" />
+    <xacro:call macro="${arm}_arm" parent="world" side="right" controller="$(arg SIM)">
+    <origin xyz="${cal_arm_x.get('right',0.0)} ${cal_arm_y.get('right',0.0)} ${cal_arm_z.get('right',0.0)}"
+      rpy="${cal_arm_roll.get('right',0.0)} ${cal_arm_pitch.get('right',0.0)} ${cal_arm_yaw.get('right',0.0)}"/>
+    </xacro:call>
+    
+    <xacro:property name="r_ee_type" value="$(arg R_EE_TYPE)"/> 
+    <xacro:property name="r_ee_side" value="$(arg R_EE_SIDE)"/>
+    <xacro:property name="r_ee_model" value="$(arg R_EE_MODEL)"/>  
+    <xacro:property name="r_ee_prefix" value="${'rh' if r_ee_side=='right' else 'lh'}"/>
+    <xacro:property name="r_ee_tactile" value="$(arg R_EE_TACTILE)"/>
+    
+    <xacro:if value="${r_ee_type!='-'}">
+     <!-- right end-effector -->
+      <xacro:include filename="$(find agni_description)/robots/${r_ee_type}_ee.urdf.xacro" /> 
+      <xacro:include filename="$(find agni_description)/calibration/${r_ee_type}${'_'+r_ee_model if r_ee_model!='-' else ''}_cal.xml"/>  
+      <xacro:call macro="${r_ee_type}" model="$(arg R_EE_MODEL)" tactile="${r_ee_tactile if r_ee_tactile!='-' else ''}" side="${r_ee_side}" prefix="${r_ee_prefix}"/>         
+
+     <!-- Link arm and effector -->
+      <joint name="ra_arm_hand_mount" type="fixed">
+        <parent link="ra_${arm_mount[arm]}"/> 
+        <child link="${r_ee_prefix}_${ee_mount[r_ee_type]}"/>
+          <origin xyz="${cal_ee_x[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_y[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_z[r_ee_type].get(r_ee_side,0.0)}"
+        rpy="${cal_ee_roll[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_pitch[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_yaw[r_ee_type].get(r_ee_side,0.0)}"/>
+      </joint>
+
+    </xacro:if>
   </xacro:if>
   
   <xacro:if value="$(arg L)">
-    <!--left arm with a left end-effector (can be of type right if needed, but must profide l_ee_base_link and cal_left_ee_x|y|z|yaw|pitch|roll) -->
-    <xacro:arm_ee parent="$(arg ARM)_frame" arm="$(arg ARM)" prefix="l" is_right="0" ee_macro="$(arg L_EE_SIDE)_$(arg L_EE_TYPE)" ee_base_link="${l_ee_base_link}" use_prefix="$(arg USE_PREFIX)" controller="false">
-      <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
-          rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
-      <origin xyz="${cal_left_ee_x} ${cal_left_ee_y} ${cal_left_ee_z}"
-      rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
-    </xacro:arm_ee>
+    <!-- Arm -->
+    <xacro:property name="arm"  value="$(arg ARM)" />
+    <xacro:call macro="${arm}_arm" parent="world" side="left" controller="$(arg SIM)">
+      <origin xyz="${cal_arm_x.get('left',0.0)} ${cal_arm_y.get('left',0.0)} ${cal_arm_z.get('left',0.0)}"
+      rpy="${cal_arm_roll.get('left',0.0)} ${cal_arm_pitch.get('left',0.0)} ${cal_arm_yaw.get('left',0.0)}"/>
+    </xacro:call>
+
+    <xacro:property name="l_ee_type" value="$(arg L_EE_TYPE)"/> 
+    <xacro:property name="l_ee_side" value="$(arg L_EE_SIDE)"/>
+    <xacro:property name="l_ee_model" value="$(arg L_EE_MODEL)"/>  
+    <xacro:property name="l_ee_prefix" value="${'rh' if l_ee_side=='right' else 'lh'}"/>
+    <xacro:property name="l_ee_tactile" value="$(arg L_EE_TACTILE)"/>
+    
+    <xacro:if value="${l_ee_type!='-'}">
+     <!-- left end-effector -->
+      <xacro:include filename="$(find agni_description)/robots/${l_ee_type}_ee.urdf.xacro" /> 
+      <xacro:include filename="$(find agni_description)/calibration/${l_ee_type}${'_'+l_ee_model if l_ee_model!='-' else ''}_cal.xml"/>  
+      <xacro:call macro="${l_ee_type}" model="$(arg L_EE_MODEL)" tactile="${l_ee_tactile if l_ee_tactile!='-' else ''}" side="${l_ee_side}" prefix="${l_ee_prefix}"/>         
+
+     <!-- Link arm and effector -->
+      <joint name="la_arm_hand_mount" type="fixed">
+        <parent link="la_${arm_mount[arm]}"/> 
+        <child link="${l_ee_prefix}_${ee_mount[l_ee_type]}"/>
+          <origin xyz="${cal_ee_x[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_y[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_z[l_ee_type].get(l_ee_side,0.0)}"
+      rpy="${cal_ee_roll[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_pitch[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_yaw[l_ee_type].get(l_ee_side,0.0)}"/>
+      </joint>
+    </xacro:if>
   </xacro:if>
   
   <xacro:if value="$(arg FLOBI)">
     <!-- flobi -->
+    <xacro:include filename="$(find flobi_sim)/defs/xacro/flobiv3.urdf.xacro" />
     <xacro:flobi prefix="" neutral="1" gender="0" parent="$(arg ARM)_frame" >
-      <origin xyz="0 ${cal_right_arm_y} ${cal_right_arm_z+mount_triangle_length/2*sin60+0.01}" rpy="0 0 ${-M_PI/2}"/>
+      <origin xyz="0 ${cal_arm_y['right']} ${cal_arm_z['right']+mount_triangle_length/2*sin(60/180.0*pi)+0.01}" rpy="0 0 ${-pi/2.0}"/>
     </xacro:flobi>
  </xacro:if>
 

@@ -1,14 +1,20 @@
 <?xml version="1.0"?>
 <robot name="poking_stick" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="poking_stick" params="prefix">
+  <xacro:macro name="poking_stick" params="prefix tactile">
   <link name="${prefix}poking_stick">
     <visual>
       <origin xyz="0 0 0" 
           rpy="0 0 0"/>
       <geometry>
+        <xacro:if value="${'ubi' in tactile}">
+        <mesh scale="0.001 0.001 0.001" 
+					 filename="package://agni_description/models/meshes/poking_stick_for_ubi.dae"/>
+        </xacro:if>
+        <xacro:unless value="${'ubi' in tactile}">
         <mesh scale="0.001 0.001 0.001" 
 					 filename="package://agni_description/models/meshes/poking_stick.dae"/>
+        </xacro:unless>
       </geometry>
     </visual> 
     <collision>
@@ -18,21 +24,59 @@
         <cylinder radius="0.06725" length="0.015"/>
       </geometry>
     </collision>
-    <collision>
-      <origin xyz="0 0 0.08875" 
-          rpy="0 0 0"/>
-      <geometry>
-        <cylinder radius="0.0075" length="0.1475"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 0.1625" 
-          rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="0.0075"/>
-      </geometry>
-    </collision>
+    <xacro:if value="${'ubi' in tactile}">
+      <collision>
+        <origin xyz="0 0 0.07375" 
+            rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.0075" length="0.1445"/>
+        </geometry>
+      </collision> 
+    </xacro:if>
+    <xacro:unless value="${'ubi' in tactile}">
+      <collision>
+        <origin xyz="0 0 0.08875" 
+            rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.0075" length="0.1475"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin xyz="0 0 0.1625" 
+            rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0075"/>
+        </geometry>
+      </collision>
+    </xacro:unless>
   </link>
+  
+  <xacro:if value="${'ubi' in tactile}">
+    <joint name="${prefix}stick_to_ubi" type="fixed">
+      <origin xyz="0 0 0.13605" rpy="0 0 0"/>
+      <parent link="${prefix}poking_stick"/>
+      <child link="${prefix}ffdistal"/>  
+    </joint>
+  
+    <link name="${prefix}ffdistal">
+      <visual>
+        <origin xyz="0 0 0" 
+            rpy="0 0 0"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" 
+             filename="package://sr_description/hand/model/ubi_tactiles/ubi_tip_visual.dae"/>
+        </geometry>
+      </visual> 
+      <collision>
+        <origin xyz="0 0 0" 
+            rpy="0 0 0"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" 
+             filename="package://sr_description/hand/model/ubi_tactiles/ubi_tip_collision.dae"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:if>
   
   <gazebo reference="${prefix}poking_stick">
   </gazebo>

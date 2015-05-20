@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="ee_mount"  value="${dict(myrmex='myrmex_quick_mount')}" />
+  <!-- default ee cal (so that the dict exists) but key right and left should be set at top level-->
+  <xacro:property name="cal_ee_x" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_y" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_z" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_yaw" value="${dict(default= 0.0)}" /> 
+  <xacro:property name="cal_ee_pitch" value="${dict(default= 0.0)}" />
+  <xacro:property name="cal_ee_roll" value="${dict(default= 0.0)}" />
+  
+  <xacro:macro name="myrmex" params="model:='-' tactile:='-' side prefix:=rh" >
+    <xacro:include filename="$(find agni_description)/models/myrmex_quick_mount.urdf.xacro" /> 
+    <xacro:myrmex_quick_mount prefix="${prefix}_" tactile="${tactile}" />
+    <xacro:if value="${tactile!='-'}">
+      <!-- tactile marker mapping description -->
+      
+    </xacro:if>
+  </xacro:macro>
+ 
+</robot>

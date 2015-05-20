@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="SIM" default="1"/> 
+  
+  <xacro:include filename="$(find agni_description)/urdf/pa10_frame.urdf.xacro"/>
+   
+  <!-- arm with end-effector 
+  <xacro:include filename="$(find agni_description)/robots/pa10_arm.urdf.xacro" /> -->
+  <!-- arm calibration -->
+  <xacro:include filename="$(find agni_description)/calibration/pa10_cal.xml"/>
+  <!-- end-effector -->
+  <xacro:include filename="$(find agni_description)/robots/shadow_hand_ee.urdf.xacro" />
+ 
+  <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
+  <link name="world" /> 
+  
+  <xacro:call macro="pa10_frame" prefix="pa10" />
+  
+  <!-- Right -->
+    <!-- Arm -->
+    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg CTRL)">
+      <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
+        rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
+    </xacro:call>
+                  
+    <!-- Effector -->
+    <xacro:call macro="shadow_hand" model="motor" side="right" tactile="ubi" prefix="rh" />
+
+    <!-- Link arm and effector -->
+    <joint name="ra_arm_hand_mount" type="fixed">
+      <parent link="ra_arm_hand_mount"/>
+      <child link="rh_forearm}"/>
+      <origin xyz="${cal_right_ee_x} ${cal_right_ee_y} ${cal_right_ee_z}"
+    rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
+    </joint>
+  
+  <!-- Left -->
+    <!-- Arm -->
+    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg CTRL)">
+      <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
+          rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
+    </xacro:call>
+                  
+    <!-- Effector -->
+    <xacro:call macro="shadow_hand" model="motor" side="left" tactile="ubi" prefix="lh" />
+
+    <!-- Link arm and effector -->
+    <joint name="la_arm_hand_mount" type="fixed">
+      <parent link="la_arm_hand_mount"/>
+      <child link="lh_forearm}"/>
+      <origin xyz="${cal_left_ee_x} ${cal_left_ee_y} ${cal_left_ee_z}"
+      rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
+    </joint> 
+</robot>

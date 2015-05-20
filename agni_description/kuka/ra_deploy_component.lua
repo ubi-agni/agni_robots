@@ -12,7 +12,6 @@ require("kuka")
 
 tc=rtt.getTC()
 tcName=tc:getName()
-print (tcName)
 -- find the deployer
 -- script might be started from deployer directly or from any other component, hopefully having a deployer as peer
 if tcName=="Deployer" then

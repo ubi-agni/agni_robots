@@ -1,0 +1,145 @@
+<launch>
+  <arg name="SIM" default="true"/>
+    
+  <group if="$(arg SIM)">
+    <!-- start gazebo with an empty plane -->
+    <!-- Gazebo world file to load. -->
+    <arg name="world_name" default="$(find agni_description)/models/agni.world" />
+    <arg name="gui" default="true"/>
+  
+    <!-- We want gazebo to stay in the root namespace but the nodes below to be
+    relative. Can then launch this inside a namespace to namespace the hand. -->
+    <group ns="/">
+        <!-- We reuse the logic in empty_world.launch, changing only the name of the world to be launched -->
+      <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="gui" value="$(arg gui)"/>
+      </include>      
+    </group>
+  </group>
+  
+  <!-- load frame description  -->
+  <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' FRAME:=pa10" />
+  <!-- load camera description -->
+  <param name="camera_description" command="$(find icl_config_parser_py)/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
+  <!-- set robot description for combined table + robot arm and end-effector  -->
+  <param name="robot_description" command="$(find xacro)/xacro.py --inorder '$(find agni_description)/robots/sfb.urdf.xacro' SIM:=$(arg SIM)" />
+ 
+  <!-- include our robots -->
+  <group if="$(arg SIM)">
+    <!-- spawn the support model -->
+    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
+    <!-- spawn the camera model -->
+    <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model icl_camera" respawn="false" output="screen" />
+    <!-- load hand description only in sim, in real, the drivers is loading it -->  
+    <!-- needed for the sr_gazebo_plugin -->
+    <group ns="lh">
+      <include file="$(find agni_description)/launch/sr_upload.launch" >
+        <arg name="namespace" value="lh"/>
+        <arg name="model" value="motor"/>
+        <arg name="side" value="left"/>
+        <arg name="tactile" value="ubi"/>
+      </include>  
+    </group>
+    <group ns="rh">
+      <include file="$(find agni_description)/launch/sr_upload.launch" >
+        <arg name="namespace" value="rh"/>
+        <arg name="model" value="motor"/>
+        <arg name="side" value="right"/>
+        <arg name="tactile" value="ubi"/>
+      </include>  
+    </group>
+  </group>
+ 
+  <!-- needed for pa10 using the sr_gazebo_plugin -->
+  <group ns="la">
+    <include file="$(find agni_description)/launch/arm_upload.launch" >
+      <arg name="arm_type" value="pa10"/>
+      <arg name="side" value="left"/>
+      <arg name="sim" value="$(arg SIM)"/>
+    </include>  
+  </group> 
+  <group ns="ra">
+    <include file="$(find agni_description)/launch/arm_upload.launch" >
+      <arg name="arm_type" value="pa10"/>
+      <arg name="side" value="right"/>
+      <arg name="sim" value="$(arg SIM)"/>
+    </include>  
+  </group> 
+  
+  <!-- Load the general left|right robot_description, spawn it, merge joint_states -->
+  <group ns="left">
+    <include file="$(find agni_description)/launch/single_arm_and_hand_no_controllers.launch" >
+      <!-- <arg name="init_args" value="-x 0.5 -y 0 -z 0.05" />-->
+      <arg name="init_args" value="" />
+      <arg name="namespace" value="left"/>
+      <arg name="arm_type" value="pa10"/>
+      <arg name="side" value="left"/>
+      <arg name="sim" value="$(arg SIM)"/>
+      <arg name="tactile" value="ubi"/>
+      <arg name="hand_model" value="motor"/>     
+    </include>
+    
+    <node pkg="topic_tools" type="relay"
+        name="pa10_joint_state_merger"
+        args="/la/joint_states /left/joint_states" >
+    </node>
+    <node pkg="topic_tools" type="relay"
+        name="shadow_joint_state_merger"
+        args="/lh/joint_states /left/joint_states" >
+    </node>     
+  </group>  
+  <group ns="right">
+    <include file="$(find agni_description)/launch/single_arm_and_hand_no_controllers.launch" >
+      <!-- <arg name="init_pose" value="-x -0.5 -y 0 -z 0.05" />-->
+      <arg name="init_args" value="" />
+      <arg name="namespace" value="right"/>
+      <arg name="arm_type" value="pa10"/>
+      <arg name="side" value="right"/>
+      <arg name="sim" value="$(arg SIM)"/>
+      <arg name="tactile" value="ubi"/>
+      <arg name="hand_model" value="motor"/>   
+    </include>
+    <!-- robot_state_publisher can work with data coming from different sources at different times -->
+    <node pkg="topic_tools" type="relay"
+        name="pa10_joint_state_merger"
+        args="/ra/joint_states /right/joint_states" >
+    </node>
+    <node pkg="topic_tools" type="relay"
+        name="shadow_joint_state_merger"
+        args="/rh/joint_states /right/joint_states" >
+    </node>
+  </group>
+  
+  <!-- drivers and/or controllers the arm 
+  <group ns="la">
+    <include file="$(find agni_description)/launch/pa10_bringup.launch" >
+      <arg name="namespace" value="la"/>
+      <arg name="sim" value="$(arg SIM)"/>
+    </include>  
+  </group> 
+  <group ns="ra">
+    <include file="$(find agni_description)/launch/pa10_bringup.launch" >
+      <arg name="namespace" value="ra"/>
+      <arg name="sim" value="$(arg SIM)"/>
+    </include>  
+  </group> 
+   -->
+  <!-- drivers and/or controllers for the hand
+  <include file="$(find agni_description)/launch/sr_bringup.launch">
+    <arg name="namespace" value="lh" />
+    <arg name="sim" value="$(arg SIM)"/>
+    <arg name="side" value="left"/>
+    <arg name="model" value="motor"/>
+    <arg name="tactile" value="ubi"/>
+  </include>
+  <include file="$(find agni_description)/launch/sr_bringup.launch">
+    <arg name="namespace" value="rh" />
+    <arg name="sim" value="$(arg SIM)"/>
+    <arg name="side" value="right"/>
+    <arg name="model" value="motor"/>
+    <arg name="tactile" value="ubi"/>
+  </include>
+   -->
+ 
+</launch>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot name="shadow_hand"
+		 xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find agni_description)/urdf/sr_gazebo.urdf.xacro" /> 
+  <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.urdf.xacro" />
+  <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.tactile.xacro" /> 
+  
+  <xacro:property name="ee_mount"  value="${dict(shadow_hand='forearm')}" />
+  
+   <!-- default ee cal (so that the dict exists) but key right and left should be set at top level-->
+  <xacro:property name="cal_ee_x" value="${dict(shadow_hand=dict(default=0.0))}" />
+  <xacro:property name="cal_ee_y" value="${dict(shadow_hand=dict(default=0.0))}" />
+  <xacro:property name="cal_ee_z" value="${dict(shadow_hand=dict(default=0.0))}" />
+  <xacro:property name="cal_ee_yaw" value="${dict(shadow_hand=dict(default=0.0))}" /> 
+  <xacro:property name="cal_ee_pitch" value="${dict(shadow_hand=dict(default=0.0))}" />
+  <xacro:property name="cal_ee_roll" value="${dict(shadow_hand=dict(default=0.0))}" />
+  
+  
+  <xacro:macro name="shadow_hand" params="model:='motor' tactile:='ubi' side:='right' prefix:='rh'">         
+    <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
+  
+    <xacro:shadowhand muscletrans="${'trans' in model}" 
+                      muscle="${'muscle' in model}" 
+                      bio="${'bio' in tactile}" 
+                      ubi="${'ubi' in tactile}" 
+                      eli="${'eli' in tactile}" 
+                      reflect="${1 if side=='right' else -1}"
+                      prefix="${'' if prefix=='' else prefix+'_'}"  />
+                      
+    <xacro:shadowhand_tactile bio="${'bio' in tactile}" 
+                      ubi="${'ubi' in tactile}" 
+                      eli="${'eli' in tactile}"
+                      reflect="${1 if side=='right' else -1}"
+                      prefix="${'' if prefix=='' else prefix+'_'}" />
+
+</xacro:macro>
+</robot>
