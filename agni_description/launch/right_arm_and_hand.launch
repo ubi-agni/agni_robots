@@ -1,5 +1,4 @@
 <launch>
-  <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
   <arg name="sim" default="true"/>
   <arg name="hand_model" default="motor"/>

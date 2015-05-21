@@ -1,6 +1,7 @@
 <launch>
   <arg name="SIM" default="true"/>
   <arg name="ARM" default="kuka"/>
+  <arg name="FLOBI" default="false"/>
   <arg name="RA" default="1"/>
   <arg name="LA" default="0"/>
   <arg name="RTT_TEST" default="1" />
@@ -36,15 +37,16 @@
   <!-- load frame description -->
   <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' FRAME:=$(arg ARM)" />
 
+  <!-- set robot description for combined table + robot arm NO end-effector  -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) 
+              FLOBI:=$(arg FLOBI) R:=$(arg RA) L:=$(arg LA) R_EE_TYPE:='-' L_EE_TYPE:='-' SIM:=$(arg SIM) " />
+ 
   <group if="$(arg SIM)">
    <!-- spawn the support model -->
    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
   </group>
   
-  <!-- args for the following includes -->
-  
-  
-            
+  <!-- robots --> 
   <group if="$(arg RA)">
     <group ns="ra">
       <!-- start the arm -->

@@ -29,7 +29,6 @@
     </group>
   </group>
   
-  
   <!-- rtt deployement environment -->
   <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/kuka/deploy.lua">
   </node> 
@@ -44,7 +43,7 @@
   <param name="camera_description" command="$(find icl_config_parser_py)/icl_conf_parser.py '$(find agni_description)/calibration/depth-qvga.xml'"/>
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) 
               FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE_TYPE:=shadow_hand R_EE_MODEL:=motor R_EE_SIDE:=right R_EE_TACTILE:=ubi 
               L_EE_TYPE:=shadow_hand L_EE_MODEL:=motor L_EE_SIDE:=left L_EE_TACTILE:=ubi SIM:=$(arg SIM) " />
  
@@ -55,13 +54,15 @@
     <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model icl_camera" respawn="false" output="screen" />
   </group>
    
-  <!-- args for the following includes -->
-  <arg name="arm_type" value="$(arg ARM)"/>
-  <arg name="sim" value="$(arg SIM)"/>
-  
+  <!-- robots -->
   <group if="$(arg R)">
     <!-- RIGHT arm & hand only -->
-    <include file="$(find agni_description)/launch/right_arm_and_hand.launch" />
+    <include file="$(find agni_description)/launch/right_arm_and_hand.launch">
+      <arg name="arm_type" value="$(arg ARM)"/>
+      <arg name="sim" value="$(arg SIM)"/>
+      <arg name="hand_model" value="motor"/>
+      <arg name="tactile" value="ubi"/>
+    </include>
     <!-- attach RIGHT arm+hand to namespaced-world -->
     <node name="right_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /right/world  100"/>
     <!-- relay RIGHT arm+hand joint_states to the main one-->
@@ -72,7 +73,12 @@
   </group>  
   <group if="$(arg L)">
     <!-- LEFT arm & hand only -->
-    <include file="$(find agni_description)/launch/left_arm_and_hand.launch" />
+    <include file="$(find agni_description)/launch/left_arm_and_hand.launch">
+      <arg name="arm_type" value="$(arg ARM)"/>
+      <arg name="sim" value="$(arg SIM)"/>
+      <arg name="hand_model" value="motor"/>
+      <arg name="tactile" value="ubi"/>
+    </include>
     <!-- attach LEFT arm+hand to namespaced-world -->
     <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /$(arg ARM)_frame /left/world 100"/>
     <!-- relay LEFT arm+hand joint_states to the main one-->
