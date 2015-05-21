@@ -32,7 +32,7 @@
 
     <xacro:if value="${controller}">  
       <!-- add controllers -->
-      <xacro:call macro="${side}_lwr_arm_gazebo_controller" namespace="${prefix}" port="$port['side']"/>
+      <xacro:call macro="${side}_lwr_arm_gazebo_controller" namespace="${prefix}" port="${portlist[side]}"/>
     </xacro:if>       
   </xacro:macro>    
 </robot>

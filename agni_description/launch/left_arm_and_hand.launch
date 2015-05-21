@@ -2,24 +2,27 @@
   <arg name="use_prefix" default="0"/>  
   <arg name="arm_type" default="kuka"/>
   <arg name="sim" default="true"/>
+  <arg name="hand_model" default="motor"/>
+  <arg name="tactile" default="ubi"/>
   <!-- upload parameters on the correct namespaces 
   must be done before gazebo spawner to have the plugin controller manager
   load on the sub namespaces -->
   
   <group ns="la">
     <include file="$(find agni_description)/launch/arm_upload.launch" >
-      <arg name="namespace" value="l"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
-      <arg name="is_right" value="0"/>
+      <arg name="side" value="right"/>
       <arg name="sim" value="$(arg sim)"/>
     </include>  
   </group> 
   
   <!-- load hand description only in sim, in real, the drivers is loading it -->  
-  <group ns="lh">
+  <group if="$(arg sim)" ns="lh">
     <include file="$(find agni_description)/launch/sr_upload.launch" >
       <arg name="namespace" value="lh"/>
-      <arg name="use_prefix" value="$(arg use_prefix)"/>
+      <arg name="side" value="left"/>
+      <arg name="model" value="$(arg hand_model)"/>
+      <arg name="tactile" value="$(arg tactile)"/> 
     </include>  
   </group>
   
@@ -28,10 +31,11 @@
     <include file="$(find agni_description)/launch/single_arm_and_hand_no_controllers.launch" >
       <!-- <arg name="init_args" value="-x 0.5 -y 0 -z 0.05" />-->
       <arg name="namespace" value="left"/>
-      <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
-      <arg name="is_right" value="0"/>
+      <arg name="side" value="left"/>
       <arg name="sim" value="$(arg sim)"/>
+      <arg name="hand_model" value="$(arg hand_model)"/>
+      <arg name="tactile" value="$(arg tactile)"/>
     </include>
     
     <node pkg="topic_tools" type="relay"
@@ -44,20 +48,21 @@
     </node>     
   </group>  
   
-  <!-- drivers and/or controllers the arm -->
+  <!-- drivers and/or controllers for the arm -->
   <group ns="la">
     <include file="$(find agni_description)/launch/$(arg arm_type)_bringup.launch" >
       <arg name="namespace" value="la"/>
       <arg name="sim" value="$(arg sim)"/>
-    </include>  
+    </include>
   </group> 
    
   <!-- drivers and/or controllers for the hand -->
   <include file="$(find agni_description)/launch/sr_bringup.launch">
     <arg name="namespace" value="lh" />
-    <arg name="use_prefix" value="$(arg use_prefix)"/>
     <arg name="sim" value="$(arg sim)"/>
+    <arg name="side" value="left"/>
+    <arg name="model" value="$(arg hand_model)"/>
+    <arg name="tactile" value="$(arg tactile)"/>  
   </include>
-  
   
 </launch>

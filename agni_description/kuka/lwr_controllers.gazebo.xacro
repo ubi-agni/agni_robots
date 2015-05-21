@@ -6,12 +6,12 @@
   
   <!-- default port value. do not modify here. 
        If not correct, redefine your own property and pass the values through macro param -->
-  <xacro:property name="port" value="${dict( right=49938, left=49940)}"/>
+  <xacro:property name="portlist" value="${dict(right=49938, left=49940)}"/>
   
   <!-- namespace must be set up according to launch file namespace -->
   <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) --> 
-  <xacro:macro name="left_lwr_arm_gazebo_controller" params="namespace port:=$port['left']">
-    <xacro:property name="prefix"  value="${'' if namespace=='' else namespace+'_'}" />
+  <xacro:macro name="left_lwr_arm_gazebo_controller" params="namespace port:=${portlist['left']}">
+    <xacro:property name="prefix"  value="${'' if namespace=='' else namespace}" />
 		<gazebo> 
 			<plugin name="left_lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>
@@ -33,7 +33,7 @@
 	
 	<!-- namespace must be set up according to launch file namespace -->
   <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) -->
-  <xacro:macro name="right_lwr_arm_gazebo_controller" params="namespace port:=$port['right']">
+  <xacro:macro name="right_lwr_arm_gazebo_controller" params="namespace port:=${portlist['right']}">
 		<gazebo> 
 			<plugin name="right_lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>

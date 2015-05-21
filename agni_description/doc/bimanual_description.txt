@@ -1,23 +1,37 @@
 Describe  2 arms + 2 hands + 1 frame in REAL world and in SIM
 -------------------------------------------------------------
 
-- linking all the robots together is not possible now requires all joint and links in a single <robot>
-- right/left distinction should be possible, just linking them to the world with a calibration of the base
+- linking all the robots together (linking several files with fixed joints) is not possible within urdf,
+    one can only create a single urdf with all joint and links in a single <robot> tag
+- gazebo plugins (sr_gazebo_plugin) require the robot_description for the joints they control (and only those)
+    one needs to create 4 robot_descriptions for each single robot (2 for arms, 2 for hands) in respective ra/la/rh/lh namespaces
+- sr_gazebo_plugin cannot handle dual hand (new real hand driver can now, using serial id to distiguish hands)
+    for this reason the hands cannot be spawned in the same robot.
+- To ensure the hands are attached with a fixed link to the arm, an arm+hand robot_description is created 
+  (hence 2 new robot_description for each side) and spawned into gazebo. They exist in right/left namespaces
+  
+- right/left are connected together in the tf tree by linking them to the world with a calibration of the base
 
-at right :
+as a summary (right):
+ there are 3 namespaces per side, right/ra/rh
+
 /right/robot_description : for planning and spawning (so that the hand and arm are physically linked together)
+/ra/robot_description : used for sr_gazebo_plugin (for pa10 controllers) but NOT used by lwrcontrollers
+/rh/robot_description : usef for sr_gazebo_plugin / in real loaded by default by the shadow driver with name rh/sh_description  
+
+/right/joint_states : merged version of the two below
 /ra/joint_states : in real world we have a separate js per robot, so create them in sim too
-/ra/robot_description : what is this needed for ?
 /rh/joint_states : in real world we have a separate js per robot, so create them in sim too
-/rh/robot_description : in sim what is this needed for ? / in real loaded by default by the shadow driver with name rh/sh_description : 
 
+similar for left side
 
-
-there are 3 namespaces per side, right/ra/rh
-
-when spawning the left/right side, the groupNS is left/right, but the namespace for hand and arm controllers should be ra/la and rh/lf
+NOTE : when spawning the left/right side, the groupNS is left/right, but the namespace for hand and arm controllers should be ra/la and rh/lf
 hand controllers need ns:rh 
 kuka gazebo bringup needs ns:ra
+
+There is a /robot_description containing the bimanual setup + frame (+ others) that would be used for planning etc.
+
+
 
 
 

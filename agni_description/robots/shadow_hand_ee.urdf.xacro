@@ -16,7 +16,7 @@
   <xacro:property name="cal_ee_roll" value="${dict(shadow_hand=dict(default=0.0))}" />
   
   
-  <xacro:macro name="shadow_hand" params="model:='motor' tactile:='ubi' side:='right' prefix:='rh'">         
+  <xacro:macro name="shadow_hand" params="model:=motor tactile:=ubi side:=right prefix:=rh">         
     <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
   
     <xacro:shadowhand muscletrans="${'trans' in model}" 

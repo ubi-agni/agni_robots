@@ -2,15 +2,16 @@
   <arg name="use_prefix" default="0"/>
   <arg name="arm_type" default="kuka"/>
   <arg name="sim" default="true"/>
+  <arg name="hand_model" default="motor"/>
+  <arg name="tactile" default="ubi"/>
   <!-- upload parameters on the correct namespaces 
   must be done before gazebo spawner to have the plugin controller manager
   load on the sub namespaces -->
   
   <group ns="ra">
     <include file="$(find agni_description)/launch/arm_upload.launch" >
-      <arg name="namespace" value="r"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
-      <arg name="is_right" value="1"/>
+      <arg name="side" value="right"/>
       <arg name="sim" value="$(arg sim)"/>
     </include>  
   </group> 
@@ -19,7 +20,9 @@
   <group if="$(arg sim)" ns="rh">
     <include file="$(find agni_description)/launch/sr_upload.launch" >
       <arg name="namespace" value="rh"/>
-      <arg name="use_prefix" value="$(arg use_prefix)"/>
+      <arg name="side" value="right"/>
+      <arg name="model" value="$(arg hand_model)"/>
+      <arg name="tactile" value="$(arg tactile)"/>  
     </include>  
   </group>
   
@@ -28,10 +31,11 @@
     <include file="$(find agni_description)/launch/single_arm_and_hand_no_controllers.launch" >
       <!-- <arg name="init_pose" value="-x -0.5 -y 0 -z 0.05" />-->
       <arg name="namespace" value="right"/>
-      <arg name="use_prefix" value="$(arg use_prefix)"/>
       <arg name="arm_type" value="$(arg arm_type)"/>
-      <arg name="is_right" value="1"/>
+      <arg name="side" value="right"/>
       <arg name="sim" value="$(arg sim)"/>
+      <arg name="hand_model" value="$(arg hand_model)"/>
+      <arg name="tactile" value="$(arg tactile)"/>
     </include>
     <!-- robot_state_publisher can work with data coming from different sources at different times -->
     <node pkg="topic_tools" type="relay"
@@ -55,9 +59,10 @@
   <!-- drivers and/or controllers for the hand -->
   <include file="$(find agni_description)/launch/sr_bringup.launch">
     <arg name="namespace" value="rh" />
-    <arg name="use_prefix" value="$(arg use_prefix)"/>
     <arg name="sim" value="$(arg sim)"/>
+    <arg name="side" value="right"/>
+    <arg name="model" value="$(arg hand_model)"/>
+    <arg name="tactile" value="$(arg tactile)"/>  
   </include>
  
-  
 </launch>

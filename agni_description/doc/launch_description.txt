@@ -1,0 +1,21 @@
+launch files structure choices
+------------------------------
+
+it was decided to reproduce the standard launch file structure of some common robots (pr2)
+
+* robot_upload.launch:      upload robot_description to the parameter server
+* robot_bringup.launch:     start simulated (load/start controllers) or real robot (start driver)
+
+It was decided to have generic and specific platform launch files
+
+* generic :
+    arm_and_hand.launch:    to start any arm+ shadowhand, left/right/both, real/sim
+    arm.launch:    to start any arm, left/right/both, real/sim
+    hand.launch:    to start shadowhand, left/right/both, real/sim
+
+    platforms.launch:  to start any arm + any end-effector
+
+* specific :
+    sfb.launch / famula.launch :   to start the sfb platform, everything is predefined
+      these use pre-generated urdfs to speed the launch process
+

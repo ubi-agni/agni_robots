@@ -1,13 +1,7 @@
 <launch>
-	<arg name="use_prefix" default="0"/>
 	<arg name="namespace" default="rh"/>
-	<group if="$(arg use_prefix)">
-		<include file="$(find agni_description)/launch/hand_controllers_prefix.launch">
-			<arg name="namespace" value="$(arg namespace)" />
-		</include>
-	</group>
-	<!-- if no prefix, use standard controllers -->
-  <group unless="$(arg use_prefix)">	
-		<include file="$(find sr_hand)/launch/gazebo/loaders/hand_controllers.launch"/>
-	</group>
+  <include file="$(find agni_description)/launch/hand_controllers_prefix.launch">
+    <arg name="namespace" default="$(arg namespace)"/>
+  </include>
+    
 </launch>

@@ -15,8 +15,6 @@
   <xacro:arg name="FLOBI" default="0"/>
   <xacro:arg name="SIM" default="1"/>
   
-  <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
-       Is mandatory if using two hands -->
   <!-- ARM to select the arm type. 
        files called <ARM>.urdf.xacro and <ARM>_cal.xml should exist and provide
        - offset of the base relatively to the <ARM>_frame
@@ -62,6 +60,8 @@
   <!-- frame generation -->
   <xacro:call macro="$(arg ARM)_frame" prefix="$(arg ARM)" />
  
+
+ 
   <xacro:if value="$(arg R)">
     <!-- Arm -->
     <xacro:property name="arm"  value="$(arg ARM)" />
@@ -78,8 +78,8 @@
     
     <xacro:if value="${r_ee_type!='-'}">
      <!-- right end-effector -->
-      <xacro:include filename="$(find agni_description)/robots/${r_ee_type}_ee.urdf.xacro" /> 
-      <xacro:include filename="$(find agni_description)/calibration/${r_ee_type}${'_'+r_ee_model if r_ee_model!='-' else ''}_cal.xml"/>  
+      <xacro:include filename="$(find agni_description)/robots/$(arg R_EE_TYPE)_ee.urdf.xacro" /> 
+      <xacro:include filename="$(find agni_description)/calibration/$(arg R_EE_TYPE)_$(arg R_EE_MODEL)_cal.xml"/>  
       <xacro:call macro="${r_ee_type}" model="$(arg R_EE_MODEL)" tactile="${r_ee_tactile if r_ee_tactile!='-' else ''}" side="${r_ee_side}" prefix="${r_ee_prefix}"/>         
 
      <!-- Link arm and effector -->
@@ -108,9 +108,12 @@
     <xacro:property name="l_ee_tactile" value="$(arg L_EE_TACTILE)"/>
     
     <xacro:if value="${l_ee_type!='-'}">
-     <!-- left end-effector -->
-      <xacro:include filename="$(find agni_description)/robots/${l_ee_type}_ee.urdf.xacro" /> 
-      <xacro:include filename="$(find agni_description)/calibration/${l_ee_type}${'_'+l_ee_model if l_ee_model!='-' else ''}_cal.xml"/>  
+      <!-- left end-effector -->
+      <xacro:if value="${r_ee_type!=l_ee_type}">
+        <xacro:include filename="$(find agni_description)/robots/$(arg L_EE_TYPE)_ee.urdf.xacro" /> 
+        <xacro:include filename="$(find agni_description)/calibration/$(arg L_EE_TYPE)_$(arg L_EE_MODEL)_cal.xml"/>  
+      </xacro:if>
+      
       <xacro:call macro="${l_ee_type}" model="$(arg L_EE_MODEL)" tactile="${l_ee_tactile if l_ee_tactile!='-' else ''}" side="${l_ee_side}" prefix="${l_ee_prefix}"/>         
 
      <!-- Link arm and effector -->

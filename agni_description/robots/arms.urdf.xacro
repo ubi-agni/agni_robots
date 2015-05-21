@@ -6,7 +6,9 @@
   
   <!-- arm calibration -->
   <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_arm.urdf.xacro"/>
-  <xacro:property name="side" value="$(arg SIDE)"/> 
+  <xacro:property name="side" value="$(arg SIDE)"/>  
+  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
+
   <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
   <link name="world" />
   <!-- arm -->

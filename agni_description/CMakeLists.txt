@@ -10,6 +10,31 @@ catkin_package(
     LIBRARIES
 )
 
+
+
+set(expanded_xacro_files "")
+
+# Xacro files
+file(GLOB model_xacro_files ${CMAKE_CURRENT_SOURCE_DIR}/robots/sfb.urdf.xacro)
+
+foreach(it ${model_xacro_files})
+  get_filename_component(basepath ${it} PATH)
+  get_filename_component(basename ${it} NAME_WE)
+  
+  message(" processing model file :" , ${basepath} ," : " , ${basename})
+  
+  set(expanded_file "${basepath}/${basename}.urdf")
+  message("    produce expanded file :" , ${expanded_file})
+  
+  xacro_add_xacro_file(${it} ${expanded_file})
+  
+  set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
+endforeach(it)
+
+add_custom_target(media_files ALL DEPENDS ${expanded_xacro_files})
+
+
+
 #catkin_add_gtest(test_sr_description_urdf test/test_sr_description_urdf.cpp)
 #add_dependencies(test_sr_description_urdf ${catkin_EXPORTED_TARGETS})
 #target_link_libraries(test_sr_description_urdf ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${GTEST_LIBRARIES} pthread)
