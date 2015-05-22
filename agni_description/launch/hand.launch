@@ -23,6 +23,14 @@
       </include>
     </group>
   </group>    
+  
+  <!-- set robot description for combined hands  -->
+  <!-- on sfb setup we stard hands in sim but want to have a arm+hand robot_description so this should not be loaded
+  <param name="robot_description" command="$(find xacro)/xacro --> <!--inorder '$(find agni_description)/robots/hands.urdf.xacro' 
+              RH:=$(arg RH) LH:=$(arg LH) R_EE_TYPE:=shadow_hand R_EE_MODEL:=$(arg MODEL) R_EE_SIDE:=right R_EE_TACTILE:=$(arg TACTILE) 
+              L_EE_TYPE:=shadow_hand L_EE_MODEL:=$(arg MODEL) L_EE_SIDE:=left L_EE_TACTILE:=$(arg TACTILE) SIM:=$(arg SIM) " />
+   -->
+  
   <!-- include our robots -->
   <group if="$(arg RH)">
     <!-- RIGHT hand -->

@@ -1,13 +1,17 @@
 <launch>
   <arg name="ARM" default="kuka"/>
   <arg name="FLOBI" default="false"/>
-  <arg name="USE_PREFIX" default="true"/>
   <arg name="R" default="1"/>
   <arg name="L" default="1"/>
-  <arg name="R_EE_TYPE" default="shadow_motor"/>
-  <arg name="L_EE_TYPE" default="shadow_motor"/>
+  <arg name="R_EE_TYPE" default="-"/>
+  <arg name="R_EE_MODEL" default="-"/>
   <arg name="R_EE_SIDE" default="right"/>
+  <arg name="R_EE_TACTILE" default="-"/>
+  <arg name="L_EE_TYPE" default="-"/>
+  <arg name="L_EE_MODEL" default="-"/>
   <arg name="L_EE_SIDE" default="left"/>
+  <arg name="L_EE_TACTILE" default="-"/>
+
   <arg name="JSP" default="false"/>
   
   <!-- JSP for joint_state_publisher gui -->
@@ -31,23 +35,19 @@
   <!-- R and L to select left or right or both arm and hand -->
   <!-- R_EE_TYPE and L_EE_TYPE are the names of the end-effectors
        mounted on right and left arms respectively -->
+  <!-- R_EE_MODEL and L_EE_MODEL are the model of the end-effectors
+       mounted on right and left arms respectively -->
   <!-- R_EE_SIDE and L_EE_SIDE are the variants of the end-effectors 
        for right and left arms respectively
        Note a left hand can be mounted on the right arm 
        with R_EE_SIDE:=left --> 
-  <!-- file called right_<R_EE_TYPE>_ee.urdf.xacro should exist and provide 
-        - a macro called <R_EE_SIDE>_<R_EE_TYPE>
-        - a property r_ee_base_link with the name of the attachement link 
-          for this end-effector type 
-          
-        - offset properties cal_right_ee_x|y|z|yaw|pitch|roll of the mounting
-          part of this effector when attached at the right arm 
-       The same for left
-          -->
+  <!-- R_EE_TACTILE and L_EE_TACTILE define the type of tactile system of the end-effectors
+       mounted on right and left arms respectively -->
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) USE_PREFIX:=$(arg USE_PREFIX) 
-                                             FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE_TYPE:=$(arg R_EE_TYPE) L_EE_TYPE:=$(arg L_EE_TYPE) R_EE_SIDE:=$(arg R_EE_SIDE) L_EE_SIDE:=$(arg L_EE_SIDE)" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/platforms.urdf.xacro'  ARM:=$(arg ARM) 
+                                             FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L)  R_EE_TYPE:=$(arg R_EE_TYPE) R_EE_MODEL:=$(arg R_EE_MODEL) R_EE_SIDE:=$(arg R_EE_SIDE) R_EE_TACTILE:=$(arg R_EE_TACTILE) 
+              L_EE_TYPE:=$(arg L_EE_TYPE) L_EE_MODEL:=$(arg L_EE_MODEL) L_EE_SIDE:=$(arg L_EE_SIDE) L_EE_TACTILE:=$(arg L_EE_TACTILE) SIM:=1" />
                                              
   <!-- publish joint values, open gui if use_gui=True -->
   <group if="$(arg JSP)"> 

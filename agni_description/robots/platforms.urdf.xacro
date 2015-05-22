@@ -9,7 +9,7 @@
   <xacro:arg name="R_EE_SIDE" default="right"/>
   <xacro:arg name="R_EE_TACTILE" default="-"/>
   <xacro:arg name="L_EE_TYPE" default="-"/>
-  <xacro:arg name="L_EE_MODEL" default=""/>
+  <xacro:arg name="L_EE_MODEL" default="-"/>
   <xacro:arg name="L_EE_SIDE" default="left"/>
   <xacro:arg name="L_EE_TACTILE" default="-"/>
   <xacro:arg name="FLOBI" default="0"/>
@@ -84,8 +84,8 @@
     <xacro:if value="${1 if r_ee_type!='-' else 0}">
      <!-- right end-effector -->
       <xacro:include filename="${agni_description_path}/robots/${r_ee_type}_ee.urdf.xacro" /> 
-      <xacro:include filename="${agni_description_path}/calibration/${r_ee_type}_${r_ee_model}_cal.xml"/>  
-      <xacro:call macro="${r_ee_type}" model="$(arg R_EE_MODEL)" tactile="${r_ee_tactile if r_ee_tactile!='-' else ''}" side="${r_ee_side}" prefix="${r_ee_prefix}"/>         
+      <xacro:include filename="${agni_description_path}/calibration/${r_ee_type}${('_'+r_ee_model) if r_ee_model!='-' else ''}_cal.xml"/>  
+      <xacro:call macro="${r_ee_type}" model="${r_ee_model}" tactile="${r_ee_tactile if r_ee_tactile!='-' else ''}" side="${r_ee_side}" prefix="${r_ee_prefix}"/>         
 
      <!-- Link arm and effector -->
       <joint name="ra_arm_hand_mount" type="fixed">
@@ -114,12 +114,12 @@
     <xacro:if value="${1 if l_ee_type!='-' else 0}">
       <!-- left end-effector -->
       <xacro:if value="${1 if (r_ee_type!=l_ee_type or r==0) else 0}">
-        <xacro:include filename="${agni_description_path}/robots/${l_ee_type}_ee.urdf.xacro" /> 
-        <xacro:include filename="${agni_description_path}/calibration/${l_ee_type}_${l_ee_model}_cal.xml"/>  
+        <xacro:include filename="${agni_description_path}/robots/${l_ee_type}_ee.urdf.xacro" />
+        <xacro:include filename="${agni_description_path}/calibration/${l_ee_type}${('_'+l_ee_model) if l_ee_model!='-' else ''}_cal.xml"/>  
       </xacro:if>
 
     
-      <xacro:call macro="${l_ee_type}" model="$(arg L_EE_MODEL)" tactile="${l_ee_tactile if l_ee_tactile!='-' else ''}" side="${l_ee_side}" prefix="${l_ee_prefix}"/>         
+      <xacro:call macro="${l_ee_type}" model="${l_ee_model}" tactile="${l_ee_tactile if l_ee_tactile!='-' else ''}" side="${l_ee_side}" prefix="${l_ee_prefix}"/>         
       <!-- Link arm and effector -->
       <joint name="la_arm_hand_mount" type="fixed">
         <parent link="la_${arm_mount[arm]}"/> 

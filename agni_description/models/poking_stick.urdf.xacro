@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="poking_stick" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="poking_stick" params="prefix tactile">
+  <xacro:macro name="poking_stick_generic" params="prefix tactile">
   <link name="${prefix}poking_stick">
     <visual>
       <origin xyz="0 0 0" 

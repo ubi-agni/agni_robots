@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot name="platform" xmlns:xacro="http://www.ros.org/wiki/xacro">
+     
+  <xacro:arg name="RH" default="1"/>
+  <xacro:arg name="LH" default="0"/>
+  <xacro:arg name="R_EE_TYPE" default="-"/>
+  <xacro:arg name="R_EE_MODEL" default="-"/>
+  <xacro:arg name="R_EE_SIDE" default="right"/>
+  <xacro:arg name="R_EE_TACTILE" default="-"/>
+  <xacro:arg name="L_EE_TYPE" default="-"/>
+  <xacro:arg name="L_EE_MODEL" default=""/>
+  <xacro:arg name="L_EE_SIDE" default="left"/>
+  <xacro:arg name="L_EE_TACTILE" default="-"/>
+  <xacro:arg name="SIM" default="1"/>
+  
+
+  <!-- RH and LH to select left or right or both arm and hand -->
+  <!-- R_EE_TYPE and L_EE_TYPE are the names of the end-effectors
+       mounted on right and left arms respectively -->
+  <!-- R_EE_MODEL and L_EE_MODEL are the model of the end-effectors
+       mounted on right and left arms respectively -->
+  <!-- R_EE_SIDE and L_EE_SIDE are the variants of the end-effectors 
+       for right and left arms respectively
+       Note a left hand can be mounted on the right arm 
+       with R_EE_SIDE:=left --> 
+  <!-- R_EE_TACTILE and L_EE_TACTILE define the type of tactile system of the end-effectors
+       mounted on right and left arms respectively -->
+  <!-- file called right_<R_EE_TYPE>.urdf.xacro should exist and provide 
+        - a macro called <R_EE_TYPE> taking parameters model, tactile, side and prefix
+        - a property as a dictionary ee_mount['<R_EE_TYPE>'] with the name of the attachement link 
+          for this end-effector type 
+        - offset properties as a dictionary cal_ee_x|y|z|yaw|pitch|roll['<R_EE_TYPE>']['left|right'] 
+          of the mounting part of this effector when attached on the arm
+          -->
+  
+  <!-- speeding up -->
+  <xacro:property name="agni_description_path" value="$(find agni_description)"/>
+  
+  <xacro:include filename="$(find sr_description)/materials.urdf.xacro" />
+
+  <xacro:property name="r" value="$(arg RH)"/> 
+  <xacro:property name="r_ee_type" value="$(arg R_EE_TYPE)"/> 
+  <xacro:property name="l_ee_type" value="$(arg L_EE_TYPE)"/> 
+  
+
+
+  <link name="world" />
+
+  <xacro:if value="$(arg RH)">
+      
+    <xacro:property name="r_ee_side" value="$(arg R_EE_SIDE)"/>
+    <xacro:property name="r_ee_model" value="$(arg R_EE_MODEL)"/>  
+    <xacro:property name="r_ee_prefix" value="${'rh' if r_ee_side=='right' else 'lh'}"/>
+    <xacro:property name="r_ee_tactile" value="$(arg R_EE_TACTILE)"/>
+    
+    <xacro:if value="${1 if r_ee_type!='-' else 0}">
+     <!-- right end-effector -->
+      <xacro:include filename="${agni_description_path}/robots/${r_ee_type}_ee.urdf.xacro" /> 
+      <!-- placement -->
+      <xacro:property name="cal_ee_x" value="${dict(shadow_hand=dict(right= -0.2, left= 0.2))}" />
+  
+      <xacro:call macro="${r_ee_type}" model="$(arg R_EE_MODEL)" tactile="${r_ee_tactile if r_ee_tactile!='-' else ''}" side="${r_ee_side}" prefix="${r_ee_prefix}"/>         
+
+     <!-- Link arm and effector -->
+      <joint name="ra_hand_mount" type="fixed">
+        <parent link="world"/> 
+        <child link="${r_ee_prefix}_${ee_mount[r_ee_type]}"/>
+          <origin xyz="${cal_ee_x[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_y[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_z[r_ee_type].get(r_ee_side,0.0)}"
+        rpy="${cal_ee_roll[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_pitch[r_ee_type].get(r_ee_side,0.0)} ${cal_ee_yaw[r_ee_type].get(r_ee_side,0.0)}"/>
+      </joint>
+
+    </xacro:if>
+  </xacro:if>
+  
+  <xacro:if value="$(arg LH)">
+
+    <xacro:property name="l_ee_side" value="$(arg L_EE_SIDE)"/>
+    <xacro:property name="l_ee_model" value="$(arg L_EE_MODEL)"/>  
+    <xacro:property name="l_ee_prefix" value="${'rh' if l_ee_side=='right' else 'lh'}"/>
+    <xacro:property name="l_ee_tactile" value="$(arg L_EE_TACTILE)"/>
+  
+    <xacro:if value="${1 if l_ee_type!='-' else 0}">
+      <!-- left end-effector -->
+      <xacro:if value="${1 if (r_ee_type!=l_ee_type or r==0) else 0}">
+        <xacro:include filename="${agni_description_path}/robots/${l_ee_type}_ee.urdf.xacro" /> 
+          <!-- placement -->
+        <xacro:property name="cal_ee_x" value="${dict(shadow_hand=dict(right= -0.2, left= 0.2))}" />
+  
+      </xacro:if>
+
+      <xacro:call macro="${l_ee_type}" model="$(arg L_EE_MODEL)" tactile="${l_ee_tactile if l_ee_tactile!='-' else ''}" side="${l_ee_side}" prefix="${l_ee_prefix}"/>         
+      <!-- Link arm and effector -->
+      <joint name="la_hand_mount" type="fixed">
+        <parent link="world"/> 
+        <child link="${l_ee_prefix}_${ee_mount[l_ee_type]}"/>
+          <origin xyz="${cal_ee_x[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_y[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_z[l_ee_type].get(l_ee_side,0.0)}"
+      rpy="${cal_ee_roll[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_pitch[l_ee_type].get(l_ee_side,0.0)} ${cal_ee_yaw[l_ee_type].get(l_ee_side,0.0)}"/>
+      </joint> 
+    </xacro:if>
+  </xacro:if>
+
+</robot>
