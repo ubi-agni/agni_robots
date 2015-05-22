@@ -49,14 +49,17 @@
           of the mounting part of this effector when attached on the arm
           -->
   
+  <!-- speeding up -->
+  <xacro:property name="agni_description_path" value="$(find agni_description)"/>
+  
   <xacro:include filename="$(find sr_description)/materials.urdf.xacro" />
   
   <!-- arm -->
-  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_arm.urdf.xacro" /> 
+  <xacro:include filename="${agni_description_path}/robots/$(arg ARM)_arm.urdf.xacro" /> 
   <!-- frame -->
-  <xacro:include filename="$(find agni_description)/urdf/$(arg ARM)_frame.urdf.xacro"/>
+  <xacro:include filename="${agni_description_path}/urdf/$(arg ARM)_frame.urdf.xacro"/>
   <!-- arm calibration -->
-  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
+  <xacro:include filename="${agni_description_path}/calibration/$(arg ARM)_cal.xml"/>
   <!-- frame generation -->
   <xacro:call macro="$(arg ARM)_frame" prefix="$(arg ARM)" />
  
@@ -80,8 +83,8 @@
     
     <xacro:if value="${1 if r_ee_type!='-' else 0}">
      <!-- right end-effector -->
-      <xacro:include filename="$(find agni_description)/robots/${r_ee_type}_ee.urdf.xacro" /> 
-      <xacro:include filename="$(find agni_description)/calibration/${r_ee_type}_${r_ee_model}_cal.xml"/>  
+      <xacro:include filename="${agni_description_path}/robots/${r_ee_type}_ee.urdf.xacro" /> 
+      <xacro:include filename="${agni_description_path}/calibration/${r_ee_type}_${r_ee_model}_cal.xml"/>  
       <xacro:call macro="${r_ee_type}" model="$(arg R_EE_MODEL)" tactile="${r_ee_tactile if r_ee_tactile!='-' else ''}" side="${r_ee_side}" prefix="${r_ee_prefix}"/>         
 
      <!-- Link arm and effector -->
@@ -110,9 +113,9 @@
   
     <xacro:if value="${1 if l_ee_type!='-' else 0}">
       <!-- left end-effector -->
-      <xacro:if value="${1 if (r_ee_type!=l_ee_type or r=='0') else 0}">
-        <xacro:include filename="$(find agni_description)/robots/${l_ee_type}_ee.urdf.xacro" /> 
-        <xacro:include filename="$(find agni_description)/calibration/${l_ee_type}_${l_ee_model}_cal.xml"/>  
+      <xacro:if value="${1 if (r_ee_type!=l_ee_type or r==0) else 0}">
+        <xacro:include filename="${agni_description_path}/robots/${l_ee_type}_ee.urdf.xacro" /> 
+        <xacro:include filename="${agni_description_path}/calibration/${l_ee_type}_${l_ee_model}_cal.xml"/>  
       </xacro:if>
 
     

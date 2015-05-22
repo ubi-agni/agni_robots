@@ -2,25 +2,25 @@
 <robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="SIM" default="1"/> 
   
-  <xacro:include filename="$(find agni_description)/urdf/pa10_frame.urdf.xacro"/>
+  <xacro:include filename="$(find agni_description)/urdf/kuka_frame.urdf.xacro"/>
    
-  <!-- arm with end-effector 
-  <xacro:include filename="$(find agni_description)/robots/pa10_arm.urdf.xacro" /> -->
+  <!-- arm with -->
+  <xacro:include filename="$(find agni_description)/robots/kuka_arm.urdf.xacro" /> 
   <!-- arm calibration -->
-  <xacro:include filename="$(find agni_description)/calibration/pa10_cal.xml"/>
+  <xacro:include filename="$(find agni_description)/calibration/kuka_cal.xml"/>
   <!-- end-effector -->
   <xacro:include filename="$(find agni_description)/robots/shadow_hand_ee.urdf.xacro" />
+  <!-- arm and hand mount calibration (should always be last) -->
+  <xacro:include filename="$(find agni_description)/calibration/famula_cal.xml"/>
  
-  <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
-  <link name="world" /> 
-  
-  <xacro:call macro="pa10_frame" prefix="pa10" />
+  <!-- Frame -->
+  <xacro:call macro="kuka_frame" prefix="kuka" />
   
   <!-- Right -->
     <!-- Arm -->
-    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg CTRL)">
-      <origin xyz="${cal_right_arm_x} ${cal_right_arm_y} ${cal_right_arm_z}"
-        rpy="${cal_right_arm_roll} ${cal_right_arm_pitch} ${cal_right_arm_yaw}"/>
+    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg SIM)">
+      <origin xyz="${cal_arm_x['right']} ${cal_arm_y['right']} ${cal_arm_z['right']}"
+      rpy="${cal_arm_roll['right']} ${cal_arm_pitch['right']} ${cal_arm_yaw['right']}"/>
     </xacro:call>
                   
     <!-- Effector -->
@@ -28,17 +28,17 @@
 
     <!-- Link arm and effector -->
     <joint name="ra_arm_hand_mount" type="fixed">
-      <parent link="ra_arm_hand_mount"/>
-      <child link="rh_forearm}"/>
-      <origin xyz="${cal_right_ee_x} ${cal_right_ee_y} ${cal_right_ee_z}"
-    rpy="${cal_right_ee_roll} ${cal_right_ee_pitch} ${cal_right_ee_yaw}"/>
+      <parent link="ra_${arm_mount['kuka']}"/> 
+      <child link="rh_${ee_mount['shadow_hand']}"/>
+      <origin xyz="${cal_ee_x['shadow_hand']['right']} ${cal_ee_y['shadow_hand']['right']} ${cal_ee_z['shadow_hand']['right']}"
+  rpy="${cal_ee_roll['shadow_hand']['right']} ${cal_ee_pitch['shadow_hand']['right']} ${cal_ee_yaw['shadow_hand']['right']}"/>
     </joint>
   
   <!-- Left -->
     <!-- Arm -->
-    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg CTRL)">
-      <origin xyz="${cal_left_arm_x} ${cal_left_arm_y} ${cal_left_arm_z}"
-          rpy="${cal_left_arm_roll} ${cal_left_arm_pitch} ${cal_left_arm_yaw}"/>
+    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg SIM)">
+     <origin xyz="${cal_arm_x['left']} ${cal_arm_y['left']} ${cal_arm_z['left']}"
+      rpy="${cal_arm_roll['left']} ${cal_arm_pitch['left']} ${cal_arm_yaw['left']}"/>
     </xacro:call>
                   
     <!-- Effector -->
@@ -46,9 +46,16 @@
 
     <!-- Link arm and effector -->
     <joint name="la_arm_hand_mount" type="fixed">
-      <parent link="la_arm_hand_mount"/>
-      <child link="lh_forearm}"/>
-      <origin xyz="${cal_left_ee_x} ${cal_left_ee_y} ${cal_left_ee_z}"
-      rpy="${cal_left_ee_roll} ${cal_left_ee_pitch} ${cal_left_ee_yaw}"/>
+      <parent link="la_${arm_mount['kuka']}"/> 
+      <child link="lh_${ee_mount['shadow_hand']}"/>
+      <origin xyz="${cal_ee_x['shadow_hand']['left']} ${cal_ee_y['shadow_hand']['left']} ${cal_ee_z['shadow_hand']['left']}"
+  rpy="${cal_ee_roll['shadow_hand']['left']} ${cal_ee_pitch['shadow_hand']['left']} ${cal_ee_yaw['shadow_hand']['left']}"/>
     </joint> 
+    
+    <!-- flobi -->
+    <xacro:include filename="$(find flobi_sim)/defs/xacro/flobiv3.urdf.xacro" />
+    <xacro:flobi prefix="" neutral="1" gender="0" parent="kuka_frame" >
+      <origin xyz="0 ${cal_arm_y['right']} ${cal_arm_z['right']+mount_triangle_length/2*sin(60/180.0*pi)+0.01}" rpy="0 0 ${-pi/2.0}"/>
+    </xacro:flobi>
+    
 </robot>
