@@ -10,111 +10,56 @@ catkin_package(
     LIBRARIES
 )
 
-set(expanded_xacro_files "")
 
 # Xacro files
+xacro_add_files(robots/sfb.urdf.xacro robots/famula.urdf.xacro INORDER
+  INSTALL DESTINATION robots)
 
-# sfb 
-#xacro_add_target("robots/sfb.urdf.xacro" "sfb.urdf" INORDER )
-file(GLOB cur_file ${CMAKE_CURRENT_SOURCE_DIR}/robots/sfb.urdf.xacro)
-message(" processing model file :" , ${cur_file})
-get_filename_component(basepath ${cur_file} PATH)
-set(expanded_file "${basepath}/generated/sfb.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER)
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-# famula
-file(GLOB cur_file ${CMAKE_CURRENT_SOURCE_DIR}/robots/famula.urdf.xacro)
-message(" processing model file :" , ${cur_file})
-get_filename_component(basepath ${cur_file} PATH)
-set(expanded_file "${basepath}/generated/famula.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER)
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
+xacro_add_xacro_file(robots/sfb.urdf.xacro INORDER)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
+# sfb frame
+xacro_add_xacro_file(robots/frame.urdf.xacro robots/sfb_frame.urdf INORDER REMAP FRAME:=pa10)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
-#sfbframe
-file(GLOB cur_file ${CMAKE_CURRENT_SOURCE_DIR}/robots/frame.urdf.xacro)
-message(" processing model file :" , ${cur_file})
-get_filename_component(basepath ${cur_file} PATH)
-set(expanded_file "${basepath}/generated/sfb_frame.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP FRAME:=pa10)
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-#famulaframe
-set(expanded_file "${basepath}/generated/famula_frame.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP FRAME:=kuka)
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
+# famula frame
+xacro_add_xacro_file(robots/frame.urdf.xacro robots/famula_frame.urdf INORDER REMAP FRAME:=kuka)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right pa10
-file(GLOB cur_file ${CMAKE_CURRENT_SOURCE_DIR}/robots/arms.urdf.xacro)
-message(" processing model file :" , ${cur_file})
-get_filename_component(basepath ${cur_file} PATH)
-set(expanded_file "${basepath}/generated/right_pa10.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=pa10 SIM:=1 SIDE:=right)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
-set(expanded_file "${basepath}/generated/left_pa10.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=pa10 SIM:=1 SIDE:=left)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
+xacro_add_xacro_file(robots/arms.urdf.xacro robots/right_pa10.urdf INORDER REMAP ARM:=pa10 SIM:=1 SIDE:=right)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/arms.urdf.xacro robots/left_pa10.urdf INORDER REMAP ARM:=pa10 SIM:=1 SIDE:=left)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 # left right kuka
-set(expanded_file "${basepath}/generated/right_kuka.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=kuka SIM:=1 SIDE:=right)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
-set(expanded_file "${basepath}/generated/left_kuka.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=kuka SIM:=1 SIDE:=left)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
+xacro_add_xacro_file(robots/arms.urdf.xacro robots/right_kuka.urdf INORDER REMAP ARM:=kuka SIM:=1 SIDE:=right)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/arms.urdf.xacro robots/left_kuka.urdf INORDER REMAP ARM:=kuka SIM:=1 SIDE:=left)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 #left right shadow_hand_motor_ubi
-file(GLOB cur_file ${CMAKE_CURRENT_SOURCE_DIR}/robots/shadow_hands.urdf.xacro)
-message(" processing model file :" , ${cur_file})
-get_filename_component(basepath ${cur_file} PATH)
-set(expanded_file "${basepath}/generated/right_shadow_hand_motor_ubi.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP MODEL:=motor SIDE:=right PREFIX:=rh TACTILE:=ubi)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
-set(expanded_file "${basepath}/generated/left_shadow_hand_motor_ubi.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP MODEL:=motor SIDE:=left PREFIX:=lh TACTILE:=ubi )  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
+xacro_add_xacro_file(robots/shadow_hands.urdf.xacro robots/right_shadow_hand_motor_ubi.urdf INORDER REMAP MODEL:=motor SIDE:=right PREFIX:=rh TACTILE:=ubi)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/shadow_hands.urdf.xacro robots/left_shadow_hand_motor_ubi.urdf INORDER REMAP MODEL:=motor SIDE:=left PREFIX:=lh TACTILE:=ubi)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 #left right pa10 shadow_hand_motor_ubi
-file(GLOB cur_file ${CMAKE_CURRENT_SOURCE_DIR}/robots/arms_hands.urdf.xacro)
-message(" processing model file :" , ${cur_file})
-get_filename_component(basepath ${cur_file} PATH)
-set(expanded_file "${basepath}/generated/right_pa10_shadow_hand_motor_ubi.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=pa10 SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=right)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
-set(expanded_file "${basepath}/generated/left_pa10_shadow_hand_motor_ubi.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=pa10 SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=left)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
+xacro_add_xacro_file(robots/arms_hands.urdf.xacro robots/right_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP ARM:=pa10 SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=right)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/arms_hands.urdf.xacro robots/left_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP ARM:=pa10 SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=left)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 #left right kuka shadow_hand_motor_ubi
-set(expanded_file "${basepath}/generated/right_kuka_shadow_hand_motor_ubi.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=kuka SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=right)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
+xacro_add_xacro_file(robots/arms_hands.urdf.xacro robots/right_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP ARM:=kuka SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=right)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/arms_hands.urdf.xacro robots/left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP ARM:=kuka SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=left)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
-set(expanded_file "${basepath}/generated/left_kuka_shadow_hand_motor_ubi.urdf")
-message("    produce expanded file :" , ${expanded_file})
-xacro_add_xacro_file(${cur_file} ${expanded_file} INORDER REMAP ARM:=kuka SIM:=1 TACTILE:=ubi HANDMODEL:=motor SIDE:=left)  
-set(expanded_xacro_files ${expanded_xacro_files} ${expanded_file})
-
-
-
-add_custom_target(media_files ALL DEPENDS ${expanded_xacro_files})
+# install the generated files
+add_custom_target(xacro ALL DEPENDS ${xacro_outputs})
+xacro_install(xacro ${xacro_outputs} DESTINATION robots)
 
 
 #catkin_add_gtest(test_sr_description_urdf test/test_sr_description_urdf.cpp)

@@ -1,4 +1,5 @@
 <launch>
+  <!-- EXPECTS agni_description to be compiled to get urdf generated in devel space -->
   <arg name="SIM" default="true"/>
   <!-- do a find only once -->
   <arg name="agni" value="$(find agni_description)"/>
@@ -21,46 +22,46 @@
   </group>
   
   <!-- load frame description  -->
-  <param name="platform_description" textfile="$(arg agni)/robots/generated/sfb_frame.urdf" />
+  <param name="platform_description" textfile="$(find agni_description)/robots/sfb_frame.urdf" />
   <!-- load camera description -->
   <param name="camera_description" command="$(find icl_config_parser_py)/icl_conf_parser.py '$(arg agni)/calibration/depth-qvga.xml'"/>
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
-  <param name="robot_description" textfile="$(arg agni)/robots/generated/sfb.urdf" /> 
+  <param name="robot_description" textfile="$(find agni_description)/robots/sfb.urdf" /> 
  
   <group if="$(arg SIM)">
-    <!-- spawn the support model -->
+    <!-- spawn the support model 
     <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
-    <!-- spawn the camera model -->
+ -->   <!-- spawn the camera model -->
     <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model icl_camera" respawn="false" output="screen" />
     
     <!-- load hand description only in sim, in real, the drivers is loading it -->  
     <!-- needed for the sr_gazebo_plugin -->
     <group ns="lh">
        <!-- load robot_description -->
-        <param name="robot_description" textfile="$(arg agni)/robots/generated/left_shadow_hand_motor_ubi.urdf" /> 
+        <param name="robot_description" textfile="$(find agni_description)/robots/left_shadow_hand_motor_ubi.urdf" /> 
     </group>
     <group ns="rh">
         <!-- load robot_description -->
-        <param name="robot_description" textfile="$(arg agni)/robots/generated/right_shadow_hand_motor_ubi.urdf" /> 
+        <param name="robot_description" textfile="$(find agni_description)/robots/right_shadow_hand_motor_ubi.urdf" /> 
     </group>
   </group>
   
   <!-- needed for pa10 using the sr_gazebo_plugin -->
   <group ns="la">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/left_pa10.urdf" />
+    <param name="robot_description" textfile="$(find agni_description)/robots/left_pa10.urdf" />
   </group> 
   <group ns="ra">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/right_pa10.urdf" />
+    <param name="robot_description" textfile="$(find agni_description)/robots/right_pa10.urdf" />
   </group> 
 
   <!-- robots -->
   <!-- Load the general left|right robot_description, spawn it, merge joint_states -->
   <group ns="left">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/left_pa10_shadow_hand_motor_ubi.urdf" /> 
+    <param name="robot_description" textfile="$(find agni_description)/robots/left_pa10_shadow_hand_motor_ubi.urdf" /> 
     <param name="tf_prefix" value="left"/>
     <!-- spawn in the sim world if SIM -->
     <group if="$(arg SIM)">
@@ -90,7 +91,7 @@
   
   <group ns="right">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/right_pa10_shadow_hand_motor_ubi.urdf" /> 
+    <param name="robot_description" textfile="$(find agni_description)/robots/right_pa10_shadow_hand_motor_ubi.urdf" /> 
     <param name="tf_prefix" value="right"/>
     <!-- spawn in the sim world if SIM -->
     <group if="$(arg SIM)">
@@ -195,12 +196,12 @@
         <!-- cheating with strangely placed quotes because the xacro execution in sr_edc.launch 
        puts everything into quotes but substitution args should not be into quotes
        and also cannot be replaced by a textfile load as xacro is executed within sr_edc.launch -->
-      <arg name="robot_description" value="$(arg agni)/robots/shadow_hands.urdf.xacro'  MODEL:=motor SIDE:=left TACTILE:=ubi PREFIX:=lh ' " />
+      <arg name="robot_description" value="$(find agni_description)/robots/shadow_hands.urdf.xacro'  MODEL:=motor SIDE:=left TACTILE:=ubi PREFIX:=lh ' " />
     </include>
     <include file="$(find sr_ethercat_hand_config)/launch/sr_rhand.launch" >
        <!-- cheating with strangely placed quotes because the xacro execution in sr_edc.launch 
        puts everything into quotes but substitution args should not be into quotes -->
-      <arg name="robot_description" value="$(arg agni)/robots/shadow_hands.urdf.xacro'  MODEL:=motor SIDE:=right TACTILE:=ubi PREFIX:=rh ' " />
+      <arg name="robot_description" value="$(find agni_description)/robots/shadow_hands.urdf.xacro'  MODEL:=motor SIDE:=right TACTILE:=ubi PREFIX:=rh ' " />
     </include>
  
     <!-- ns is already contained in the controller.launch -->
@@ -215,5 +216,11 @@
 			<arg name="namespace" value="rh" />
 		</include>
   </group>
+  
+   <group if="$(arg SIM)">
+    <!-- spawn the support model -->
+    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
+   </group>
+  
    
 </launch>

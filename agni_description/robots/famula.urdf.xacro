@@ -36,7 +36,7 @@
   
   <!-- Left -->
     <!-- Arm -->
-    <xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg SIM)">
+    <xacro:call macro="kuka_arm" parent="world" side="left" controller="$(arg SIM)">
      <origin xyz="${cal_arm_x['left']} ${cal_arm_y['left']} ${cal_arm_z['left']}"
       rpy="${cal_arm_roll['left']} ${cal_arm_pitch['left']} ${cal_arm_yaw['left']}"/>
     </xacro:call>

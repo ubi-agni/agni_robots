@@ -1,4 +1,5 @@
 <launch>
+  <!-- EXPECTS agni_description to be compiled to get urdf generated in devel space -->
   <arg name="SIM" default="true"/>
   <arg name="RTT_TEST" default="1" />
    
@@ -31,12 +32,12 @@
   </group>
   
   <!-- load frame description  -->
-  <param name="platform_description" textfile="$(arg agni)/robots/generated/famula_frame.urdf" />
+  <param name="platform_description" textfile="$(find agni_description)/robots/famula_frame.urdf" />
   <!-- load camera description -->
   <param name="camera_description" command="$(find icl_config_parser_py)/icl_conf_parser.py '$(arg agni)/calibration/depth-qvga.xml'"/>
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
-  <param name="robot_description" textfile="$(arg agni)/robots/generated/famula.urdf" /> 
+  <param name="robot_description" textfile="$(find agni_description)/robots/famula.urdf" /> 
  
   <group if="$(arg SIM)">
     <!-- spawn the support model -->
@@ -48,29 +49,29 @@
     <!-- needed for the sr_gazebo_plugin -->
     <group ns="lh">
        <!-- load robot_description -->
-        <param name="robot_description" textfile="$(arg agni)/robots/generated/left_shadow_hand_motor_ubi.urdf" /> 
+        <param name="robot_description" textfile="$(find agni_description)/robots/left_shadow_hand_motor_ubi.urdf" /> 
     </group>
     <group ns="rh">
         <!-- load robot_description -->
-        <param name="robot_description" textfile="$(arg agni)/robots/generated/right_shadow_hand_motor_ubi.urdf" /> 
+        <param name="robot_description" textfile="$(find agni_description)/robots/right_shadow_hand_motor_ubi.urdf" /> 
     </group>
   </group>
   
   <!-- needed for kuka using the sr_gazebo_plugin -->
   <group ns="la">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/left_kuka.urdf" />
+    <param name="robot_description" textfile="$(find agni_description)/robots/left_kuka.urdf" />
   </group> 
   <group ns="ra">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/right_kuka.urdf" />
+    <param name="robot_description" textfile="$(find agni_description)/robots/right_kuka.urdf" />
   </group> 
 
   <!-- robots -->
   <!-- Load the general left|right robot_description, spawn it, merge joint_states -->
   <group ns="left">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/left_kuka_shadow_hand_motor_ubi.urdf" /> 
+    <param name="robot_description" textfile="$(find agni_description)/robots/left_kuka_shadow_hand_motor_ubi.urdf" /> 
     <param name="tf_prefix" value="left"/>
     <!-- spawn in the sim world if SIM -->
     <group if="$(arg SIM)">
@@ -100,7 +101,7 @@
   
   <group ns="right">
     <!-- load robot_description -->
-    <param name="robot_description" textfile="$(arg agni)/robots/generated/right_kuka_shadow_hand_motor_ubi.urdf" /> 
+    <param name="robot_description" textfile="$(find agni_description)/robots/right_kuka_shadow_hand_motor_ubi.urdf" /> 
     <param name="tf_prefix" value="right"/>
     <!-- spawn in the sim world if SIM -->
     <group if="$(arg SIM)">
