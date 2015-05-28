@@ -6,13 +6,15 @@
   <arg name="side" default="right"/>
   <arg name="tactile" default="-"/>
 
-  <!-- load robot_description -->
-  <include file="$(find agni_description)/launch/sr_upload.launch">
-    <arg name="namespace" default="$(arg namespace)"/>
-    <arg name="model" default="$(arg model)"/>
-    <arg name="side" default="$(arg side)"/>
-    <arg name="tactile" default="$(arg tactile)"/>
-  </include>
+  <!-- load robot_description (only in sim, driver in bringup does it to) -->
+  <group if="$(arg sim)">
+    <include file="$(find agni_description)/launch/sr_upload.launch">
+      <arg name="namespace" default="$(arg namespace)"/>
+      <arg name="model" default="$(arg model)"/>
+      <arg name="side" default="$(arg side)"/>
+      <arg name="tactile" default="$(arg tactile)"/>
+    </include>
+  </group>
     
   <param name="tf_prefix" value="$(arg namespace)" />
 

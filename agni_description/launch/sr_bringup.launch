@@ -20,9 +20,8 @@
   <group unless="$(arg sim)"> 
     <!-- ns is already contained in sr_rh|lhand.launch -->
     <include file="$(find sr_ethercat_hand_config)/launch/sr_$(arg namespace)and.launch" >
-       <!-- cheating with strangely placed quotes because the xacro execution in sr_edc.launch 
-       puts everything into quotes but substitution args should not be into quotes -->
-      <arg name="robot_description" value="$(find agni_description)/robots/shadow_hands.urdf.xacro'  MODEL:=$(arg model) SIDE:=$(arg side)  TACTILE:=$(arg tactile) PREFIX:=$(arg namespace) ' " />
+       <!-- single quotes must be added around urdf.xacr but not around substitution args -->
+      <arg name="robot_description" value="'$(find agni_description)/robots/shadow_hands.urdf.xacro' MODEL:=$(arg model) SIDE:=$(arg side)  TACTILE:=$(arg tactile) PREFIX:=$(arg namespace)" />
     </include>
  
     <!-- ns is already contained in the controller.launch -->
