@@ -3,6 +3,6 @@
 	<arg name="prefix" default="rh_"/>
   <!-- load robot_description -->
   <group ns="$(arg namespace)" >
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find agni_description)/robots/ubi_poking_stick.urdf.xacro prefix:=$(arg prefix)" />  
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/poking_sticks.urdf.xacro' PREFIX:=$(arg prefix) TACTILE:=ubi " />  
   </group>
 </launch>
