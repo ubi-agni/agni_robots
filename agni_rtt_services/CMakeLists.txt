@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(agni_rtt_services)
 
-find_package(catkin REQUIRED COMPONENTS roscpp rtt_roscomm rtt_ros genmsg message_generation) 
+find_package(catkin REQUIRED COMPONENTS rtt_roscomm rtt_ros genmsg message_generation) 
 
 add_message_files(
   FILES
