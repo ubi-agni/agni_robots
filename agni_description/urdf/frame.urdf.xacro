@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find agni_description)/urdf/util.urdf.xacro"/>
-<xacro:include filename="$(find agni_description)/urdf/materials.urdf.xacro"/>
+<xacro:include filename="../urdf/util.urdf.xacro"/>
+<xacro:include filename="../urdf/materials.urdf.xacro"/>
 
 <xacro:macro name="barcollision" params="thickness len *origin">
    <visual>

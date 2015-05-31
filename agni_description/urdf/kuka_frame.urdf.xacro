@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find agni_description)/urdf/frame-half.urdf.xacro"/>
+  <xacro:include filename="../urdf/frame-half.urdf.xacro"/>
    <xacro:property name="cal_frame_thick"     value="0.09" />
     <xacro:property name="cal_frame_width"     value="1.92" />
     <xacro:property name="cal_frame_depth"     value="1.82" />
@@ -11,7 +11,7 @@
   
   <xacro:macro name="kuka_frame" params="prefix">
     <!-- arm calibration (local) -->
-    <xacro:include filename="$(find agni_description)/calibration/kuka_cal.xml"/>
+    <xacro:include filename="../calibration/kuka_cal.xml"/>
     <xacro:frame-half prefix="${prefix}" thickness="${cal_frame_thick}" width="${cal_frame_width}" depth="${cal_frame_depth}"
               height="${cal_frame_height}" tableHeight="${cal_frame_table_height}"/>
                 

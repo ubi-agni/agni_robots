@@ -9,13 +9,13 @@
   <xacro:property name="side" value="$(arg SIDE)"/>  
   <xacro:property name="arm"  value="$(arg ARM)" />
   <!-- arm -->
-  <xacro:include filename="$(find agni_description)/robots/$(arg ARM)_arm.urdf.xacro" /> 
+  <xacro:include filename="../robots/$(arg ARM)_arm.urdf.xacro" />
   <!-- arm calibration -->
-  <xacro:include filename="$(find agni_description)/calibration/$(arg ARM)_cal.xml"/>
+  <xacro:include filename="../calibration/$(arg ARM)_cal.xml"/>
   <!-- end-effector -->
-  <xacro:include filename="$(find agni_description)/robots/shadow_hand_ee.urdf.xacro" /> 
+  <xacro:include filename="../robots/shadow_hand_ee.urdf.xacro" />
   <!-- end-effector calibration -->
-  <xacro:include filename="$(find agni_description)/calibration/shadow_hand_$(arg HANDMODEL)_cal.xml"/>
+  <xacro:include filename="../calibration/shadow_hand_$(arg HANDMODEL)_cal.xml"/>
   
    <!-- must be world to spawn the arm in gazebo and have it fixed at the calibration location -->
   <link name="world" /> 
@@ -28,8 +28,8 @@
   </xacro:call>
                 
   <!-- Effector -->
-  <xacro:property name="arm_prefix" value="${'ra' if side=='right' else 'la'}"/> 
-  <xacro:property name="ee_prefix" value="${'rh' if side=='right' else 'lh'}"/> 
+  <xacro:property name="arm_prefix" value="${'ra' if side=='right' else 'la'}"/>
+  <xacro:property name="ee_prefix" value="${'rh' if side=='right' else 'lh'}"/>
   <xacro:call macro="shadow_hand" model="$(arg HANDMODEL)" tactile="$(arg TACTILE)" side="${side}" prefix="${ee_prefix}"/>         
   
   <!-- Link arm and effector -->

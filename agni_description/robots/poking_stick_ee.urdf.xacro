@@ -12,7 +12,7 @@
 
   
   <xacro:macro name="poking_stick" params="model:='-' tactile:='-' side prefix:=rh" >
-    <xacro:include filename="$(find agni_description)/models/poking_stick.urdf.xacro" /> 
+    <xacro:include filename="../models/poking_stick.urdf.xacro" /> 
     <xacro:poking_stick_generic prefix="${prefix}_" tactile="${tactile}" />
     <xacro:if value="${tactile!='-'}">
       <xacro:include filename="$(find sr_description)/hand/xacro/finger/distal/distal.tactile.xacro" />

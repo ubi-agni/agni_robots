@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="poking_stick"
 		 xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find agni_description)/robots/poking_stick_ee.urdf.xacro" /> 
+  <xacro:include filename="../robots/poking_stick_ee.urdf.xacro" /> 
  
   <xacro:arg name="MODEL" default="-"/>
   <xacro:arg name="SIDE" default="right"/>

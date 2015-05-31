@@ -2,9 +2,9 @@
 <robot name="kuka_anytool"
      xmlns:xacro="http://www.ros.org/wiki/xacro">
   
-  <xacro:include filename="$(find agni_description)/pa10/pa10-a.urdf.xacro"/> 
-  <xacro:include filename="$(find agni_description)/pa10/pa10-c.urdf.xacro"/> 
-  <xacro:include filename="$(find agni_description)/pa10/pa10_shadow_controller_manager.xacro"/> 
+  <xacro:include filename="../pa10/pa10-a.urdf.xacro"/> 
+  <xacro:include filename="../pa10/pa10-c.urdf.xacro"/> 
+  <xacro:include filename="../pa10/pa10_shadow_controller_manager.xacro"/> 
  
   <!-- arm macro with the params
          * parent : where it is attached

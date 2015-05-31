@@ -11,7 +11,7 @@
   <xacro:property name="cal_ee_roll" value="${dict(default= 0.0)}" />
   
   <xacro:macro name="myrmex" params="model:='-' tactile:='-' side prefix:=rh" >
-    <xacro:include filename="$(find agni_description)/models/myrmex_quick_mount.urdf.xacro" /> 
+    <xacro:include filename="../models/myrmex_quick_mount.urdf.xacro" /> 
     <xacro:myrmex_quick_mount prefix="${prefix}_" tactile="${tactile}" />
     <xacro:if value="${tactile!='-'}">
       <!-- tactile marker mapping description -->

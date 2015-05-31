@@ -2,16 +2,16 @@
 <robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="SIM" default="1"/> 
   
-  <xacro:include filename="$(find agni_description)/urdf/kuka_frame.urdf.xacro"/>
+  <xacro:include filename="../urdf/kuka_frame.urdf.xacro"/>
    
   <!-- arm with -->
-  <xacro:include filename="$(find agni_description)/robots/kuka_arm.urdf.xacro" /> 
+  <xacro:include filename="../robots/kuka_arm.urdf.xacro" /> 
   <!-- arm calibration -->
-  <xacro:include filename="$(find agni_description)/calibration/kuka_cal.xml"/>
+  <xacro:include filename="../calibration/kuka_cal.xml"/>
   <!-- end-effector -->
-  <xacro:include filename="$(find agni_description)/robots/shadow_hand_ee.urdf.xacro" />
+  <xacro:include filename="../robots/shadow_hand_ee.urdf.xacro" />
   <!-- arm and hand mount calibration (should always be last) -->
-  <xacro:include filename="$(find agni_description)/calibration/famula_cal.xml"/>
+  <xacro:include filename="../calibration/famula_cal.xml"/>
  
   <!-- Frame -->
   <xacro:call macro="kuka_frame" prefix="kuka" />

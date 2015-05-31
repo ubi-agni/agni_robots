@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find agni_description)/urdf/frame.urdf.xacro"/>
+  <xacro:include filename="../urdf/frame.urdf.xacro"/>
   
   <xacro:property name="cal_frame_thick"  value="0.09" />
   <xacro:property name="cal_frame_width"     value="1.92" />
@@ -12,7 +12,7 @@
 
   <xacro:macro name="pa10_frame" params="prefix">
     <!-- arm calibration (local) -->
-    <xacro:include filename="$(find agni_description)/calibration/pa10_cal.xml"/>
+    <xacro:include filename="../calibration/pa10_cal.xml"/>
     
     <xacro:frame prefix="${prefix}"  thickness="${cal_frame_thick}" width="${cal_frame_width}" depth="${cal_frame_depth}"
               height="${cal_frame_height}" tableHeight="${cal_frame_table_height}" mountingYpos="${cal_arm_y.get('right',0.0)}" mountingspacing="${cal_frame_mounting_spacing}" />

@@ -2,14 +2,14 @@
 <robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="SIM" default="1"/> 
   
-  <xacro:include filename="$(find agni_description)/urdf/pa10_frame.urdf.xacro"/>
+  <xacro:include filename="../urdf/pa10_frame.urdf.xacro"/>
    
   <!-- arm  -->
-  <xacro:include filename="$(find agni_description)/robots/pa10_arm.urdf.xacro" /> 
+  <xacro:include filename="../robots/pa10_arm.urdf.xacro" /> 
   <!-- end-effector -->
-  <xacro:include filename="$(find agni_description)/robots/shadow_hand_ee.urdf.xacro" />
+  <xacro:include filename="../robots/shadow_hand_ee.urdf.xacro" />
   <!-- arm and hand mount calibration (should always be last) -->
-  <xacro:include filename="$(find agni_description)/calibration/sfb_cal.xml"/>
+  <xacro:include filename="../calibration/sfb_cal.xml"/>
  
   <!-- Frame -->
   <xacro:call macro="pa10_frame" prefix="pa10" />

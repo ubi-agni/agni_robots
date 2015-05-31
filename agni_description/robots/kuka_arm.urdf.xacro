@@ -2,8 +2,8 @@
 <robot name="kuka_anytool"
      xmlns:xacro="http://www.ros.org/wiki/xacro">
   
-  <xacro:include filename="$(find agni_description)/kuka/kuka.urdf.xacro"/>
-  <xacro:include filename="$(find agni_description)/kuka/lwr_controllers.gazebo.xacro"/>  
+  <xacro:include filename="../kuka/kuka.urdf.xacro"/>
+  <xacro:include filename="../kuka/lwr_controllers.gazebo.xacro"/>  
  
   <!-- arm_ee macro with the params
          * parent : where it is attached

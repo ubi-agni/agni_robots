@@ -4,7 +4,7 @@
      
   <xacro:arg name="FRAME" default="kuka"/> 
   
-  <xacro:include filename="$(find agni_description)/urdf/$(arg FRAME)_frame.urdf.xacro"/>
+  <xacro:include filename="../urdf/$(arg FRAME)_frame.urdf.xacro"/>
 
   <xacro:call macro="$(arg FRAME)_frame" prefix="$(arg FRAME)" />
 	

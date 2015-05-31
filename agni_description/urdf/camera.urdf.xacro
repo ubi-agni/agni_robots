@@ -1,7 +1,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- The reference frame is the depth optical frame, all other frames are built around it -->
 
-  <xacro:include filename="$(find agni_description)/urdf/gazebo_camera.urdf.xacro"/>
+  <xacro:include filename="../urdf/gazebo_camera.urdf.xacro"/>
   <!-- do not name the macro 'camera', it conflicts with gazebo camera tag -->
   <xacro:macro name="camera_body" params="parent name fps hfov width height has_depth *origin">
     
