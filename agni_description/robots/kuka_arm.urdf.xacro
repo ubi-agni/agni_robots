@@ -25,7 +25,7 @@
     <xacro:property name="prefix"  value="${'ra' if side=='right' else 'la'}" />
     <xacro:kuka_lwr_arm name="${prefix}_" reflect="${1 if side=='right' else -1}" tool_name=""/>
     <joint name="${prefix}_frame_placement" type="fixed">
-       <insert_block name="origin" />
+       <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${prefix}_arm_base_link"/>
     </joint>  

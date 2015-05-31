@@ -8,7 +8,7 @@
 <xacro:include filename="$(find agni_description)/urdf/materials.urdf.xacro"/>
 <xacro:include filename="$(find agni_description)/calibration/kuka_cal.xml"/>
 
-  <property name="mount_triangle_length"     value="0.26" />
+  <xacro:property name="mount_triangle_length"     value="0.26" />
   
 
 <xacro:macro name="bar" params="thickness len *origin">

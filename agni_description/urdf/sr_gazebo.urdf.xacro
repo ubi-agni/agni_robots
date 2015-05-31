@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
 	<!-- namespace must be set up according to launch file namespace -->
-  <macro name="shadow_gazebo_controller_manager" params="namespace">
+  <xacro:macro name="shadow_gazebo_controller_manager" params="namespace">
 		<gazebo>
 			<plugin name="sr_gazebo_ros_controller_manager" filename="libsr_gazebo_ros_controller_manager.so">
 				<alwaysOn>true</alwaysOn>
@@ -10,5 +10,5 @@
 				<robotNamespace>${namespace}</robotNamespace>
 			</plugin>
 		</gazebo>
-  </macro>
+  </xacro:macro>
 </robot>

@@ -26,7 +26,7 @@
     <xacro:property name="prefix"  value="${'ra' if side=='right' else 'la'}" />
     <xacro:call macro="${armname[side]}_arm" name="${prefix}_" />
     <joint name="${prefix}_frame_placement" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${prefix}_arm_base_link"/>
     </joint>  

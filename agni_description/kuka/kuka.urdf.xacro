@@ -6,18 +6,18 @@
 
   <xacro:include filename="$(find agni_description)/urdf/util.urdf.xacro"/>
   
-  <property name="arm_elem_base_mass" value="2.0"/>
-  <property name="arm_elem_link_mass" value="2.0"/>
-  <property name="arm_elem_ball_link_mass" value="1.0"/>
-  <property name="arm_elem_end_link_mass" value="0.2"/>
-  <property name="safety_controller_k_pos" value="100" />
-  <property name="safety_controller_k_vel" value="2" />
-  <property name="joint_damping" value="1.0" />
+  <xacro:property name="arm_elem_base_mass" value="2.0"/>
+  <xacro:property name="arm_elem_link_mass" value="2.0"/>
+  <xacro:property name="arm_elem_ball_link_mass" value="1.0"/>
+  <xacro:property name="arm_elem_end_link_mass" value="0.2"/>
+  <xacro:property name="safety_controller_k_pos" value="100" />
+  <xacro:property name="safety_controller_k_vel" value="2" />
+  <xacro:property name="joint_damping" value="1.0" />
 
-  <property name="arm_velocity_scale_factor" value="1"/>
+  <xacro:property name="arm_velocity_scale_factor" value="1"/>
 
   <!-- reflect is either 1 (for right arm) or -1 (for left arm) -->
-  <macro name="kuka_lwr_arm" params="name reflect tool_name:=''">
+  <xacro:macro name="kuka_lwr_arm" params="name reflect tool_name:=''">
 
     <link name="${name}arm_base_link">
       <inertial>
@@ -433,6 +433,6 @@
 
     <link name="${name}arm_hand_mount" />
 
-  </macro>
+  </xacro:macro>
 
 </robot>

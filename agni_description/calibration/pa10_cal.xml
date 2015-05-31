@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- arm base -->
-  <property name="cal_arm_x"     value="${dict(right=-0.168, left=0.168)}" />
-  <property name="cal_arm_y"     value="${dict(right= 0.855, left=0.855)}" />
-  <property name="cal_arm_z"     value="${dict(right= 1.193, left=1.193)}" />
-  <property name="cal_arm_roll"  value="${dict(right= pi-0.261799, left= pi-0.261799)}" />
-  <property name="cal_arm_pitch" value="${dict(right= 0, left= 0)}" />
-  <property name="cal_arm_yaw"   value="${dict(right= -pi/2.0, left=pi/2.0)}" />
+  <xacro:property name="cal_arm_x"     value="${dict(right=-0.168, left=0.168)}" />
+  <xacro:property name="cal_arm_y"     value="${dict(right= 0.855, left=0.855)}" />
+  <xacro:property name="cal_arm_z"     value="${dict(right= 1.193, left=1.193)}" />
+  <xacro:property name="cal_arm_roll"  value="${dict(right= pi-0.261799, left= pi-0.261799)}" />
+  <xacro:property name="cal_arm_pitch" value="${dict(right= 0, left= 0)}" />
+  <xacro:property name="cal_arm_yaw"   value="${dict(right= -pi/2.0, left=pi/2.0)}" />
 
 </root>

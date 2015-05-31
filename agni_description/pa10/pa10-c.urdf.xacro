@@ -7,7 +7,7 @@
 
   <xacro:include filename="$(find agni_description)/urdf/util.urdf.xacro"/>
 
-  <macro name="pa10c_arm" params="name kinematic:=false">
+  <xacro:macro name="pa10c_arm" params="name kinematic:=false">
   <link name="${name}arm_base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -376,5 +376,5 @@
    <gazebo reference="${name}arm_hand_mount">
     <kinematic>${kinematic}</kinematic>
   </gazebo>
-  </macro>
+  </xacro:macro>
 </robot>

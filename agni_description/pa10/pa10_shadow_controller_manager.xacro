@@ -4,7 +4,7 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
 	<!-- namespace must be set up according to launch file namespace -->
-  <macro name="pa10_shadow_gazebo_controller_manager" params="namespace">
+  <xacro:macro name="pa10_shadow_gazebo_controller_manager" params="namespace">
 		<gazebo>
 			<plugin name="sr_gazebo_ros_controller_manager" filename="libsr_gazebo_ros_controller_manager.so">
 				<alwaysOn>true</alwaysOn>
@@ -12,5 +12,5 @@
 				<robotNamespace>${namespace}</robotNamespace>
 			</plugin>
 		</gazebo>
-  </macro>
+  </xacro:macro>
 </robot>
