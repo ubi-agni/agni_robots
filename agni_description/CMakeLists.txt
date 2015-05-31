@@ -11,10 +11,6 @@ catkin_package(
 )
 
 
-# Xacro files
-xacro_add_files(robots/sfb.urdf.xacro robots/famula.urdf.xacro INORDER
-  INSTALL DESTINATION robots)
-
 xacro_add_xacro_file(robots/sfb.urdf.xacro INORDER)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
