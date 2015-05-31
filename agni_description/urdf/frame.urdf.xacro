@@ -34,21 +34,21 @@
     </inertial>
 	 <!-- horizontal front bar-->
 	 <xacro:bar thickness="${thickness}" len="${width}">
-		<origin xyz="0 ${-thickness/2} ${-thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+		<origin xyz="0 ${-thickness/2} ${-thickness/2}" rpy="0 ${-pi/2} 0"/>
 	 </xacro:bar>
 	 <!-- horizontal rear bar -->
 	 <xacro:bar thickness="${thickness}" len="${width}">
-		<origin xyz="0 ${depth+thickness/2} ${-thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+		<origin xyz="0 ${depth+thickness/2} ${-thickness/2}" rpy="0 ${-pi/2} 0"/>
 	 </xacro:bar>
     
     <!-- robot mounting bars -->
 	 <!-- horizontal front bar top -->
 	 <xacro:bar thickness="${thickness}" len="${width}">
-		<origin xyz="0 ${mountingYpos-mountingspacing/2 + thickness/2} ${height+thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+		<origin xyz="0 ${mountingYpos-mountingspacing/2 + thickness/2} ${height+thickness/2}" rpy="0 ${-pi/2} 0"/>
 	 </xacro:bar>
 	 <!-- horizontal rear bar top -->
 	 <xacro:bar thickness="${thickness}" len="${width}">
-		<origin xyz="0 ${mountingYpos+mountingspacing/2 - thickness/2} ${height+thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+		<origin xyz="0 ${mountingYpos+mountingspacing/2 - thickness/2} ${height+thickness/2}" rpy="0 ${-pi/2} 0"/>
 	 </xacro:bar>
     <!-- additional collision box inbetzeen the mounting bars at the top -->
      <collision>
@@ -79,22 +79,22 @@
 	 <!-- left side bottom -->
 	 <xacro:bar thickness="${thickness}" len="${depth}">
 		<origin xyz="${-(width+thickness)/2} ${depth/2} ${-thickness/2}" 
-				  rpy="${-M_PI/2} 0 0"/>
+				  rpy="${-pi/2} 0 0"/>
 	 </xacro:bar>
 	 <!-- right side bottom -->
 	 <xacro:bar thickness="${thickness}" len="${depth}">
 		<origin xyz="${+(width+thickness)/2} ${depth/2} ${-thickness/2}" 
-				  rpy="${-M_PI/2} 0 0"/>
+				  rpy="${-pi/2} 0 0"/>
 	 </xacro:bar>
 	 <!-- left side top -->
 	 <xacro:bar thickness="${thickness}" len="${depth}">
 		<origin xyz="${-(width+thickness)/2} ${depth/2} ${height+thickness/2}" 
-				  rpy="${-M_PI/2} 0 0"/>
+				  rpy="${-pi/2} 0 0"/>
 	 </xacro:bar>
 	 <!-- right side top -->
 	 <xacro:bar thickness="${thickness}" len="${depth}">
 		<origin xyz="${+(width+thickness)/2} ${depth/2} ${height+thickness/2}" 
-				  rpy="${-M_PI/2} 0 0"/>
+				  rpy="${-pi/2} 0 0"/>
 	 </xacro:bar>
 
    <!-- table plane -->

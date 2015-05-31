@@ -50,10 +50,10 @@
     <joint name="${name}arm_0_joint" type="revolute">
       <origin xyz="0 0 0.11" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
-      <limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}"
-             effort="204" velocity="${arm_velocity_scale_factor * 110 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-168 * M_PI / 180}"
-                         soft_upper_limit="${168 * M_PI / 180}"
+      <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+             effort="204" velocity="${arm_velocity_scale_factor * 110 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                         soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -81,7 +81,7 @@
       </inertial>
 
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
           <mesh scale="100 100 100"  filename="package://agni_description/kuka/meshes/arm_segment_a.dae"/>
         </geometry>
@@ -89,7 +89,7 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
           <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_a_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -103,10 +103,10 @@
     <joint name="${name}arm_1_joint" type="revolute">
       <origin xyz="0 0 0.20" rpy="0 0 0"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}"
-             effort="306" velocity="${arm_velocity_scale_factor * 110 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-118 * M_PI / 180}"
-                         soft_upper_limit="${118 * M_PI / 180}"
+      <limit lower="${-120 * pi / 180}" upper="${120 * pi / 180}"
+             effort="306" velocity="${arm_velocity_scale_factor * 110 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-118 * pi / 180}"
+                         soft_upper_limit="${118 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -134,7 +134,7 @@
       </inertial>
 
       <visual>
-        <origin xyz="0 0 0.2" rpy="${M_PI} 0 ${M_PI}"/>
+        <origin xyz="0 0 0.2" rpy="${pi} 0 ${pi}"/>
         <geometry>
           <mesh scale="100 100 100"
 					 filename="package://agni_description/kuka/meshes/arm_segment_b.dae"/>
@@ -143,7 +143,7 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0.2" rpy="${M_PI} 0 ${M_PI}"/>
+        <origin xyz="0 0 0.2" rpy="${pi} 0 ${pi}"/>
         <geometry>
           <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_b_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -157,10 +157,10 @@
     <joint name="${name}arm_2_joint" type="revolute">
       <origin xyz="0 0 0.20" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
-      <limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}"
-             effort="204" velocity="${arm_velocity_scale_factor * 130 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-168 * M_PI / 180}"
-                         soft_upper_limit="${168 * M_PI / 180}"
+      <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+             effort="204" velocity="${arm_velocity_scale_factor * 130 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                         soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -211,10 +211,10 @@
     <joint name="${name}arm_3_joint" type="revolute">
       <origin xyz="0 0 0.20" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
-      <limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}"
-             effort="306" velocity="${arm_velocity_scale_factor * 130 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-118 * M_PI / 180}"
-                         soft_upper_limit="${118 * M_PI / 180}"
+      <limit lower="${-120 * pi / 180}" upper="${120 * pi / 180}"
+             effort="306" velocity="${arm_velocity_scale_factor * 130 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-118 * pi / 180}"
+                         soft_upper_limit="${118 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -242,7 +242,7 @@
       </inertial>
 
       <visual>
-        <origin xyz="0 0 0.2" rpy="0 ${M_PI} ${M_PI}"/>
+        <origin xyz="0 0 0.2" rpy="0 ${pi} ${pi}"/>
         <geometry>
           <mesh scale="100 100 100" 
 					 filename="package://agni_description/kuka/meshes/arm_segment_b.dae"/>
@@ -251,7 +251,7 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0.2" rpy="0 ${M_PI} ${M_PI}"/>
+        <origin xyz="0 0 0.2" rpy="0 ${pi} ${pi}"/>
         <geometry>
           <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_b_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -265,10 +265,10 @@
     <joint name="${name}arm_4_joint" type="revolute">
       <origin xyz="0 0 0.20" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
-      <limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}"
-             effort="204" velocity="${arm_velocity_scale_factor * 130 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-168 * M_PI / 180}"
-                         soft_upper_limit="${168 * M_PI / 180}"
+      <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+             effort="204" velocity="${arm_velocity_scale_factor * 130 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                         soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -296,7 +296,7 @@
       </inertial>
 
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry name="${name}arm_5_geom">
           <mesh scale="100 100 100" 
 					 filename="package://agni_description/kuka/meshes/arm_segment_last.dae"/>
@@ -305,7 +305,7 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
           <mesh filename="package://agni_description/kuka/meshes/convex/arm_segment_last_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -319,10 +319,10 @@
     <joint name="${name}arm_5_joint" type="revolute">
       <origin xyz="0 0 0.19" rpy="0 0 0"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}"
-             effort="306" velocity="${arm_velocity_scale_factor * 180 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-118 * M_PI / 180}"
-                         soft_upper_limit="${118 * M_PI / 180}"
+      <limit lower="${-120 * pi / 180}" upper="${120 * pi / 180}"
+             effort="306" velocity="${arm_velocity_scale_factor * 180 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-118 * pi / 180}"
+                         soft_upper_limit="${118 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -350,7 +350,7 @@
       </inertial>
 
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
           <mesh scale="100 100 100" 
 					 filename="package://agni_description/kuka/meshes/arm_wrist.dae"/>
@@ -359,7 +359,7 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
           <mesh filename="package://agni_description/kuka/meshes/convex/arm_wrist_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -373,10 +373,10 @@
     <joint name="${name}arm_6_joint" type="revolute">
       <origin xyz="0 0 0.078" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
-      <limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}"
-             effort="204" velocity="${arm_velocity_scale_factor * 180 * M_PI / 180}" />
-      <safety_controller soft_lower_limit="${-168 * M_PI / 180}"
-                         soft_upper_limit="${168 * M_PI / 180}"
+      <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+             effort="204" velocity="${arm_velocity_scale_factor * 180 * pi / 180}" />
+      <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                         soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
       <dynamics damping="${joint_damping}"/>
@@ -403,7 +403,7 @@
                             mass="${arm_elem_end_link_mass}"/>
       </inertial>
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 ${reflect * -1/4 * M_PI  +  M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${reflect * -1/4 * pi  +  pi}"/>
         <geometry>
           <mesh scale="100 100 100" 
 					 filename="package://agni_description/kuka/meshes/arm_flanche${tool_name}.dae"/>
@@ -411,7 +411,7 @@
         <material name="Grey"/>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 ${reflect * -1/4 * M_PI  +  M_PI}"/>
+        <origin xyz="0 0 0" rpy="0 0 ${reflect * -1/4 * pi  +  pi}"/>
         <geometry>
           <mesh filename="package://agni_description/kuka/meshes/convex/arm_flanche${tool_name}_convex.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -425,7 +425,7 @@
     <joint name="${name}arm_hand_fixed_joint" type="fixed">
 <!--
       <origin xyz="${-reflect * 0.075} -0.075 -0.094"
-              rpy="${0.5*reflect*M_PI} 0 ${(1.5 + 0.25*reflect)*M_PI}"/>
+              rpy="${0.5*reflect*pi} 0 ${(1.5 + 0.25*reflect)*pi}"/>
 -->
       <parent link="${name}arm_7_link"/>
       <child link="${name}arm_hand_mount"/>

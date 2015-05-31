@@ -1,6 +1,4 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:property name="M_PI" value="3.1415926535"/>
-
   <!-- The reference frame is the depth optical frame, all other frames are built around it -->
 
   <xacro:include filename="$(find agni_description)/urdf/gazebo_camera.urdf.xacro"/>
@@ -26,7 +24,7 @@
     </link>
 
     <joint name="${name}_camera_depth_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${M_PI/2} ${-M_PI/2} 0 " />
+      <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
       <parent link="${name}_camera_depth_optical_frame" />
       <child link="${name}_camera_depth_frame" />
     </joint>
@@ -86,7 +84,7 @@
     </link>
     
     <joint name="${name}_camera_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
       <parent link="${name}_camera_rgb_frame" />
       <child link="${name}_camera_rgb_optical_frame" />
     </joint>

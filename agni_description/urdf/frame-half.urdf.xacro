@@ -33,15 +33,15 @@
     </inertial>
    <!-- horizontal front bar-->
    <xacro:bar thickness="${thickness}" len="${width}">
-    <origin xyz="0 ${thickness/2} ${-thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+    <origin xyz="0 ${thickness/2} ${-thickness/2}" rpy="0 ${-pi/2} 0"/>
    </xacro:bar>
    <!-- horizontal rear bar -->
    <xacro:bar thickness="${thickness}" len="${width}">
-    <origin xyz="0 ${depth+thickness/2} ${-thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+    <origin xyz="0 ${depth+thickness/2} ${-thickness/2}" rpy="0 ${-pi/2} 0"/>
    </xacro:bar>
    <!-- horizontal rear bar top -->
    <xacro:bar thickness="${thickness}" len="${width}">
-    <origin xyz="0 ${depth+thickness/2} ${height+thickness/2}" rpy="0 ${-M_PI/2} 0"/>
+    <origin xyz="0 ${depth+thickness/2} ${height+thickness/2}" rpy="0 ${-pi/2} 0"/>
    </xacro:bar>
 
    <!-- left front pole -->
@@ -65,12 +65,12 @@
    <!-- left side bottom -->
    <xacro:bar thickness="${thickness}" len="${depth}">
     <origin xyz="${-(width+thickness)/2} ${depth/2} ${-thickness/2}" 
-          rpy="${-M_PI/2} 0 0"/>
+          rpy="${-pi/2} 0 0"/>
    </xacro:bar>
    <!-- right side bottom -->
    <xacro:bar thickness="${thickness}" len="${depth}">
     <origin xyz="${+(width+thickness)/2} ${depth/2} ${-thickness/2}" 
-          rpy="${-M_PI/2} 0 0"/>
+          rpy="${-pi/2} 0 0"/>
    </xacro:bar>
 
    <!-- left central pole -->
@@ -111,25 +111,25 @@
   <!-- kuka mount triangle -->
    <visual>
      <origin xyz="${cal_arm_x['left']-cos(30/180.0*pi)*0.01} ${cal_arm_y['left']} ${cal_arm_z['left']-sin(30/180.0*pi)*0.01}"
-        rpy="0 ${M_PI/3} 0"/>
+        rpy="0 ${pi/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
     <material name="Silver"/>
    </visual>  
    <collision>
      <origin xyz="${cal_arm_x['left']-cos(30/180.0*pi)*0.01} ${cal_arm_y['left']} ${cal_arm_z['left']-sin(30/180.0*pi)*0.01}"
-        rpy="0 ${M_PI/3} 0"/>
+        rpy="0 ${pi/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
    <visual>
      <origin xyz="${cal_arm_x['right']+cos(30/180.0*pi)*0.01} ${cal_arm_y['right']} ${cal_arm_z['right']-sin(30/180.0*pi)*0.01}"
-        rpy="0 ${-M_PI/3} 0"/>
+        rpy="0 ${-pi/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.02}"/></geometry>
     <material name="Silver"/>
    </visual>  
     <collision>
        <origin xyz="${cal_arm_x['right']+cos(30/180.0*pi)*0.01} ${cal_arm_y['right']} ${cal_arm_z['right']-sin(30/180.0*pi)*0.01}"
-        rpy="0 ${-M_PI/3} 0"/>
+        rpy="0 ${-pi/3} 0"/>
     <geometry><box size="${mount_triangle_length} ${mount_triangle_length} ${0.015}"/></geometry>
    </collision>  
    
