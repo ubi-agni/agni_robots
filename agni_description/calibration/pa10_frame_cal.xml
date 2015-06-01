@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="cal_frame_thick"        value="0.09" />
+  <xacro:property name="cal_frame_width"        value="1.92" />
+  <xacro:property name="cal_frame_depth"        value="1.82" />
+  <xacro:property name="cal_frame_height"       value="1.26" />
+  <xacro:property name="cal_frame_table_height" value="1.00" />
+  <xacro:property name="cal_frame_mounting_spacing" value="0.513" />
+  <xacro:property name="cal_frame_mounting_ypos" value="0.855" />
+
+</root>

@@ -1,52 +1,50 @@
 <?xml version="1.0"?>
 <robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:arg name="SIM" default="1"/> 
-  
-  <xacro:include filename="../urdf/pa10_frame.urdf.xacro"/>
-   
-  <!-- arm  -->
-  <xacro:include filename="../robots/pa10_arm.urdf.xacro" /> 
-  <!-- end-effector -->
-  <xacro:include filename="../robots/shadow_hand_ee.urdf.xacro" />
-  <!-- arm and hand mount calibration (should always be last) -->
-  <xacro:include filename="../calibration/sfb_cal.xml"/>
- 
-  <!-- Frame -->
-  <xacro:call macro="pa10_frame" prefix="pa10" />
-  
-  <!-- Right -->
-    <!-- Arm -->
-    <xacro:call macro="pa10_arm" parent="world" side="right" controller="$(arg SIM)">
-      <origin xyz="${cal_arm_x['right']} ${cal_arm_y['right']} ${cal_arm_z['right']}"
-      rpy="${cal_arm_roll['right']} ${cal_arm_pitch['right']} ${cal_arm_yaw['right']}"/>
-    </xacro:call>
-                  
-    <!-- Effector -->
-    <xacro:call macro="shadow_hand" model="motor" side="right" tactile="ubi" prefix="rh" />
+	<xacro:arg name="SIM" default="1"/>
 
-    <!-- Link arm and effector -->
-    <joint name="ra_arm_hand_mount" type="fixed">
-      <parent link="ra_${arm_mount['pa10']}"/> 
-      <child link="rh_${ee_mount['shadow_hand']}"/>
-  <origin xyz="${cal_ee_x['shadow_hand']['right']} ${cal_ee_y['shadow_hand']['right']} ${cal_ee_z['shadow_hand']['right']}"
-  rpy="${cal_ee_roll['shadow_hand']['right']} ${cal_ee_pitch['shadow_hand']['right']} ${cal_ee_yaw['shadow_hand']['right']}"/>
-    </joint>
-  
-  <!-- Left -->
-    <!-- Arm -->
-    <xacro:call macro="pa10_arm" parent="world" side="left" controller="$(arg SIM)">
-      <origin xyz="${cal_arm_x['left']} ${cal_arm_y['left']} ${cal_arm_z['left']}"
-      rpy="${cal_arm_roll['left']} ${cal_arm_pitch['left']} ${cal_arm_yaw['left']}"/>
-    </xacro:call>
-                  
-    <!-- Effector -->
-    <xacro:call macro="shadow_hand" model="motor" side="left" tactile="ubi" prefix="lh" />
+	<!-- Frame -->
+	<xacro:include filename="../urdf/frame.urdf.xacro"/>
+	<xacro:include filename="../calibration/pa10_frame_cal.xml"/>
+	<xacro:frame prefix="pa10"/>
 
-    <!-- Link arm and effector -->
-    <joint name="la_arm_hand_mount" type="fixed">
-      <parent link="la_${arm_mount['pa10']}"/> 
-      <child link="lh_${ee_mount['shadow_hand']}"/>
-        <origin xyz="${cal_ee_x['shadow_hand']['left']} ${cal_ee_y['shadow_hand']['left']} ${cal_ee_z['shadow_hand']['left']}"
-  rpy="${cal_ee_roll['shadow_hand']['left']} ${cal_ee_pitch['shadow_hand']['left']} ${cal_ee_yaw['shadow_hand']['left']}"/>
-    </joint> 
+	<!-- arm  -->
+	<xacro:include filename="../robots/pa10_arm.urdf.xacro" />
+	<!-- end-effector -->
+	<xacro:include filename="../robots/shadow_hand_ee.urdf.xacro" />
+
+	<!-- Right -->
+	<!-- Arm -->
+	<xacro:include filename="../calibration/sfb_pa10_right_cal.xml"/>
+	<xacro:call macro="pa10_arm" parent="world" side="right" controller="$(arg SIM)">
+		<origin xyz="${cal_arm_x} ${cal_arm_y} ${cal_arm_z}" rpy="${cal_arm_roll} ${cal_arm_pitch} ${cal_arm_yaw}"/>
+	</xacro:call>
+
+	<!-- Effector -->
+	<xacro:call macro="shadow_hand" model="motor" side="right" tactile="ubi" prefix="rh" />
+
+	<!-- Link arm and effector -->
+	<xacro:include filename="../calibration/sfb_shadow_hand_motor_right_cal.xml"/>
+	<joint name="ra_arm_hand_mount" type="fixed">
+		<parent link="ra_${arm_mount['pa10']}"/>
+		<child link="rh_${ee_mount['shadow_hand']}"/>
+		<origin xyz="${cal_ee_x} ${cal_ee_y} ${cal_ee_z}" rpy="${cal_ee_roll} ${cal_ee_pitch} ${cal_ee_yaw}"/>
+	</joint>
+
+	<!-- Left -->
+	<!-- Arm -->
+	<xacro:include filename="../calibration/sfb_pa10_left_cal.xml"/>
+	<xacro:call macro="pa10_arm" parent="world" side="left" controller="$(arg SIM)">
+		<origin xyz="${cal_arm_x} ${cal_arm_y} ${cal_arm_z}" rpy="${cal_arm_roll} ${cal_arm_pitch} ${cal_arm_yaw}"/>
+	</xacro:call>
+
+	<!-- Effector -->
+	<xacro:call macro="shadow_hand" model="motor" side="left" tactile="ubi" prefix="lh" />
+
+	<!-- Link arm and effector -->
+	<xacro:include filename="../calibration/sfb_shadow_hand_motor_left_cal.xml"/>
+	<joint name="la_arm_hand_mount" type="fixed">
+		<parent link="la_${arm_mount['pa10']}"/>
+		<child link="lh_${ee_mount['shadow_hand']}"/>
+		<origin xyz="${cal_ee_x} ${cal_ee_y} ${cal_ee_z}" rpy="${cal_ee_roll} ${cal_ee_pitch} ${cal_ee_yaw}"/>
+	</joint>
 </robot>
