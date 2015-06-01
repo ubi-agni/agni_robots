@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:arg name="SIM" default="1"/>
+	<xacro:arg name="CALIB" default="famula"/>
 
 	<!-- Frame -->
 	<xacro:include filename="../urdf/frame-half.urdf.xacro"/>
@@ -14,7 +15,7 @@
 
 	<!-- Right -->
 	<!-- Arm -->
-	<xacro:include filename="../calibration/famula_kuka_right_cal.xml"/>
+	<xacro:include filename="../calibration/$(arg CALIB)/kuka_right_cal.xml"/>
 	<xacro:call macro="kuka_arm" parent="world" side="right" controller="$(arg SIM)">
 		<origin xyz="${cal_arm_x} ${cal_arm_y} ${cal_arm_z}"
 		        rpy="${cal_arm_roll} ${cal_arm_pitch} ${cal_arm_yaw}"/>
@@ -24,7 +25,7 @@
 	<xacro:call macro="shadow_hand" model="motor" side="right" tactile="ubi" prefix="rh" />
 
 	<!-- Link arm and effector -->
-	<xacro:include filename="../calibration/famula_shadow_hand_motor_right_cal.xml"/>
+	<xacro:include filename="../calibration/$(arg CALIB)/shadow_hand_motor_right_cal.xml"/>
 	<joint name="ra_arm_hand_mount" type="fixed">
 		<parent link="ra_${arm_mount['kuka']}"/>
 		<child link="rh_${ee_mount['shadow_hand']}"/>
@@ -34,7 +35,7 @@
 
 	<!-- Left -->
 	<!-- Arm -->
-	<xacro:include filename="../calibration/famula_kuka_left_cal.xml"/>
+	<xacro:include filename="../calibration/$(arg CALIB)/kuka_left_cal.xml"/>
 	<xacro:call macro="kuka_arm" parent="world" side="left" controller="$(arg SIM)">
 		<origin xyz="${cal_arm_x} ${cal_arm_y} ${cal_arm_z}"
 		        rpy="${cal_arm_roll} ${cal_arm_pitch} ${cal_arm_yaw}"/>
@@ -44,7 +45,7 @@
 	<xacro:call macro="shadow_hand" model="motor" side="left" tactile="ubi" prefix="lh" />
 
 	<!-- Link arm and effector -->
-	<xacro:include filename="../calibration/famula_shadow_hand_motor_left_cal.xml"/>
+	<xacro:include filename="../calibration/$(arg CALIB)/shadow_hand_motor_left_cal.xml"/>
 	<joint name="la_arm_hand_mount" type="fixed">
 		<parent link="la_${arm_mount['kuka']}"/>
 		<child link="lh_${ee_mount['shadow_hand']}"/>
