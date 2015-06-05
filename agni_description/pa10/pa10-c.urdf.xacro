@@ -369,11 +369,11 @@
   
   <joint name="${name}arm_hand_fixed_joint" type="fixed">
 	 <parent link="${name}arm_7_link"/>
-	 <child link="${name}arm_hand_mount"/>
+	 <child link="${name}tool_mount"/>
   </joint>
   
-  <link name="${name}arm_hand_mount" />
-   <gazebo reference="${name}arm_hand_mount">
+  <link name="${name}tool_mount" />
+   <gazebo reference="${name}tool_mount">
     <kinematic>${kinematic}</kinematic>
   </gazebo>
   </xacro:macro>

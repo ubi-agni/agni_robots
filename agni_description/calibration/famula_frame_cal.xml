@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="cal_frame_thick"         value="0.09" />
+  <xacro:property name="cal_frame_width"         value="1.92" />
+  <xacro:property name="cal_frame_depth"         value="1.82" />
+  <xacro:property name="cal_frame_height"        value="1.26" />
+  <xacro:property name="cal_frame_table_height"  value="1.00" />
+
+  <xacro:property name="mount_triangle_length"   value="0.26" />
+  <xacro:property name="mount_triangle_thickness" value="0.02" />
+
+  <xacro:include filename="famula/kukaL_cal.xml" ns="left"/>
+  <xacro:include filename="famula/kukaR_cal.xml" ns="right"/>
+
+  <!-- [leftX | rightX], Y, Z is the mounting position of the arms -->
+  <xacro:property name="cal_triangle_pos" value="${dict(
+    leftX=left.cal_x,
+    rightX=right.cal_x,
+    Y=(left.cal_y + right.cal_y) / 2,
+    Z=(left.cal_z + right.cal_z) / 2)}"/>
+
+  <xacro:property name="cal_flobi_pos" value="${dict(X=0, Y=cal_triangle_pos['Y'],
+    Z=cal_triangle_pos['Z'] + mount_triangle_length/2*sin(60/180.0*pi) + mount_triangle_thickness/2)}"/>
+</root>

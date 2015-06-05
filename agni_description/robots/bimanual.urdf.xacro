@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="bimanual" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
+
+	<xacro:arg name="SIM" default="1"/>
+	<xacro:arg name="CALIB" default="$(arg FRAME)"/>
+
+	<xacro:arg name="FRAME" default="-"/>
+	<xacro:arg name="ARM_L" default="-"/>
+	<xacro:arg name="ARM_R" default="-"/>
+	<xacro:arg name="TOOL_L" default="-"/>
+	<xacro:arg name="TOOL_R" default="-"/>
+	
+	<xacro:property name="parent" value="world"/>
+
+	<!-- FRAME -->
+	<xacro:property name="FRAME" value="$(arg FRAME)"/>
+	<xacro:if value="${FRAME not in ['', '-']}">
+		<xacro:property name="FRAME" value="$(arg FRAME)"/>
+		<xacro:if value="${FRAME == 'famula'}">
+			<xacro:include filename="../urdf/frame-half.urdf.xacro"/>
+		</xacro:if>
+		<xacro:if value="${FRAME == 'sfb'}">
+			<xacro:include filename="../urdf/frame.urdf.xacro"/>
+		</xacro:if>
+
+		<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
+		<xacro:frame/>
+		<xacro:property name="parent" value="frame"/>
+	</xacro:if>
+	<xacro:unless value="${FRAME not in ['', '-']}">
+		<link name="world"/>
+	</xacro:unless>
+
+	<xacro:include filename="../urdf/helpers.urdf.xacro" />
+
+	<!-- LEFT ARM with TOOL -->
+	<xacro:arm_with_tool parent="${parent}" prefix="l" 
+	                     arm_type="$(arg ARM_L)" tool_type="$(arg TOOL_L)"/>
+	<!-- RIGHT ARM with TOOL -->
+	<xacro:arm_with_tool parent="${parent}" prefix="r" 
+	                     arm_type="$(arg ARM_R)" tool_type="$(arg TOOL_R)"/>
+</robot>

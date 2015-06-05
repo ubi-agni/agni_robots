@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<helpers xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="arm" params="type prefix:='' parent:='world' controller *origin">
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
+    <xacro:property name="props" value="${settings['arms'][type]['props'] if settings['arms'][type]['props'] else dict()}"/>
+
+    <!-- include urdf file and call macro to generate arm -->
+    <xacro:include filename="${settings['arms'][type]['file']}"/>
+    <xacro:call macro="${settings['arms'][type]['macro']}" 
+                prefix="${prefix}" controller="${controller}"/>
+
+    <!-- attach arm to parent link -->
+    <joint name="${prefix_}arm_mount" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix_}arm_base_link"/>
+      <xacro:insert_block name="origin" />
+    </joint>
+  </xacro:macro>
+
+
+  <xacro:macro name="tool" params="type prefix:='' parent:='world' *origin">
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
+    <xacro:property name="props" value="${settings['tools'][type]['props'] if settings['tools'][type]['props'] else dict()}"/>
+
+    <!-- include urdf file and call macro to generate arm -->
+    <xacro:include filename="${settings['tools'][type]['file']}"/>
+    <xacro:call macro="${settings['tools'][type]['macro']}" 
+                prefix="${prefix}" />
+
+    <!-- attach tool to parent link -->
+    <joint name="${prefix_}tool_mount" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix_}${settings['tools'][type]['mount']}"/>
+      <xacro:insert_block name="origin" />
+    </joint>
+  </xacro:macro>
+
+
+  <!-- create arm + tool
+       prefix:    l | r | ''
+       arm_type:  pa10a | pa10c | kukaL | kukaR
+       determines type and calibration file name
+       tool_type: shadow_[motor|muscle]_[left|right] | poking_stick | myrmex
+       determines type and calibration file name
+  -->
+  <xacro:macro name="arm_with_tool" params="prefix:='' parent:='world' arm_type:='' tool_type:=''">
+    <!-- define arm and tool prefix -->
+    <xacro:property name="arm_prefix" value="${prefix + 'a' if prefix else ''}"/>
+    <xacro:property name="tool_prefix" value="${prefix + 'h' if prefix else ''}"/>
+
+    <!-- append _ to prefix -->
+    <xacro:property name="arm_prefix_" value="${arm_prefix + '_' if arm_prefix else ''}"/>
+    <xacro:property name="tool_prefix_" value="${tool_prefix + '_' if tool_prefix else ''}"/>
+
+    <xacro:property name="tool_parent" value="world"/>
+
+    <xacro:if value="${arm_type not in ['','-']}">
+      <!-- load arm calibration and instantiate arm -->
+      <xacro:include filename="../calibration/$(arg CALIB)/${arm_type}_cal.xml"/>
+      <xacro:arm type="${arm_type}" prefix="${arm_prefix}" controller="$(arg SIM)">
+        <origin xyz="${cal_x} ${cal_y} ${cal_z}"
+                rpy="${cal_roll} ${cal_pitch} ${cal_yaw}"/>
+      </xacro:arm>
+
+      <!-- use tool mount from arm -->
+      <xacro:property name="tool_parent" value="${arm_prefix_}tool_mount"/>
+    </xacro:if>
+
+    <xacro:if value="${tool_type not in ['','-']}">
+      <!-- load tool calibration and instantiate tool -->
+      <xacro:include filename="../calibration/$(arg CALIB)/${tool_type}_cal.xml"/>
+      <xacro:tool type="${tool_type}" prefix="${tool_prefix}" parent="${tool_parent}">
+        <origin xyz="${cal_x} ${cal_y} ${cal_z}"
+                rpy="${cal_roll} ${cal_pitch} ${cal_yaw}"/>
+      </xacro:tool>
+    </xacro:if>
+  </xacro:macro>
+</helpers>

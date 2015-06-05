@@ -1,0 +1,78 @@
+arms:
+  pa10a:
+    file:  ../robots/pa10_arm.urdf.xacro
+    macro: pa10_arm
+    props:
+      model: 7a
+  pa10c:
+    file:  ../robots/pa10_arm.urdf.xacro
+    macro: pa10_arm
+    props:
+      model: 7c
+
+  kukaL:
+    file:  ../robots/kuka_arm.urdf.xacro
+    macro: kuka_arm
+    props:
+      port: 49940
+  kukaR:
+    file:  ../robots/kuka_arm.urdf.xacro
+    macro: kuka_arm
+    props:
+      port: 49938
+
+tools:
+  shadow_motor_left:
+    file: ../robots/shadow_hand.urdf.xacro
+    macro: shadow_hand
+    mount: forearm
+    props:
+      model:   motor
+      tactile: ubi
+      side:    left
+
+  shadow_motor_right:
+    file: ../robots/shadow_hand.urdf.xacro
+    macro: shadow_hand
+    mount: forearm
+    props:
+      model:   motor
+      tactile: ubi
+      side:    right
+
+  shadow_muscle_left:
+    file: ../robots/shadow_hand.urdf.xacro
+    macro: shadow_hand
+    mount: forearm
+    props:
+      model:   muscle
+      tactile: pst
+      side:    left
+
+  shadow_muscle_right:
+    file: ../robots/shadow_hand.urdf.xacro
+    macro: shadow_hand
+    mount: forearm
+    props:
+      model:   muscle
+      tactile: shadow
+      side:    right
+
+  myrmex:
+    file: ../robots/myrmex.urdf.xacro
+    macro: myrmex
+    mount: myrmex_quick_mount
+
+  poking_stick_ubi:
+    file: ../robots/poking_stick.urdf.xacro
+    macro: poking_stick
+    mount: poking_stick
+    props:
+      tactile: ubi
+
+  poking_stick_rigid:
+    file: ../robots/poking_stick.urdf.xacro
+    macro: poking_stick
+    mount: poking_stick
+    props:
+      tactile: ""

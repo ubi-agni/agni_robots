@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- arm base -->
+  <xacro:property name="cal_x"     value="-0.08232" />
+  <xacro:property name="cal_y"     value="0.897" />
+  <xacro:property name="cal_z"     value="0.29758" />
+  <xacro:property name="cal_roll"  value="-0.71215" />
+  <xacro:property name="cal_pitch" value="0.84840" />
+  <xacro:property name="cal_yaw"   value="2.28576" /> 
+
+</root>

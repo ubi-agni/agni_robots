@@ -1,40 +1,45 @@
 <?xml version="1.0"?>
 <robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  
-  <xacro:macro name="myrmex_quick_mount" params="prefix tactile">
-  <link name="${prefix}myrmex_quick_mount">
-    <visual>
-      <origin xyz="0 0 0" 
-          rpy="0 0 0"/>
-      <geometry>
-        <mesh scale="0.001 0.001 0.001" 
-					 filename="package://agni_description/models/meshes/myrmex_quick_mount.dae"/>
-      </geometry>
-    </visual> 
-    <collision>
-      <origin xyz="0 0 0.00797" 
-          rpy="0 0 0"/>
-      <geometry>
-        <cylinder radius="0.06725" length="0.01584"/>
-      </geometry>
-    </collision>
-     <collision>
-      <origin xyz="0 0 0.02159" 
-          rpy="0 0 0"/>
-      <geometry>
-        <cylinder radius="0.060" length="0.0115"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0 0 0.03034" 
-          rpy="0 0 0"/>
+
+  <xacro:macro name="myrmex_quick_mount" params="prefix:=''">
+    <link name="${prefix}myrmex_quick_mount">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001"
+                filename="package://agni_description/models/meshes/myrmex_quick_mount.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.00797" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.06725" length="0.01584"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin xyz="0 0 0.02159" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.060" length="0.0115"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin xyz="0 0 0.03034" rpy="0 0 0"/>
         <geometry>
           <box size="0.095 0.095 0.006"/>
         </geometry>
-    </collision>
-  </link>
-  
-  <gazebo reference="${prefix}myrmex_quick_mount">
-  </gazebo>
-    </xacro:macro>
+      </collision>
+    </link>
+
+    <gazebo reference="${prefix}myrmex_quick_mount"></gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="myrmex_tactile_markers" params="parent topic *origin">
+    <!-- tactile marker mapping description -->
+    <tactile topic="${topic}" data="data" xs="0 4095" link="${parent}">
+      <geometry>
+        <grid size="16 16" spacing="0.005 0.005"/>
+      </geometry>
+      <xacro:insert_block name="origin"/>
+    </tactile>
+  </xacro:macro>
 </robot>

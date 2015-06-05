@@ -1,39 +1,21 @@
 <?xml version="1.0"?>
-<robot name="kuka_anytool"
-     xmlns:xacro="http://www.ros.org/wiki/xacro">
-  
-  <xacro:include filename="../pa10/pa10-a.urdf.xacro"/> 
-  <xacro:include filename="../pa10/pa10-c.urdf.xacro"/> 
-  <xacro:include filename="../pa10/pa10_shadow_controller_manager.xacro"/> 
- 
-  <!-- arm macro with the params
-         * parent : where it is attached
-         * side : right|left
-         * controller : should the controllers be loaded or not
-         * *origin : first block for the base offset -->
-  <xacro:property name="arm_mount"  value="${dict( pa10='arm_hand_mount' )}" />
-  <!-- default arm cal (so that the dict exists) but key right and left should be set at top level-->
-  <xacro:property name="cal_arm_x" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_y" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_z" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_yaw" value="${dict(default= 0.0)}" /> 
-  <xacro:property name="cal_arm_pitch" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_roll" value="${dict(default= 0.0)}" />
-  
-  <xacro:macro name="pa10_arm" params="parent side controller *origin">
-  <!-- PA10 arm -->     
-    <xacro:property name="armname" value="${dict( right='pa10c', left='pa10a')}"/>
-    <xacro:property name="prefix"  value="${'ra' if side=='right' else 'la'}" />
-    <xacro:call macro="${armname[side]}_arm" name="${prefix}_" />
-    <joint name="${prefix}_frame_placement" type="fixed">
-      <xacro:insert_block name="origin" />
-      <parent link="${parent}"/>
-      <child link="${prefix}_arm_base_link"/>
-    </joint>  
+<robot name="pa10_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="filename" value="${dict([('7a', 'pa10-a'), ('7c', 'pa10-c')])}"/>
+  <xacro:property name="macroname" value="${dict([('7a', 'pa10a_arm'), ('7c', 'pa10c_arm')])}"/>
 
-    <xacro:if value="${controller}">  
-      <!-- add controllers -->
-       <xacro:pa10_shadow_gazebo_controller_manager namespace="${prefix}"/>
-    </xacro:if>       
-  </xacro:macro>    
+  <xacro:macro name="pa10_arm" params="prefix controller">
+    <!-- PA10 arm -->
+
+    <xacro:include filename="../pa10/${filename[props['model']]}.urdf.xacro"/>
+
+    <xacro:call macro="${macroname[props['model']]}" 
+                name="${prefix + '_' if prefix else ''}"/>
+
+    <xacro:if value="${controller}">
+      <!-- add gazebo controllers -->
+
+      <xacro:include filename="../pa10/pa10_shadow_controller_manager.xacro"/>
+      <xacro:pa10_shadow_gazebo_controller_manager namespace="${prefix}"/>
+    </xacro:if>
+  </xacro:macro>
 </robot>

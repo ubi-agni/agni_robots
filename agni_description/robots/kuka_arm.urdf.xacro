@@ -1,38 +1,17 @@
 <?xml version="1.0"?>
-<robot name="kuka_anytool"
-     xmlns:xacro="http://www.ros.org/wiki/xacro">
-  
-  <xacro:include filename="../kuka/kuka.urdf.xacro"/>
-  <xacro:include filename="../kuka/lwr_controllers.gazebo.xacro"/>  
- 
-  <!-- arm_ee macro with the params
-         * parent : where it is attached
-         * side : right|left
-         * controller : should the controllers be loaded or not
-         * *origin : first block for the base offset -->
-  <xacro:property name="arm_mount"  value="${dict( kuka='arm_hand_mount' )}" />
-  
-  <!-- default arm cal (so that the dict exists) but key right and left should be set at top level-->
-  <xacro:property name="cal_arm_x" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_y" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_z" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_yaw" value="${dict(default= 0.0)}" /> 
-  <xacro:property name="cal_arm_pitch" value="${dict(default= 0.0)}" />
-  <xacro:property name="cal_arm_roll" value="${dict(default= 0.0)}" />
-  
-  <xacro:macro name="kuka_arm" params="parent side controller *origin">
-  <!-- KUKA arm -->     
-    <xacro:property name="prefix"  value="${'ra' if side=='right' else 'la'}" />
-    <xacro:kuka_lwr_arm name="${prefix}_" reflect="${1 if side=='right' else -1}" tool_name=""/>
-    <joint name="${prefix}_frame_placement" type="fixed">
-       <xacro:insert_block name="origin" />
-      <parent link="${parent}"/>
-      <child link="${prefix}_arm_base_link"/>
-    </joint>  
+<robot name="kuka_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="kuka_arm" params="prefix controller">
+    <!-- KUKA arm -->
 
-    <xacro:if value="${controller}">  
-      <!-- add controllers -->
-      <xacro:call macro="${side}_lwr_arm_gazebo_controller" namespace="${prefix}" port="${portlist[side]}"/>
-    </xacro:if>       
-  </xacro:macro>    
+    <xacro:include filename="../kuka/kuka.urdf.xacro"/>
+    <xacro:kuka_lwr_arm name="${prefix + '_' if prefix else ''}"/>
+
+    <xacro:if value="${controller}">
+      <!-- add gazebo controllers -->
+
+      <xacro:include filename="../kuka/lwr_controllers.gazebo.xacro"/>
+      <xacro:lwr_arm_gazebo_controller namespace="${prefix}" 
+                                       port="${props['port']}"/>
+    </xacro:if>
+  </xacro:macro>
 </robot>

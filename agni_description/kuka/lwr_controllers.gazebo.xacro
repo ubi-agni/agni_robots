@@ -1,56 +1,25 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-  
-
-  
-  <!-- default port value. do not modify here. 
-       If not correct, redefine your own property and pass the values through macro param -->
-  <xacro:property name="portlist" value="${dict(right=49938, left=49940)}"/>
-  
-  <!-- namespace must be set up according to launch file namespace -->
-  <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) --> 
-  <xacro:macro name="left_lwr_arm_gazebo_controller" params="namespace port:=${portlist['left']}">
-    <xacro:property name="prefix"  value="${'' if namespace=='' else namespace}" />
-		<gazebo> 
-			<plugin name="left_lwr_arm_controller" filename="liblwr_controller.so">
-				<alwaysOn>true</alwaysOn>
-				<robotPrefix>${prefix}</robotPrefix>
-				<robotNamespace>${namespace}</robotNamespace>
-				<remotePort>${port}</remotePort>
-				<baseLink>la_arm_base_link</baseLink>
-				<toolLink>la_arm_hand_mount</toolLink>
-				<la_arm_0_joint>0.0</la_arm_0_joint>
-				<la_arm_1_joint>0</la_arm_1_joint>
-				<la_arm_2_joint>0.0</la_arm_2_joint>
-				<la_arm_3_joint>0</la_arm_3_joint>
-				<la_arm_4_joint>0</la_arm_4_joint>
-				<la_arm_5_joint>0</la_arm_5_joint>
-				<la_arm_6_joint>0</la_arm_6_joint>
-			</plugin>
-		</gazebo>  
-	</xacro:macro>
-	
 	<!-- namespace must be set up according to launch file namespace -->
-  <!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) -->
-  <xacro:macro name="right_lwr_arm_gazebo_controller" params="namespace port:=${portlist['right']}">
+	<!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) --> 
+	<xacro:macro name="lwr_arm_gazebo_controller" params="namespace port"> 
+		<xacro:property name="prefix"  value="${namespace + '_' if namespace else ''}" />
 		<gazebo> 
-			<plugin name="right_lwr_arm_controller" filename="liblwr_controller.so">
+			<plugin name="${prefix}lwr_arm_controller" filename="liblwr_controller.so">
 				<alwaysOn>true</alwaysOn>
-				<robotPrefix>ra</robotPrefix>
+				<robotPrefix>${namespace}</robotPrefix>
 				<robotNamespace>${namespace}</robotNamespace>
 				<remotePort>${port}</remotePort>
-				<baseLink>ra_arm_base_link</baseLink>
-				<toolLink>ra_arm_hand_mount</toolLink>
-				<ra_arm_0_joint>0.0</ra_arm_0_joint>
-				<ra_arm_1_joint>0</ra_arm_1_joint>
-				<ra_arm_2_joint>0.0</ra_arm_2_joint>
-				<ra_arm_3_joint>0</ra_arm_3_joint>
-				<ra_arm_4_joint>0</ra_arm_4_joint>
-				<ra_arm_5_joint>0</ra_arm_5_joint>
-				<ra_arm_6_joint>0</ra_arm_6_joint>
+				<baseLink>${prefix}arm_base_link</baseLink>
+				<toolLink>${prefix}tool_mount</toolLink>
+				<xacro:rename xacro:name="${prefix}arm_0_joint">0</xacro:rename>
+				<xacro:rename xacro:name="${prefix}arm_1_joint">0</xacro:rename>
+				<xacro:rename xacro:name="${prefix}arm_2_joint">0</xacro:rename>
+				<xacro:rename xacro:name="${prefix}arm_3_joint">0</xacro:rename>
+				<xacro:rename xacro:name="${prefix}arm_4_joint">0</xacro:rename>
+				<xacro:rename xacro:name="${prefix}arm_5_joint">0</xacro:rename>
+				<xacro:rename xacro:name="${prefix}arm_6_joint">0</xacro:rename>
 			</plugin>
 		</gazebo>  
 	</xacro:macro>
-	
 </robot>
