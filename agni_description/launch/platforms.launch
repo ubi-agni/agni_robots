@@ -34,18 +34,6 @@
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/platforms.urdf.xacro USE_PREFIX:=$(arg USE_PREFIX) FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L) R_EE::=$(arg R_EE) L_EE::=$(arg L_EE)'" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   <group if="$(arg SIM)">
     <!-- spawn the support model -->
     <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param frame -model frame" respawn="false" output="screen" />

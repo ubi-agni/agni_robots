@@ -1,7 +1,6 @@
 <launch>
   <!-- EXPECTS agni_description to be compiled to get urdf generated in devel space -->
   <arg name="SIM" default="true"/>
-  <arg name="RTT_TEST" default="1" />
    
   <!-- do a find only once -->
   <arg name="agni" value="$(find agni_description)"/>
@@ -26,10 +25,6 @@
   <!-- rtt deployement environment -->
   <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(arg agni)/kuka/deploy.lua">
   </node> 
-  <!-- motion manager and logger rtt deployement -->
-  <group if="$(arg RTT_TEST)">
-    <node pkg="rosservice" type="rosservice" name="motion_manager_deployer" args="call --wait /rtt_environment/Deployer/run_lua_script $(arg agni)/kuka/scripted_deploy.lua"/>   
-  </group>
   
   <!-- load frame description  -->
   <param name="platform_description" textfile="$(find agni_description)/robots/famula_frame.urdf" />

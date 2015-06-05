@@ -4,10 +4,8 @@
   <arg name="FLOBI" default="false"/>
   <arg name="RA" default="1"/>
   <arg name="LA" default="0"/>
-  <arg name="RTT_TEST" default="1" />
   <!-- RA and LA to select left or right or both arm -->
   <!-- ARM [kuka|pa10]-->
-  <!-- RTT_TEST to deploy a test setup-->
 
   <group if="$(arg SIM)">
     <!-- start gazebo with an empty plane -->
@@ -27,13 +25,9 @@
   </group>
   
   <!-- rtt deployement environment -->
-  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/kuka/deploy.lua">
+  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/scripts/deploy.lua">
   </node> 
   
-  <!-- motion manager and logger rtt deployement -->
-  <group if="$(arg RTT_TEST)">
-    <node pkg="rosservice" type="rosservice" name="motion_manager_deployer" args="call --wait /rtt_environment/Deployer/run_lua_script $(find agni_description)/kuka/scripted_deploy.lua"/> 
-  </group>
   <!-- load frame description -->
   <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' FRAME:=$(arg ARM)" />
 

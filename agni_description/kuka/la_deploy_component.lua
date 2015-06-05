@@ -10,6 +10,22 @@ end
 
 require("kuka")
 
+function contains(tab, element)
+  for _, value in pairs(tab) do
+    --print ("peer: ",value)
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
+
+function sleep(s)
+  local ntime = os.time() + s
+  repeat until os.time() > ntime
+end
+
+
 tc=rtt.getTC()
 tcName=tc:getName()
 print (tcName)
@@ -46,10 +62,41 @@ kuka_controller:getProperty("namespace"):set(prefix)
 kuka_controller:getProperty("port"):set(49940)
 kuka_controller:configure()
 
--- connect the component
-kuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosLA")
-kuka_controller:provides("controllerService"):connectOut("JNTPOS","MotionManager.FRIRealJointPosLA")
-kuka_controller:provides("controllerService"):connectOut("LOG","LogLA.Log")
+-- wait for motion manager to appear
+i=0
+found_motion_manager=false
+while not found_motion_manager do
+      print("waiting MotionManager ", i)
+      peers = d:getPeers()
+      if contains(peers,"MotionManager") then 
+--      ret= pcall(d:getPeer("MotionManager")) 
+        found_motion_manager=true
+        break
+      else
+        print("MotionManager not found")
+      end
+      i = i + 1
+      sleep(1)
+
+      if i > 5 then
+        break
+      end
+end
+if found_motion_manager then
+  m=d:getPeer("MotionManager")
+  while not m:isRunning() do
+      print("waiting MotionManager running", i)
+      i = i + 1
+      sleep(1)
+  end
+  -- connect the component
+  print("connecting to MotionManager")
+  kuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosLA")
+  kuka_controller:provides("controllerService"):connectOut("JNTPOS","MotionManager.FRIRealJointPosLA")
+  kuka_controller:provides("controllerService"):connectOut("LOG","LogLA.Log")
+  
+end
+
 
 -- stat the component
 kuka_controller:start()

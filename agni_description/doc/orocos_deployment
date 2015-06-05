@@ -1,0 +1,37 @@
+Overview
+---------
+This package contains lua scripts to deploy orocos component to control the kuka robot among others.
+
+By default, the following scripts start a RTT environment with a deployer and a ROS service to run new lua scripts
+
+* arm.launch
+* arm_and_hand.launch
+* famula.launch
+
+Test setup
+----------
+
+A test setup, deploying a MotionManager, Loggers and kuka controllers is provided
+in launch/rtt_deployement_test.launch
+>> roslaunch agni_description rtt_deployment_test.launch  LA:=0|1 RA:=1|0
+
+
+
+Usage
+-----
+
+In order to run your own scripts you can deploy them using the ros service or a launch file using the ros service
+
+* command line 
+rosservice call /rtt_environment/Deployer/run_lua_script "PATHTO_agni_description/scripts/cleanup_component.lua"
+
+* launch file
+look at the example in launch/rtt_deployement_test.launch
+
+
+
+
+If you are interested in deploying the kukas only, without connecting to anything,
+use kuka/kuka_deploy.launch
+
+It will attempt to connect to the motion manager for 5 seconds and start without it if not found.

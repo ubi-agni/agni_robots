@@ -1,0 +1,19 @@
+<launch>
+  <arg name="RA" default="1"/>
+  <arg name="LA" default="0"/>
+  
+  <!-- motion manager and logger rtt deployement -->
+  <node pkg="rosservice" type="rosservice" name="motion_manager_deployer" args="call --wait /rtt_environment/Deployer/run_lua_script $(find agni_description)/scripts/motion_manager_logger_deploy.lua"/> 
+  
+  <group if="$(arg RA)">
+    <include file="$(find agni_description)/kuka/kuka_deploy.launch" >
+      <arg name="namespace" value="ra" />
+    </include>	
+  </group>
+  <group if="$(arg LA)">
+    <include file="$(find agni_description)/kuka/kuka_deploy.launch" >
+      <arg name="namespace" value="la" />
+    </include>	
+  </group>
+  
+</launch>
