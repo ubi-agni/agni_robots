@@ -1,5 +1,5 @@
 <launch>
-	<arg name="deploy" default="$(find agni_description)/kuka/deploy.lua"/>
+	<arg name="deploy" default="$(find agni_description)/scripts/deploy.lua"/>
   
   <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(arg deploy)">
   </node> 

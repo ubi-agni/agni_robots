@@ -28,7 +28,7 @@
   </group>
   
   <!-- rtt deployement environment -->
-  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/kuka/deploy.lua">
+  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/scripts/deploy.lua">
   </node> 
   
   <!-- load frame description  -->
