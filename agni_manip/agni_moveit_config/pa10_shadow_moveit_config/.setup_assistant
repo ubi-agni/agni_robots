@@ -1,7 +1,7 @@
 moveit_setup_assistant_config:
   URDF:
     package: agni_description
-    relative_path: robots/both_pa10_shadow.urdf.xacro
+    relative_path: robots/sfb.urdf.xacro
   SRDF:
     relative_path: config/pa10_shadow.srdf
   CONFIG:
