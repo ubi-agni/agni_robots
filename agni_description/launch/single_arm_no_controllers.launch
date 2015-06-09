@@ -2,9 +2,9 @@
   <arg name="namespace" default="r"/>
   <arg name="side" default="right"/>
   <arg name="arm_type" default="kuka"/>
-	<arg name="init_args" default="-x 0 -y 0 -z 0.1"/>
+  <arg name="init_args" default="-x 0 -y 0 -z 0.1"/>
   <arg name="sim" default="true"/>
-	
+
   <!-- load robot_description -->
   <include file="$(find agni_description)/launch/arm_upload.launch" >
      <arg name="arm_type" value="$(arg arm_type)"/>
