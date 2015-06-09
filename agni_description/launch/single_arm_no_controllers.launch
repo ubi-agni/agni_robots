@@ -1,6 +1,6 @@
 <launch>
-  <arg name="namespace" default="r"/>
-  <arg name="side" default="right"/>
+  <arg name="prefix" default="r"/>
+  <arg name="calib" default="default"/>
   <arg name="arm_type" default="kuka"/>
   <arg name="init_args" default="-x 0 -y 0 -z 0.1"/>
   <arg name="sim" default="true"/>
@@ -8,16 +8,17 @@
   <!-- load robot_description -->
   <include file="$(find agni_description)/launch/arm_upload.launch" >
      <arg name="arm_type" value="$(arg arm_type)"/>
-     <arg name="side" value="$(arg side)"/>
+     <arg name="calib" value="$(arg calib)"/>
+     <arg name="prefix" value="$(arg prefix)"/>
      <arg name="sim" value="$(arg sim)"/>
   </include>
   
-  <param name="tf_prefix" value="$(arg namespace)"/>
-  <!-- spawn in the sim world if SIM -->
+  <!--<param name="tf_prefix" value="$(arg namespace)"/>
+   spawn in the sim world if SIM -->
   <group if="$(arg sim)">
     <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
       <arg name="init_args" value="$(arg init_args)" />
-      <arg name="robot_name" value="$(arg namespace)_$(arg arm_type)" />
+      <arg name="robot_name" value="$(arg prefix)_$(arg arm_type)" />
     </include>
   </group>
 

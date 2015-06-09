@@ -1,6 +1,8 @@
 <launch>
   <arg name="SIM" default="true"/>
-  <arg name="ARM" default="kuka"/>
+  <arg name="FRAME" default="famula"/>
+	<arg name="ARM_L" default="kukaL"/>
+	<arg name="ARM_R" default="kukaR"/>
   <arg name="FLOBI" default="false"/>
   <arg name="RA" default="1"/>
   <arg name="LA" default="0"/>
@@ -32,12 +34,12 @@
   </group>
   
   <!-- load frame description -->
-  <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' FRAME:=$(arg ARM)" />
+  <param name="platform_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' FRAME:=$(arg FRAME)" />
 
   <!-- set robot description for combined table + robot arm NO end-effector  -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/platforms.urdf.xacro' ARM:=$(arg ARM) 
-              FLOBI:=$(arg FLOBI) R:=$(arg RA) L:=$(arg LA) R_EE_TYPE:='-' L_EE_TYPE:='-' SIM:=$(arg SIM) " />
- 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/bimanual.urdf.xacro' 
+              CALIB:=$(arg FRAME) FRAME:=$(arg FRAME) ARM_R:=$(arg ARM_R) ARM_L:=$(arg ARM_L) 
+              FLOBI:=$(arg FLOBI) TOOL_R:='-' TOOL_L:='-' SIM:=$(arg SIM) " />
   <group if="$(arg SIM)">
    <!-- spawn the support model -->
    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
@@ -49,37 +51,35 @@
       <!-- start the arm -->
       <include file="$(find agni_description)/launch/single_arm_no_controllers.launch" >
         <arg name="init_args" value="" />
-        <arg name="namespace" value="r"/>
-        <arg name="arm_type" value="$(arg ARM)"/>
-        <arg name="side" value="right"/>
+        <arg name="prefix" value="r"/>
+        <arg name="arm_type" value="$(arg ARM_R)"/>
+        <arg name="calib" value="$(arg FRAME)"/>
         <arg name="sim" value="$(arg SIM)"/>
       </include>
       <!-- Controllers for the arm -->
-      <include file="$(find agni_description)/launch/$(arg ARM)_bringup.launch" >
+      <include file="$(find agni_description)/launch/$(arg ARM_R)_bringup.launch" >
         <arg name="namespace" value="ra" />
         <arg name="sim" value="$(arg SIM)"/>
       </include>	
     </group>
-    <!-- attach arm to namespaced-world -->
-    <node name="right_arm_static" pkg="tf" type="static_transform_publisher"  args="0 0 0 0 0 0 /$(arg ARM)_frame /right/world  100"/>
+
   </group>
   <group if="$(arg LA)">
     <group ns="la">
       <!-- start the arm -->
       <include file="$(find agni_description)/launch/single_arm_no_controllers.launch" >
         <arg name="init_args" value="" />
-        <arg name="namespace" value="l"/>
-        <arg name="arm_type" value="$(arg ARM)"/>
-        <arg name="side" value="left"/>
+        <arg name="prefix" value="l"/>
+        <arg name="arm_type" value="$(arg ARM_L)"/>
+        <arg name="calib" value="$(arg FRAME)"/>
         <arg name="sim" value="$(arg SIM)"/>
       </include>
       <!-- Controllers for the arm -->
-      <include file="$(find agni_description)/launch/$(arg ARM)_bringup.launch" >
+      <include file="$(find agni_description)/launch/$(arg ARM_L)_bringup.launch" >
         <arg name="namespace" value="la" />
         <arg name="sim" value="$(arg SIM)"/>
       </include>	
     </group>		
-    <!-- attach arm to namespaced-world -->
-    <node name="left_arm_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0  /$(arg ARM)_frame /left/world 100"/>
+ 
 	</group>		
 </launch>

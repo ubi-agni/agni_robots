@@ -1,8 +1,7 @@
 <launch>
 	<arg name="namespace" default="rh"/>
-  <arg name="model" default="motor"/>
-  <arg name="side" default="right"/>
-  <arg name="tactile" default="-"/>
+  <arg name="hand_type" default="shadow_motor_right"/>
+  <arg name="prefix" default="r"/>
   <arg name="sim" default="true"/>
 	 
   <group if="$(arg sim)"> 
@@ -20,10 +19,10 @@
   <group unless="$(arg sim)"> 
     <!-- ns is already contained in sr_rh|lhand.launch -->
     <include file="$(find sr_ethercat_hand_config)/launch/sr_$(arg namespace)and.launch" >
-       <!-- single quotes must be added around urdf.xacr but not around substitution args -->
-      <arg name="robot_description" value="'$(find agni_description)/robots/shadow_hands.urdf.xacro' MODEL:=$(arg model) SIDE:=$(arg side)  TACTILE:=$(arg tactile) PREFIX:=$(arg namespace)" />
+       <!-- single quotes must be added around urdf.xacro but not around substitution args -->
+      <arg name="robot_description" value="'$(find agni_description)/robots/single.urdf.xacro' 
+          PREFIX:=$(arg prefix) TOOL:=$(arg hand_type) SIM:=0 CALIB:=default" />
     </include>
- 
     <!-- ns is already contained in the controller.launch -->
     <include file="$(find sr_ethercat_hand_config)/launch/controllers/sr_edc_mixed_position_velocity_controllers.launch" >
 			<arg name="set_namespace" value="1"/>

@@ -2,10 +2,10 @@
   <!-- load description of the arm into robot_description -->
   <arg name="arm_type"/>
   <arg name="sim" default="1"/>
-  <arg name="side" default="right"/>
+  <arg name="calib" default="default"/>
+  <arg name="prefix" default="prefix"/>
 
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/single.urdf.xacro' 
-          ARM:=$(arg arm_type) SIM:=$(arg sim) SIDE:=$(arg side)" />
-  
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
+          PREFIX:=$(arg prefix) ARM:=$(arg arm_type) SIM:=$(arg sim) CALIB:=$(arg calib)" />
 </launch>

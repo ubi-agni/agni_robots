@@ -2,8 +2,8 @@
   <arg name="SIM" default="true"/>
   <arg name="RH" default="1"/>
   <arg name="LH" default="0"/>
-  <arg name="MODEL" default="motor"/>
-  <arg name="TACTILE" default="ubi"/>
+  <arg name="HAND_R" default="shadow_motor_right"/>
+  <arg name="HAND_L" default="shadow_motor_left"/>
   
   <group if="$(arg SIM)"> 
     <!-- start gazebo with an empty plane -->
@@ -24,33 +24,23 @@
     </group>
   </group>    
   
-  <!-- set robot description for combined hands  -->
-  <!-- on sfb setup we stard hands in sim but want to have a arm+hand robot_description so this should not be loaded
-  <param name="robot_description" command="$(find xacro)/xacro --> <!--inorder '$(find agni_description)/robots/hands.urdf.xacro' 
-              RH:=$(arg RH) LH:=$(arg LH) R_EE_TYPE:=shadow_hand R_EE_MODEL:=$(arg MODEL) R_EE_SIDE:=right R_EE_TACTILE:=$(arg TACTILE) 
-              L_EE_TYPE:=shadow_hand L_EE_MODEL:=$(arg MODEL) L_EE_SIDE:=left L_EE_TACTILE:=$(arg TACTILE) SIM:=$(arg SIM) " />
-   -->
-  
   <!-- include our robots -->
   <group if="$(arg RH)">
     <!-- RIGHT hand -->
     <group ns="rh">
       <include file="$(find agni_description)/launch/single_hand_no_controllers.launch" >
         <arg name="init_args" value="-x -0.2 -y 0 -z 0" />
-        <arg name="namespace" value="rh"/>
-        <arg name="side" value="right"/>
+        <arg name="prefix" value="r"/>
         <arg name="sim" value="$(arg SIM)"/>
-        <arg name="model" value="$(arg MODEL)"/>
-        <arg name="tactile" value="$(arg TACTILE)"/>
+        <arg name="hand_type" value="$(arg HAND_R)"/>
       </include>
     </group>
     <!-- drivers and/or controllers for the hand -->
     <include file="$(find agni_description)/launch/sr_bringup.launch">
       <arg name="namespace" value="rh" />
-      <arg name="side" value="right"/>
+      <arg name="prefix" value="r"/>
       <arg name="sim" value="$(arg SIM)"/>
-      <arg name="model" value="$(arg MODEL)"/>
-      <arg name="tactile" value="$(arg TACTILE)"/>  
+      <arg name="hand_type" value="$(arg HAND_R)"/>
     </include>
   </group>	
   <group if="$(arg LH)">
@@ -58,20 +48,17 @@
     <group ns="lh">
       <include file="$(find agni_description)/launch/single_hand_no_controllers.launch" >
         <arg name="init_args" value="-x 0.2 -y 0 -z 0" />
-        <arg name="namespace" value="lh"/>
-        <arg name="side" value="left"/>
+        <arg name="prefix" value="l"/>
         <arg name="sim" value="$(arg SIM)"/>
-        <arg name="model" value="$(arg MODEL)"/>
-        <arg name="tactile" value="$(arg TACTILE)"/>
+        <arg name="hand_type" value="$(arg HAND_L)"/>
       </include>
     </group>
     <!-- drivers and/or controllers for the hand -->
     <include file="$(find agni_description)/launch/sr_bringup.launch">
       <arg name="namespace" value="lh" />
-      <arg name="side" value="left"/>
+      <arg name="prefix" value="l"/>
       <arg name="sim" value="$(arg SIM)"/>
-      <arg name="model" value="$(arg MODEL)"/>
-      <arg name="tactile" value="$(arg TACTILE)"/>      
+      <arg name="hand_type" value="$(arg HAND_L)"/>
     </include>
   </group>
   

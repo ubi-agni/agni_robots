@@ -22,7 +22,7 @@
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
     <xacro:property name="props" value="${settings['tools'][type]['props'] if settings['tools'][type]['props'] else dict()}"/>
 
-    <!-- include urdf file and call macro to generate arm -->
+    <!-- include urdf file and call macro to generate tool -->
     <xacro:include filename="${settings['tools'][type]['file']}"/>
     <xacro:call macro="${settings['tools'][type]['macro']}" 
                 prefix="${prefix}" />

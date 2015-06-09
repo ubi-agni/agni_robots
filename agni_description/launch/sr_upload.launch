@@ -1,9 +1,7 @@
 <launch>
-	<arg name="namespace" default="rh"/>
-	<arg name="model" default="motor"/>
-  <arg name="side" default="right"/>
-  <arg name="tactile" default="-"/>
+  <arg name="prefix" default="r"/>
+  <arg name="hand_type"/>
   <!-- load robot_description -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/shadow_hands.urdf.xacro' 
-  MODEL:=$(arg model) SIDE:=$(arg side)  TACTILE:=$(arg tactile) PREFIX:=$(arg namespace) " /> 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
+          PREFIX:=$(arg prefix) TOOL:=$(arg hand_type) SIM:=0 CALIB:=default" />
 </launch>

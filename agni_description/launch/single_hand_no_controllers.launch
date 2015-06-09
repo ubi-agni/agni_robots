@@ -1,33 +1,26 @@
 <launch>
-  <arg name="namespace" default="rh"/>
+  <arg name="prefix" default="r"/>
   <arg name="init_args" default="-x 0 -y 0 -z 0"/>
   <arg name="sim" default="true"/>
-  <arg name="model" default="motor"/>
-  <arg name="side" default="right"/>
-  <arg name="tactile" default="-"/>
+  <arg name="hand_type" default="shadow_motor_right"/>
 
   <!-- load robot_description (only in sim, driver in bringup does it to) -->
   <group if="$(arg sim)">
     <include file="$(find agni_description)/launch/sr_upload.launch">
-      <arg name="namespace" default="$(arg namespace)"/>
-      <arg name="model" default="$(arg model)"/>
-      <arg name="side" default="$(arg side)"/>
-      <arg name="tactile" default="$(arg tactile)"/>
+      <arg name="prefix" value="$(arg prefix)"/>
+      <arg name="hand_type" value="$(arg hand_type)"/>
     </include>
   </group>
     
-  <param name="tf_prefix" value="$(arg namespace)" />
-
   <group if="$(arg sim)">
     <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
       <arg name="init_args" value="$(arg init_args)" />
-      <arg name="robot_name" value="$(arg namespace)_ubi_motor_hand" />
+      <arg name="robot_name" value="$(arg prefix)_$(arg hand_type)" />
     </include>
   </group>   
 
   <node pkg="robot_state_publisher" type="robot_state_publisher"
         name="robot_state_publisher_full_pos">
-    <!--<remap from="joint_states" to="joint_states" />-->
     <param name="publish_frequency" type="double" value="20.0" />
   </node>
 

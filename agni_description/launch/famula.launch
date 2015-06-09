@@ -140,14 +140,12 @@
   
     <!-- only load parameters here -->
     <rosparam command="load" file="$(arg agni)/kuka/la_controllers.yaml" />
-    <node pkg="rosservice" type="rosservice" name="kuka_bringup" args="call --wait /rtt_environment/Deployer/run_lua_script $(arg agni)/kuka/la_deploy_component.lua"/>   
   </group> 
   <group ns="ra">
     <!-- Currently no difference between simulated and real kuka -->
   
     <!-- only load parameters here -->
     <rosparam command="load" file="$(arg agni)/kuka/ra_controllers.yaml" />
-    <node pkg="rosservice" type="rosservice" name="kuka_bringup" args="call --wait /rtt_environment/Deployer/run_lua_script $(arg agni)/kuka/ra_deploy_component.lua"/>   
   </group> 
   
   <!-- drivers and/or controllers for the hand -->
