@@ -2,15 +2,16 @@
 <robot name="single" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
 
-	<xacro:arg name="FRAME" default="-"/>
-	<xacro:arg name="ARM" default="-"/>
-	<xacro:arg name="TOOL" default="-"/>
-	
 	<xacro:arg name="PREFIX" default="-"/>
 	<xacro:arg name="SIM" default="1"/>
 	<xacro:arg name="CALIB" default="default"/>
 
+	<xacro:arg name="FRAME" default="-"/>
+	<xacro:arg name="ARM" default="-"/>
+	<xacro:arg name="TOOL" default="-"/>
+	
 	<xacro:property name="parent" value="world"/>
+	<link name="${parent}"/>
 
 	<!-- FRAME -->
 	<xacro:property name="FRAME" value="$(arg FRAME)"/>
@@ -23,12 +24,8 @@
 		</xacro:if>
 
 		<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
-		<xacro:frame/>
-		<xacro:property name="parent" value="frame"/>
+		<xacro:frame parent="${parent}"/>
 	</xacro:if>
-	<xacro:unless value="${FRAME not in ['', '-']}">
-		<link name="world"/>
-	</xacro:unless>
 
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
 

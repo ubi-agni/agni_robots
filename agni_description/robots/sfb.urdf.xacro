@@ -5,10 +5,13 @@
 	<xacro:arg name="SIM" default="1"/>
 	<xacro:arg name="CALIB" default="sfb"/>
 
-	<!-- Frame -->
+	<xacro:property name="parent" value="world"/>
+	<link name="${parent}"/>
+
+	<!-- frame -->
 	<xacro:include filename="../urdf/frame.urdf.xacro"/>
 	<xacro:include filename="../calibration/sfb_frame_cal.xml"/>
-	<xacro:frame/>
+	<xacro:frame parent="${parent}"/>
 
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
 

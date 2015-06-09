@@ -23,12 +23,12 @@
 		</visual>
 	</xacro:macro>
 
-	<xacro:macro name="frame" params="prefix:='' thickness:=${cal_frame_thick}
+	<xacro:macro name="frame" params="prefix:='' parent:=''
+	   thickness:=${cal_frame_thick}
 	   width:=${cal_frame_width} depth:=${cal_frame_depth} height:=${cal_frame_height}
 	   tableHeight:=${cal_frame_table_height}
 	   mountingYpos:=${cal_frame_mounting_ypos}
 	   mountingspacing:=${cal_frame_mounting_spacing}">
-		<link name="world"/>
 		<link name="${prefix}frame">
 			<inertial>
 				<mass value="100.0" />
@@ -164,11 +164,13 @@
 
 		</link>
 
-		<joint name="${prefix}frame_joint" type="fixed">
-			<origin xyz="0 0 0" rpy="0 0 0"/>
-			<parent link="world"/>
-			<child link="${prefix}frame"/>
-		</joint>
+		<xacro:if value="${parent != ''}">
+			<joint name="${prefix}frame_joint" type="fixed">
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<parent link="${parent}"/>
+				<child link="${prefix}frame"/>
+			</joint>
+		</xacro:if>
 
 
 	</xacro:macro>
