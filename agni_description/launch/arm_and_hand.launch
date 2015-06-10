@@ -55,9 +55,6 @@
     <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model icl_camera" respawn="false" output="screen" />
   </group>
    
-  <!-- attach the frame to the world 
-  <node name="frame_static" pkg="tf" type="static_transform_publisher"   args="0 0 0 0 0 0 /frame /world 100"/>-->
-      
   <!-- robots -->
   <group if="$(arg R)">
     <!-- RIGHT arm & hand only -->

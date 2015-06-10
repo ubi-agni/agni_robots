@@ -1,53 +1,25 @@
 <launch>
-  <arg name="ARM" default="kuka"/>
+  <arg name="FRAME" default="famula"/>
+	<arg name="ARM_L" default="kukaL"/>
+	<arg name="ARM_R" default="kukaR"/>
+  <arg name="TOOL_L" default="shadow_motor_left"/>
+	<arg name="TOOL_R" default="shadow_motor_right"/>
   <arg name="FLOBI" default="false"/>
-  <arg name="R" default="1"/>
-  <arg name="L" default="1"/>
-  <arg name="R_EE_TYPE" default="-"/>
-  <arg name="R_EE_MODEL" default="-"/>
-  <arg name="R_EE_SIDE" default="right"/>
-  <arg name="R_EE_TACTILE" default="-"/>
-  <arg name="L_EE_TYPE" default="-"/>
-  <arg name="L_EE_MODEL" default="-"/>
-  <arg name="L_EE_SIDE" default="left"/>
-  <arg name="L_EE_TACTILE" default="-"/>
 
   <arg name="JSP" default="false"/>
   
   <!-- JSP for joint_state_publisher gui -->
   <!-- USE_PREFIX [true|false] to tell to use prefix for the end-effector or not.
        Is mandatory if using two hands -->
-  <!-- ARM to select the arm type. 
-       files called <ARM>.urdf.xacro and <ARM>_cal.xml should exist and provide
-       - offset of the base relatively to the <ARM>_frame
-       - arm_ee macro with the params
-         * parent : where it is attached
-         * arm : arm type
-         * is_right : 1 if arm is the right one
-         * ee_macro : name of the end-effector macro
-         * ee_base_link : name of the base_link of the end-effector to link to
-         * use_prefix : should we use prefix for the end-effector
-         * prefix : the prefix (for instance "r")
-         * controller : should the controllers be loaded or not
-         * *origin : first block for the base offset
-         * *ee_offset : second block for the end-effector offset -->
+  <!-- ARM_R|ARM|L to select the arm type. -->
   <!-- FLOBI to select if flobi should be added to the setup -->
-  <!-- R and L to select left or right or both arm and hand -->
-  <!-- R_EE_TYPE and L_EE_TYPE are the names of the end-effectors
-       mounted on right and left arms respectively -->
-  <!-- R_EE_MODEL and L_EE_MODEL are the model of the end-effectors
-       mounted on right and left arms respectively -->
-  <!-- R_EE_SIDE and L_EE_SIDE are the variants of the end-effectors 
-       for right and left arms respectively
-       Note a left hand can be mounted on the right arm 
-       with R_EE_SIDE:=left --> 
-  <!-- R_EE_TACTILE and L_EE_TACTILE define the type of tactile system of the end-effectors
+  <!-- TOOL_R|TOOL_L are the names of the end-effectors
        mounted on right and left arms respectively -->
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/platforms.urdf.xacro'  ARM:=$(arg ARM) 
-                                             FLOBI:=$(arg FLOBI) R:=$(arg R) L:=$(arg L)  R_EE_TYPE:=$(arg R_EE_TYPE) R_EE_MODEL:=$(arg R_EE_MODEL) R_EE_SIDE:=$(arg R_EE_SIDE) R_EE_TACTILE:=$(arg R_EE_TACTILE) 
-              L_EE_TYPE:=$(arg L_EE_TYPE) L_EE_MODEL:=$(arg L_EE_MODEL) L_EE_SIDE:=$(arg L_EE_SIDE) L_EE_TACTILE:=$(arg L_EE_TACTILE) SIM:=1" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/bimanual.urdf.xacro' 
+              CALIB:=$(arg FRAME) FRAME:=$(arg FRAME) ARM_R:=$(arg ARM_R) ARM_L:=$(arg ARM_L) 
+              FLOBI:=$(arg FLOBI) TOOL_R:=$(arg TOOL_R) TOOL_L:=$(arg TOOL_L) SIM:=true " />
                                              
   <!-- publish joint values, open gui if use_gui=True -->
   <group if="$(arg JSP)"> 
