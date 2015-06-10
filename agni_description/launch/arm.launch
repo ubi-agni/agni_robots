@@ -4,9 +4,11 @@
   <arg name="FLOBI" default="false"/>
   <arg name="RA" default="1"/>
   <arg name="LA" default="0"/>
+  <arg name="RTT" default="1"/>
   <!-- RA and LA to select left or right or both arm -->
   <!-- ARM [kuka|pa10]-->
-
+  <!-- RTT to select if an RTT enviromnemt + deployer + services should be started -->
+  
   <group if="$(arg SIM)">
     <!-- start gazebo with an empty plane -->
     <!-- Gazebo world file to load. -->
@@ -25,8 +27,9 @@
   </group>
   
   <!-- rtt deployement environment -->
-  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(find agni_description)/scripts/deploy.lua">
-  </node> 
+  <group if="$(arg RTT)">
+    <include file="$(find agni_description)/launch/rtt_bringup.launch"/>
+  </group>
   
   <!-- load frame description -->
   <param name="platform_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/frame.urdf.xacro' FRAME:=$(arg ARM)" />

@@ -6,6 +6,9 @@
   <!-- only load parameters here -->
   <rosparam command="load" file="$(find agni_description)/kuka/$(arg namespace)_controllers.yaml" />
   
-  <!-- no orocos deployment should be done here anymore, only gazebo or real world stuff-->
+  <!-- low level orocos component to be deployed here (to get joint state published at all)-->
+  <include file="$(find agni_description)/kuka/kuka_deploy.launch">
+    <arg name="namespace" value="$(arg namespace)"/>
+  </include>
      
 </launch>

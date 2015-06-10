@@ -1,5 +1,5 @@
 <launch>
-	<arg name="namespace" default="ra"/>
+  <arg name="namespace" default="ra"/>
 
   <!-- only load parameters here -->
   <rosparam command="load" file="$(find agni_description)/kuka/$(arg namespace)_controllers.yaml" />
