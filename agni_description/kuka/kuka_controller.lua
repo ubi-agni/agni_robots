@@ -28,6 +28,9 @@ function configureHook()
   d:import("oro_joint_state_publisher")
   d:import("flwr_filter")
   d:import("agni_rtt_services")
+  d:import("rtt_sensor_msgs")
+  d:import("rtt_diagnostic_msgs")
+  
   
   iface=rttlib.create_if(iface_spec)
   namespace = iface.props.namespace:get()
