@@ -4,18 +4,14 @@
     A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
 -->
 
- <!--the platform urdf was generated with the following command
-`rospack find xacro`/xacro.py `rospack find agni_description`/robots/platforms.urdf.xacro    
- ARM:=pa10 USE_PREFIX:=true FLOBI:=false R:=1 L:=1 R_EE_TYPE:=shadow_motor L_EE_TYPE:=shadow_motor  
-  R_EE_SIDE:=right L_EE_SIDE:=left -->
-<robot name="platform">
+<robot name="arm_hand_shadow">
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="left_hand">
-        <joint name="la_arm_hand_mount" />
+        <joint name="lh_tool_mount" />
         <joint name="lh_WRJ2" />
         <joint name="lh_WRJ1" />
         <joint name="lh_FFJ4" />
@@ -48,7 +44,7 @@
         <group name="left_fingers" />
     </group>
     <group name="right_hand">
-        <joint name="ra_arm_hand_mount" />
+        <joint name="rh_tool_mount" />
         <joint name="rh_WRJ2" />
         <joint name="rh_WRJ1" />
         <joint name="rh_FFJ4" />
@@ -229,7 +225,7 @@
         <chain base_link="lh_palm" tip_link="lh_thtip" />
     </group>
     <group name="right_arm">
-        <joint name="ra_frame_placement" />
+        <joint name="ra_arm_mount" />
         <joint name="ra_S1" />
         <joint name="ra_S2" />
         <joint name="ra_S3" />
@@ -238,10 +234,10 @@
         <joint name="ra_W1" />
         <joint name="ra_W2" />
         <joint name="ra_arm_hand_fixed_joint" />
-        <chain base_link="ra_arm_base_link" tip_link="ra_arm_hand_mount" />
+        <chain base_link="ra_arm_base_link" tip_link="ra_tool_mount" />
     </group>
     <group name="left_arm">
-        <joint name="la_frame_placement" />
+        <joint name="la_arm_mount" />
         <joint name="la_S1" />
         <joint name="la_S2" />
         <joint name="la_S3" />
@@ -250,10 +246,10 @@
         <joint name="la_W1" />
         <joint name="la_W2" />
         <joint name="la_arm_hand_fixed_joint" />
-        <chain base_link="la_arm_base_link" tip_link="la_arm_hand_mount" />
+        <chain base_link="la_arm_base_link" tip_link="la_tool_mount" />
     </group>
     <group name="right_armpalm">
-        <joint name="ra_frame_placement" />
+        <joint name="ra_arm_mount" />
         <joint name="ra_S1" />
         <joint name="ra_S2" />
         <joint name="ra_S3" />
@@ -267,7 +263,7 @@
         <chain base_link="ra_arm_base_link" tip_link="rh_palm" />
     </group>
     <group name="left_armpalm">
-        <joint name="la_frame_placement" />
+        <joint name="la_arm_mount" />
         <joint name="la_S1" />
         <joint name="la_S2" />
         <joint name="la_S3" />
@@ -295,7 +291,7 @@
         <group name="right_hand" />
     </group>
     <group name="both_armpalm">
-        <joint name="la_frame_placement" />
+        <joint name="la_arm_mount" />
         <joint name="la_S1" />
         <joint name="la_S2" />
         <joint name="la_S3" />
@@ -304,10 +300,10 @@
         <joint name="la_W1" />
         <joint name="la_W2" />
         <joint name="la_arm_hand_fixed_joint" />
-        <joint name="la_arm_hand_mount" />
+        <joint name="lh_tool_mount" />
         <joint name="lh_WRJ2" />
         <joint name="lh_WRJ1" />
-        <joint name="ra_frame_placement" />
+        <joint name="ra_arm_mount" />
         <joint name="ra_S1" />
         <joint name="ra_S2" />
         <joint name="ra_S3" />
@@ -316,7 +312,7 @@
         <joint name="ra_W1" />
         <joint name="ra_W2" />
         <joint name="ra_arm_hand_fixed_joint" />
-        <joint name="ra_arm_hand_mount" />
+        <joint name="rh_tool_mount" />
         <joint name="rh_WRJ2" />
         <joint name="rh_WRJ1" />
         <group name="left_armpalm" />
@@ -596,8 +592,8 @@
         <joint name="lh_THJ5" value="0" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="right_hand" parent_link="ra_arm_hand_mount" group="right_hand" parent_group="right_arm" />
-    <end_effector name="left_hand" parent_link="la_arm_hand_mount" group="left_hand" parent_group="left_arm" />
+    <end_effector name="right_hand" parent_link="ra_tool_mount" group="right_hand" parent_group="right_arm" />
+    <end_effector name="left_hand" parent_link="la_tool_mount" group="left_hand" parent_group="left_arm" />
     <end_effector name="left_hand_first_finger" parent_link="lh_fftip" group="left_first_finger" parent_group="left_hand" />
     <end_effector name="left_hand_middle_finger" parent_link="lh_mftip" group="left_middle_finger" parent_group="left_hand" />
     <end_effector name="left_hand_ring_finger" parent_link="lh_rftip" group="left_ring_finger" parent_group="left_hand" />
@@ -611,7 +607,7 @@
     <end_effector name="left_palm" parent_link="lh_palm" group="left_hand" parent_group="left_armpalm" />
     <end_effector name="right_palm" parent_link="rh_palm" group="right_hand" parent_group="right_armpalm" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
-    <virtualh_joint name="bimanual_frame" type="fixed" parent_frame="world" child_link="pa10_frame" />
+    <virtualh_joint name="bimanual_frame" type="fixed" parent_frame="world" child_link="frame" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="lh_ffdistal" link2="lh_ffknuckle" reason="Never" />
     <disable_collisions link1="lh_ffdistal" link2="lh_ffmiddle" reason="Adjacent" />
@@ -669,7 +665,7 @@
     <disable_collisions link1="lh_ffknuckle" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="lh_ffknuckle" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="lh_ffknuckle" link2="la_arm_base_link" reason="User" />
-    <disable_collisions link1="lh_ffknuckle" link2="pa10_frame" reason="User" />
+    <disable_collisions link1="lh_ffknuckle" link2="frame" reason="User" />
     <disable_collisions link1="lh_ffknuckle" link2="rh_ffdistal" reason="Never" />
     <disable_collisions link1="lh_ffknuckle" link2="rh_ffknuckle" reason="User" />
     <disable_collisions link1="lh_ffknuckle" link2="rh_ffmiddle" reason="User" />
@@ -829,7 +825,7 @@
     <disable_collisions link1="lh_lfknuckle" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="lh_lfknuckle" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="lh_lfknuckle" link2="la_arm_base_link" reason="User" />
-    <disable_collisions link1="lh_lfknuckle" link2="pa10_frame" reason="User" />
+    <disable_collisions link1="lh_lfknuckle" link2="frame" reason="User" />
     <disable_collisions link1="lh_lfknuckle" link2="rh_ffdistal" reason="Never" />
     <disable_collisions link1="lh_lfknuckle" link2="rh_ffknuckle" reason="Never" />
     <disable_collisions link1="lh_lfknuckle" link2="rh_ffmiddle" reason="Never" />
@@ -970,7 +966,7 @@
     <disable_collisions link1="lh_mfknuckle" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="lh_mfknuckle" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="lh_mfknuckle" link2="la_arm_base_link" reason="User" />
-    <disable_collisions link1="lh_mfknuckle" link2="pa10_frame" reason="User" />
+    <disable_collisions link1="lh_mfknuckle" link2="frame" reason="User" />
     <disable_collisions link1="lh_mfknuckle" link2="rh_ffdistal" reason="Never" />
     <disable_collisions link1="lh_mfknuckle" link2="rh_ffknuckle" reason="Never" />
     <disable_collisions link1="lh_mfknuckle" link2="rh_ffmiddle" reason="Never" />
@@ -1092,7 +1088,7 @@
     <disable_collisions link1="lh_rfknuckle" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="lh_rfknuckle" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="lh_rfknuckle" link2="la_arm_base_link" reason="User" />
-    <disable_collisions link1="lh_rfknuckle" link2="pa10_frame" reason="User" />
+    <disable_collisions link1="lh_rfknuckle" link2="frame" reason="User" />
     <disable_collisions link1="lh_rfknuckle" link2="rh_ffdistal" reason="Never" />
     <disable_collisions link1="lh_rfknuckle" link2="rh_ffknuckle" reason="Never" />
     <disable_collisions link1="lh_rfknuckle" link2="rh_ffmiddle" reason="Never" />
@@ -1172,7 +1168,7 @@
     <disable_collisions link1="lh_thbase" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="lh_thbase" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="lh_thbase" link2="la_arm_base_link" reason="User" />
-    <disable_collisions link1="lh_thbase" link2="pa10_frame" reason="User" />
+    <disable_collisions link1="lh_thbase" link2="frame" reason="User" />
     <disable_collisions link1="lh_thbase" link2="rh_ffdistal" reason="Never" />
     <disable_collisions link1="lh_thbase" link2="rh_ffknuckle" reason="User" />
     <disable_collisions link1="lh_thbase" link2="rh_ffmiddle" reason="User" />
@@ -1232,7 +1228,7 @@
     <disable_collisions link1="lh_thhub" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="lh_thhub" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="lh_thhub" link2="la_arm_base_link" reason="User" />
-    <disable_collisions link1="lh_thhub" link2="pa10_frame" reason="User" />
+    <disable_collisions link1="lh_thhub" link2="frame" reason="User" />
     <disable_collisions link1="lh_thhub" link2="rh_ffdistal" reason="Never" />
     <disable_collisions link1="lh_thhub" link2="rh_ffknuckle" reason="Never" />
     <disable_collisions link1="lh_thhub" link2="rh_ffmiddle" reason="User" />
@@ -1313,7 +1309,7 @@
     <disable_collisions link1="la_arm_1_link" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="la_arm_base_link" reason="Adjacent" />
-    <disable_collisions link1="la_arm_1_link" link2="pa10_frame" reason="Never" />
+    <disable_collisions link1="la_arm_1_link" link2="frame" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="rh_ffknuckle" reason="User" />
     <disable_collisions link1="la_arm_1_link" link2="rh_lfknuckle" reason="User" />
     <disable_collisions link1="la_arm_1_link" link2="rh_mfknuckle" reason="User" />
@@ -1379,7 +1375,7 @@
     <disable_collisions link1="la_arm_7_link" link2="rh_rfknuckle" reason="User" />
     <disable_collisions link1="la_arm_7_link" link2="rh_thbase" reason="User" />
     <disable_collisions link1="la_arm_7_link" link2="rh_thhub" reason="User" />
-    <disable_collisions link1="la_arm_base_link" link2="pa10_frame" reason="Adjacent" />
+    <disable_collisions link1="la_arm_base_link" link2="frame" reason="Adjacent" />
     <disable_collisions link1="la_arm_base_link" link2="rh_ffknuckle" reason="User" />
     <disable_collisions link1="la_arm_base_link" link2="rh_lfknuckle" reason="User" />
     <disable_collisions link1="la_arm_base_link" link2="rh_mfknuckle" reason="User" />
@@ -1390,14 +1386,14 @@
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_3_link" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_base_link" reason="Never" />
-    <disable_collisions link1="pa10_frame" link2="rh_ffknuckle" reason="User" />
-    <disable_collisions link1="pa10_frame" link2="rh_lfknuckle" reason="User" />
-    <disable_collisions link1="pa10_frame" link2="rh_mfknuckle" reason="User" />
-    <disable_collisions link1="pa10_frame" link2="rh_rfknuckle" reason="User" />
-    <disable_collisions link1="pa10_frame" link2="rh_thbase" reason="User" />
-    <disable_collisions link1="pa10_frame" link2="rh_thhub" reason="User" />
-    <disable_collisions link1="pa10_frame" link2="ra_arm_1_link" reason="Never" />
-    <disable_collisions link1="pa10_frame" link2="ra_arm_base_link" reason="Adjacent" />
+    <disable_collisions link1="frame" link2="rh_ffknuckle" reason="User" />
+    <disable_collisions link1="frame" link2="rh_lfknuckle" reason="User" />
+    <disable_collisions link1="frame" link2="rh_mfknuckle" reason="User" />
+    <disable_collisions link1="frame" link2="rh_rfknuckle" reason="User" />
+    <disable_collisions link1="frame" link2="rh_thbase" reason="User" />
+    <disable_collisions link1="frame" link2="rh_thhub" reason="User" />
+    <disable_collisions link1="frame" link2="ra_arm_1_link" reason="Never" />
+    <disable_collisions link1="frame" link2="ra_arm_base_link" reason="Adjacent" />
     <disable_collisions link1="rh_ffdistal" link2="rh_ffknuckle" reason="Never" />
     <disable_collisions link1="rh_ffdistal" link2="rh_ffmiddle" reason="Adjacent" />
     <disable_collisions link1="rh_ffdistal" link2="rh_ffproximal" reason="Never" />

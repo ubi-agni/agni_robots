@@ -6,9 +6,7 @@
   <arg name="robot_description" default="robot_description"/>
 
   <!-- Load universal robot description format (URDF) -->              
-  <param if="$(arg load_robot_description)" name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/platforms.urdf.xacro'  ARM:=pa10 
-                FLOBI:=false R:=1 L:=1  R_EE_TYPE:=shadow_hand R_EE_MODEL:=motor R_EE_SIDE:=right R_EE_TACTILE:=ubi
-              L_EE_TYPE:=shadow_hand L_EE_MODEL:=motor L_EE_SIDE:=left L_EE_TACTILE:=ubi SIM:=1" />
+  <param if="$(arg load_robot_description)" name="robot_description" textfile="$(find agni_description)/robots/sfb.urdf" />
               
   <!-- The semantic description that corresponds to the URDF -->
   <param name="$(arg robot_description)_semantic" textfile="$(find pa10_shadow_moveit_config)/config/pa10_shadow.srdf" />

@@ -3,11 +3,8 @@
     This is a format for representing semantic information about the robot structure.
     A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
 -->
- <!--the platform urdf was generated with the following command
-`rospack find xacro`/xacro.py `rospack find agni_description`/robots/platforms.urdf.xacro 
-    ARM:=kuka USE_PREFIX:=true FLOBI:=true R:=1 L:=1 R_EE_TYPE:=shadow_motor L_EE_TYPE:=shadow_motor
-    R_EE_SIDE:=right L_EE_SIDE:=left" -->
-<robot name="platform">
+
+<robot name="arm_hand_shadow">
     
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
@@ -15,7 +12,7 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="left_armhand">
-        <joint name="la_frame_placement" />
+        <joint name="la_arm_mount" />
         <joint name="la_arm_0_joint" />
         <joint name="la_arm_1_joint" />
         <joint name="la_arm_2_joint" />
@@ -24,13 +21,13 @@
         <joint name="la_arm_5_joint" />
         <joint name="la_arm_6_joint" />
         <joint name="la_arm_hand_fixed_joint" />
-        <joint name="la_arm_hand_mount" />
+        <joint name="lh_tool_mount" />
         <joint name="lh_WRJ2" />
         <joint name="lh_WRJ1" />
         <chain base_link="la_arm_base_link" tip_link="lh_palm" />
     </group>
     <group name="right_armhand">
-        <joint name="ra_frame_placement" />
+        <joint name="ra_arm_mount" />
         <joint name="ra_arm_0_joint" />
         <joint name="ra_arm_1_joint" />
         <joint name="ra_arm_2_joint" />
@@ -39,7 +36,7 @@
         <joint name="ra_arm_5_joint" />
         <joint name="ra_arm_6_joint" />
         <joint name="ra_arm_hand_fixed_joint" />
-        <joint name="ra_arm_hand_mount" />
+        <joint name="rh_tool_mount" />
         <joint name="rh_WRJ2" />
         <joint name="rh_WRJ1" />
         <chain base_link="ra_arm_base_link" tip_link="rh_palm" />
@@ -267,10 +264,10 @@
         <chain base_link="lh_palm" tip_link="lh_thtip" />
     </group>
     <group name="left_arm">
-        <chain base_link="la_arm_base_link" tip_link="la_arm_hand_mount" />
+        <chain base_link="la_arm_base_link" tip_link="la_tool_mount" />
     </group>
     <group name="right_arm">
-        <chain base_link="ra_arm_base_link" tip_link="ra_arm_hand_mount" />
+        <chain base_link="ra_arm_base_link" tip_link="ra_tool_mount" />
     </group>
     <group name="flobi_eyes">
         <link name="flobi_eyes_left_hub_link" />
@@ -545,12 +542,12 @@
     <end_effector name="right_hand_little_finger" parent_link="rh_lftip" group="right_little_finger" parent_group="right_hand" />
     <end_effector name="right_hand_thumb" parent_link="rh_thtip" group="right_thumb" parent_group="right_hand" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
-    <virtualh_joint name="bimanual_frame" type="fixed" parent_frame="world" child_link="kuka_frame" />
+    <virtualh_joint name="bimanual_frame" type="fixed" parent_frame="world" child_link="frame" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="flobi_eyes_left_link" link2="flobi_eyes_right_link" reason="Never" />
     <disable_collisions link1="flobi_eyes_left_link" link2="flobi_head_link" reason="Adjacent" />
     <disable_collisions link1="flobi_eyes_left_link" link2="flobi_neck_base_link" reason="Never" />
-    <disable_collisions link1="flobi_eyes_left_link" link2="kuka_frame" reason="Never" />
+    <disable_collisions link1="flobi_eyes_left_link" link2="frame" reason="Never" />
     <disable_collisions link1="flobi_eyes_left_link" link2="lh_ffknuckle" reason="Never" />
     <disable_collisions link1="flobi_eyes_left_link" link2="lh_ffmiddle" reason="Never" />
     <disable_collisions link1="flobi_eyes_left_link" link2="lh_ffproximal" reason="Never" />
@@ -609,7 +606,7 @@
     <disable_collisions link1="flobi_eyes_left_link" link2="ra_arm_base_link" reason="Never" />
     <disable_collisions link1="flobi_eyes_right_link" link2="flobi_head_link" reason="Adjacent" />
     <disable_collisions link1="flobi_eyes_right_link" link2="flobi_neck_base_link" reason="Never" />
-    <disable_collisions link1="flobi_eyes_right_link" link2="kuka_frame" reason="Never" />
+    <disable_collisions link1="flobi_eyes_right_link" link2="frame" reason="Never" />
     <disable_collisions link1="flobi_eyes_right_link" link2="lh_ffknuckle" reason="Never" />
     <disable_collisions link1="flobi_eyes_right_link" link2="lh_ffmiddle" reason="User" />
     <disable_collisions link1="flobi_eyes_right_link" link2="lh_ffproximal" reason="User" />
@@ -673,19 +670,19 @@
     <disable_collisions link1="flobi_head_link" link2="ra_arm_1_link" reason="Never" />
     <disable_collisions link1="flobi_head_link" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="flobi_head_link" link2="ra_arm_base_link" reason="Never" />
-    <disable_collisions link1="flobi_neck_base_link" link2="kuka_frame" reason="Adjacent" />
+    <disable_collisions link1="flobi_neck_base_link" link2="frame" reason="Adjacent" />
     <disable_collisions link1="flobi_neck_base_link" link2="la_arm_1_link" reason="Never" />
     <disable_collisions link1="flobi_neck_base_link" link2="la_arm_2_link" reason="Never" />
     <disable_collisions link1="flobi_neck_base_link" link2="la_arm_base_link" reason="Never" />
     <disable_collisions link1="flobi_neck_base_link" link2="ra_arm_1_link" reason="Never" />
     <disable_collisions link1="flobi_neck_base_link" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="flobi_neck_base_link" link2="ra_arm_base_link" reason="Never" />
-    <disable_collisions link1="kuka_frame" link2="la_arm_1_link" reason="Never" />
-    <disable_collisions link1="kuka_frame" link2="la_arm_2_link" reason="Never" />
-    <disable_collisions link1="kuka_frame" link2="la_arm_base_link" reason="Adjacent" />
-    <disable_collisions link1="kuka_frame" link2="ra_arm_1_link" reason="Never" />
-    <disable_collisions link1="kuka_frame" link2="ra_arm_2_link" reason="Never" />
-    <disable_collisions link1="kuka_frame" link2="ra_arm_base_link" reason="Adjacent" />
+    <disable_collisions link1="frame" link2="la_arm_1_link" reason="Never" />
+    <disable_collisions link1="frame" link2="la_arm_2_link" reason="Never" />
+    <disable_collisions link1="frame" link2="la_arm_base_link" reason="Adjacent" />
+    <disable_collisions link1="frame" link2="ra_arm_1_link" reason="Never" />
+    <disable_collisions link1="frame" link2="ra_arm_2_link" reason="Never" />
+    <disable_collisions link1="frame" link2="ra_arm_base_link" reason="Adjacent" />
     <disable_collisions link1="lh_ffdistal" link2="lh_ffknuckle" reason="Never" />
     <disable_collisions link1="lh_ffdistal" link2="lh_ffmiddle" reason="Adjacent" />
     <disable_collisions link1="lh_ffdistal" link2="lh_ffproximal" reason="Never" />
