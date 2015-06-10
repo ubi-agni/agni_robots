@@ -45,18 +45,6 @@ d:setActivity("MotionManager", 0.001, 60, rtt.globals.ORO_SCHED_RT)
 MotionManager = d:getPeer("MotionManager")
 MotionManager:configure()
 
-
-
-
-
---ra_kuka = KukaControllers("ra",49938)
---ra_kuka.init(d) 
---ra_kuka.deploy(d)
---ra_kuka.connectIn(d,"FilteredJointPosition","MotionManager.DesiredJointPosRA")
---ra_kuka.connectOut(d,"JointPosition","MotionManager.FRIRealJointPosRA")
---ra_kuka.connectOut(d,"Log","LogRA.Log")
-
-
 -- ROS in out
 ros=rtt.provides("ros")
 d:stream("Grasp.Attach",ros:topic("/gazebo_attach"))

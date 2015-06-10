@@ -1,7 +1,9 @@
 <launch>
   <!-- EXPECTS agni_description to be compiled to get urdf generated in devel space -->
   <arg name="SIM" default="true"/>
-   
+  <arg name="RTT" default="1"/>
+  <!-- RTT to select if an RTT enviromnemt + deployer + services should be started -->
+  
   <!-- do a find only once -->
   <arg name="agni" value="$(find agni_description)"/>
     
@@ -23,8 +25,9 @@
   </group>
   
   <!-- rtt deployement environment -->
-  <node name="rtt_environment" pkg="rtt_ros" type="rttlua" launch-prefix="xterm -hold -T rtt_environment -e " args=" -i $(arg agni)/scripts/deploy.lua">
-  </node> 
+  <group if="$(arg RTT)">
+    <include file="$(find agni_description)/launch/rtt_bringup.launch"/>
+  </group> 
   
   <!-- load frame description  -->
   <param name="platform_description" textfile="$(find agni_description)/robots/famula_frame.urdf" />

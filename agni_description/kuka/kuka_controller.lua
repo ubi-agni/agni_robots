@@ -35,7 +35,6 @@ function configureHook()
   local in_portmap={}
   local out_portmap={}
   
- 
   diagname = namespace.."LWRDiag"
   d:loadComponent(diagname, "FRIDiagnostics")
   d:setActivity(diagname, 0.01, 2, rtt.globals.ORO_SCHED_RT)
@@ -51,10 +50,11 @@ function configureHook()
   fri = d:getPeer(friname)
   fri:getProperty("fri_port"):set(port)
   fri:configure()
+  
   -- add fri to the parent component peers
   d:addPeer(tcName, friname)  
   
-  
+  -- advertize ports for the compound controller
   in_portmap['JNTPOS'] = friname..".JointPositionCommand"
   out_portmap['JNTPOS'] = friname..".JointPosition"
 
@@ -79,20 +79,20 @@ function configureHook()
   filter = d:getPeer(filtername)
   filter:getProperty("FREQUENCY"):set(1.0)
   filter:configure()
-  
-  
+
+  -- advertize ports for the compound controller
   in_portmap['FILJNTPOS'] = filtername..".DesiredJointPos"
   out_portmap['LOG'] = filtername..".Log"
+  
   -- add filter to the parent component peers
   d:addPeer(tcName, filtername) 
-        
-        
+
   -- store the mapping in the properties
   
   storeMapping("in_portmap",in_portmap)
   storeMapping("out_portmap",out_portmap)
   
-      
+  -- internal connection
   d:connect(friname..".RobotState", diagname..".RobotState", rtt.Variable("ConnPolicy"))
   d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
   d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
@@ -121,7 +121,6 @@ function storeMapping(propname,mymap)
   for _ in pairs(mymap) do count = count + 1 end
   portmap.type:resize(count)
   portmap.portname:resize(count)
-  count = 0
   count = 0
   -- assign entries
   for k,v in pairs(mymap) do 
