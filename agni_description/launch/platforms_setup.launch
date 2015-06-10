@@ -1,9 +1,9 @@
 <launch>
   <arg name="FRAME" default="famula"/>
-	<arg name="ARM_L" default="kukaL"/>
-	<arg name="ARM_R" default="kukaR"/>
+  <arg name="ARM_L" default="kukaL"/>
+  <arg name="ARM_R" default="kukaR"/>
   <arg name="TOOL_L" default="shadow_motor_left"/>
-	<arg name="TOOL_R" default="shadow_motor_right"/>
+  <arg name="TOOL_R" default="shadow_motor_right"/>
   <arg name="FLOBI" default="false"/>
 
   <arg name="JSP" default="false"/>

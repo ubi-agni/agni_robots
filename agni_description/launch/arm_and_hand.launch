@@ -1,15 +1,19 @@
 <launch>
   <arg name="SIM" default="true"/>
   <arg name="FRAME" default="famula"/>
-  <arg name="ARM_L" default="kukaL"/>
-  <arg name="ARM_R" default="kukaR"/>
-  <arg name="TOOL_L" default="shadow_motor_left"/>
-  <arg name="TOOL_R" default="shadow_motor_right"/>
   <arg name="FLOBI" default="false"/>
   <arg name="R" default="1"/>
   <arg name="L" default="0"/>
+  <arg name="ARM_L" default="kukaL" if="$(arg L)"/>
+  <arg name="ARM_R" default="kukaR" if="$(arg R)"/>
+  <arg name="ARM_L" value="-" unless="$(arg L)"/>
+  <arg name="ARM_R" value="-" unless="$(arg R)"/>
+  <arg name="TOOL_L" default="shadow_motor_left" if="$(arg L)"/>
+  <arg name="TOOL_R" default="shadow_motor_right" if="$(arg R)"/>
+  <arg name="TOOL_L" value="-" unless="$(arg L)"/>
+  <arg name="TOOL_R" value="-" unless="$(arg R)"/>
   <arg name="RTT" default="1"/>
-
+      
   <!-- arguments R and L to select left or right or both arm and hand -->
   <!-- ARM_L|ARM_R [kukaL|kukaR|pa10a|pa10c|...]-->
   <!-- TOOL_L|TOOL_R [shadow_motor_left|shadow_motor_right|...]-->

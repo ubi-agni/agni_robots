@@ -2,9 +2,10 @@
   <arg name="SIM" default="true"/>
   <arg name="RH" default="1"/>
   <arg name="LH" default="0"/>
-  <arg name="HAND_R" default="shadow_motor_right"/>
-  <arg name="HAND_L" default="shadow_motor_left"/>
-  
+  <arg name="HAND_R" default="shadow_motor_right" if="$(arg RH)"/>
+  <arg name="HAND_L" default="shadow_motor_left" if="$(arg LH)"/>
+  <arg name="HAND_R" value="-" unless="$(arg RH)" />
+  <arg name="HAND_L" value="-" unless="$(arg LH)"/>
   <group if="$(arg SIM)"> 
     <!-- start gazebo with an empty plane -->
 	
