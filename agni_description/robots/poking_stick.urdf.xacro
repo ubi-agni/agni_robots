@@ -13,7 +13,7 @@
       <xacro:distal_tactile bio="${props['tactile'] == 'bio'}"
                             ubi="${props['tactile'] == 'ubi'}"
                             eli="${props['tactile'] == 'eli'}"
-                            prefix="{prefix}" link_prefix="ff" finger_number="0"/>
+                            prefix="${prefix_}" link_prefix="ff" finger_number="0"/>
     </xacro:if>
   </xacro:macro>
 </robot>
