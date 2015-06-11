@@ -4,7 +4,7 @@
   <arg name="RTT" default="1"/>
   <!-- RTT to select if an RTT enviromnemt + deployer + services should be started -->
   
-  <!-- do a find only once -->
+  <!-- do a find only once , does not work for urdf generated files that require a find -->
   <arg name="agni" value="$(find agni_description)"/>
     
   <group if="$(arg SIM)">
@@ -46,41 +46,36 @@
     <!-- load hand description only in sim, in real, the drivers is loading it -->  
     <!-- needed for the sr_gazebo_plugin -->
     <group ns="lh">
-       <!-- load robot_description -->
-        <param name="robot_description" textfile="$(find agni_description)/robots/left_shadow_hand_motor_ubi.urdf" /> 
+      <!-- load robot_description -->
+      <param name="robot_description" textfile="$(find agni_description)/robots/left_shadow_hand_motor_ubi.urdf" /> 
     </group>
     <group ns="rh">
-        <!-- load robot_description -->
-        <param name="robot_description" textfile="$(find agni_description)/robots/right_shadow_hand_motor_ubi.urdf" /> 
+      <!-- load robot_description -->
+      <param name="robot_description" textfile="$(find agni_description)/robots/right_shadow_hand_motor_ubi.urdf" /> 
     </group>
+    
+    <!-- needed for kuka controllers -->
+    <group ns="la">
+      <!-- load robot_description -->
+      <param name="robot_description" textfile="$(find agni_description)/robots/left_kuka.urdf" />
+    </group> 
+    <group ns="ra">
+      <!-- load robot_description -->
+      <param name="robot_description" textfile="$(find agni_description)/robots/right_kuka.urdf" />
+    </group> 
   </group>
   
-  <!-- needed for kuka using the sr_gazebo_plugin -->
-  <group ns="la">
-    <!-- load robot_description -->
-    <param name="robot_description" textfile="$(find agni_description)/robots/left_kuka.urdf" />
-  </group> 
-  <group ns="ra">
-    <!-- load robot_description -->
-    <param name="robot_description" textfile="$(find agni_description)/robots/right_kuka.urdf" />
-  </group> 
-
   <!-- robots -->
   <!-- Load the general left|right robot_description, spawn it, merge joint_states -->
   <group ns="left">
-    <!-- load robot_description -->
-    <param name="robot_description" textfile="$(find agni_description)/robots/left_kuka_shadow_hand_motor_ubi.urdf" /> 
-    <param name="tf_prefix" value="left"/>
     <!-- spawn in the sim world if SIM -->
     <group if="$(arg SIM)">
+      <!-- load robot_description -->
+      <param name="robot_description" textfile="$(find agni_description)/robots/left_kuka_shadow_hand_motor_ubi.urdf" /> 
       <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
      args="-urdf -param robot_description -model left_kuka_shadow"
      respawn="false" output="screen" />
     </group>   
-    <node pkg="robot_state_publisher" type="robot_state_publisher"
-                            name="robot_state_publisher_full_pos">
-      <param name="publish_frequency" type="double" value="10.0" />
-    </node>
     <node pkg="topic_tools" type="relay"
         name="kuka_joint_state_merger"
         args="/la/joint_states /left/joint_states" >
@@ -98,19 +93,14 @@
   </node>
   
   <group ns="right">
-    <!-- load robot_description -->
-    <param name="robot_description" textfile="$(find agni_description)/robots/right_kuka_shadow_hand_motor_ubi.urdf" /> 
-    <param name="tf_prefix" value="right"/>
     <!-- spawn in the sim world if SIM -->
     <group if="$(arg SIM)">
+      <!-- load robot_description -->
+      <param name="robot_description" textfile="$(find agni_description)/robots/right_kuka_shadow_hand_motor_ubi.urdf" /> 
       <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
      args="-urdf -param robot_description -model right_kuka_shadow"
      respawn="false" output="screen" />
     </group> 
-    <node pkg="robot_state_publisher" type="robot_state_publisher"
-                            name="robot_state_publisher_full_pos">
-      <param name="publish_frequency" type="double" value="10.0" />
-    </node>
     <!-- robot_state_publisher can work with data coming from different sources at different times -->
     <node pkg="topic_tools" type="relay"
         name="kuka_joint_state_merger"
@@ -140,12 +130,24 @@
   
     <!-- only load parameters here -->
     <rosparam command="load" file="$(arg agni)/kuka/la_controllers.yaml" />
+    
+    <group if="$(arg RTT)">
+      <!-- low level orocos component to be deployed here (to get joint state published at all)-->
+      <node pkg="rosservice" type="rosservice" name="la_kuka_bringup" args="call --wait /rtt_environment/Deployer/run_lua_script $(arg agni)/kuka/la_deploy_component.lua"/>   
+    </group> 
+    
   </group> 
   <group ns="ra">
     <!-- Currently no difference between simulated and real kuka -->
   
     <!-- only load parameters here -->
     <rosparam command="load" file="$(arg agni)/kuka/ra_controllers.yaml" />
+    
+    <group if="$(arg RTT)">
+      <!-- low level orocos component to be deployed here (to get joint state published at all)-->
+      <node pkg="rosservice" type="rosservice" name="ra_kuka_bringup" args="call --wait /rtt_environment/Deployer/run_lua_script $(arg agni)/kuka/ra_deploy_component.lua"/>   
+    </group> 
+    
   </group> 
   
   <!-- drivers and/or controllers for the hand -->
@@ -177,28 +179,27 @@
   <group unless="$(arg SIM)"> 
     <!-- ns is already contained in sr_rh|lhand.launch -->
     <include file="$(find sr_ethercat_hand_config)/launch/sr_lhand.launch" >
-        <!-- cheating with strangely placed quotes because the xacro execution in sr_edc.launch 
-       puts everything into quotes but substitution args should not be into quotes
-       and also cannot be replaced by a textfile load as xacro is executed within sr_edc.launch -->
-      <arg name="robot_description" value="$(arg agni)/robots/shadow_hands.urdf.xacro'  MODEL:=motor SIDE:=left TACTILE:=ubi PREFIX:=lh ' " />
+        <!-- cheating with strangely placed quotes due the xacro execution in sr_edc.launch -->
+      <arg name="robot_description" value="--inorder '$(find agni_description)/robots/single.urdf.xacro' 
+          PREFIX:=l TOOL:=shadow_motor_left SIM:=0 CALIB:=default PARENT:='-'" />
     </include>
     <include file="$(find sr_ethercat_hand_config)/launch/sr_rhand.launch" >
-       <!-- cheating with strangely placed quotes because the xacro execution in sr_edc.launch 
-       puts everything into quotes but substitution args should not be into quotes -->
-      <arg name="robot_description" value="$(arg agni)/robots/shadow_hands.urdf.xacro'  MODEL:=motor SIDE:=right TACTILE:=ubi PREFIX:=rh ' " />
+       <!-- cheating with strangely placed quotes due the xacro execution in sr_edc.launch -->
+      <arg name="robot_description" value="--inorder '$(find agni_description)/robots/single.urdf.xacro' 
+          PREFIX:=r TOOL:=shadow_motor_right SIM:=0 CALIB:=default PARENT:='-'" />
     </include>
  
     <!-- ns is already contained in the controller.launch -->
     <include file="$(find sr_ethercat_hand_config)/launch/controllers/sr_edc_mixed_position_velocity_controllers.launch" >
-			<arg name="set_namespace" value="1"/>
-			<arg name="config_dir" value="lh/" />
-			<arg name="namespace" value="lh" />
-		</include>
+      <arg name="set_namespace" value="1"/>
+      <arg name="config_dir" value="lh/" />
+      <arg name="namespace" value="lh" />
+    </include>
     <include file="$(find sr_ethercat_hand_config)/launch/controllers/sr_edc_mixed_position_velocity_controllers.launch" >
-			<arg name="set_namespace" value="1"/>
-			<arg name="config_dir" value="rh/" />
-			<arg name="namespace" value="rh" />
-		</include>
+      <arg name="set_namespace" value="1"/>
+      <arg name="config_dir" value="rh/" />
+      <arg name="namespace" value="rh" />
+    </include>
   </group>
    
 </launch>

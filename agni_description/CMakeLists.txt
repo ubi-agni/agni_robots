@@ -25,9 +25,9 @@ xacro_add_xacro_file(robots/single.urdf.xacro robots/famula_frame.urdf INORDER R
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right pa10
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10c SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10c PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 # left right kuka
 xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaR SIM:=1)
@@ -36,21 +36,21 @@ xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf INORDER REMA
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right shadow motor hand
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_right PREFIX:=r)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_right PREFIX:=r PARENT:=-)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_left PREFIX:=l)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_left PREFIX:=l PARENT:=-)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right pa10 shadow_hand_motor_ubi
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=sfb ARM:=pa10c TOOL:=shadow_motor_right SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=sfb ARM:=pa10c TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a TOOL:=shadow_motor_left SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right kuka shadow_hand_motor_ubi
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaR TOOL:=shadow_motor_right SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaL TOOL:=shadow_motor_left SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # install the generated files
