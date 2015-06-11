@@ -12,13 +12,13 @@
 				<remotePort>${port}</remotePort>
 				<baseLink>${prefix}arm_base_link</baseLink>
 				<toolLink>${prefix}tool_mount</toolLink>
-				<xacro:rename xacro:name="${prefix}arm_0_joint">0</xacro:rename>
-				<xacro:rename xacro:name="${prefix}arm_1_joint">0</xacro:rename>
-				<xacro:rename xacro:name="${prefix}arm_2_joint">0</xacro:rename>
-				<xacro:rename xacro:name="${prefix}arm_3_joint">0</xacro:rename>
-				<xacro:rename xacro:name="${prefix}arm_4_joint">0</xacro:rename>
-				<xacro:rename xacro:name="${prefix}arm_5_joint">0</xacro:rename>
-				<xacro:rename xacro:name="${prefix}arm_6_joint">0</xacro:rename>
+				<xacro:element xacro:name="${prefix}arm_0_joint">0</xacro:element>
+				<xacro:element xacro:name="${prefix}arm_1_joint">0</xacro:element>
+				<xacro:element xacro:name="${prefix}arm_2_joint">0</xacro:element>
+				<xacro:element xacro:name="${prefix}arm_3_joint">0</xacro:element>
+				<xacro:element xacro:name="${prefix}arm_4_joint">0</xacro:element>
+				<xacro:element xacro:name="${prefix}arm_5_joint">0</xacro:element>
+				<xacro:element xacro:name="${prefix}arm_6_joint">0</xacro:element>
 			</plugin>
 		</gazebo>  
 	</xacro:macro>
