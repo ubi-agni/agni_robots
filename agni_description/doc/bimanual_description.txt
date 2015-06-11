@@ -16,7 +16,7 @@ as a summary (right):
  there are 3 namespaces per side, right/ra/rh
 
 /right/robot_description : for planning and spawning (so that the hand and arm are physically linked together)
-/ra/robot_description : used for sr_gazebo_plugin (for pa10 controllers) but NOT used by lwrcontrollers
+/ra/robot_description : used for sr_gazebo_plugin (for pa10 controllers) and lwrcontrollers plugin
 /rh/robot_description : usef for sr_gazebo_plugin / in real loaded by default by the shadow driver with name rh/sh_description  
 
 /right/joint_states : merged version of the two below

@@ -13,9 +13,43 @@ It was decided to have generic and specific platform launch files
     arm.launch:    to start any arm, left/right/both, real/sim
     hand.launch:    to start shadowhand, left/right/both, real/sim
 
-    platforms.launch:  to start any arm + any end-effector
+    platforms_setup.launch:  to upload a full description on any frame + any arm + any tool
 
 * specific :
     sfb.launch / famula.launch :   to start the sfb platform, everything is predefined
       these use pre-generated urdfs to speed the launch process
+      
+Notes on robot_description, joint_states, robot_state_publishers
+--------------------------------
 
+There are good reasons why there are multiple robot_description (also see bimanual_description.txt),
+ joint_states and robot_state_publishers, on several namespaces rh/ra/lh/la/left/right and root called /
+They are summarized in a table
+abbreviation used
+  robot_description : rd
+  robot_state_publisher : rsp
+  namespace : ns
+
+
+launch file       | /rd            | rh/rd and lh/rd       |  ra/rd and la/rd   | right/left
+--------------------------------------------------------------------------------------------------
+arm.launch   real | \  display     |                       | \  for spawn       | 
+                  |  > + main rsp  |                       |  > + plugin        |
+             sim  | /              |                       | /  no rsp here     |
+--------------------------------------------------------------------------------------------------
+hand.launch  real |\ no rd, no rsp | driver +rsp in driver |                    |
+                  | > rsp would be |                       |                    |
+             sim  |/  duplicate    | spawn/plugin + ns/rsp |                    |
+--------------------------------------------------------------------------------------------------
+arm_and_hand real | \  display     | driver +rsp in driver |                    |  
+                  |  > + main rsp  |                       |                    |
+             sim  | /              | plugin only           | plugin only        | spawn , no rsp
+--------------------------------------------------------------------------------------------------
+
+The number of rsp was reduced at maximum but some driver constraint in the shadow hand oblige to 
+have some other ones. They then have tfprefix = namespace to avoid conflicts (arm+hand)
+in hand alone, for consistency reason there is no main rsp, only namespaced ones.
+
+rd in namespace are often for plugins that do not support multiple trees (2 hands) or for simplicity
+of urdf generation (in current nested structure, it is hard to generate 1 arm or 2 arms but only 
+one single controllers plugin, with correct prefix/namespace for its joint state to be on /arm or /hand for instance)
