@@ -10,11 +10,13 @@
                 prefix="${prefix}" controller="${controller}"/>
 
     <!-- attach arm to parent link -->
-    <joint name="${prefix_}arm_mount" type="fixed">
-      <parent link="${parent}"/>
-      <child link="${prefix_}arm_base_link"/>
-      <xacro:insert_block name="origin" />
-    </joint>
+    <xacro:if value="${parent != '-'}">
+      <joint name="${prefix_}arm_mount" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${prefix_}arm_base_link"/>
+        <xacro:insert_block name="origin" />
+      </joint>
+    </xacro:if>
   </xacro:macro>
 
 
@@ -28,11 +30,13 @@
                 prefix="${prefix}" />
 
     <!-- attach tool to parent link -->
-    <joint name="${prefix_}tool_mount" type="fixed">
-      <parent link="${parent}"/>
-      <child link="${prefix_}${settings['tools'][type]['mount']}"/>
-      <xacro:insert_block name="origin" />
-    </joint>
+    <xacro:if value="${parent != '-'}">
+      <joint name="${prefix_}tool_mount" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${prefix_}${settings['tools'][type]['mount']}"/>
+        <xacro:insert_block name="origin" />
+      </joint>
+    </xacro:if>
   </xacro:macro>
 
 
@@ -52,7 +56,7 @@
     <xacro:property name="arm_prefix_" value="${arm_prefix + '_' if arm_prefix else ''}"/>
     <xacro:property name="tool_prefix_" value="${tool_prefix + '_' if tool_prefix else ''}"/>
 
-    <xacro:property name="tool_parent" value="world"/>
+    <xacro:property name="tool_parent" value="${parent}"/>
 
     <xacro:if value="${arm_type not in ['','-']}">
       <!-- load arm calibration and instantiate arm -->

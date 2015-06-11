@@ -9,9 +9,12 @@
 	<xacro:arg name="FRAME" default="-"/>
 	<xacro:arg name="ARM" default="-"/>
 	<xacro:arg name="TOOL" default="-"/>
-	
-	<xacro:property name="parent" value="world"/>
-	<link name="${parent}"/>
+	<xacro:arg name="PARENT" default="world"/>
+
+	<xacro:property name="parent" value="$(arg PARENT)"/>
+	<xacro:if value="${parent != '-'}">
+		<link name="${parent}"/>
+	</xacro:if>
 
 	<!-- FRAME -->
 	<xacro:property name="FRAME" value="$(arg FRAME)"/>
