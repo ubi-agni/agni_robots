@@ -46,8 +46,8 @@
    <!-- spawn the support model -->
    <node name="spawn_support" pkg="gazebo_ros" type="spawn_model" args="-urdf -param platform_description -model platform -z 0" respawn="false" output="screen" /> 
   </group>
-  
-  <!-- robots --> 
+    
+  <!-- robots needs to be spawned separately due to plugin in ns --> 
   <group if="$(arg RA)">
     <group ns="ra">
       <!-- start the arm -->
@@ -57,14 +57,18 @@
         <arg name="arm_type" value="$(arg ARM_R)"/>
         <arg name="calib" value="$(arg FRAME)"/>
         <arg name="sim" value="$(arg SIM)"/>
-      </include>
+      </include> 
       <!-- Controllers for the arm -->
       <include file="$(find agni_description)/launch/$(arg ARM_R)_bringup.launch" >
         <arg name="namespace" value="ra" />
         <arg name="sim" value="$(arg SIM)"/>
-      </include>	
+      </include>
     </group>
-
+    <!-- relay RIGHT arm joint_states to the main one-->
+    <node pkg="topic_tools" type="relay"
+      name="ra_joint_state_merger"
+      args="/ra/joint_states /joint_states" >
+    </node>
   </group>
   <group if="$(arg LA)">
     <group ns="la">
@@ -80,8 +84,18 @@
       <include file="$(find agni_description)/launch/$(arg ARM_L)_bringup.launch" >
         <arg name="namespace" value="la" />
         <arg name="sim" value="$(arg SIM)"/>
-      </include>	
-    </group>		
- 
-	</group>		
+      </include>
+    </group>
+    <!-- relay LEFT arm joint_states to the main one-->
+    <node pkg="topic_tools" type="relay"
+      name="la_joint_state_merger"
+      args="/la/joint_states /joint_states" >
+    </node>
+  </group>
+  
+  <node pkg="robot_state_publisher" type="robot_state_publisher"
+        name="robot_state_publisher_arms">
+    <param name="publish_frequency" type="double" value="20.0" />
+  </node>
+  
 </launch>

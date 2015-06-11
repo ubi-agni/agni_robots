@@ -3,5 +3,5 @@
   <arg name="hand_type"/>
   <!-- load robot_description -->
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
-          PREFIX:=$(arg prefix) TOOL:=$(arg hand_type) SIM:=0 CALIB:=default" />
+          PREFIX:=$(arg prefix) TOOL:=$(arg hand_type) SIM:=0 CALIB:=default PARENT:='-' " />
 </launch>

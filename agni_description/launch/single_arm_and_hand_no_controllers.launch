@@ -6,26 +6,21 @@
   <arg name="sim" default="1"/>
   <arg name="tool_type" />   
 
-  <!-- load robot_description -->
-  <include file="$(find agni_description)/launch/arm_hand_upload.launch" >
-    <arg name="arm_type" value="$(arg arm_type)"/>
-    <arg name="tool_type" value="$(arg tool_type)"/>
-    <arg name="calib" value="$(arg calib)"/>
-    <arg name="sim" value="$(arg sim)"/>
-    <arg name="prefix" value="$(arg prefix)"/>
-  </include>
-
   <!-- spawn in the sim world if SIM -->
   <group if="$(arg sim)">
+    <!-- load robot_description for spawning only -->
+    <include file="$(find agni_description)/launch/arm_hand_upload.launch" >
+      <arg name="arm_type" value="$(arg arm_type)"/>
+      <arg name="tool_type" value="$(arg tool_type)"/>
+      <arg name="calib" value="$(arg calib)"/>
+      <arg name="sim" value="$(arg sim)"/>
+      <arg name="prefix" value="$(arg prefix)"/>
+    </include>
+
     <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
       <!--  the pose is defined in the urdf relative to world already frame -->
       <arg name="init_args" value="$(arg init_args)" />
       <arg name="robot_name" value="$(arg prefix)_$(arg arm_type)_$(arg tool_type)" />
     </include>   
   </group>   
-  <node pkg="robot_state_publisher" type="robot_state_publisher"
-                          name="robot_state_publisher_full_pos">
-    <param name="publish_frequency" type="double" value="10.0" />
-          
-  </node>
 </launch>

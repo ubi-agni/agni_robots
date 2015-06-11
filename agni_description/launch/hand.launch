@@ -8,7 +8,7 @@
   <arg name="HAND_L" value="-" unless="$(arg LH)"/>
   <group if="$(arg SIM)"> 
     <!-- start gazebo with an empty plane -->
-	
+
     <!-- Gazebo world file to load. -->
     <arg name="world_name" default="$(find sr_description)/other/worlds/shadowhand.world" />
     <arg name="gui" default="true"/>
@@ -43,7 +43,7 @@
       <arg name="sim" value="$(arg SIM)"/>
       <arg name="hand_type" value="$(arg HAND_R)"/>
     </include>
-  </group>	
+  </group>
   <group if="$(arg LH)">
     <!-- LEFT hand -->
     <group ns="lh">

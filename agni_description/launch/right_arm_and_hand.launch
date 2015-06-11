@@ -7,7 +7,8 @@
   must be done before gazebo spawner to have the plugin controller manager
   load on the sub namespaces -->
   
-  <group ns="ra">
+  <!-- load arm description for plugin only -->
+  <group if="$(arg sim)" ns="ra">
     <include file="$(find agni_description)/launch/arm_upload.launch" >
       <arg name="arm_type" value="$(arg arm_type)"/>
       <arg name="calib" value="$(arg calib)"/>
@@ -16,7 +17,7 @@
     </include>  
   </group> 
   
-  <!-- load hand description only in sim, in real, the drivers is loading it -->
+  <!-- load hand description for gazeboplugin, only in sim; in real, the drivers loads it -->
   <group if="$(arg sim)" ns="rh">
     <include file="$(find agni_description)/launch/sr_upload.launch" >
       <arg name="prefix" value="r"/>

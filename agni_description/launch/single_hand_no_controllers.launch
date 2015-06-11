@@ -4,24 +4,25 @@
   <arg name="sim" default="true"/>
   <arg name="hand_type" default="shadow_motor_right"/>
 
-  <!-- load robot_description (only in sim, driver in bringup does it to) -->
+  <!-- hand description for gazebo spawn/plugin only in sim, in real driver loads it 
+  state pub not on root tf, in sim only, to have it a ns as in driver -->
   <group if="$(arg sim)">
     <include file="$(find agni_description)/launch/sr_upload.launch">
       <arg name="prefix" value="$(arg prefix)"/>
       <arg name="hand_type" value="$(arg hand_type)"/>
     </include>
-  </group>
-    
-  <group if="$(arg sim)">
+
+    <param name="tf_prefix" value="$(arg prefix)h" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher"
+          name="robot_state_publisher_$(arg prefix)hand">
+      <param name="publish_frequency" type="double" value="20.0" />
+    </node>
+
     <include file="$(find agni_description)/launch/gazebo_robot_spawner.launch" >
       <arg name="init_args" value="$(arg init_args)" />
       <arg name="robot_name" value="$(arg prefix)_$(arg hand_type)" />
     </include>
   </group>   
-
-  <node pkg="robot_state_publisher" type="robot_state_publisher"
-        name="robot_state_publisher_full_pos">
-    <param name="publish_frequency" type="double" value="20.0" />
-  </node>
+  
 
 </launch>
