@@ -18,7 +18,7 @@
   
   <!-- set robot description for combined table + robot arm and end-effector  -->
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/bimanual.urdf.xacro' 
-              CALIB:=$(arg FRAME) FRAME:=$(arg FRAME) ARM_R:=$(arg ARM_R) ARM_L:=$(arg ARM_L) 
+              FRAME:=$(arg FRAME) ARM_R:=$(arg ARM_R) ARM_L:=$(arg ARM_L) 
               FLOBI:=$(arg FLOBI) TOOL_R:=$(arg TOOL_R) TOOL_L:=$(arg TOOL_L) SIM:=true " />
                                              
   <!-- publish joint values, open gui if use_gui=True -->

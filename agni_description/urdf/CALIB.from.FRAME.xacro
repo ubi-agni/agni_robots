@@ -1,0 +1,9 @@
+<helper xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="FRAME" value="$(arg FRAME)"/>
+	<xacro:if value="${FRAME in ['', '-']}">
+		<xacro:arg name="CALIB" default="default"/>
+	</xacro:if>
+	<xacro:unless value="${FRAME in ['', '-']}">
+		<xacro:arg name="CALIB" default="$(arg FRAME)"/>
+	</xacro:unless>
+</helper>

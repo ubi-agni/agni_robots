@@ -2,22 +2,21 @@
 <robot name="single" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
 
-	<xacro:arg name="PREFIX" default="-"/>
-	<xacro:arg name="SIM" default="1"/>
-	<xacro:arg name="CALIB" default="default"/>
-
 	<xacro:arg name="FRAME" default="-"/>
 	<xacro:arg name="ARM" default="-"/>
 	<xacro:arg name="TOOL" default="-"/>
 	<xacro:arg name="PARENT" default="world"/>
 
+	<xacro:arg name="PREFIX" default="-"/>
+	<xacro:arg name="SIM" default="1"/>
+	<xacro:include filename="../urdf/CALIB.from.FRAME.xacro"/>
+
 	<xacro:property name="parent" value="$(arg PARENT)"/>
-	<xacro:if value="${parent != '-'}">
+	<xacro:if value="${parent not in ['', '-' ]}">
 		<link name="${parent}"/>
 	</xacro:if>
-
+	
 	<!-- FRAME -->
-	<xacro:property name="FRAME" value="$(arg FRAME)"/>
 	<xacro:if value="${FRAME not in ['', '-']}">
 		<xacro:if value="${FRAME == 'famula'}">
 			<xacro:include filename="../urdf/frame-half.urdf.xacro"/>
@@ -35,5 +34,5 @@
 	<!-- SINGLE ARM with TOOL -->
 	<xacro:property name="PREFIX" value="$(arg PREFIX)"/>
 	<xacro:arm_with_tool parent="${parent}" arm_type="$(arg ARM)" tool_type="$(arg TOOL)"
-	                     prefix="${PREFIX if PREFIX != '-' else ''}"/>
+	                     prefix="${PREFIX if PREFIX not in ['', '-'] else ''}"/>
 </robot>
