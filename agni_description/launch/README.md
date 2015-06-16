@@ -1,5 +1,9 @@
 # Launch files
 
+## constraints
+* To allow merging of joint states, e.g. from left and right hands, 
+  we need to have name prefixes 'lh_' and 'rh_' for joints and links in the robot_description.
+
 ## structural design choices
 
 We follow the standard naming convention for launch files:
