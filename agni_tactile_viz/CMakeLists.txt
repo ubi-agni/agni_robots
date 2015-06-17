@@ -17,7 +17,7 @@ catkin_package(
 #############################
 add_executable(agni_tactile_viz src/tactile_viz.cpp)
 add_dependencies(agni_tactile_viz ${catkin_EXPORTED_TARGETS})
-target_link_libraries(agni_tactile_viz agni_tactile_processing ${Boost_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(agni_tactile_viz ${Boost_LIBRARIES} ${catkin_LIBRARIES})
 
 
 install(TARGETS agni_tactile_viz 
