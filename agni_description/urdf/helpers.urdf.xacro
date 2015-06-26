@@ -69,6 +69,10 @@
       <!-- use tool mount from arm -->
       <xacro:property name="tool_parent" value="${arm_prefix_}tool_mount"/>
     </xacro:if>
+    <xacro:unless value="${arm_type not in ['','-']}">
+      <!-- use parent as tool mount -->
+      <xacro:property name="tool_parent" value="${parent}"/>
+    </xacro:unless>
 
     <xacro:if value="${tool_type not in ['','-']}">
       <!-- load tool calibration and instantiate tool -->
