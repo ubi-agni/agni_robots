@@ -31,7 +31,13 @@
 	<group ns="$(arg namespace)h">
 		<arg name="suffix" value="_fixed" if="$(arg fixed)"/>
 		<arg name="suffix" value="" unless="$(arg fixed)"/>
+		<!-- tactile_marker_publisher -->
 		<node pkg="tactile_marker_publisher" type="tactile_marker_publisher" name="tactile_viz$(arg suffix)" output="screen">
+			<param name="tf_prefix" value="$(arg ns)/"/>
+		</node>
+
+		<!-- tactile_merger -->
+		<node pkg="tactile_marker_publisher" type="tactile_merger" name="tactile_merger$(arg suffix)" output="screen">
 			<param name="tf_prefix" value="$(arg ns)/"/>
 		</node>
 
