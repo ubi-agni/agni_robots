@@ -213,20 +213,6 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Class: rviz/TF
-      Enabled: false
-      Frame Timeout: 15
-      Frames:
-        All Enabled: false
-      Marker Scale: 0.3
-      Name: TF
-      Show Arrows: true
-      Show Axes: true
-      Show Names: true
-      Tree:
-        {}
-      Update Interval: 0
-      Value: false
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
@@ -388,25 +374,229 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        base:
+          Value: true
+        lh/lh_ffdistal:
+          Value: true
+        lh/lh_ffknuckle:
+          Value: true
+        lh/lh_ffmiddle:
+          Value: true
+        lh/lh_ffproximal:
+          Value: true
+        lh/lh_fftip:
+          Value: true
+        lh/lh_forearm:
+          Value: true
+        lh/lh_lfdistal:
+          Value: true
+        lh/lh_lfknuckle:
+          Value: true
+        lh/lh_lfmetacarpal:
+          Value: true
+        lh/lh_lfmiddle:
+          Value: true
+        lh/lh_lfproximal:
+          Value: true
+        lh/lh_lftip:
+          Value: true
+        lh/lh_mfdistal:
+          Value: true
+        lh/lh_mfknuckle:
+          Value: true
+        lh/lh_mfmiddle:
+          Value: true
+        lh/lh_mfproximal:
+          Value: true
+        lh/lh_mftip:
+          Value: true
+        lh/lh_palm:
+          Value: true
+        lh/lh_rfdistal:
+          Value: true
+        lh/lh_rfknuckle:
+          Value: true
+        lh/lh_rfmiddle:
+          Value: true
+        lh/lh_rfproximal:
+          Value: true
+        lh/lh_rftip:
+          Value: true
+        lh/lh_thbase:
+          Value: true
+        lh/lh_thdistal:
+          Value: true
+        lh/lh_thhub:
+          Value: true
+        lh/lh_thmiddle:
+          Value: true
+        lh/lh_thproximal:
+          Value: true
+        lh/lh_thtip:
+          Value: true
+        lh/lh_wrist:
+          Value: true
+        rh/rh_ffdistal:
+          Value: true
+        rh/rh_ffknuckle:
+          Value: true
+        rh/rh_ffmiddle:
+          Value: true
+        rh/rh_ffproximal:
+          Value: true
+        rh/rh_fftip:
+          Value: true
+        rh/rh_forearm:
+          Value: true
+        rh/rh_lfdistal:
+          Value: true
+        rh/rh_lfknuckle:
+          Value: true
+        rh/rh_lfmetacarpal:
+          Value: true
+        rh/rh_lfmiddle:
+          Value: true
+        rh/rh_lfproximal:
+          Value: true
+        rh/rh_lftip:
+          Value: true
+        rh/rh_mfdistal:
+          Value: true
+        rh/rh_mfknuckle:
+          Value: true
+        rh/rh_mfmiddle:
+          Value: true
+        rh/rh_mfproximal:
+          Value: true
+        rh/rh_mftip:
+          Value: true
+        rh/rh_palm:
+          Value: true
+        rh/rh_rfdistal:
+          Value: true
+        rh/rh_rfknuckle:
+          Value: true
+        rh/rh_rfmiddle:
+          Value: true
+        rh/rh_rfproximal:
+          Value: true
+        rh/rh_rftip:
+          Value: true
+        rh/rh_thbase:
+          Value: true
+        rh/rh_thdistal:
+          Value: true
+        rh/rh_thhub:
+          Value: true
+        rh/rh_thmiddle:
+          Value: true
+        rh/rh_thproximal:
+          Value: true
+        rh/rh_thtip:
+          Value: true
+        rh/rh_wrist:
+          Value: true
+      Marker Scale: 0.15
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        base:
+          lh/lh_forearm:
+            lh/lh_wrist:
+              lh/lh_palm:
+                lh/lh_ffknuckle:
+                  lh/lh_ffproximal:
+                    lh/lh_ffmiddle:
+                      lh/lh_ffdistal:
+                        lh/lh_fftip:
+                          {}
+                lh/lh_lfmetacarpal:
+                  lh/lh_lfknuckle:
+                    lh/lh_lfproximal:
+                      lh/lh_lfmiddle:
+                        lh/lh_lfdistal:
+                          lh/lh_lftip:
+                            {}
+                lh/lh_mfknuckle:
+                  lh/lh_mfproximal:
+                    lh/lh_mfmiddle:
+                      lh/lh_mfdistal:
+                        lh/lh_mftip:
+                          {}
+                lh/lh_rfknuckle:
+                  lh/lh_rfproximal:
+                    lh/lh_rfmiddle:
+                      lh/lh_rfdistal:
+                        lh/lh_rftip:
+                          {}
+                lh/lh_thbase:
+                  lh/lh_thproximal:
+                    lh/lh_thhub:
+                      lh/lh_thmiddle:
+                        lh/lh_thdistal:
+                          lh/lh_thtip:
+                            {}
+          rh/rh_forearm:
+            rh/rh_wrist:
+              rh/rh_palm:
+                rh/rh_ffknuckle:
+                  rh/rh_ffproximal:
+                    rh/rh_ffmiddle:
+                      rh/rh_ffdistal:
+                        rh/rh_fftip:
+                          {}
+                rh/rh_lfmetacarpal:
+                  rh/rh_lfknuckle:
+                    rh/rh_lfproximal:
+                      rh/rh_lfmiddle:
+                        rh/rh_lfdistal:
+                          rh/rh_lftip:
+                            {}
+                rh/rh_mfknuckle:
+                  rh/rh_mfproximal:
+                    rh/rh_mfmiddle:
+                      rh/rh_mfdistal:
+                        rh/rh_mftip:
+                          {}
+                rh/rh_rfknuckle:
+                  rh/rh_rfproximal:
+                    rh/rh_rfmiddle:
+                      rh/rh_rfdistal:
+                        rh/rh_rftip:
+                          {}
+                rh/rh_thbase:
+                  rh/rh_thproximal:
+                    rh/rh_thhub:
+                      rh/rh_thmiddle:
+                        rh/rh_thdistal:
+                          rh/rh_thtip:
+                            {}
+      Update Interval: 0
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /rh/tactile_markers
       Name: TactileRH
       Namespaces:
-        rh_ff_ubi_middle: true
-        rh_ff_ubi_proximal: true
-        rh_ff_ubi_tip: true
-        rh_lf_ubi_middle: true
-        rh_lf_ubi_proximal: true
-        rh_lf_ubi_tip: true
-        rh_metacarpal: true
-        rh_mf_ubi_middle: true
-        rh_mf_ubi_proximal: true
-        rh_mf_ubi_tip: true
-        rh_palm: true
-        rh_rf_ubi_middle: true
-        rh_rf_ubi_proximal: true
-        rh_rf_ubi_tip: true
+        force: true
+        meshes/rh_ff: true
+        meshes/rh_lf: true
+        meshes/rh_mf: true
+        meshes/rh_palm: true
+        meshes/rh_rf: true
+        meshes/rh_th: true
+        normals/rh_ff: true
+        normals/rh_lf: true
+        normals/rh_mf: true
+        normals/rh_rf: true
+        normals/rh_th: true
       Queue Size: 5
       Value: true
     - Class: rviz/MarkerArray
@@ -414,20 +604,18 @@ Visualization Manager:
       Marker Topic: /lh/tactile_markers
       Name: TactileLH
       Namespaces:
-        lh_ff_ubi_middle: true
-        lh_ff_ubi_proximal: true
-        lh_ff_ubi_tip: true
-        lh_lf_ubi_middle: true
-        lh_lf_ubi_proximal: true
-        lh_lf_ubi_tip: true
-        lh_metacarpal: true
-        lh_mf_ubi_middle: true
-        lh_mf_ubi_proximal: true
-        lh_mf_ubi_tip: true
-        lh_palm: true
-        lh_rf_ubi_middle: true
-        lh_rf_ubi_proximal: true
-        lh_rf_ubi_tip: true
+        force: true
+        meshes/lh_ff: true
+        meshes/lh_lf: true
+        meshes/lh_mf: true
+        meshes/lh_palm: false
+        meshes/lh_rf: true
+        meshes/lh_th: true
+        normals/lh_ff: true
+        normals/lh_lf: true
+        normals/lh_mf: true
+        normals/lh_rf: true
+        normals/lh_th: true
       Queue Size: 5
       Value: true
   Enabled: true
@@ -454,22 +642,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.655843
+      Distance: 0.752092
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.00231407
-        Y: -0.00659234
-        Z: 0.230186
+        X: -0.00773397
+        Y: 0.0377914
+        Z: 0.247459
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.125203
+      Pitch: 0.145203
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.76306
+      Yaw: 4.70809
     Saved: ~
 Window Geometry:
   Displays:
