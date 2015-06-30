@@ -6,11 +6,11 @@
 
     <!-- include urdf file and call macro to generate arm -->
     <xacro:include filename="${settings['arms'][type]['file']}"/>
-    <xacro:call macro="${settings['arms'][type]['macro']}" 
+    <xacro:call macro="${settings['arms'][type]['macro']}"
                 prefix="${prefix}" controller="${controller}"/>
 
     <!-- attach arm to parent link -->
-    <xacro:if value="${parent != '-'}">
+    <xacro:if value="${parent not in ['','-']}">
       <joint name="${prefix_}arm_mount" type="fixed">
         <parent link="${parent}"/>
         <child link="${prefix_}arm_base_link"/>
@@ -26,11 +26,11 @@
 
     <!-- include urdf file and call macro to generate tool -->
     <xacro:include filename="${settings['tools'][type]['file']}"/>
-    <xacro:call macro="${settings['tools'][type]['macro']}" 
+    <xacro:call macro="${settings['tools'][type]['macro']}"
                 prefix="${prefix}" />
 
     <!-- attach tool to parent link -->
-    <xacro:if value="${parent != '-'}">
+    <xacro:if value="${parent not in ['','-']}">
       <joint name="${prefix_}tool_mount" type="fixed">
         <parent link="${parent}"/>
         <child link="${prefix_}${settings['tools'][type]['mount']}"/>
