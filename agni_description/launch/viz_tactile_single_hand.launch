@@ -11,6 +11,7 @@
 		<!-- publish joint values, open gui if use_gui=True -->
 		<node name="joint_publisher"
 		      pkg="joint_state_publisher" type="joint_state_publisher">
+			<param name="publish_frequency" type="double" value="2.0"/>
 			<param name="use_gui" value="False"/>
 			<!-- use robot description from non-fixed namespace -->
 			<remap from="/$(arg ns)/robot_description" to="/$(arg namespace)h/robot_description"/>
@@ -19,7 +20,7 @@
 		<!-- publish transforms of all robot links -->
 		<node name="state_publisher"
 		      pkg="robot_state_publisher" type="state_publisher">
-			<param name="publish_frequency" type="double" value="10.0"/>
+			<param name="publish_frequency" type="double" value="2.0"/>
 			<param name="tf_prefix" value="$(arg ns)"/>
 			<!-- use robot description from non-fixed namespace -->
 			<remap from="/$(arg ns)/robot_description" to="/$(arg namespace)h/robot_description"/>
