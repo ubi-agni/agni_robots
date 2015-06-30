@@ -17,7 +17,9 @@
                       prefix="${'' if prefix=='' else prefix+'_'}"  />
 
     <!-- add tactile markers -->
-    <xacro:shadowhand_tactile prefix="${'' if prefix=='' else prefix+'_'}" meshes="1" normals="1"/>
+    <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"
+                              prefix="${'' if prefix=='' else prefix+'_'}"
+                              meshes="1" normals="1"/>
 
     <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
   </xacro:macro>
