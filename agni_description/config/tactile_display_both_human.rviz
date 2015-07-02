@@ -10,6 +10,8 @@ Panels:
         - /RobotModelLH1
         - /TactileRH1
         - /TactileLH1
+        - /RobotModel1
+        - /MarkerArray1
       Splitter Ratio: 0.446809
     Tree Height: 823
   - Class: rviz/Selection
@@ -427,6 +429,143 @@ Visualization Manager:
         normals/lh_rf: true
         normals/lh_th: true
       Queue Size: 5
+      Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        human_hand_right_index_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_index_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_index_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_index_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_invisible_wire_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_little_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_little_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_little_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_little_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_middle_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_middle_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_middle_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_middle_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_palm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_ring_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_ring_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_ring_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_ring_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_thumb_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_thumb_fake_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_thumb_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_thumb_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+      Name: RobotModel
+      Robot Description: /human_hand/robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /human_hand/tactile_markers
+      Name: MarkerArray
+      Namespaces:
+        index: true
+        little: true
+        middle: true
+        palm: true
+        ring: true
+        thumb: true
+      Queue Size: 1
       Value: true
   Enabled: true
   Global Options:
