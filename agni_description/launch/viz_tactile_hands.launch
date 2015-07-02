@@ -9,7 +9,7 @@
 		<include file="$(find agni_description)/launch/viz_tactile_single_hand.launch" >
 			<arg name="namespace" value="r"/>
 			<arg name="fixed" value="$(arg fixed)"/>
-			<arg name="pos" value="0.2 0 0 0 0 0"/>
+			<arg name="pos" value="-0.2 0 0 0 0 0"/>
 		</include>
 	</group>
 
@@ -17,7 +17,7 @@
 		<include file="$(find agni_description)/launch/viz_tactile_single_hand.launch" >
 			<arg name="namespace" value="l"/>
 			<arg name="fixed" value="$(arg fixed)"/>
-			<arg name="pos" value="-0.2 0 0 0 0 0"/>
+			<arg name="pos" value="+0.2 0 0 0 0 0"/>
 		</include>
 	</group>
 </launch>
