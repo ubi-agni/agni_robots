@@ -21,8 +21,8 @@
 	                     arm_type="kukaL" tool_type="shadow_motor_left"/>
 
 	<!-- flobi -->
-	<xacro:include filename="$(find flobi_sim)/defs/xacro/flobiv3.urdf.xacro" />
-	<xacro:flobi parent="frame" prefix="" neutral="1" gender="0">
+	<xacro:include filename="$(find flobi_description)/xacro/flobiv3.urdf.xacro" />
+	<xacro:flobi parent="frame" prefix="flobi_" neutral="1" gender="0">
 		<origin xyz="${cal_flobi_pos['X']} ${cal_flobi_pos['Y']} ${cal_flobi_pos['Z']}"
 		        rpy="0 0 ${-pi/2.0}"/>
 	</xacro:flobi>
