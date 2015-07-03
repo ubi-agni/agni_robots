@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
   <xacro:macro name="poking_stick" params="prefix:=''">
+
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
     <!-- poking stick -->
 
@@ -8,12 +10,14 @@
     <xacro:poking_stick_generic prefix="${prefix_}" tactile="${props['tactile']}"/>
 
     <xacro:if value="${props['tactile'] in ['bio', 'ubi', 'eli']}">
-      <xacro:include filename="$(find sr_description)/hand/xacro/finger/distal/distal.tactile.xacro" />
+      <xacro:include filename="$(find sr_description)/hand/xacro/tactile.${props['tactile']}.xacro" />
       <!-- tactile marker mapping description -->
-      <xacro:distal_tactile bio="${props['tactile'] == 'bio'}"
-                            ubi="${props['tactile'] == 'ubi'}"
-                            eli="${props['tactile'] == 'eli'}"
-                            prefix="${prefix_}" link_prefix="ff" finger_number="0"/>
+
+      <xacro:property name="ns" value="${prefix_}"/>
+      <xacro:property name="xs" value="1023 0"/>
+      <xacro:property name="taxel_dir" value="$(find sr_description)/hand/xacro/finger"/>
+      <xacro:distal_tactile finger="ff" taxel_data="${load_yaml(taxel_dir + '/distal/distal.taxels.ubi.yaml')}"/>
+
     </xacro:if>
   </xacro:macro>
 </robot>
