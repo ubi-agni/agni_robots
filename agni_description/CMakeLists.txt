@@ -57,10 +57,6 @@ list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_install(xacro ${xacro_outputs} DESTINATION robots)
 
 
-#catkin_add_gtest(test_sr_description_urdf test/test_sr_description_urdf.cpp)
-#add_dependencies(test_sr_description_urdf ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(test_sr_description_urdf ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${GTEST_LIBRARIES} pthread)
-
 install(DIRECTORY doc/
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/doc)
 
@@ -81,31 +77,17 @@ install(DIRECTORY config/
 
 install(DIRECTORY calibration/
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/calibration)
-   
+
 install(DIRECTORY robots/
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/robots)
 
 install(DIRECTORY launch/
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch)
-   
 
-#file(GLOB def_files ${CMAKE_CURRENT_SOURCE_DIR}/urdf/*.xacro
-#                    ${CMAKE_CURRENT_SOURCE_DIR}/robots/*groups*.xacro)
-
-#file(GLOB xacros ${CMAKE_CURRENT_SOURCE_DIR}/robots/*.urdf.xacro)
-
-#rosbuild_find_ros_package(xacro)
-
-#set(outfiles "")
-
-#foreach( _xacro ${xacros} )
-#  string(REPLACE ".urdf." ".expanded." _outfile ${_xacro})
-#  add_custom_command(
-#    OUTPUT ${_outfile}
-#    COMMAND ${xacro_PACKAGE_PATH}/xacro.py
-#    ARGS ${_xacro} > ${_outfile}
-#    DEPENDS ${_xacro} ${def_files})
-#  list(APPEND outfiles ${_outfile})
-#endforeach( _xacro)
-
-#add_custom_target( expanded_defs ALL DEPENDS ${outfiles} )
+# testing
+enable_testing()
+foreach(tool shadow_motor_left shadow_motor_right shadow_muscle_left shadow_muscle_right myrmex poking_stick_ubi poking_stick_rigid)
+  add_test(
+    NAME tool-${tool}
+    COMMAND ${_xacro_py} --inorder ${CMAKE_CURRENT_SOURCE_DIR}/robots/single.urdf.xacro TOOL:=${tool})
+endforeach()
