@@ -13,6 +13,10 @@
       <include file="$(find agni_description)/launch/hand_controllers.launch">
         <arg name="namespace" value="$(arg namespace)" />
       </include>
+      <!-- trajectory controllers -->
+      <include file="$(find agni_description)/launch/hand_trajectory_controllers.launch">
+        <arg name="namespace" value="$(arg namespace)" />
+      </include>      
     </group>  
   </group>  
   

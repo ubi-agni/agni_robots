@@ -1,0 +1,21 @@
+la_kuka_trajectory_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - la_arm_0_joint
+    - la_arm_1_joint
+    - la_arm_2_joint
+    - la_arm_3_joint
+    - la_arm_4_joint
+    - la_arm_5_joint
+    - la_arm_6_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      la_arm_0_joint: {trajectory: 0.3, goal: 0.1}
+      la_arm_1_joint: {trajectory: 0.3, goal: 0.1}
+      la_arm_2_joint: {trajectory: 0.3, goal: 0.1}
+      la_arm_3_joint: {trajectory: 0.3, goal: 0.1}
+      la_arm_4_joint: {trajectory: 0.3, goal: 0.1}
+      la_arm_5_joint: {trajectory: 0.3, goal: 0.1}
+      la_arm_6_joint: {trajectory: 0.3, goal: 0.1}
+  stop_trajectory_duration: 0.5
