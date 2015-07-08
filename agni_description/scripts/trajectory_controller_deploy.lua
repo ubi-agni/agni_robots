@@ -11,79 +11,85 @@ elseif tcName=="Deployer" then
 end
 
 -- ROS integration
+d:import("rtt_actionlib")
+d:import("rtt_actionlib_msgs")
 d:import("rtt_rosnode")
 d:import("rtt_roscomm")
 d:import("rtt_std_msgs")
 d:import("rtt_sensor_msgs")
 d:import("rtt_diagnostic_msgs")
 d:import("rtt_control_msgs")
+d:import("rtt_trajectory_msgs")
+
 --d:import("rtt_dot_service")
 --d:loadService("Deployer","dot")
 
 -- Start of user code imports
-d:import("s_motion_manager")
-d:import("joint_spline_trajectory_generator")
-d:import("oro_joint_trajectory_action")
+d:import("internal_space_spline_trajectory_generator")
+d:import("internal_space_spline_trajectory_action")
 
-d:loadComponent("MotionManager", "SMotionManager")
-d:setActivity("MotionManager", 0.001, 60, rtt.globals.ORO_SCHED_RT)
-MotionManager = d:getPeer("MotionManager")
-MotionManager:configure()
 
-d:loadComponent("JntTrajGen","JointSplineTrajectoryGenerator")
+d:loadComponent("JntTrajGen","InternalSpaceSplineTrajectoryGenerator")
 d:setActivity("JntTrajGen", 0.001, 5, rtt.globals.ORO_SCHED_RT)
 JntTrajGen = d:getPeer("JntTrajGen")
 number_of_joints=JntTrajGen:getProperty("number_of_joints")
 number_of_joints:set(7)
 JntTrajGen:configure()
 
-d:loadComponent("JntTrajGen","JointSplineTrajectoryGenerator")
-d:setActivity("JntTrajGen", 0.001, 5, rtt.globals.ORO_SCHED_RT)
-JntTrajGen = d:getPeer("JntTrajGen")
-number_of_joints=JntTrajGen:getProperty("number_of_joints")
-number_of_joints:set(7)
-JntTrajGen:configure()
 
-d:loadComponent("JntTrajAction", "JointTrajectoryAction")
+d:loadComponent("JntTrajAction", "InternalSpaceSplineTrajectoryAction")
 d:setActivity("JntTrajAction", 0.1, 2, rtt.globals.ORO_SCHED_RT)
 JntTrajAct = d:getPeer("JntTrajAction")
 nbr_of_joints=JntTrajAct:getProperty("number_of_joints")
 nbr_of_joints:set(7)
-for i=0,6,1 do 
-		jntnameprop=rtt.Property("string", "joint"..i.."_name", "")
-		jntnameprop:set("right_arm_"..i.."_joint")
-		JntTrajAct:addProperty(jntnameprop)
-end
-JntTrajAct:configure()
+joint_names=JntTrajAct:getProperty("joint_names")
+lower_limits=JntTrajAct:getProperty("lower_limits")
+upper_limits=JntTrajAct:getProperty("upper_limits")
+joint_names:get():resize(7)
+lower_limits:get():resize(7)
+upper_limits:get():resize(7)
 
+lowlims = {-2.96 , -2.09, -2.96, -2.09, -2.96, -2.09, -2.96}
+uplims = {2.96 , 2.09, 2.96, 2.09, 2.96, 2.09, 2.96}
+
+namespace="ra"
+for i=0,6,1 do 
+  joint_names[i]=namespace.."_arm_"..i.."_joint"
+  lower_limits[i] = lowlims[i+1]
+  upper_limits[i] = uplims[i+1]
+end 
+
+--JntTrajAct.loadService("rosparam")
+--JntTrajAct.rosparam.getAll()
+--JntTrajAct.rosparam.getParam("~/JntTrajAction/upper_limits", "upper_limits")
+--JntTrajAct.rosparam.getParam("~/JntTrajAction/lower_limits", "lower_limits")
+-- yaml file
+--JntTrajGen:
+--  number_of_joints: 7
+--JntTrajAction:
+--  joint_names: [joint1, joint2, joint3, joint4, joint5, joint6, joint7]
+--  lower_limits: [-2.96 , -2.09, -2.96, -2.09, -2.96, -2.09, -2.96]
+--  upper_limits: [2.96 , 2.09, 2.96, 2.09, 2.96, 2.09, 2.96]
+       
+      
+JntTrajAct:loadService("actionlib")
+JntTrajAct:provides("actionlib"):connect("/ra_arm_trajectory_action")      
+        
+JntTrajAct:configure()
 
 d:addPeer("JntTrajAction","JntTrajGen")
 
-d:connect("JntTrajGen.JointPositionCommand", "FRI.JointPositionCommand", rtt.Variable("ConnPolicy"))
-d:connect("FRI.JointPosition","JntTrajGen.DesiredJointPosition", rtt.Variable("ConnPolicy"))
-d:connect("JntTrajAction.trajectory_point", "JntTrajGen.trajectory_point", rtt.Variable("ConnPolicy"))
-d:connect("JntTrajGen.buffer_ready", "JntTrajAction.buffer_ready", rtt.Variable("ConnPolicy"))
-d:connect("JntTrajGen.trajectory_compleat", "JntTrajAction.trajectory_compleat", rtt.Variable("ConnPolicy"))
-
-
-
-
+d:connect("JntTrajAction.trajectoryPtr", "JntTrajGen.trajectoryPtr", rtt.Variable("ConnPolicy"))
 
 -- ROS in out
-ros=rtt.provides("ros")
-d:stream("JntTrajAction.command",rtt.provides("ros"):topic("joint_trajectory_action/command"))
-d:stream("JntTrajAction.goal",rtt.provides("ros"):topic("joint_trajectory_action/goal"))
-d:stream("JntTrajAction.cancel",rtt.provides("ros"):topic("joint_trajectory_action/cancel"))
-d:stream("JntTrajAction.feedback",rtt.provides("ros"):topic("joint_trajectory_action/feedback"))
-d:stream("JntTrajAction.result",rtt.provides("ros"):topic("joint_trajectory_action/result"))
-d:stream("JntTrajAction.status",rtt.provides("ros"):topic("joint_trajectory_action/status"))
-
-
+--ros=rtt.provides("ros")
+--d:stream("JntTrajAction.command",rtt.provides("ros"):topic("joint_trajectory_action/command"))
+--d:stream("JntTrajAction.goal",rtt.provides("ros"):topic("joint_trajectory_action/goal"))
+--d:stream("JntTrajAction.cancel",rtt.provides("ros"):topic("joint_trajectory_action/cancel"))
+--d:stream("JntTrajAction.feedback",rtt.provides("ros"):topic("joint_trajectory_action/feedback"))
+--d:stream("JntTrajAction.result",rtt.provides("ros"):topic("joint_trajectory_action/result"))
+--d:stream("JntTrajAction.status",rtt.provides("ros"):topic("joint_trajectory_action/status"))
 
 JntTrajAct:start()
 
-LogLA:start()
-LogRA:start()
-MotionManager:start()
-Grasp:start()
-print("finished starting manager")
+print("finished starting trajectory controller")
