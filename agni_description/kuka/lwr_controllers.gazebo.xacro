@@ -2,7 +2,8 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<!-- namespace must be set up according to launch file namespace -->
 	<!-- port is the port number for the FRI UDP connection (be aware that port+1 is also used) --> 
-	<xacro:macro name="lwr_arm_gazebo_controller" params="namespace port"> 
+	<xacro:macro name="lwr_arm_gazebo_controller" params="namespace port gravity_dir:=^|-
+		                                                    payload_mass:=^|- payload_cog:=^|-"> 
 		<xacro:property name="prefix"  value="${namespace + '_' if namespace else ''}" />
 		<gazebo> 
 			<plugin name="${prefix}lwr_arm_controller" filename="liblwr_controller.so">
@@ -12,6 +13,15 @@
 				<remotePort>${port}</remotePort>
 				<baseLink>${prefix}arm_base_link</baseLink>
 				<toolLink>${prefix}tool_mount</toolLink>
+				<xacro:if value="${gravity_dir not in ['','-']}" >
+					<gravityDirection>${gravity_dir}</gravityDirection>
+				</xacro:if>
+				<xacro:if value="${payload_mass not in ['','-']}" >
+					<payloadMass>${payload_mass}</payloadMass>
+				</xacro:if>
+				<xacro:if value="${payload_cog not in ['','-']}" >
+					<payloadCOG>${payload_cog}</payloadCOG>
+				</xacro:if>
 				<xacro:element xacro:name="${prefix}arm_0_joint">0</xacro:element>
 				<xacro:element xacro:name="${prefix}arm_1_joint">0</xacro:element>
 				<xacro:element xacro:name="${prefix}arm_2_joint">0</xacro:element>

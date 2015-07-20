@@ -55,6 +55,12 @@
     <!-- append _ to prefix -->
     <xacro:property name="arm_prefix_" value="${arm_prefix + '_' if arm_prefix else ''}"/>
     <xacro:property name="tool_prefix_" value="${tool_prefix + '_' if tool_prefix else ''}"/>
+    
+    <!-- add payload mass if relevant -->
+    <xacro:if value="${tool_type not in ['','-']}">
+      <xacro:property name="payload_mass" value="${settings['tools'][tool_type]['props']['mass']}"/> 
+      <xacro:property name="payload_cog" value="${settings['tools'][tool_type]['props']['cog']}"/> 
+    </xacro:if>
 
     <xacro:property name="tool_parent" value="${parent}"/>
 

@@ -6,13 +6,13 @@
 
   <xacro:include filename="../urdf/util.urdf.xacro"/>
   
-  <xacro:property name="arm_elem_base_mass" value="2.0"/>
+  <xacro:property name="arm_elem_base_mass" value="1.2"/>
   <xacro:property name="arm_elem_link_mass" value="2.0"/>
   <xacro:property name="arm_elem_ball_link_mass" value="1.0"/>
   <xacro:property name="arm_elem_end_link_mass" value="0.2"/>
   <xacro:property name="safety_controller_k_pos" value="100" />
   <xacro:property name="safety_controller_k_vel" value="2" />
-  <xacro:property name="joint_damping" value="1.0" />
+  <xacro:property name="joint_damping_factor" value="1.0" />
 
   <xacro:property name="arm_velocity_scale_factor" value="1"/>
 
@@ -55,7 +55,7 @@
                          soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*5.0}"/>
       <parent link="${name}arm_base_link"/>
       <child link="${name}arm_1_link"/>
     </joint>
@@ -108,7 +108,7 @@
                          soft_upper_limit="${118 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*5.0}"/>
       <parent link="${name}arm_1_link"/>
       <child link="${name}arm_2_link"/>
     </joint>
@@ -162,7 +162,7 @@
                          soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*3.0}"/>
       <parent link="${name}arm_2_link"/>
       <child link="${name}arm_3_link"/>
     </joint>
@@ -216,7 +216,7 @@
                          soft_upper_limit="${118 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*3.0}"/>
       <parent link="${name}arm_3_link"/>
       <child link="${name}arm_4_link"/>
     </joint>
@@ -270,7 +270,7 @@
                          soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*1.0}"/>
       <parent link="${name}arm_4_link"/>
       <child link="${name}arm_5_link"/>
     </joint>
@@ -324,7 +324,7 @@
                          soft_upper_limit="${118 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*1.0}"/>
       <parent link="${name}arm_5_link"/>
       <child link="${name}arm_6_link"/>
     </joint>
@@ -378,7 +378,7 @@
                          soft_upper_limit="${168 * pi / 180}"
                          k_position="${safety_controller_k_pos}"
                          k_velocity="${safety_controller_k_vel}"/>
-      <dynamics damping="${joint_damping}"/>
+      <dynamics damping="${joint_damping_factor*1.0}"/>
       <parent link="${name}arm_6_link"/>
       <child link="${name}arm_7_link"/>
     </joint>
