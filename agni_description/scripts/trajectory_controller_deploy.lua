@@ -59,6 +59,7 @@ for i=0,6,1 do
   upper_limits[i] = uplims[i+1]
 end 
 
+-- TODO move that into a yaml and load it via the launch files that also spawns the lua
 --JntTrajAct.loadService("rosparam")
 --JntTrajAct.rosparam.getAll()
 --JntTrajAct.rosparam.getParam("~/JntTrajAction/upper_limits", "upper_limits")
@@ -70,25 +71,15 @@ end
 --  joint_names: [joint1, joint2, joint3, joint4, joint5, joint6, joint7]
 --  lower_limits: [-2.96 , -2.09, -2.96, -2.09, -2.96, -2.09, -2.96]
 --  upper_limits: [2.96 , 2.09, 2.96, 2.09, 2.96, 2.09, 2.96]
-       
-      
+
 JntTrajAct:loadService("actionlib")
 JntTrajAct:provides("actionlib"):connect("/ra_arm_trajectory_action")      
-        
+
 JntTrajAct:configure()
 
 d:addPeer("JntTrajAction","JntTrajGen")
 
 d:connect("JntTrajAction.trajectoryPtr", "JntTrajGen.trajectoryPtr", rtt.Variable("ConnPolicy"))
-
--- ROS in out
---ros=rtt.provides("ros")
---d:stream("JntTrajAction.command",rtt.provides("ros"):topic("joint_trajectory_action/command"))
---d:stream("JntTrajAction.goal",rtt.provides("ros"):topic("joint_trajectory_action/goal"))
---d:stream("JntTrajAction.cancel",rtt.provides("ros"):topic("joint_trajectory_action/cancel"))
---d:stream("JntTrajAction.feedback",rtt.provides("ros"):topic("joint_trajectory_action/feedback"))
---d:stream("JntTrajAction.result",rtt.provides("ros"):topic("joint_trajectory_action/result"))
---d:stream("JntTrajAction.status",rtt.provides("ros"):topic("joint_trajectory_action/status"))
 
 JntTrajAct:start()
 
