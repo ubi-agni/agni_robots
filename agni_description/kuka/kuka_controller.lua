@@ -13,6 +13,9 @@ iface_spec = {
       { name='port', datatype='int', desc="port on which FRI listens" },
       { name='in_portmap', datatype='agni_rtt_services/ControlIOMap', desc="input port mapping" },
       { name='out_portmap', datatype='agni_rtt_services/ControlIOMap', desc="output port mapping" },
+      { name='resources', datatype='strings', desc="joints controlled by this controller" },
+      { name='controller_name', datatype='string', desc="controller name" },
+      { name='controller_type', datatype='string', desc="controller type ex: position_controllers/JointTrajectoryController" },
    }
 }
  
@@ -23,17 +26,22 @@ function configureHook()
   
   local d=tc:getPeer("Deployer")
   tcName=tc:getName()
-  
+
   d:import("lwr_fri")
   d:import("oro_joint_state_publisher")
   d:import("flwr_filter")
   d:import("agni_rtt_services")
   d:import("rtt_sensor_msgs")
   d:import("rtt_diagnostic_msgs")
-  
-  
+
   iface=rttlib.create_if(iface_spec)
   namespace = iface.props.namespace:get()
+  
+  controller_type = tc:getProperty("controller_type")
+  -- only position is advertized here as the filter is sending positions
+  controller_type:set("position_controllers/JointPositionController")
+  resources = tc:getProperty("resources")
+  
   port = iface.props.port:get()
   local in_portmap={}
   local out_portmap={}
@@ -66,10 +74,15 @@ function configureHook()
   d:loadComponent(jspname, "JointStatePublisher")
   d:setActivity(jspname, 0.01, 10, rtt.globals.ORO_SCHED_RT)
   jsp = d:getPeer(jspname)
-  joint_names=jsp:getProperty("joint_names")
+  joint_names = jsp:getProperty("joint_names")
   joint_names:get():resize(7)
+  
+  -- set the resource to match the controlled joints
+  resources:get():resize(7)
+  
   for i=0,6,1 do 
-    joint_names[i]=namespace.."_arm_"..i.."_joint"
+    joint_names[i] = namespace.."_arm_"..i.."_joint"
+    resources[i] = joint_names[i]
   end 
   jsp:configure()
   -- add jsp to the parent component peers
@@ -136,11 +149,11 @@ end
  
 function startHook()
   -- stop all peers except Deployer
-  local d=tc:getPeer("Deployer")
-  local peers=tc:getPeers()
+  local d = tc:getPeer("Deployer")
+  local peers = tc:getPeers()
   for _,peername in pairs(peers) do
-    if peername~="Deployer" then
-      p=d:getPeer(peername)
+    if peername ~= "Deployer" then
+      p = d:getPeer(peername)
       if p then
         p:start()
       end
@@ -153,11 +166,11 @@ end
 
 function stopHook()
   -- stop all peers except Deployer
-  local d=tc:getPeer("Deployer")
-  local peers=tc:getPeers()
+  local d = tc:getPeer("Deployer")
+  local peers = tc:getPeers()
   for _,peername in pairs(peers) do
-    if peername~="Deployer" then
-      p=d:getPeer(peername)
+    if peername ~= "Deployer" then
+      p = d:getPeer(peername)
       if p then
         p:stop()
       else --already removed
@@ -177,12 +190,12 @@ end
 function cleanupHook()
   print ("Cleaning up "..tc:getName())
   -- unload all peers except Deployer
-  local d=tc:getPeer("Deployer")
-  local peers=tc:getPeers()
+  local d = tc:getPeer("Deployer")
+  local peers = tc:getPeers()
     
   for _,peername in pairs(peers) do
-    if peername~="Deployer" then
-      p=d:getPeer(peername)
+    if peername ~= "Deployer" then
+      p = d:getPeer(peername)
       if p then
         print (tc:getName().." cleaning up "..peername)
         p:cleanup()

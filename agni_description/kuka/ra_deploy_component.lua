@@ -38,6 +38,8 @@ kuka_controller:exec_file(pathOfThisFile.."kuka_controller.lua")
 -- configure the component
 kuka_controller:getProperty("namespace"):set(prefix)
 kuka_controller:getProperty("port"):set(49938)
+kuka_controller:getProperty("controller_name"):set(prefix.."/kuka_controller")
+
 kuka_controller:configure()
 
 -- stat the component

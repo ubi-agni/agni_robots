@@ -13,12 +13,15 @@ public:
   std::string getOwnerName();
   std::vector<std::string> getInTypes();
   std::vector<std::string> getOutTypes();
-  bool connectIn(std::string type, std::string peer_portname);
-  bool connectOut(std::string type, std::string peer_portname);
+  bool connectInTo(std::string type, std::string peer_portname);
+  bool connectOutTo(std::string type, std::string peer_portname);
+  bool connectIn(std::string type, std::string peer, std::string other_type);
+  bool connectOut(std::string type, std::string peer, std::string other_type);
   
 private:
   bool connect(std::string dir, std::string type, std::string peer_portname);
   std::string getInternalPortName(std::string dir, std::string type);
+  std::string getPeerPortName(std::string peer, std::string dir, std::string type);
 };
 
 
@@ -28,8 +31,10 @@ ControllerService::ControllerService(TaskContext* owner) :
   this->addOperation("getName", &ControllerService::getOwnerName, this).doc("Returns the name of the owner of this object.");
   this->addOperation("getInTypes", &ControllerService::getInTypes, this).doc("Returns the inport type list.");
   this->addOperation("getOutTypes", &ControllerService::getOutTypes, this).doc("Returns the outport type list.");
-  this->addOperation("connectIn", &ControllerService::connectIn, this).doc("Connect inputs of given type to given peer+port.");
-  this->addOperation("connectOut", &ControllerService::connectOut, this).doc("Connect outputs of given type to given peer+port.");
+  this->addOperation("connectInTo", &ControllerService::connectInTo, this).doc("Connect inputs of given type to given peer+port.");
+  this->addOperation("connectIn", &ControllerService::connectIn, this).doc("Connect inputs of given type to given peer port with given type.");
+  this->addOperation("connectOutTo", &ControllerService::connectOutTo, this).doc("Connect outputs of given type to given peer+port.");
+  this->addOperation("connectOut", &ControllerService::connectOut, this).doc("Connect outputs of given type to given peer port with given type.");
 }
 
 std::string ControllerService::getOwnerName() {
@@ -37,19 +42,38 @@ std::string ControllerService::getOwnerName() {
 }
 
 std::vector<std::string> ControllerService::getInTypes() {
-  
+
   agni_rtt_services::ControlIOMap *ciomap;
   base::PropertyBase* pb = getOwner()->getProperty( "in_portmap" );
   ciomap = static_cast<agni_rtt_services::ControlIOMap*>(pb->getDataSource()->getRawPointer());
   return ciomap->type;
 }
 
-bool ControllerService::connectIn(std::string type, std::string peer_portname) {
+bool ControllerService::connectInTo(std::string type, std::string peer_portname) {
   return connect("in", type, peer_portname);
 }
 
-bool ControllerService::connectOut(std::string type, std::string peer_portname) {
+bool ControllerService::connectOutTo(std::string type, std::string peer_portname) {
   return connect("out", type, peer_portname);
+}
+
+bool ControllerService::connectIn(std::string type, std::string peer, std::string other_type) {\
+  // must be out port of the other peer
+  std::string peer_portname = getPeerPortName(peer, "out", other_type);
+  if (peer_portname!="")
+  {
+    return connect("in", type, peer_portname);
+  }
+  return false;
+}
+
+bool ControllerService::connectOut(std::string type, std::string peer, std::string other_type) {
+  std::string peer_portname = getPeerPortName(peer, "in", other_type);
+  if (peer_portname!="")
+  {
+    return connect("out", type, peer_portname);
+  }
+  return false;
 }
 
 bool ControllerService::connect(std::string dir, std::string type, std::string peer_portname) {
@@ -57,20 +81,19 @@ bool ControllerService::connect(std::string dir, std::string type, std::string p
   bool ret=false;
   if(prev_running)
     getOwner()->stop();
-  
+
   // get the deployer
   OCL::DeploymentComponent *deployer = dynamic_cast<OCL::DeploymentComponent*>(getOwner()->getPeer("Deployer"));
-  
-  
+
   // get name and port of peer;
   size_t pos=peer_portname.find_first_of('.');
   std::string otherpeername=peer_portname.substr(0,pos);
   std::string otherportname=peer_portname.substr(pos+1,std::string::npos);
   //RTT::log(RTT::Error) << peer_portname <<"peer "<< otherpeername <<" port " <<  otherportname <<RTT::endlog();
-  
+
   // Create an unbuffered 'shared data' connection:
   ConnPolicy policy = RTT::ConnPolicy::data();
-  
+
   // get the internal name and port
   std::string internal_name = getInternalPortName(dir,type);
   if (internal_name!="")
@@ -88,9 +111,30 @@ bool ControllerService::connect(std::string dir, std::string type, std::string p
 
   if(prev_running)
     getOwner()->start();
-    
-  return ret;
 
+  return ret;
+}
+
+std::string ControllerService::getPeerPortName(std::string peer, std::string dir, std::string type) {
+  agni_rtt_services::ControlIOMap *ciomap;
+  // get the deployer
+  OCL::DeploymentComponent *deployer = dynamic_cast<OCL::DeploymentComponent*>(getOwner()->getPeer("Deployer"));
+  // get the other peer
+  TaskContext* peer_tc = deployer->getPeer(peer);
+  if(peer_tc)
+  {
+    base::PropertyBase* pb = peer_tc->getProperty( dir+"_portmap" );
+    ciomap = static_cast<agni_rtt_services::ControlIOMap*>(pb->getDataSource()->getRawPointer());
+    if (ciomap)
+    {
+      for (size_t i=0 ; i<ciomap->type.size() ; ++i)
+      {
+        if( ciomap->type[i]==type)
+          return ciomap->portname[i];
+      }
+    }
+  }
+  return "";
 }
 
 std::string ControllerService::getInternalPortName(std::string dir, std::string type) {
@@ -109,7 +153,6 @@ std::string ControllerService::getInternalPortName(std::string dir, std::string 
 }
 
 std::vector<std::string> ControllerService::getOutTypes() {
-  
   agni_rtt_services::ControlIOMap *ciomap;
   base::PropertyBase* pb = getOwner()->getProperty( "out_portmap" );
   ciomap = static_cast<agni_rtt_services::ControlIOMap*>(pb->getDataSource()->getRawPointer());

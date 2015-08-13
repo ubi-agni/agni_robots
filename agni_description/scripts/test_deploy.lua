@@ -32,9 +32,9 @@ if (found_motion_manager and found_rakuka_controller) then
   d:loadService("rakuka_controller","controllerService")
   -- connect the controller wrapper and the motion manager (this should stop the controller and restart it)
   print("rakuka connecting to MotionManager")
-  rakuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosRA")
-  rakuka_controller:provides("controllerService"):connectOut("JNTPOS","MotionManager.FRIRealJointPosRA")
-  rakuka_controller:provides("controllerService"):connectOut("LOG","LogRA.Log")
+  rakuka_controller:provides("controllerService"):connectInTo("FILJNTPOS","MotionManager.DesiredJointPosRA")
+  rakuka_controller:provides("controllerService"):connectOutTo("JNTPOS","MotionManager.FRIRealJointPosRA")
+  rakuka_controller:provides("controllerService"):connectOutTo("LOG","LogRA.Log")
   
 end
 
@@ -48,9 +48,9 @@ if (found_motion_manager and found_lakuka_controller) then
   d:loadService("lakuka_controller","controllerService")
   -- connect the controller wrapper and the motion manager
   print("lakuka connecting to MotionManager")
-  lakuka_controller:provides("controllerService"):connectIn("FILJNTPOS","MotionManager.DesiredJointPosLA")
-  lakuka_controller:provides("controllerService"):connectOut("JNTPOS","MotionManager.FRIRealJointPosLA")
-  lakuka_controller:provides("controllerService"):connectOut("LOG","LogLA.Log")
+  lakuka_controller:provides("controllerService"):connectInTo("FILJNTPOS","MotionManager.DesiredJointPosLA")
+  lakuka_controller:provides("controllerService"):connectOutTo("JNTPOS","MotionManager.FRIRealJointPosLA")
+  lakuka_controller:provides("controllerService"):connectOutTo("LOG","LogLA.Log")
   
 end
 
