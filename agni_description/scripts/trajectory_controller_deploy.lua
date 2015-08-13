@@ -1,6 +1,11 @@
 require "rttlib"
 require "rttros"
 
+-- get parameter from arguments
+local namespace=...
+
+print ("starting "..namespace.." trajectory controller")
+
 tc=rtt.getTC()
 tcName=tc:getName()
 print (tcName)
@@ -29,17 +34,16 @@ d:import("internal_space_spline_trajectory_generator")
 d:import("internal_space_spline_trajectory_action")
 
 
-d:loadComponent("JntTrajGen","InternalSpaceSplineTrajectoryGenerator")
-d:setActivity("JntTrajGen", 0.001, 5, rtt.globals.ORO_SCHED_RT)
-JntTrajGen = d:getPeer("JntTrajGen")
+d:loadComponent(namespace.."JntTrajGen","InternalSpaceSplineTrajectoryGenerator")
+d:setActivity(namespace.."JntTrajGen", 0.001, 5, rtt.globals.ORO_SCHED_RT)
+JntTrajGen = d:getPeer(namespace.."JntTrajGen")
 number_of_joints=JntTrajGen:getProperty("number_of_joints")
 number_of_joints:set(7)
 JntTrajGen:configure()
 
-
-d:loadComponent("JntTrajAction", "InternalSpaceSplineTrajectoryAction")
-d:setActivity("JntTrajAction", 0.1, 2, rtt.globals.ORO_SCHED_RT)
-JntTrajAct = d:getPeer("JntTrajAction")
+d:loadComponent(namespace.."JntTrajAction", "InternalSpaceSplineTrajectoryAction")
+d:setActivity(namespace.."JntTrajAction", 0.1, 2, rtt.globals.ORO_SCHED_RT)
+JntTrajAct = d:getPeer(namespace.."JntTrajAction")
 nbr_of_joints=JntTrajAct:getProperty("number_of_joints")
 nbr_of_joints:set(7)
 joint_names=JntTrajAct:getProperty("joint_names")
@@ -52,7 +56,6 @@ upper_limits:get():resize(7)
 lowlims = {-2.96 , -2.09, -2.96, -2.09, -2.96, -2.09, -2.96}
 uplims = {2.96 , 2.09, 2.96, 2.09, 2.96, 2.09, 2.96}
 
-namespace="ra"
 for i=0,6,1 do 
   joint_names[i]=namespace.."_arm_"..i.."_joint"
   lower_limits[i] = lowlims[i+1]
@@ -73,13 +76,20 @@ end
 --  upper_limits: [2.96 , 2.09, 2.96, 2.09, 2.96, 2.09, 2.96]
 
 JntTrajAct:loadService("actionlib")
-JntTrajAct:provides("actionlib"):connect("/ra_arm_trajectory_action")      
+JntTrajAct:provides("actionlib"):connect("/"..namespace.."/arm_trajectory_controller/follow_joint_trajectory")
+
 
 JntTrajAct:configure()
 
-d:addPeer("JntTrajAction","JntTrajGen")
+d:addPeer(namespace.."JntTrajAction",namespace.."JntTrajGen")
 
-d:connect("JntTrajAction.trajectoryPtr", "JntTrajGen.trajectoryPtr", rtt.Variable("ConnPolicy"))
+d:connect(namespace.."JntTrajAction.trajectoryPtr", namespace.."JntTrajGen.trajectoryPtr", rtt.Variable("ConnPolicy"))
+
+
+-- ROS in out
+ros=rtt.provides("ros")
+d:stream(namespace.."JntTrajAction.command",ros:topic("/"..namespace.."/arm_trajectory_controller/command"))
+d:stream(namespace.."JntTrajAction.state",ros:topic("/"..namespace.."/arm_trajectory_controller/state"))
 
 JntTrajAct:start()
 
