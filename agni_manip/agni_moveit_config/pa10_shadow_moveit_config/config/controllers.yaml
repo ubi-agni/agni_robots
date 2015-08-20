@@ -1,28 +1,28 @@
 controller_list:
- - name: ra/arm_trajectory_controller
+ - name: ra
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory
    default: true
    joints:
-     - ra_arm_0_joint
-     - ra_arm_1_joint
-     - ra_arm_2_joint
-     - ra_arm_3_joint
-     - ra_arm_4_joint
-     - ra_arm_5_joint
-     - ra_arm_6_joint
- - name: la/arm_trajectory_controller
+     - ra_S1
+     - ra_S2
+     - ra_S3
+     - ra_E1
+     - ra_E2
+     - ra_W1
+     - ra_W2
+ - name: la
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory
    default: true
    joints:
-     - la_arm_0_joint
-     - la_arm_1_joint
-     - la_arm_2_joint
-     - la_arm_3_joint
-     - la_arm_4_joint
-     - la_arm_5_joint
-     - la_arm_6_joint
+     - la_S1
+     - la_S2
+     - la_S3
+     - la_E1
+     - la_E2
+     - la_W1
+     - la_W2
  - name: rh/rh_hand_trajectory_controller
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory
