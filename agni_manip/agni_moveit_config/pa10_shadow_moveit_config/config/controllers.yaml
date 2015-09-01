@@ -11,6 +11,10 @@ controller_list:
      - ra_E2
      - ra_W1
      - ra_W2
+   constraints:
+     goal_time: 10.0                   # Override default
+     stopped_velocity_tolerance: 0.05 # Override default
+
  - name: la
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory
@@ -23,6 +27,10 @@ controller_list:
      - la_E2
      - la_W1
      - la_W2
+   constraints:
+     goal_time: 10.0                   # Override default
+     stopped_velocity_tolerance: 0.05 # Override default
+     
  - name: rh/rh_hand_trajectory_controller
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory

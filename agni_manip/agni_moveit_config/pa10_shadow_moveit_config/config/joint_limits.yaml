@@ -1,39 +1,39 @@
 joint_limits:
   la_S1:
     has_velocity_limits: true
-    max_velocity: 1
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0.5 #30deg/s/s
   la_S2:
     has_velocity_limits: true
-    max_velocity: 1
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   la_S3:
     has_velocity_limits: true
-    max_velocity: 2
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.2
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   la_E1:
     has_velocity_limits: true
-    max_velocity: 2
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.2
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   la_E2:
     has_velocity_limits: true
-    max_velocity: 6.28
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.628
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   la_W1:
     has_velocity_limits: true
-    max_velocity: 6.28
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.628
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   la_W2:
     has_velocity_limits: true
-    max_velocity: 6.28
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.628
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   lh_WRJ2:
     has_velocity_limits: true
     max_velocity: 1
@@ -271,41 +271,41 @@ joint_limits:
     max_acceleration: 0
   ra_E1:
     has_velocity_limits: true
-    max_velocity: 2
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.2
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   ra_E2:
     has_velocity_limits: true
-    max_velocity: 6.28
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.628
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   ra_W1:
     has_velocity_limits: true
-    max_velocity: 6.28
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.628
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   ra_S2:
     has_velocity_limits: true
-    max_velocity: 1
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   ra_S3:
     has_velocity_limits: true
-    max_velocity: 2
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.2
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   ra_W2:
     has_velocity_limits: true
-    max_velocity: 6.28
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.628
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   rh_WRJ2:
     has_velocity_limits: true
-    max_velocity: 1
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0.5
   ra_S1:
     has_velocity_limits: true
-    max_velocity: 1
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.1
+    has_acceleration_limits: true
+    max_acceleration: 0.5
