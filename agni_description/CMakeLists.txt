@@ -30,9 +30,9 @@ list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 # left right kuka
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaR SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaR PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaL SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaL PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right shadow motor hand
