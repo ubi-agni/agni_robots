@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(agni_description)
-find_package(catkin REQUIRED COMPONENTS urdf xacro)
+find_package(catkin REQUIRED COMPONENTS urdf)
+find_package(xacro 1.10 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 
 catkin_package(

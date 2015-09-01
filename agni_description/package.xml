@@ -15,6 +15,7 @@
   <!-- Dependencies needed to compile this package. -->
   <build_depend>urdf</build_depend>
   <build_depend>xacro</build_depend>
+  <build_depend>sr_description</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
   <run_depend>urdf</run_depend>
@@ -24,4 +25,3 @@
   <!-- Dependencies needed only for running tests. -->
   <test_depend>gtest</test_depend>
 </package>
-
