@@ -66,6 +66,9 @@ tools:
     file: ../robots/myrmex.urdf.xacro
     macro: myrmex
     mount: myrmex_quick_mount
+    props:
+      mass:  0.185
+      cog: "0.0 0.0 0.01"
 
   poking_stick_ubi:
     file: ../robots/poking_stick.urdf.xacro
@@ -73,6 +76,8 @@ tools:
     mount: poking_stick
     props:
       tactile: ubi
+      mass:  0.500
+      cog: "0.0 0.0 0.015"
 
   poking_stick_rigid:
     file: ../robots/poking_stick.urdf.xacro
