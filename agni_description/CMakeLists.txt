@@ -87,8 +87,10 @@ install(DIRECTORY launch/
 
 # testing
 enable_testing()
-foreach(tool shadow_motor_left shadow_motor_right shadow_muscle_left shadow_muscle_right myrmex poking_stick_ubi poking_stick_rigid)
-  add_test(
-    NAME tool-${tool}
-    COMMAND ${_xacro_py} --inorder ${CMAKE_CURRENT_SOURCE_DIR}/robots/single.urdf.xacro TOOL:=${tool})
+foreach(arm - pa10a pa10c kukaL kukaR)
+  foreach(tool - shadow_motor_left shadow_motor_right shadow_muscle_left shadow_muscle_right myrmex poking_stick_ubi poking_stick_rigid)
+    add_test(
+      NAME test-${arm}-${tool}
+      COMMAND ${CATKIN_ENV} ${_xacro_py} -o /dev/null --inorder ${CMAKE_CURRENT_SOURCE_DIR}/robots/single.urdf.xacro ARM:=${arm} TOOL:=${tool})
+  endforeach()
 endforeach()
