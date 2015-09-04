@@ -2,7 +2,7 @@
 <helpers xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="arm" params="type prefix:='' parent:='world' controller *origin">
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
-    <xacro:property name="props" value="${settings['arms'][type]['props'] if settings['arms'][type]['props'] else dict()}"/>
+    <xacro:property name="props" value="${settings['arms'][type]['props'] if 'props' in settings['arms'][type] else dict()}"/>
 
     <!-- include urdf file and call macro to generate arm -->
     <xacro:include filename="${settings['arms'][type]['file']}"/>
@@ -22,7 +22,7 @@
 
   <xacro:macro name="tool" params="type prefix:='' parent:='world' *origin">
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
-    <xacro:property name="props" value="${settings['tools'][type]['props'] if settings['tools'][type]['props'] else dict()}"/>
+    <xacro:property name="props" value="${settings['tools'][type]['props'] if 'props' in settings['tools'][type] else dict()}"/>
 
     <!-- include urdf file and call macro to generate tool -->
     <xacro:include filename="${settings['tools'][type]['file']}"/>
@@ -55,11 +55,13 @@
     <!-- append _ to prefix -->
     <xacro:property name="arm_prefix_" value="${arm_prefix + '_' if arm_prefix else ''}"/>
     <xacro:property name="tool_prefix_" value="${tool_prefix + '_' if tool_prefix else ''}"/>
-    
-    <!-- add payload mass if relevant -->
-    <xacro:if value="${tool_type not in ['','-']}">
-      <xacro:property name="payload_mass" value="${settings['tools'][tool_type]['props']['mass']}"/> 
-      <xacro:property name="payload_cog" value="${settings['tools'][tool_type]['props']['cog']}"/> 
+
+    <!-- add payload mass if available -->
+    <xacro:if value="${(tool_type not in ['','-']) and
+                     ('props' in settings['tools'][tool_type]) and
+                     ('mass' in settings['tools'][tool_type]['props'])}">
+      <xacro:property name="payload_mass" value="${settings['tools'][tool_type]['props']['mass']}"/>
+      <xacro:property name="payload_cog" value="${settings['tools'][tool_type]['props']['cog']}"/>
     </xacro:if>
 
     <xacro:property name="tool_parent" value="${parent}"/>
