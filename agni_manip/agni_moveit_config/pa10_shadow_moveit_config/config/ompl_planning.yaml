@@ -21,33 +21,7 @@ planner_configs:
     type: geometric::PRM
   PRMstarkConfigDefault:
     type: geometric::PRMstar
-    
-left_armpalm:
-  planner_configs:
-    - SBLkConfigDefault
-    - ESTkConfigDefault
-    - LBKPIECEkConfigDefault
-    - BKPIECEkConfigDefault
-    - KPIECEkConfigDefault
-    - RRTkConfigDefault
-    - RRTConnectkConfigDefault
-    - RRTstarkConfigDefault
-    - TRRTkConfigDefault
-    - PRMkConfigDefault
-    - PRMstarkConfigDefault
-right_armpalm:
-  planner_configs:
-    - SBLkConfigDefault
-    - ESTkConfigDefault
-    - LBKPIECEkConfigDefault
-    - BKPIECEkConfigDefault
-    - KPIECEkConfigDefault
-    - RRTkConfigDefault
-    - RRTConnectkConfigDefault
-    - RRTstarkConfigDefault
-    - TRRTkConfigDefault
-    - PRMkConfigDefault
-    - PRMstarkConfigDefault
+
 left_hand:
   planner_configs:
     - SBLkConfigDefault
@@ -78,6 +52,7 @@ right_hand:
     - PRMstarkConfigDefault
   projection_evaluator: joints(rh_WRJ2,rh_WRJ1)
   longest_valid_segment_fraction: 0.05
+
 left_fingers:
   planner_configs:
     - SBLkConfigDefault
@@ -108,19 +83,7 @@ right_fingers:
     - PRMstarkConfigDefault
   projection_evaluator: joints(rh_FFJ4,rh_FFJ3)
   longest_valid_segment_fraction: 0.05
-upper_body:
-  planner_configs:
-    - SBLkConfigDefault
-    - ESTkConfigDefault
-    - LBKPIECEkConfigDefault
-    - BKPIECEkConfigDefault
-    - KPIECEkConfigDefault
-    - RRTkConfigDefault
-    - RRTConnectkConfigDefault
-    - RRTstarkConfigDefault
-    - TRRTkConfigDefault
-    - PRMkConfigDefault
-    - PRMstarkConfigDefault
+
 right_first_finger:
   planner_configs:
     - SBLkConfigDefault
@@ -271,6 +234,7 @@ left_thumb:
     - PRMstarkConfigDefault
   projection_evaluator: joints(lh_THJ5,lh_THJ4)
   longest_valid_segment_fraction: 0.05
+
 left_arm:
   planner_configs:
     - SBLkConfigDefault
@@ -301,36 +265,23 @@ right_arm:
     - PRMstarkConfigDefault
   projection_evaluator: joints(ra_S1,ra_S2)
   longest_valid_segment_fraction: 0.05
-both_hands:
-  planner_configs:
-    - SBLkConfigDefault
-    - ESTkConfigDefault
-    - LBKPIECEkConfigDefault
-    - BKPIECEkConfigDefault
-    - KPIECEkConfigDefault
-    - RRTkConfigDefault
-    - RRTConnectkConfigDefault
-    - RRTstarkConfigDefault
-    - TRRTkConfigDefault
-    - PRMkConfigDefault
-    - PRMstarkConfigDefault
-  projection_evaluator: joints(lh_WRJ2,lh_WRJ1)
-  longest_valid_segment_fraction: 0.05
-both_armhand:
-  planner_configs:
-    - SBLkConfigDefault
-    - ESTkConfigDefault
-    - LBKPIECEkConfigDefault
-    - BKPIECEkConfigDefault
-    - KPIECEkConfigDefault
-    - RRTkConfigDefault
-    - RRTConnectkConfigDefault
-    - RRTstarkConfigDefault
-    - TRRTkConfigDefault
-    - PRMkConfigDefault
-    - PRMstarkConfigDefault
 both_arms:
   planner_configs:
+    - RRTstarkConfigDefault
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+  longest_valid_segment_fraction: 0.05
+
+left_arm_palm:
+  planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -342,6 +293,73 @@ both_arms:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-  projection_evaluator: joints(ra_S1,ra_S2)
+right_arm_palm:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+
+both_arms_palm:
+  planner_configs:
+    - RRTstarkConfigDefault
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
   longest_valid_segment_fraction: 0.05
-    
+
+left_arm_hand:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+right_arm_hand:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+
+both_arms_hand:
+  planner_configs:
+    - RRTstarkConfigDefault
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+  longest_valid_segment_fraction: 0.05

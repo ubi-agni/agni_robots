@@ -3,6 +3,6 @@
    <node name="$(arg arm_type)_joint_state_merger"
           pkg="joint_state_publisher" type="joint_state_publisher">
       <param name="use_gui" value="false"/>
-      <rosparam param="source_list" >["/la/joint_states","/ra/joint_states","/rh/joint_states","/lh/joint_states"]</rosparam>  
-    </node>  
+      <rosparam param="source_list" >["/la/joint_states","/ra/joint_states","/rh/joint_states","/lh/joint_states"]</rosparam>
+    </node>
 </launch>
