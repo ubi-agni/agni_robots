@@ -1,5 +1,0 @@
-<launch>
-  <node pkg="agni_robot_viz" type="collision_shape_generator" name="collision_shape_generator"  output="screen">
-        <rosparam file="$(find agni_robot_viz)/config/only_left_hand_filter.yaml" command="load"/>
-  </node>
-</launch>
