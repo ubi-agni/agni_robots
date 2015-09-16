@@ -3,14 +3,14 @@
   <xacro:macro name="kuka_arm" params="prefix controller">
     <!-- KUKA arm -->
 
-    <xacro:include filename="../kuka/kuka.urdf.xacro"/>
+    <xacro:include filename="$(find lwr_description)/urdf/lwr.urdf.xacro"/>
     <xacro:kuka_lwr_arm name="${prefix + '_' if prefix else ''}"/>
 
     <xacro:if value="${controller}">
       <!-- add gazebo controllers -->
 
-      <xacro:include filename="../kuka/lwr_controllers.gazebo.xacro"/>
-      <xacro:lwr_arm_gazebo_controller namespace="${prefix}" 
+      <xacro:include filename="$(find lwr_description)/urdf/lwr_gazebo.urdf.xacro"/>
+      <xacro:lwr_arm_gazebo_controller prefix="${prefix}" namespace="${prefix}" 
                                        port="${props['port']}"/>
     </xacro:if>
   </xacro:macro>
