@@ -1,6 +1,0 @@
-<launch>	
-  <arg name="namespace" default="rh"/>
-  <rosparam command="load" file="$(find agni_description)/config/$(arg namespace)_hand_trajectory_controller.yaml" />
-  <node name="hand_trajectory_controller_spawner" pkg="controller_manager" type="spawner" output="screen"
-        args="--shutdown-timeout=1.0 $(arg namespace)_hand_trajectory_controller" />
-</launch>
