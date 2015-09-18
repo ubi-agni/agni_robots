@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <robot name="pa10_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:property name="filename" value="${dict([('7a', 'pa10-a'), ('7c', 'pa10-c')])}"/>
-  <xacro:property name="macroname" value="${dict([('7a', 'pa10a_arm'), ('7c', 'pa10c_arm')])}"/>
+  <xacro:property name="pkg" value="${dict([('7a', 'pa10_7a_description'), ('7c', 'pa10_7c_description')])}"/>
+  <xacro:property name="filename" value="${dict([('7a', 'pa10-7a'), ('7c', 'pa10-7c')])}"/>
+  <xacro:property name="macroname" value="${dict([('7a', 'pa10_7a_arm'), ('7c', 'pa10_7c_arm')])}"/>
 
   <xacro:macro name="pa10_arm" params="prefix controller">
     <!-- PA10 arm -->
-
-    <xacro:include filename="../pa10/${filename[props['model']]}.urdf.xacro"/>
+    <xacro:include filename="$(find ${pkg[props['model']]})/urdf/${filename[props['model']]}.urdf.xacro"/>
 
     <xacro:call macro="${macroname[props['model']]}" 
                 name="${prefix + '_' if prefix else ''}"/>
@@ -14,7 +14,7 @@
     <xacro:if value="${controller}">
       <!-- add gazebo controllers -->
 
-      <xacro:include filename="../pa10/pa10_shadow_controller_manager.xacro"/>
+      <xacro:include filename="$(find ${pkg[props['model']]})/urdf/pa10_shadow_controller_manager.xacro"/>
       <xacro:pa10_shadow_gazebo_controller_manager namespace="${prefix}"/>
     </xacro:if>
   </xacro:macro>
