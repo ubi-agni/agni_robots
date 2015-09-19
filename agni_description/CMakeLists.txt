@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(agni_description)
 find_package(catkin REQUIRED COMPONENTS urdf)
 find_package(xacro 1.10 REQUIRED)
+find_package(flobi_description)
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
@@ -14,8 +15,10 @@ catkin_package(
 
 xacro_add_xacro_file(robots/sfb.urdf.xacro INORDER)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
-list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+if(flobi_description_FOUND)
+  xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
+  list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+endif()
 
 # sfb frame
 xacro_add_xacro_file(robots/single.urdf.xacro robots/sfb_frame.urdf INORDER REMAP FRAME:=sfb)
