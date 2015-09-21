@@ -13,4 +13,4 @@ end
 d:import("rtt_rospack")
 ros = rtt.provides("ros")
 lwr_bringup_path = ros:find("lwr_bringup")
-assert(loadfile(lwr_bringup_path.."/scripts/kuka_deploy.lua"))("ra")
+assert(loadfile(lwr_bringup_path.."/scripts/kuka_deploy.lua"))("ra",49938)
