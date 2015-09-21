@@ -19,13 +19,11 @@
     <!-- add tool frame -->
     <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
     <joint name="${prefix_}tool_frame" type="fixed">
-      <parent link="${prefix_.replace('h_', 'a_')}tool_mount"/>
+      <parent link="${prefix_}forearm"/>
       <child link="${prefix_}tool_frame"/>
-      <!-- Hm. For some reason, the me files use an offset of 1cm -->
-      <origin rpy="${pi/2} 0 ${pi/2}" xyz="0.0 -0.01 0.327"/>
+      <origin rpy="${pi/2} 0 0" xyz="0.0 -0.01 0.327"/>
     </joint>
     <link name="${prefix_}tool_frame"/>
-
 
     <!-- add tactile markers -->
     <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"

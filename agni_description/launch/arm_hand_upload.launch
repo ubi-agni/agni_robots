@@ -4,11 +4,10 @@
   <arg name="tool_type"/>
   <arg name="sim" default="1"/>
   <arg name="calib" default="default"/>
-  <arg name="prefix" default="prefix"/>
-    
+  <arg name="prefix" default="-"/>
+
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro'
           PREFIX:=$(arg prefix) ARM:=$(arg arm_type) TOOL:=$(arg tool_type) SIM:=$(arg sim) CALIB:=$(arg calib)" />
-  
+
 </launch>
- 
