@@ -17,6 +17,8 @@
   <build_depend>xacro</build_depend>
   <build_depend>sr_description</build_depend>
   <build_depend>lwr_description</build_depend>
+  <build_depend>pa10_7a_description</build_depend>
+  <build_depend>pa10_7c_description</build_depend>
   <build_depend>flobi_description</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
@@ -24,6 +26,8 @@
   <run_depend>xacro</run_depend>
   <run_depend>sr_description</run_depend>
   <run_depend>lwr_description</run_depend>
+  <run_depend>pa10_7a_description</run_depend>
+  <run_depend>pa10_7c_description</run_depend>
   <run_depend>flobi_description</run_depend>
 
   <!-- Dependencies needed only for running tests. -->
