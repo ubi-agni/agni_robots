@@ -2,13 +2,15 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!-- namespace must be set up according to launch file namespace -->
-  <xacro:macro name="shadow_gazebo_controller_manager" params="namespace">
+	<xacro:macro name="shadow_gazebo_controller_manager" params="namespace">
 		<gazebo>
-			<plugin name="sr_gazebo_ros_controller_manager" filename="libsr_gazebo_ros_controller_manager.so">
-				<alwaysOn>true</alwaysOn>
-				<updateRate>1000.0</updateRate>
+			<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+				<robotSimType>sr_gazebo_sim/SrGazeboHWSim</robotSimType>
 				<robotNamespace>${namespace}</robotNamespace>
 			</plugin>
 		</gazebo>
+
+    
+    
   </xacro:macro>
 </robot>

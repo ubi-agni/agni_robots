@@ -7,7 +7,7 @@
   <license>BSD</license>
 
   <url type="repository">vol/ni/src/git/agniros.git</url>
-	<author>Guillaume Walck, Robert Haschke</author>
+  <author>Guillaume Walck, Robert Haschke</author>
 
   <!-- Dependencies which this package needs to build itself. -->
   <buildtool_depend>catkin</buildtool_depend>
@@ -25,6 +25,7 @@
   <run_depend>urdf</run_depend>
   <run_depend>xacro</run_depend>
   <run_depend>sr_description</run_depend>
+  <run_depend>sr_gazebo_sim</run_depend>
   <run_depend>lwr_description</run_depend>
   <run_depend>pa10_7a_description</run_depend>
   <run_depend>pa10_7c_description</run_depend>
