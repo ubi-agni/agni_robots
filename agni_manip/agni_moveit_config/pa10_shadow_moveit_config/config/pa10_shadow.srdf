@@ -33,7 +33,6 @@
         <group name="right_thumb" />
     </group>
     <group name="right_hand">
-        <joint name="rh_tool_mount" />
         <joint name="rh_WRJ2" />
         <joint name="rh_WRJ1" />
         <group name="right_fingers" />
@@ -62,7 +61,6 @@
         <group name="left_thumb" />
     </group>
     <group name="left_hand">
-        <joint name="lh_tool_mount" />
         <joint name="lh_WRJ2" />
         <joint name="lh_WRJ1" />
         <group name="left_fingers" />
@@ -189,12 +187,12 @@
     </group_state>
 
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_fingers" parent_group="right_arm"/>
-    <end_effector name="rh_tool_frame" parent_link="rh_tool_frame" group="right_fingers" parent_group="right_arm"/>
+    <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_hand" parent_group="right_arm"/>
+    <end_effector name="rh_tool_frame" parent_link="rh_tool_frame" group="right_hand" parent_group="right_arm"/>
     <end_effector name="rh_palm" parent_link="rh_palm" group="right_fingers" parent_group="right_arm_palm" />
 
-    <end_effector name="la_tool_mount" parent_link="la_tool_mount" group="left_fingers" parent_group="left_arm"/>
-    <end_effector name="lh_tool_frame" parent_link="lh_tool_frame" group="left_fingers" parent_group="left_arm"/>
+    <end_effector name="la_tool_mount" parent_link="la_tool_mount" group="left_hand" parent_group="left_arm"/>
+    <end_effector name="lh_tool_frame" parent_link="lh_tool_frame" group="left_hand" parent_group="left_arm"/>
     <end_effector name="lh_palm" parent_link="lh_palm" group="left_fingers" parent_group="left_arm_palm" />
 
     <end_effector name="left_hand_first_finger" parent_link="lh_fftip" group="left_first_finger" parent_group="left_fingers" />
