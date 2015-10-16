@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot name="calibration_tool" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="calibration_tool_generic" params="prefix">
+  <link name="${prefix}calibration_tool">
+    <visual>
+      <origin xyz="0 0 0" 
+          rpy="0 0 0"/>
+      <geometry>
+        <mesh scale="0.001 0.001 0.001" 
+          filename="package://agni_description/models/meshes/calibration_tool.dae"/>
+      </geometry>
+    </visual> 
+      <collision>
+        <origin xyz="0 0 0.0" 
+            rpy="0 0 0"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001" 
+          filename="package://agni_description/models/meshes/calibration_tool.dae"/>
+        </geometry>
+      </collision>
+  </link>
+  <joint name="${prefix}calib_frame_fixed" type="fixed">
+    <parent link="${prefix}calibration_tool"/>
+    <child  link="${prefix}calibration_tool_frame"/>
+    <origin xyz="-0.032 -0.032 0.2712" rpy="0 0 0 "/>
+  </joint>
+  <link name="${prefix}calibration_tool_frame"/>
+  <gazebo reference="${prefix}calibration_tool">
+  </gazebo>
+  </xacro:macro>
+</robot>
