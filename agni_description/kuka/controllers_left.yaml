@@ -1,9 +1,0 @@
-left_lwr_arm_controller:
-  joints:
-    - la_arm_0_joint
-    - la_arm_1_joint
-    - la_arm_2_joint
-    - la_arm_3_joint
-    - la_arm_4_joint
-    - la_arm_5_joint
-    - la_arm_6_joint

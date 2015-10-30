@@ -1,9 +1,0 @@
-right_lwr_arm_controller:
-  joints:
-    - ra_arm_0_joint
-    - ra_arm_1_joint
-    - ra_arm_2_joint
-    - ra_arm_3_joint
-    - ra_arm_4_joint
-    - ra_arm_5_joint
-    - ra_arm_6_joint

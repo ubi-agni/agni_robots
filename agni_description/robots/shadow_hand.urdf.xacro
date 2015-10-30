@@ -11,6 +11,7 @@
     <xacro:shadowhand muscletrans="${'trans' in model}"
                       muscle="${'muscle' in model}"
                       bio="${'bio' in tactile}"
+                      bt_sp="${'bt_stp' in tactile}"
                       ubi="${'ubi' in tactile}"
                       eli="${'eli' in tactile}"
                       reflect="${1 if side=='right' else -1}"

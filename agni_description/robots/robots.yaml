@@ -85,3 +85,11 @@ tools:
     mount: poking_stick
     props:
       tactile: ""
+      
+  calibration_tool:
+    file: ../robots/calibration_tool.urdf.xacro
+    macro: calibration_tool
+    mount: calibration_tool
+    props:
+      mass:  2.5
+      cog: "0.05 0.05 0.14"

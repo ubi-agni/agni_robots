@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="calibration_tool" params="prefix:=''">
+
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
+    <!-- calibration_tool -->
+    <xacro:include filename="../models/calibration_tool.urdf.xacro" />
+    <xacro:calibration_tool_generic prefix="${prefix_}" />
+  </xacro:macro>
+</robot>

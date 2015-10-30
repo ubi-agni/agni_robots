@@ -1,4 +1,0 @@
-<launch>
-  <!-- motion manager and logger rtt deployement -->
-  <node pkg="rosservice" type="rosservice" name="motion_manager_deployer" args="call --wait /rtt_environment/Deployer/run_lua_script $(find agni_description)/scripts/test_deploy.lua"/> 
-</launch>

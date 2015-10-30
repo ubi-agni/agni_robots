@@ -1,4 +1,0 @@
-filter_primitive:
-  move_group: "upper_body"
-  links : "all"
-    

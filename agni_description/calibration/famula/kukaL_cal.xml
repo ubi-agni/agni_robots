@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- arm base -->
-  <xacro:property name="cal_x"     value="0.08232" />
-  <xacro:property name="cal_y"     value="0.897" />
-  <xacro:property name="cal_z"     value="0.29758" />
-  <xacro:property name="cal_roll"  value="0.71215" />
-  <xacro:property name="cal_pitch" value="0.84840" />
-  <xacro:property name="cal_yaw"   value="${pi-2.28576}" /> 
-  <xacro:property name="gravity_dir" value="7.35989 -4.23830 -4.90968" />
+  <xacro:property name="cal_x"     value="0.0871" /><!--0.08232 -->
+  <xacro:property name="cal_y"     value="0.9011" /><!-- 0.897 -->
+  <xacro:property name="cal_z"     value="0.2981" /><!-- 0.29758 -->
+  <xacro:property name="cal_roll"  value="0.7227" /><!--0.71215 -->
+  <xacro:property name="cal_pitch" value="0.8512" /><!-- 0.84840 -->
+  <xacro:property name="cal_yaw"   value="0.8490" /><!-- ${pi-2.28576} =0.855832 -->
+   <!-- gravity dir must be recomputed to match new base pose  "7.35989 -4.23830 -4.90968" -->
+  <xacro:property name="gravity_dir" value="7.3775 -4.2769 -4.8494" />
 
 </root>

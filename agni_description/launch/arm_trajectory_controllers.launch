@@ -1,4 +1,0 @@
-<launch>	
-  <!-- <rosparam command="load" file="$(find agni_description)/config/$(arg namespace)_arm_trajectory_controller.yaml" /> -->
-  <node pkg="rosservice" type="rosservice" name="$(arg namespace)_kuka_bringup" args="call --wait /rtt_environment/Deployer/run_lua_script $(find agni_description)/scripts/traj_kuka_deploy.lua"/>   
-</launch>
