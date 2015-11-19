@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>agni_robots</name>
+  <version>0.1.0</version>
+  <description>URDF and SRDF definitions of the robot platforms used in AGNI at Uni Bielefeld</description>
+  <maintainer email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>agni_description</run_depend>
+  <run_depend>agni_moveit_config</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+
+</package>
