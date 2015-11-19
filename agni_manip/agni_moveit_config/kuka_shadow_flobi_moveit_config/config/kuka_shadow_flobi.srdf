@@ -663,7 +663,23 @@
     <disable_collisions link1="flobi_EYES_RIGHT_LR_LINK" link2="ra_arm_6_link" reason="User" />
     <disable_collisions link1="flobi_EYES_RIGHT_LR_LINK" link2="ra_arm_7_link" reason="User" />
     <disable_collisions link1="flobi_EYES_RIGHT_LR_LINK" link2="ra_arm_base_link" reason="Never" />
+    <disable_collisions link1="flobi_EYES_LEFT_BROW_LINK" link2="flobi_EYES_LEFT_UD_VIRTUAL_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_EYES_RIGHT_BROW_LINK" link2="flobi_EYES_RIGHT_LID_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_EYES_RIGHT_BROW_LINK" link2="flobi_EYES_RIGHT_UD_VIRTUAL_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_EYES_LEFT_LID_LOWER_LINK" link2="flobi_EYES_LEFT_LID_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_EYES_RIGHT_LID_LOWER_LINK" link2="flobi_EYES_RIGHT_LID_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_LIP_CENTER_LOWER_LINK" link2="flobi_LIP_CENTER_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_LIP_LEFT_LOWER_LINK" link2="flobi_LIP_LEFT_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_LIP_RIGHT_LOWER_LINK" link2="flobi_LIP_RIGHT_UPPER_LINK" reason="Adjacent" />
     <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_BASE_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_LEFT_BROW_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_LEFT_LID_LOWER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_LEFT_LID_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_LEFT_UD_VIRTUAL_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_RIGHT_BROW_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_RIGHT_LID_LOWER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_RIGHT_LID_UPPER_LINK" reason="Adjacent" />
+    <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="flobi_EYES_RIGHT_UD_VIRTUAL_LINK" reason="Adjacent" />
     <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="la_arm_1_link" reason="Never" />
     <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="la_arm_2_link" reason="Never" />
     <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="la_arm_base_link" reason="Never" />
@@ -671,6 +687,7 @@
     <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="flobi_NECK_ROLL_LINK" link2="ra_arm_base_link" reason="Never" />
     <disable_collisions link1="flobi_BASE_LINK" link2="frame" reason="Adjacent" />
+    <disable_collisions link1="flobi_BASE_LINK" link2="flobi_LIP_CENTER_LOWER_LINK" reason="Adjacent" />
     <disable_collisions link1="flobi_BASE_LINK" link2="la_arm_1_link" reason="Never" />
     <disable_collisions link1="flobi_BASE_LINK" link2="la_arm_2_link" reason="Never" />
     <disable_collisions link1="flobi_BASE_LINK" link2="la_arm_base_link" reason="Never" />
