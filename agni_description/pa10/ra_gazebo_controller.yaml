@@ -1,96 +1,49 @@
 ra_S1_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_S1
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
 
 ra_S2_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_S2
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
-
 
 ra_S3_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_S3
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
-
 
 ra_E1_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_E1
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
-
 
 ra_E2_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_E2
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
-
 
 ra_W1_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_W1
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
-
 
 ra_W2_position_controller:
-  type: sr_mechanism_controllers/SrhJointPositionController
+  type: position_controllers/JointPositionController
   joint: ra_W2
-  pid:
-    p: 50.0
-    deadband: 0.0
-    friction_deadband: 2000.0
-    i: 5.0
-    d: 50.0
-    max_force: 100.0
-    i_clamp: 100.0
-    position_deadband: 0.014999999999999999
 
+ra_arm_trajectory_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - ra_S1
+    - ra_S2
+    - ra_S3
+    - ra_E1
+    - ra_E2
+    - ra_W1
+    - ra_W2
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      ra_S1: {trajectory: 0.9, goal: 0.4}
+      ra_S2: {trajectory: 0.9, goal: 0.4}
+      ra_S3: {trajectory: 0.9, goal: 0.4}
+      ra_E1: {trajectory: 0.9, goal: 0.4}
+      ra_E2: {trajectory: 0.9, goal: 0.4}
+      ra_W1: {trajectory: 0.9, goal: 0.4}
+      ra_W2: {trajectory: 0.9, goal: 0.4}
+  stop_trajectory_duration: 0.5
