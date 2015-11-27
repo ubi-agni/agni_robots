@@ -7,6 +7,8 @@ Panels:
         - /Global Options1
         - /Status1
         - /MotionPlanning1
+        - /MotionPlanning1/Scene Robot1
+        - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.74256
     Tree Height: 422
   - Class: rviz/Help
@@ -54,39 +56,99 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          flobi_eyes_left_hub_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          flobi_eyes_left_link:
+          flobi_BASE_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_eyes_right_hub_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          flobi_eyes_right_link:
+          flobi_EYES_LEFT_BROW_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_head_link:
+          flobi_EYES_LEFT_LID_LOWER_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_neck_base_link:
+          flobi_EYES_LEFT_LID_UPPER_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_neck_beam_link:
+          flobi_EYES_LEFT_LR_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          flobi_neck_hub_link:
+          flobi_EYES_LEFT_UD_VIRTUAL_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_BROW_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_LID_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_LID_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_LR_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          flobi_EYES_RIGHT_UD_VIRTUAL_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_CENTER_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_CENTER_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_LEFT_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_LEFT_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_RIGHT_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_RIGHT_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_NECK_PAN_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          flobi_NECK_ROLL_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_NECK_TILT_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -279,6 +341,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          lh_tool_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           lh_wrist:
             Alpha: 1
             Show Axes: false
@@ -465,6 +531,10 @@ Visualization Manager:
             Show Trail: false
             Value: true
           rh_thtip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          rh_tool_frame:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -495,9 +565,9 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0
+        Interactive Marker Size: 0.02
         Joint Violation Color: 255; 0; 255
-        Planning Group: left_arm
+        Planning Group: left_hand
         Query Goal State: true
         Query Start State: false
         Show Workspace: false
@@ -520,39 +590,99 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          flobi_eyes_left_hub_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          flobi_eyes_left_link:
+          flobi_BASE_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_eyes_right_hub_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          flobi_eyes_right_link:
+          flobi_EYES_LEFT_BROW_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_head_link:
+          flobi_EYES_LEFT_LID_LOWER_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_neck_base_link:
+          flobi_EYES_LEFT_LID_UPPER_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          flobi_neck_beam_link:
+          flobi_EYES_LEFT_LR_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          flobi_neck_hub_link:
+          flobi_EYES_LEFT_UD_VIRTUAL_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_BROW_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_LID_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_LID_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_EYES_RIGHT_LR_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          flobi_EYES_RIGHT_UD_VIRTUAL_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_CENTER_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_CENTER_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_LEFT_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_LEFT_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_RIGHT_LOWER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_LIP_RIGHT_UPPER_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_NECK_PAN_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          flobi_NECK_ROLL_LINK:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          flobi_NECK_TILT_LINK:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -745,6 +875,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          lh_tool_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           lh_wrist:
             Alpha: 1
             Show Axes: false
@@ -934,6 +1068,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          rh_tool_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           rh_wrist:
             Alpha: 1
             Show Axes: false
@@ -945,7 +1083,7 @@ Visualization Manager:
             Show Trail: false
         Robot Alpha: 0.5
         Show Robot Collision: false
-        Show Robot Visual: true
+        Show Robot Visual: false
       Value: true
   Enabled: true
   Global Options:
@@ -962,22 +1100,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.9965
+      Distance: 1.39159
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.368993
-        Y: 0.192316
+        X: 1.36835
+        Y: 0.721658
         Z: 9.38774e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.294797
+      Pitch: 1.4698
       Target Frame: kuka_frame
       Value: XYOrbit (rviz)
-      Yaw: 5.07495
+      Yaw: 3.86494
     Saved: ~
 Window Geometry:
   Displays:
