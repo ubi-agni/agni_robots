@@ -7,8 +7,8 @@
     <xacro:include filename="../models/myrmex_quick_mount.urdf.xacro" />
     <xacro:myrmex_quick_mount prefix="${prefix_}"/>
 
-    <xacro:myrmex_tactile_markers parent="${prefix_}myrmex_quick_mount" topic="unknown">
-      <origin xyz="0 0.1 0" rpy="0 0 0"/>
+    <xacro:myrmex_tactile_markers parent="${prefix_}myrmex_quick_mount" topic="${prefix_}myrmex/data">
+      <origin xyz="0 0 0.034" rpy="0 0 0"/>
     </xacro:myrmex_tactile_markers>
   </xacro:macro>
 </robot>
