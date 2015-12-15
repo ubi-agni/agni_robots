@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="poking_stick" params="prefix:=''">
+
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
+    
+    <!-- ati sensor -->    
+    <link name="${prefix_}ft_sensor_link">
+      <inertial>
+        <mass value="0.255"/>
+        <origin xyz="0 0 ${(0.0333 + 0.008)/2.0}"/>
+        <cylinder_inertia_def length="${0.0333 + 0.008}" radius="0.038" mass="0.255"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 ${(0.0333 + 0.008)/2.0}" rpy="0 0 0"/>
+        <geometry>
+           <cylinder radius="0.038" length="${0.0333 + 0.008}" />
+        </geometry>
+        <material name="Silver"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.038" length="${0.0333 + 0.008}" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="${prefix_}ft_tool_fixed_joint" type="fixed">
+      <origin xyz="0 0 ${0.0333 + 0.008}"/>
+      <parent link="${prefix_}ft_sensor_link"/>
+      <child link="${prefix_}poking_stick"/>
+    </joint>
+    
+    
+    <!-- poking stick -->
+    <xacro:include filename="../models/poking_stick.urdf.xacro" />
+    <xacro:poking_stick_generic prefix="${prefix_}" tactile="${props['tactile']}"/>
+
+    <xacro:if value="${props['tactile'] in ['bio', 'ubi', 'eli']}">
+      <xacro:include filename="$(find sr_description)/hand/xacro/tactile.${props['tactile']}.xacro" />
+      <!-- tactile marker mapping description -->
+
+      <xacro:property name="prefix" value="${prefix_}"/>
+      <xacro:property name="xs" value="1023 0"/>
+      <xacro:property name="taxel_dir" value="$(find sr_description)/hand/xacro/finger"/>
+      <xacro:distal_tactile finger="ff" taxel_data="${load_yaml(taxel_dir + '/distal/distal.taxels.ubi.yaml')}"/>
+
+    </xacro:if>
+  </xacro:macro>
+</robot>

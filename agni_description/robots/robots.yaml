@@ -80,13 +80,33 @@ tools:
       tactile: ubi
       mass:  0.500
       cog: "0.0 0.0 0.015"
+  
+  poking_stick_ubi_ati:
+    file: ../robots/poking_stick_ati.urdf.xacro
+    macro: poking_stick
+    mount: ft_sensor_link
+    props:
+      tactile: ubi
+      mass:  0.700
+      cog: "0.0 0.0 0.045"
 
   poking_stick_rigid:
     file: ../robots/poking_stick.urdf.xacro
     macro: poking_stick
     mount: poking_stick
     props:
+      mass:  0.500
+      cog: "0.0 0.0 0.015"
       tactile: ""
+      
+  poking_stick_rigid_ati:
+    file: ../robots/poking_stick_ati.urdf.xacro
+    macro: poking_stick
+    mount: ft_sensor_link
+    props:
+      tactile: ubi
+      mass:  0.700
+      cog: "0.0 0.0 0.045"
       
   calibration_tool:
     file: ../robots/calibration_tool.urdf.xacro
