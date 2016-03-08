@@ -34,12 +34,18 @@
   </xacro:macro>
 
   <xacro:macro name="myrmex_tactile_markers" params="parent topic *origin">
+    <xacro:property name="cell_size" value="0.005" />
+    <xacro:property name="myrmex_size" value="16" />
     <!-- tactile marker mapping description -->
-    <tactile topic="${topic}" data="data" xs="0 4095" link="${parent}">
-      <geometry>
-        <grid size="16 16" spacing="0.005 0.005"/>
-      </geometry>
+    <sensor name="myrmex_sensor" update_rate="100">
+      <parent link="${parent}"/>
       <xacro:insert_block name="origin"/>
-    </tactile>
+      <tactile>
+        <array rows="${myrmex_size}" cols="${myrmex_size}" 
+            order="row-major" size="${cell_size} ${cell_size}" 
+            offset="${cell_size * myrmex_size/2.0} ${cell_size * myrmex_size/2.0}">
+        </array>
+      </tactile>
+    </sensor>
   </xacro:macro>
 </robot>
