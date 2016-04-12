@@ -1,5 +1,5 @@
 &ACCESS RVP
-&REL 34
+&REL 35
 &PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
 &PARAM EDITMASK = *
 DEF friorocosokc( )
@@ -86,6 +86,13 @@ IF (force > 10) OR (torque > 8) THEN
   ENDWHILE
 ENDIF
 
+
+;FOLD Init FRI_TO Variables
+$FRI_TO_INT[16] = 0
+$FRI_TO_INT[15] = 0
+$FRI_TO_INT[14] = 0
+
+;ENDFOLD
 ;check if in park posture (DEPENDS ON RIGHT OR LEFT ARM)
 IF (IS_EQUAL_AXES($AXIS_ACT, park_pos, 2.0)) THEN
   ; we are in park mode, get to safe working position first
@@ -97,20 +104,23 @@ ENDIF
 ;switch on motors
 PTP start_pos
 
-;FOLD Init FRI_TO Variables
-$FRI_TO_INT[16] = 0
-$FRI_TO_INT[15] = 0
-$FRI_TO_INT[14] = 0
-;ENDFOLD
 
-
-retVal = friopen (10)
+retVal = friopen (2)
 ;INTERRUPT ON
 
 old_cmd=0
+
+$FRI_TO_BOOL[1] = false
 LOOP
-Wait for (($FRI_FRM_INT[16] <> 0) and ($FRI_FRM_INT[16] <> old_cmd))
+Wait for ($FRI_FRM_BOOL[1])
+;check if rcv cmd
+IF $FRI_FRM_BOOL[1] then
+
 old_cmd=$FRI_FRM_INT[16]
+
+;ack cmd
+$FRI_TO_BOOL[1] = true
+
 Switch $FRI_FRM_INT[16]
 Case 1
      FRI_START()
@@ -145,7 +155,9 @@ Case 99
  retVal = friclose()
  Exit
 ENDSwitch
-
+ENDIF
+;clear proc flag
+$FRI_TO_BOOL[1] = false
 ENDLOOP
 
 
@@ -276,8 +288,17 @@ END
 
 DEF MOVE_START_POSITION()
 $FRI_TO_INT[15] = 10
+;save the current commanded pos in KRC
+PTP CLAMP_AXES($AXIS_ACT)
+wait sec 0.2
+;stop fri command mode
+retVal = fristop()
+wait sec 0.2
+SET_SAFE_VEL()
 PTP safestart_pos
 ;PTP {A1 90, A2 100, A3 -85,A4 0, A5 40, A6 0, E1 0}
+
+SET_USER_VEL()
 $FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
 $FRI_TO_INT[16] = 108
 END
@@ -312,13 +333,26 @@ wait sec 0.2
 ;stop fri command mode
 retVal = fristop()
 wait sec 0.2
+
+SET_SAFE_VEL()
 ;move to requested pos
 PTP given_pos
+wait sec 0.2
+SET_USER_VEL()
 $FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
 $FRI_TO_INT[16] = 122
 END
 
 DEF MOVE_TO_PARK_POS()
+
+;save the current commanded pos in KRC
+PTP CLAMP_AXES($AXIS_ACT)
+wait sec 0.2
+;stop fri command mode
+retVal = fristop()
+wait sec 0.2
+
+SET_SAFE_VEL()
 $FRI_TO_INT[15] = 90
 ;front safe pos before going up
 PTP {A1 60.0, A2 140.0 ,A3 -60.0, A4 -25.0, A5 75.0, A6 0.0, E1 0.0}
@@ -328,12 +362,32 @@ PTP {A1 15.0, A2 140.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
 
 ;candle 
 PTP park_pos
+SET_USER_VEL()
 $FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
 $FRI_TO_INT[16] = 190
 END
 
+DEF SET_USER_VEL()
+  ; reset velocity profiles
+  DECL INT AZ
+  FOR AZ=1 TO $NUM_AX STEP 1
+    $VEL_AXIS[AZ]= 100
+  ENDFOR
+  FOR AZ=1 TO $EX_AX_NUM STEP 1
+    $VEL_EXTAX[AZ]= 100
+  ENDFOR
+END
 
-
+DEF SET_SAFE_VEL()
+  ; change velocity profiles
+  DECL INT AZ
+  FOR AZ=1 TO $NUM_AX STEP 1
+    $VEL_AXIS[AZ]= 35
+  ENDFOR
+  FOR AZ=1 TO $EX_AX_NUM STEP 1
+    $VEL_EXTAX[AZ]= 35
+  ENDFOR
+END
 
 
 ;FOLD AXIS HELPER FUNCTIONS
