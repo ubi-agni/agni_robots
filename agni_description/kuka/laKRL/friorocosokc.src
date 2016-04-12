@@ -1,0 +1,432 @@
+&ACCESS RVEO
+&REL 7
+&PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
+&PARAM EDITMASK = *
+DEF friorocosokc( )
+;PROGRAM IS A MERGE OF friokc2 and fri_hand (UNI BREMEN)
+;FOLD INI
+  DECL INT ret
+  DECL FRAME t
+  DECL REAL force
+  DECL REAL torque
+  DECL INT AX
+
+  ;FOLD BASISTECH INI
+    GLOBAL INTERRUPT DECL 3 WHEN $STOPMESS==TRUE DO IR_STOPM ( )
+    INTERRUPT ON 3 
+    BAS (#INITMOV,0 )
+  ;ENDFOLD (BASISTECH INI)
+  ;FOLD USER INI
+    ;Make your modifications here
+  ;ENDFOLD (USER INI)
+  
+  ; for left robot
+  park_pos = {A1 -30.0, A2 150.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
+  ; for right robot
+  ; TOBEVERIFIED park_pos = {A1 30.0, A2 150.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
+  safestart_pos = {A1 60, A2 130, A3 -60, A4 -25, A5 75, A6 0, E1 0}
+
+
+;ENDFOLD (INI)
+
+;stop FRI in case it's running
+retVal=fristop()
+
+;set tool no. 1
+bas (#tool,1)
+
+;FOLD SETUP
+
+  ;; set IP address and port of remote controller
+    retVal=friSetup("192.168.10.123",49940,49940)
+  
+  ;Setting Stiffness to some decent defaults
+  USERSTIFF = $STIFFNESS
+  USERSTIFF.STRATEGY = 10
+  USERSTIFF.FRAMETYPE=#TOOL
+  USERSTIFF.AXISSTIFFNESS = {A1 40, A2 40, A3 40, A4 40, A5 40, A6 40, E1 40}
+  USERSTIFF.AXISDAMPING = {A1 0.7, A2 0.7, A3 0.7, A4 0.7, A5 0.7, A6 0.7, E1 0.7}
+  USERSTIFF.CPSTIFFNESS = {x 2000, Y 2000, Z 2000, A 200, B 200, C 200}
+  USERSTIFF.CPDAMPING = {X 0.7, Y 0.7, Z 0.7, A 0.7, B 0.7, C 0.7}
+
+  ;Limits
+  USERSTIFF.AXISMAXDELTA = {A1 340, A2 340, A3 340, A4 340, A5 340, A6 340, E1 340}
+  USERSTIFF.AXISMAXDELTATRQ = {A1 400, A2 400, A3 400, A4 400, A5 400, A6 400, E1 400}
+  USERSTIFF.CPMAXDELTA = {X 2000, Y 2000, Z 2000, A 180, B 180, C 180}
+  USERSTIFF.MAXFORCE = {X 900, Y 900, Z 900, A 900, B 900, C 900}
+
+
+  ;commit new settings
+  $STIFFNESS=USERSTIFF  
+  $STIFFNESS.COMMIT = TRUE
+  
+  ; init velocity and acceleration profiles
+  FOR AX=1 TO $NUM_AX STEP 1
+    $VEL_AXIS[AX]= 100
+    $ACC_AXIS[AX]= 50
+  ENDFOR
+  FOR AX=1 TO $EX_AX_NUM STEP 1
+    $VEL_EXTAX[AX]= 100
+    $ACC_EXTAX[AX]= 50
+  ENDFOR
+
+  ; set base
+  $base = $robroot
+
+;ENDFOLD (SETUP)
+
+WAIT SEC 0.2
+
+;check if torques are within limits
+t = $torque_tcp_est.ft
+force  = SQRT(t.x*t.x + t.y*t.y + t.z*t.z)
+torque = SQRT(t.a*t.a + t.b*t.b + t.c*t.c)
+
+IF (force > 8) OR (torque > 8) THEN
+  ; experiencing too much force. refusing to start!
+  WHILE TRUE
+    HALT
+  ENDWHILE
+ENDIF
+
+;check if in park posture (DEPENDS ON RIGHT OR LEFT ARM)
+IF (IS_EQUAL_AXES($AXIS_ACT, park_pos, 2.0)) THEN
+  ; we are in park mode, get to safe working position first
+  start_pos = safestart_pos
+ELSE
+  ; we are not in part mode, stay where we are
+  start_pos = TOUCH_AXES($AXIS_ACT)
+ENDIF
+;switch on motors
+PTP start_pos
+
+;FOLD Init FRI_TO Variables
+$FRI_TO_INT[16] = 0
+$FRI_TO_INT[15] = 0
+$FRI_TO_INT[14] = 0
+;ENDFOLD
+
+
+retVal = friopen (1)
+;INTERRUPT ON
+
+old_cmd=0
+LOOP
+Wait for (($FRI_FRM_INT[16] <> 0) and ($FRI_FRM_INT[16] <> old_cmd))
+old_cmd=$FRI_FRM_INT[16]
+Switch $FRI_FRM_INT[16]
+Case 1
+     FRI_START()
+Case 2
+     FRI_STOP()
+Case 3
+     RESET_STATUS()
+Case 4
+     SET_CPSTIFFNESS_DAMPING()
+Case 5
+     SETAXISSTIFFNESSDAMPING()
+Case 6
+     SWITCH_CP_CONTROL()
+Case 7
+     SWITCH_AXIS_CONTROL()
+Case 8
+     SWITCH_GRAVCOMP()
+Case 9
+     SWITCH_POSITION()
+Case 10
+     MOVE_START_POSITION()
+Case 11
+     RESET_COUNTER()
+Case 20
+     BRAKE_MOTORS()
+Case 21
+     UNBRAKE_MOTORS()
+Case 22
+     MOVE_TO_AXIS_POS()
+Case 99
+ retVal = fristop()
+ retVal = friclose()
+ Exit
+ENDSwitch
+
+ENDLOOP
+
+
+wait for $FRI_FRM_INT[16] == 99
+retVal = fristop()
+retVal = friclose()
+END
+
+DEF RESET_COUNTER()
+$FRI_TO_INT[16] = 111
+$FRI_TO_INT[15] = 11
+$FRI_TO_INT[14] = 0
+END
+
+DEF FRI_START()
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[15] = 1
+retVal = fristart (1.0)
+wait sec 0.2
+$FRI_TO_INT[16] = 100
+END
+
+DEF FRI_STOP()
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[15] = 2
+;save the current commanded pos in KRC
+PTP CLAMP_AXES($AXIS_ACT)
+wait sec 0.2
+retVal = fristop()
+wait sec 0.2
+$FRI_TO_INT[16] = 101
+END
+
+DEF RESET_STATUS()
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[15] = 0
+$FRI_TO_INT[16] = 0
+END
+
+DEF SET_CPSTIFFNESS_DAMPING()
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[15] = 4
+USERSTIFF.CPSTIFFNESS.X = $FRI_FRM_INT[10]
+USERSTIFF.CPSTIFFNESS.Y = $FRI_FRM_INT[11]
+USERSTIFF.CPSTIFFNESS.Z = $FRI_FRM_INT[12]
+USERSTIFF.CPSTIFFNESS.A = $FRI_FRM_INT[13]
+USERSTIFF.CPSTIFFNESS.B = $FRI_FRM_INT[14]
+USERSTIFF.CPSTIFFNESS.C = $FRI_FRM_INT[15]
+USERSTIFF.CPDAMPING.X = $FRI_FRM_REA[11]
+USERSTIFF.CPDAMPING.Y = $FRI_FRM_REA[12]
+USERSTIFF.CPDAMPING.Z = $FRI_FRM_REA[13]
+USERSTIFF.CPDAMPING.A = $FRI_FRM_REA[14]
+USERSTIFF.CPDAMPING.B = $FRI_FRM_REA[15]
+USERSTIFF.CPDAMPING.C = $FRI_FRM_REA[16]
+USERSTIFF.COMMIT = TRUE
+$STIFFNESS=USERSTIFF
+WAIT FOR ( $STIFFNESS.COMMIT == FALSE )
+$FRI_TO_INT[16] = 102
+END
+
+DEF SETAXISSTIFFNESSDAMPING()
+$FRI_TO_INT[15] = 5
+USERSTIFF.AXISSTIFFNESS.A1 = $FRI_FRM_INT[9]
+USERSTIFF.AXISSTIFFNESS.A2 = $FRI_FRM_INT[10]
+USERSTIFF.AXISSTIFFNESS.E1 = $FRI_FRM_INT[11]
+USERSTIFF.AXISSTIFFNESS.A3 = $FRI_FRM_INT[12]
+USERSTIFF.AXISSTIFFNESS.A4 = $FRI_FRM_INT[13]
+USERSTIFF.AXISSTIFFNESS.A5 = $FRI_FRM_INT[14]
+USERSTIFF.AXISSTIFFNESS.A6 = $FRI_FRM_INT[15]
+USERSTIFF.AXISDAMPING.A1 = $FRI_FRM_REA[10]
+USERSTIFF.AXISDAMPING.A2 = $FRI_FRM_REA[11]
+USERSTIFF.AXISDAMPING.E1 = $FRI_FRM_REA[12]
+USERSTIFF.AXISDAMPING.A3 = $FRI_FRM_REA[13]
+USERSTIFF.AXISDAMPING.A4 = $FRI_FRM_REA[14]
+USERSTIFF.AXISDAMPING.A5 = $FRI_FRM_REA[15]
+USERSTIFF.AXISDAMPING.A6 = $FRI_FRM_REA[16]
+USERSTIFF.COMMIT = TRUE
+$STIFFNESS=USERSTIFF
+WAIT FOR ( $STIFFNESS.COMMIT == FALSE )
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 103
+END
+
+
+DEF SWITCH_CP_CONTROL()
+$FRI_TO_INT[15] = 6
+USERSTIFF.STRATEGY=20
+USERSTIFF.COMMIT=TRUE
+;BRAKE F
+$STIFFNESS=USERSTIFF
+WAIT FOR ( $STIFFNESS.COMMIT == FALSE )
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 104
+END
+
+DEF SWITCH_AXIS_CONTROL()
+$FRI_TO_INT[15] = 7
+USERSTIFF.STRATEGY=30
+USERSTIFF.COMMIT=TRUE
+;BRAKE F
+$STIFFNESS=USERSTIFF
+WAIT FOR ( $STIFFNESS.COMMIT == FALSE )
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 105
+END
+
+DEF SWITCH_GRAVCOMP()
+$FRI_TO_INT[15] = 8
+USERSTIFF.STRATEGY=101
+USERSTIFF.COMMIT=TRUE
+;BRAKE F
+$STIFFNESS=USERSTIFF
+WAIT FOR ( $STIFFNESS.COMMIT == FALSE )
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 106
+END
+
+DEF SWITCH_POSITION()
+$FRI_TO_INT[15] = 9
+USERSTIFF.STRATEGY=10
+USERSTIFF.COMMIT=TRUE
+;BRAKE F
+$STIFFNESS=USERSTIFF
+WAIT FOR ( $STIFFNESS.COMMIT == FALSE )
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 107
+END
+
+DEF MOVE_START_POSITION()
+$FRI_TO_INT[15] = 10
+PTP safestart_pos
+;PTP {A1 90, A2 100, A3 -85,A4 0, A5 40, A6 0, E1 0}
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 108
+END
+
+DEF BRAKE_MOTORS()
+$FRI_TO_INT[15] = 20
+; APPARENTLY NOT POSSIBLE (MAYBE USE PULSE TO DRIVE() button in the future
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 120
+END
+
+DEF UNBRAKE_MOTORS()
+$FRI_TO_INT[15] = 21
+; APPARENTLY NOT POSSIBLE (MAYBE USE PULSE TO DRIVE() button in the future
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 121
+END
+
+DEF MOVE_TO_AXIS_POS()
+$FRI_TO_INT[15] = 22
+DECL E6AXIS an
+
+an.A1 = CLAMP($FRI_FRM_REA[10], -169., 169.)
+an.A2 = CLAMP($FRI_FRM_REA[11],  -29., 209.)
+an.E1 = CLAMP($FRI_FRM_REA[12], -169., 169.)
+an.A3 = CLAMP($FRI_FRM_REA[13], -119., 119.)
+an.A4 = CLAMP($FRI_FRM_REA[14], -169., 169.)
+an.A5 = CLAMP($FRI_FRM_REA[15], -119., 119.)
+an.A6 = CLAMP($FRI_FRM_REA[16], -169., 169.)
+
+;save the current commanded pos in KRC
+PTP CLAMP_AXES($AXIS_ACT)
+wait sec 0.2
+;stop fri command mode
+retVal = fristop()
+wait sec 0.2
+;move to requested pos
+PTP an
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 122
+END
+
+DEF MOVE_TO_PARK_POS()
+$FRI_TO_INT[15] = 90
+DECL E6AXIS an
+;front safe pos before going up
+PTP {A1 60.0, A2 140.0 ,A3 -60.0, A4 -25.0, A5 75.0, A6 0.0, E1 0.0}
+
+;straigth almost candle
+PTP {A1 15.0, A2 140.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
+
+;candle 
+PTP park_pos
+$FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
+$FRI_TO_INT[16] = 190
+END
+
+
+
+
+
+;FOLD AXIS HELPER FUNCTIONS
+
+DEFFCT E6AXIS TOUCH_AXES(ax)
+E6AXIS ax
+DECL E6AXIS an
+
+an = CLAMP_AXES(ax)
+
+IF an.A6 < 0 THEN
+  an.A6 = an.A6 + 0.01
+ELSE
+  an.A6 = an.A6 - 0.01
+ENDIF
+
+RETURN an
+ENDFCT
+
+DEFFCT BOOL IS_EQUAL_AXES(ax:IN, ay:IN, eps:IN)
+; input axis
+E6AXIS ax 
+E6AXIS ay
+REAL eps
+
+IF ABS(ax.A1 - ay.A1) > eps THEN
+  return FALSE
+ENDIF
+
+IF ABS(ax.A2 - ay.A2) > eps THEN
+  return FALSE
+ENDIF
+
+IF ABS(ax.E1 - ay.E1) > eps THEN
+  return FALSE
+ENDIF
+
+IF ABS(ax.A3 - ay.A3) > eps THEN
+  return FALSE
+ENDIF
+
+IF ABS(ax.A4 - ay.A4) > eps THEN
+  return FALSE
+ENDIF
+
+IF ABS(ax.A5 - ay.A5) > eps THEN
+  return FALSE
+ENDIF
+
+IF ABS(ax.A6 - ay.A6) > eps THEN
+  return FALSE
+ENDIF
+
+return TRUE
+ENDFCT
+
+DEFFCT E6AXIS CLAMP_AXES(ax:IN)
+E6AXIS ax
+DECL E6AXIS an
+
+an.A1 = CLAMP(ax.A1, -169., 169.)
+an.A2 = CLAMP(ax.A2,  -29., 209.)
+an.E1 = CLAMP(ax.E1, -169., 169.)
+an.A3 = CLAMP(ax.A3, -119., 119.)
+an.A4 = CLAMP(ax.A4, -169., 169.)
+an.A5 = CLAMP(ax.A5, -119., 119.)
+an.A6 = CLAMP(ax.A6, -169., 169.)
+
+RETURN an
+ENDFCT
+
+
+DEFFCT REAL CLAMP(v:IN, minval:IN, maxval:IN)
+REAL v, minval, maxval
+DECL REAL r
+
+r = v
+
+IF v > maxval THEN
+  r = maxval
+ENDIF
+
+IF v < minval THEN
+    r = minval
+ENDIF
+
+RETURN r
+ENDFCT
+
+;ENDFOLD (AXIS HELPER FUNCTIONS)
