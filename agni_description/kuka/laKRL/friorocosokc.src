@@ -1,5 +1,5 @@
-&ACCESS RVEO
-&REL 7
+&ACCESS RVP
+&REL 34
 &PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
 &PARAM EDITMASK = *
 DEF friorocosokc( )
@@ -20,11 +20,6 @@ DEF friorocosokc( )
     ;Make your modifications here
   ;ENDFOLD (USER INI)
   
-  ; for left robot
-  park_pos = {A1 -30.0, A2 150.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
-  ; for right robot
-  ; TOBEVERIFIED park_pos = {A1 30.0, A2 150.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
-  safestart_pos = {A1 60, A2 130, A3 -60, A4 -25, A5 75, A6 0, E1 0}
 
 
 ;ENDFOLD (INI)
@@ -33,7 +28,7 @@ DEF friorocosokc( )
 retVal=fristop()
 
 ;set tool no. 1
-bas (#tool,1)
+bas (#tool,2)
 
 ;FOLD SETUP
 
@@ -82,7 +77,9 @@ t = $torque_tcp_est.ft
 force  = SQRT(t.x*t.x + t.y*t.y + t.z*t.z)
 torque = SQRT(t.a*t.a + t.b*t.b + t.c*t.c)
 
-IF (force > 8) OR (torque > 8) THEN
+
+
+IF (force > 10) OR (torque > 8) THEN
   ; experiencing too much force. refusing to start!
   WHILE TRUE
     HALT
@@ -107,7 +104,7 @@ $FRI_TO_INT[14] = 0
 ;ENDFOLD
 
 
-retVal = friopen (1)
+retVal = friopen (10)
 ;INTERRUPT ON
 
 old_cmd=0
@@ -301,15 +298,13 @@ END
 
 DEF MOVE_TO_AXIS_POS()
 $FRI_TO_INT[15] = 22
-DECL E6AXIS an
-
-an.A1 = CLAMP($FRI_FRM_REA[10], -169., 169.)
-an.A2 = CLAMP($FRI_FRM_REA[11],  -29., 209.)
-an.E1 = CLAMP($FRI_FRM_REA[12], -169., 169.)
-an.A3 = CLAMP($FRI_FRM_REA[13], -119., 119.)
-an.A4 = CLAMP($FRI_FRM_REA[14], -169., 169.)
-an.A5 = CLAMP($FRI_FRM_REA[15], -119., 119.)
-an.A6 = CLAMP($FRI_FRM_REA[16], -169., 169.)
+given_pos.A1 = CLAMP($FRI_FRM_REA[10], -169., 169.)
+given_pos.A2 = CLAMP($FRI_FRM_REA[11],  -29., 209.)
+given_pos.E1 = CLAMP($FRI_FRM_REA[12], -169., 169.)
+given_pos.A3 = CLAMP($FRI_FRM_REA[13], -119., 119.)
+given_pos.A4 = CLAMP($FRI_FRM_REA[14], -169., 169.)
+given_pos.A5 = CLAMP($FRI_FRM_REA[15], -119., 119.)
+given_pos.A6 = CLAMP($FRI_FRM_REA[16], -169., 169.)
 
 ;save the current commanded pos in KRC
 PTP CLAMP_AXES($AXIS_ACT)
@@ -318,14 +313,13 @@ wait sec 0.2
 retVal = fristop()
 wait sec 0.2
 ;move to requested pos
-PTP an
+PTP given_pos
 $FRI_TO_INT[14] = $FRI_TO_INT[14] + 1
 $FRI_TO_INT[16] = 122
 END
 
 DEF MOVE_TO_PARK_POS()
 $FRI_TO_INT[15] = 90
-DECL E6AXIS an
 ;front safe pos before going up
 PTP {A1 60.0, A2 140.0 ,A3 -60.0, A4 -25.0, A5 75.0, A6 0.0, E1 0.0}
 
