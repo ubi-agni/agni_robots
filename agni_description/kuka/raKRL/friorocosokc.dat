@@ -1,5 +1,5 @@
 &ACCESS RVP
-&REL 118
+&REL 136
 &PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
 &PARAM EDITMASK = *
 DEFDAT friorocosokc

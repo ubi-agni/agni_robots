@@ -1,5 +1,5 @@
 &ACCESS RVP
-&REL 118
+&REL 136
 &PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
 &PARAM EDITMASK = *
 DEF friorocosokc( )
@@ -151,6 +151,8 @@ Case 21
      UNBRAKE_MOTORS()
 Case 22
      MOVE_TO_AXIS_POS()
+Case 90
+     MOVE_TO_PARK_POS()
 Case 99
  retVal = fristop()
  retVal = friclose()
@@ -358,10 +360,9 @@ wait sec 0.2
 SET_SAFE_VEL()
 $FRI_TO_INT[15] = 90
 ;front safe pos before going up
-PTP {A1 60.0, A2 140.0 ,A3 -60.0, A4 -25.0, A5 75.0, A6 0.0, E1 0.0}
-
+PTP safestart_pos
 ;straigth almost candle
-PTP {A1 15.0, A2 140.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
+PTP {A1 -15.0, A2 130.0 ,A3 0.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0}
 
 ;candle 
 PTP park_pos
@@ -386,10 +387,10 @@ DEF SET_SAFE_VEL()
   ; change velocity profiles
 DECL INT AZ
   FOR AZ=1 TO $NUM_AX STEP 1
-    $VEL_AXIS[AZ]= 35
+    $VEL_AXIS[AZ]= 10
   ENDFOR
   FOR AZ=1 TO $EX_AX_NUM STEP 1
-    $VEL_EXTAX[AZ]= 35
+    $VEL_EXTAX[AZ]= 10
   ENDFOR
 END
 
