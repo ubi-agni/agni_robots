@@ -1,9 +1,0 @@
-<launch>
-  <arg name="namespace" default="ra"/>
-
-  <!-- only load parameters here -->
-  <rosparam command="load" file="$(find agni_description)/kuka/$(arg namespace)_controllers.yaml" />
-    
-  <node pkg="rosservice" type="rosservice" name="$(arg namespace)_kuka_bringup" args="call --wait /rtt_environment/Deployer/run_lua_script $(find agni_description)/kuka/$(arg namespace)_deploy_component.lua"/>   
-    
-</launch>

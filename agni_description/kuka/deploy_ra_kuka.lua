@@ -12,5 +12,6 @@ else
 end
 d:import("rtt_rospack")
 ros = rtt.provides("ros")
-agni_deploy_path = ros:find("agni_deploy")
-assert(loadfile(agni_deploy_path.."/scripts/kuka_deploy.lua"))("la",49940)
+agni_description_path = ros:find("agni_description")
+assert(loadfile(agni_description_path.."/kuka/deploy_meta_driver_kuka.lua"))("ra",49938)
+

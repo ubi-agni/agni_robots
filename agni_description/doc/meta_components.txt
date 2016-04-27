@@ -1,0 +1,27 @@
+In order to simplify dynamic deployment with Lua  we use meta-components.
+
+A meta-components is a component that regroups other components as a block and offers simplified connection 
+to other components or other meta-components.
+
+They are basically Lua-defined components that implement
+
+ * an interface specification for advertized properties of the meta-component
+ * a configureHook that :
+   - Imports dependencies for all components of the block
+   - Configures the advertized properties on the meta-component (name, resources, controller type, etc...)
+   - Instantiates all the components of the block, and add them as peer
+   - Configures all the components of the block
+   - Registers certain ports of the inner components that should be "visible" to the exterior of the meta-component.
+      These ports are listed in an In/Out map with keywords to access them by type (CURJNT, CMDJNTPOS, ...) 
+      It avoids to require knowing the specific name of component ports, that may vary from components to components
+      It also avoids to add one more delay by directly pointing at the internal ports for any inter-connection with the meta-component
+   - Connect all the internal components together and to ROS
+  * a startHook, that starts each inner component
+  * a stopHook, that stops each inner component
+  * a cleanupHook, that cleans up each inner component
+  * There is NO updateHook
+  
+The meta-component should be have their name start with meta, ex: meta_driver_kuka.lua, meta_trajectory_controller.lua
+
+
+  
