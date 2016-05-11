@@ -414,104 +414,156 @@ Visualization Manager:
           Value: true
           lh_ffdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
           lh_ffmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
           lh_ffproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
           rh_ffdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_ffmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_ffproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
         lf:
           Value: true
           lh_lfdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           lh_lfmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           lh_lfproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_lfdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_lfmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_lfproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
         mf:
           Value: true
           lh_mfdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
           lh_mfmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           lh_mfproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_mfdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_mfmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_mfproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
         palm:
           Value: true
           lh_lfmetacarpal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 4096
           lh_palm:
             Value: true
-            data range: ~
+            data range:
+              maximum: 4096
           rh_lfmetacarpal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
           rh_palm:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
         rf:
           Value: true
           lh_rfdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           lh_rfmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           lh_rfproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_rfdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_rfmiddle:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_rfproximal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
         th:
           Value: true
           lh_thdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
           rh_thdistal:
             Value: true
-            data range: ~
+            data range:
+              maximum: 1
+              minimum: 0
       topic: /tactile_states
     - Alpha: 1
       Class: rviz_tactile_plugins/Tactile Contact Display
