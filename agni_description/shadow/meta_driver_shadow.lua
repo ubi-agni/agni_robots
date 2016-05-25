@@ -56,7 +56,7 @@ function configureHook()
 
   -- SR BRIDGE
   bridgename = namespace.."bridge"
-  d:loadComponent(bridgename, "RTT_sr_bridge")
+  d:loadComponent(bridgename, "RTTSrBridge")
   d:setActivity(bridgename, 0, 20, rtt.globals.ORO_SCHED_RT) 
   bridge = d:getPeer(bridgename)
   d:loadService(bridgename,"rosservice")
@@ -89,7 +89,7 @@ function configureHook()
   
   -- EFFORT LIMITER
   efflimname = namespace.."EffLim" 
-  d:loadComponent(efflimname, "RTT_sr_effort_limiter") 
+  d:loadComponent(efflimname, "RTTSrEffortLimiter") 
   d:setActivity(efflimname, 0, 20, rtt.globals.ORO_SCHED_RT) 
   EffLim = d:getPeer(efflimname)
   ns=EffLim:getProperty("namespace")

@@ -15,4 +15,4 @@ agni_description_path = rttros.find_rospack("agni_description")
 package.path = agni_description_path..'/shadow'..'/?.lua;' .. package.path 
 require("meta_driver_shadow_component")
 
-driver_deploy(d, "rh", "shadow_driver", "/shadow/meta_driver_shadow.lua")
+driver_undeploy(d, "lh", "shadow_driver")

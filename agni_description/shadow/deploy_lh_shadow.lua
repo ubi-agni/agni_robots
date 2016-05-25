@@ -1,17 +1,18 @@
 require "rttlib"
 require "rttros"
+
 tc=rtt.getTC()
 tcName=tc:getName()
--- find the deployer
--- script might be started from deployer directly or from any other component, hopefully having a deployer as peer
-if tcName=="Deployer" then
-  d=tc
-else
+print (tcName)
+if tcName=="lua" then
   d=tc:getPeer("Deployer")
-    -- TODO complain and exit if deployer not found
+elseif tcName=="Deployer" then
+  d=tc
 end
-d:import("rtt_rospack")
-ros = rtt.provides("ros")
-agni_description_path = ros:find("agni_description")
-assert(loadfile(agni_description_path.."/shadow/deploy_meta_driver_shadow.lua"))("lh")
 
+-- import a generic meta_driver component utility (instantiate)
+agni_description_path = rttros.find_rospack("agni_description")
+package.path = agni_description_path..'/shadow'..'/?.lua;' .. package.path 
+require("meta_driver_shadow_component")
+
+driver_deploy(d, "lh", "shadow_driver", "/shadow/meta_driver_shadow.lua")
