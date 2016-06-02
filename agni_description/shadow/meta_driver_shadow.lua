@@ -31,6 +31,7 @@ function configureHook()
 
   -- import the required libraries and typekits here
   d:import("rtt_sr_bridge")
+  d:import("rtt_sr_effort_limiter")
   d:import("rtt_roscomm")
   d:import("rtt_rosnode")
   d:import("rtt_rosparam")
@@ -94,8 +95,7 @@ function configureHook()
   EffLim = d:getPeer(efflimname)
   ns=EffLim:getProperty("namespace")
   ns:set(namespace)
-  ndof=EffLim:getProperty("nDOF")
-  ndof:set(20)
+  ndof=EffLim:getProperty("nDOF"):set(20)
   pth=EffLim:getProperty("pain_thresholds")
   pth:get():resize(20)
   pen=EffLim:getProperty("pain_endurances")
@@ -119,28 +119,27 @@ function configureHook()
   -- register ports for the compound controller depending on the type using generic names
   -- among CMDJNTPOS, CURJNTPOS, CMDJNT, CURJNT, LOG, ...
   register_port(in_portmap, 'CMDJNTPOS', bridgename..".JointPositionCommand")
-  register_port(in_portmap, 'CMDJNTPOS', efflimname..".JointPositionCommand")
   register_port(in_portmap, 'CMDJNT', bridgename..".DesiredJoint")
-  register_port(in_portmap, 'CMDJNT', efflimname..".DesiredJoint")
   
-  register_port(out_portmap, 'CURJNTPOS', bridgename..".CtrlJointPosition")
-  register_port(out_portmap, 'CURJNTVEL', bridgename..".CtrlJointVelocity")
-  register_port(out_portmap, 'CURJNTEFF', bridgename..".CtrlJointEffort")
+  register_port(out_portmap, 'CURJNTPOS', bridgename..".JointPosition")
+  register_port(out_portmap, 'CURJNTVEL', bridgename..".JointVelocity")
+  register_port(out_portmap, 'CURJNTEFF', bridgename..".JointEffort")
 
   -- store the mapping in the properties
   storeMapping("in_portmap",in_portmap)
   storeMapping("out_portmap",out_portmap)
   
-  -- set the resource to match the controlled joints
-  resources:get():resize(20) 
+  -- set the resource to match the joints
+  resources:get():resize(24) 
   -- fill the resource
-  for i=0,19,1 do
-    resources[i] = ctrl_joint_names[i]
+  for i=0,23,1 do
+    resources[i] = joint_names[i]
   end 
 
   -- internal connection
   d:connect(bridgename..".CtrlJointPosition", efflimname..".JointPosition", rtt.Variable("ConnPolicy"))
   d:connect(bridgename..".CtrlJointEffort", efflimname..".JointEffort", rtt.Variable("ConnPolicy"))
+  d:connect(bridgename..".CtrlJointPositionCommand", efflimname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
 
   -- ROS in out
   local ros=rtt.provides("ros")

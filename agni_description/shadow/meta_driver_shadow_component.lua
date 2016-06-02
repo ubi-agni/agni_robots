@@ -27,7 +27,7 @@ function driver_deploy(d, namespace, driver_name, driver_script)
     
     -- configure the component
     driver:getProperty("namespace"):set(namespace)
-    driver:getProperty("controller_name"):set(namespace.."/"..driver_name)
+    driver:getProperty("controller_name"):set(namespace..driver_name)
 
     driver:configure()
 
