@@ -29,12 +29,15 @@ function driver_deploy(d, namespace, driver_name, driver_script)
     driver:getProperty("namespace"):set(namespace)
     driver:getProperty("controller_name"):set(namespace..driver_name)
 
-    driver:configure()
+    if driver:configure() then
+      -- stat the component
+      driver:start()
 
-    -- stat the component
-    driver:start()
-
-    print("finished loading "..name)
+      print("finished loading "..name)
+    else
+      d:unloadComponent(name)
+      print(name.." could not be loaded")
+    end
   end
 end
 

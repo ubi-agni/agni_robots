@@ -84,67 +84,79 @@ function configureHook()
     joint_names[i] = namespace.."_"..joints[i+1]
   end
 
-  bridge:configure() 
-  -- add bridgename to the wrapper component peers
-  d:addPeer(tcName, bridgename)
+  if bridge:configure() then
   
-  -- EFFORT LIMITER
-  efflimname = namespace.."EffLim" 
-  d:loadComponent(efflimname, "RTTSrEffortLimiter") 
-  d:setActivity(efflimname, 0, 20, rtt.globals.ORO_SCHED_RT) 
-  EffLim = d:getPeer(efflimname)
-  ns=EffLim:getProperty("namespace")
-  ns:set(namespace)
-  ndof=EffLim:getProperty("nDOF"):set(20)
-  pth=EffLim:getProperty("pain_thresholds")
-  pth:get():resize(20)
-  pen=EffLim:getProperty("pain_endurances")
-  pen:get():resize(20)
-  hl=EffLim:getProperty("high_limits")
-  hl:get():resize(20)
-  ll=EffLim:getProperty("low_limits")
-  ll:get():resize(20)
-  -- set limits
-  for i=0,19,1 do 
-    pth[i] = 150.0
-    pen[i] = 3000.0
-    ll[i] = 0.2
-    hl[i] = 0.7
-  end 
-  
-  EffLim:configure()
-  -- add efflimname to the wrapper component peers
-  d:addPeer(tcName, efflimname) -- ##CHANGE ME##
+    -- add bridgename to the wrapper component peers
+    d:addPeer(tcName, bridgename)
+    
+    -- EFFORT LIMITER
+    efflimname = namespace.."EffLim" 
+    d:loadComponent(efflimname, "RTTSrEffortLimiter") 
+    d:setActivity(efflimname, 0, 20, rtt.globals.ORO_SCHED_RT) 
+    EffLim = d:getPeer(efflimname)
+    ns=EffLim:getProperty("namespace")
+    ns:set(namespace)
+    ndof=EffLim:getProperty("nDOF"):set(20)
+    pth=EffLim:getProperty("pain_thresholds")
+    pth:get():resize(20)
+    pen=EffLim:getProperty("pain_endurances")
+    pen:get():resize(20)
+    hl=EffLim:getProperty("high_limits")
+    hl:get():resize(20)
+    ll=EffLim:getProperty("low_limits")
+    ll:get():resize(20)
+    -- set limits
+    for i=0,19,1 do 
+      pth[i] = 150.0
+      pen[i] = 3000.0
+      ll[i] = 0.2
+      hl[i] = 0.7
+    end 
+    
+    if EffLim:configure() then
+      -- add efflimname to the wrapper component peers
+      d:addPeer(tcName, efflimname) -- ##CHANGE ME##
 
-  -- register ports for the compound controller depending on the type using generic names
-  -- among CMDJNTPOS, CURJNTPOS, CMDJNT, CURJNT, LOG, ...
-  register_port(in_portmap, 'CMDJNTPOS', bridgename..".JointPositionCommand")
-  register_port(in_portmap, 'CMDJNT', bridgename..".DesiredJoint")
-  
-  register_port(out_portmap, 'CURJNTPOS', bridgename..".JointPosition")
-  register_port(out_portmap, 'CURJNTVEL', bridgename..".JointVelocity")
-  register_port(out_portmap, 'CURJNTEFF', bridgename..".JointEffort")
+      -- register ports for the compound controller depending on the type using generic names
+      -- among CMDJNTPOS, CURJNTPOS, CMDJNT, CURJNT, LOG, ...
+      register_port(in_portmap, 'CMDJNTPOS', bridgename..".JointPositionCommand")
+      register_port(in_portmap, 'CMDJNT', bridgename..".DesiredJoint")
+      
+      register_port(out_portmap, 'CURJNTPOS', bridgename..".JointPosition")
+      register_port(out_portmap, 'CURJNTVEL', bridgename..".JointVelocity")
+      register_port(out_portmap, 'CURJNTEFF', bridgename..".JointEffort")
 
-  -- store the mapping in the properties
-  storeMapping("in_portmap",in_portmap)
-  storeMapping("out_portmap",out_portmap)
-  
-  -- set the resource to match the joints
-  resources:get():resize(24) 
-  -- fill the resource
-  for i=0,23,1 do
-    resources[i] = joint_names[i]
-  end 
+      -- store the mapping in the properties
+      storeMapping("in_portmap",in_portmap)
+      storeMapping("out_portmap",out_portmap)
+      
+      -- set the resource to match the joints
+      resources:get():resize(24) 
+      -- fill the resource
+      for i=0,23,1 do
+        resources[i] = joint_names[i]
+      end 
 
-  -- internal connection
-  d:connect(bridgename..".CtrlJointPosition", efflimname..".JointPosition", rtt.Variable("ConnPolicy"))
-  d:connect(bridgename..".CtrlJointEffort", efflimname..".JointEffort", rtt.Variable("ConnPolicy"))
-  d:connect(bridgename..".CtrlJointPositionCommand", efflimname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
+      -- internal connection
+      d:connect(bridgename..".CtrlJointPosition", efflimname..".JointPosition", rtt.Variable("ConnPolicy"))
+      d:connect(bridgename..".CtrlJointEffort", efflimname..".JointEffort", rtt.Variable("ConnPolicy"))
+      d:connect(bridgename..".CtrlJointPositionCommand", efflimname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
 
-  -- ROS in out
-  local ros=rtt.provides("ros")
-  d:stream(bridgename..".joint_states",ros:topic("/"..namespace.."/joint_states"))
+      -- ROS in out
+      local ros=rtt.provides("ros")
+      d:stream(bridgename..".joint_states",ros:topic("/"..namespace.."/joint_states"))
 
-  print(namespace.."Wrapper is configured")
-  return true
+      print(namespace.."Wrapper is configured")
+      return true
+    else
+      print ("failed to configure the effort_limiter, unloading the effort_limiter and bridge")
+      d:unloadComponent(efflimname)
+      d:unloadComponent(bridgename)
+      return false
+    end
+  else
+    print ("failed to configure the bridge, unloading the bridge")
+    d:unloadComponent(bridgename)
+    return false
+  end
 end

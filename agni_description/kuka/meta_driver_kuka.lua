@@ -66,87 +66,100 @@ function configureHook()
   d:setActivity(friname, 0, 80, rtt.globals.ORO_SCHED_RT)
   fri = d:getPeer(friname)
   fri:getProperty("fri_port"):set(port)
-  fri:configure()
+  if fri:configure() then
 
-  -- add fri to the parent component peers
-  d:addPeer(tcName, friname)  
+    -- add fri to the parent component peers
+    d:addPeer(tcName, friname)  
 
-  -- register ports for the compound controller
-  -- fri should not advertize this port to the exterior, it must be thorough the filter for protection
-  --register_port(in_portmap, 'CMDJNTPOS', friname..".JointPositionCommand")
-  register_port(out_portmap, 'CURJNTPOS', friname..".JointPosition")
+    -- register ports for the compound controller
+    -- fri should not advertize this port to the exterior, it must be thorough the filter for protection
+    --register_port(in_portmap, 'CMDJNTPOS', friname..".JointPositionCommand")
+    register_port(out_portmap, 'CURJNTPOS', friname..".JointPosition")
 
-  -- deploy joint state publisher
-  jspname = namespace.."JntPub"
-  d:loadComponent(jspname, "JointStatePublisher")
-  d:setActivity(jspname, 0.01, 10, rtt.globals.ORO_SCHED_RT)
-  jsp = d:getPeer(jspname)
-  joint_names = jsp:getProperty("joint_names")
-  joint_names:get():resize(7)
+    -- deploy joint state publisher
+    jspname = namespace.."JntPub"
+    d:loadComponent(jspname, "JointStatePublisher")
+    d:setActivity(jspname, 0.01, 10, rtt.globals.ORO_SCHED_RT)
+    jsp = d:getPeer(jspname)
+    joint_names = jsp:getProperty("joint_names")
+    joint_names:get():resize(7)
 
-  -- set the resource to match the controlled joints
-  resources:get():resize(7)
+    -- set the resource to match the controlled joints
+    resources:get():resize(7)
 
-  for i=0,6,1 do 
-    joint_names[i] = namespace.."_arm_"..i.."_joint"
-    resources[i] = joint_names[i]
-  end 
-  jsp:configure()
-  -- add jsp to the parent component peers
-  d:addPeer(tcName, jspname) 
+    for i=0,6,1 do 
+      joint_names[i] = namespace.."_arm_"..i.."_joint"
+      resources[i] = joint_names[i]
+    end 
+    
+    if jsp:configure() then
+      -- add jsp to the parent component peers
+      d:addPeer(tcName, jspname) 
 
-  -- deploy the filter and advertize its input/output
-  filtername = namespace.."Filter"
-  d:loadComponent(filtername, "FLWRFilter")
-  d:setActivity(filtername, 0, 70, rtt.globals.ORO_SCHED_RT)
+      -- deploy the filter and advertize its input/output
+      filtername = namespace.."Filter"
+      d:loadComponent(filtername, "FLWRFilter")
+      d:setActivity(filtername, 0, 70, rtt.globals.ORO_SCHED_RT)
 
-  -- set velocity and acceleration limits
-  filter = d:getPeer(filtername)
-  filter:getProperty("CUTOFF_FREQUENCY"):set(10.0)
-  filter:getProperty("TIMESTEP"):set(0.002)
-  filter:getProperty("MODE"):set(1)
-  vel_limits=filter:getProperty("VELOCITY_LIMITS")
-  vel_limits:get():resize(7)
-  acc_limits=filter:getProperty("ACCEL_LIMITS")
-  acc_limits:get():resize(7)
-  -- TODO: Read from file of better request from URDF
-  for i=0,6,1 do 
-    vel_limits[i] = 1.8
-   acc_limits[i] = 8.0
-  end 
-  filter:configure()
+      -- set velocity and acceleration limits
+      filter = d:getPeer(filtername)
+      filter:getProperty("CUTOFF_FREQUENCY"):set(10.0)
+      filter:getProperty("TIMESTEP"):set(0.002)
+      filter:getProperty("MODE"):set(1)
+      vel_limits=filter:getProperty("VELOCITY_LIMITS")
+      vel_limits:get():resize(7)
+      acc_limits=filter:getProperty("ACCEL_LIMITS")
+      acc_limits:get():resize(7)
+      -- TODO: Read from file of better request from URDF
+      for i=0,6,1 do 
+        vel_limits[i] = 1.8
+       acc_limits[i] = 8.0
+      end
+       
+      filter:configure()
 
-  -- register ports for the compound controller
-  register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
-  register_port(out_portmap, 'LOG', filtername..".Log")
-  register_port(out_portmap, 'CURJNT', filtername..".CurrentJoint")
+      -- register ports for the compound controller
+      register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
+      register_port(out_portmap, 'LOG', filtername..".Log")
+      register_port(out_portmap, 'CURJNT', filtername..".CurrentJoint")
 
-  -- add filter to the parent component peers
-  d:addPeer(tcName, filtername) 
+      -- add filter to the parent component peers
+      d:addPeer(tcName, filtername) 
 
-  -- store the mapping in the properties
-  storeMapping("in_portmap",in_portmap)
-  storeMapping("out_portmap",out_portmap)
+      -- store the mapping in the properties
+      storeMapping("in_portmap",in_portmap)
+      storeMapping("out_portmap",out_portmap)
 
-  -- internal connection
-  d:connect(friname..".RobotState", diagname..".RobotState", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".JointVelocity", jspname..".JointVelocity", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
-  d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
-  d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
+      -- internal connection
+      d:connect(friname..".RobotState", diagname..".RobotState", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".JointVelocity", jspname..".JointVelocity", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
+      d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
 
-  -- ROS in out
-  local ros=rtt.provides("ros")
-  d:stream(diagname..".Diagnostics",ros:topic(namespace.."/diagnostics"))
-  d:stream(jspname..".joint_state",ros:topic(namespace.."/joint_states"))
-  d:stream(friname..".fromKRL",ros:topic(namespace.."/fromKRL"))
-  d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
+      -- ROS in out
+      local ros=rtt.provides("ros")
+      d:stream(diagname..".Diagnostics",ros:topic(namespace.."/diagnostics"))
+      d:stream(jspname..".joint_state",ros:topic(namespace.."/joint_states"))
+      d:stream(friname..".fromKRL",ros:topic(namespace.."/fromKRL"))
+      d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
 
-  print(namespace.."kuka_controller configured")
-  return true
+      print(namespace.."kuka_controller configured")
+      return true
+    else
+      print(namespace.."JSP could not be configured, unloading it")
+      d:unloadComponent(jspname)
+      d:unloadComponent(friname)
+      return false
+    end
+  else
+    print(namespace.."FRI could not be configured, unloading it")
+    d:unloadComponent(friname)
+    return false
+  end
 end
 
