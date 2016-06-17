@@ -1,0 +1,17 @@
+<library path="src">
+  <class name="SrDashboard" type="rqt_sr_dashboard.rqt_sr_dashboard.RqtSrDashboard" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      A Python GUI plugin to interact with the shadow robot state
+    </description>
+    <qtgui>
+      <group>
+        <label>Robot</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins related to specific robots.</statustip>
+      </group>
+      <label>SR Dashboard</label>
+      <icon type="theme">task-past-due</icon>
+      <statustip>A Python GUI plugin to interact with the robot state.</statustip>
+    </qtgui>
+  </class>
+</library>
