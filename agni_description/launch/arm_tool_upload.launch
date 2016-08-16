@@ -1,5 +1,5 @@
 <launch>
-	<!-- load description of arm+hand into robot_description -->
+	<!-- load description of arm+tool into robot_description -->
   <arg name="arm_type"/>
   <arg name="tool_type"/>
   <arg name="sim" default="1"/>
