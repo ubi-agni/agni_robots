@@ -293,7 +293,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        pa10_frame:
+        frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -466,7 +466,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 176; 176; 176
-    Fixed Frame: pa10_frame
+    Fixed Frame: frame
     Frame Rate: 30
   Name: root
   Tools:

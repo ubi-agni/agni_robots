@@ -106,7 +106,7 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        kuka_frame:
+        frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -498,7 +498,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 176; 176; 176
-    Fixed Frame: kuka_frame
+    Fixed Frame: frame
     Frame Rate: 30
   Name: root
   Tools:
