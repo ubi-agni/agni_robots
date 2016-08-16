@@ -24,13 +24,29 @@
       </collision>
       <collision>
         <origin xyz="0 0 0.03034" rpy="0 0 0"/>
-        <geometry>
+        <geometry name="${prefix}foam_collision_geom">
           <box size="0.095 0.095 0.006"/>
         </geometry>
       </collision>
     </link>
 
-    <gazebo reference="${prefix}myrmex_quick_mount"></gazebo>
+    <gazebo reference="${prefix}myrmex_quick_mount">
+      <sensor type="contact" name="${prefix}myrmex_contact">
+        <always_on>1</always_on>
+        <update_rate>1000.0</update_rate>
+        <contact>
+          <collision>${prefix}foam_collision</collision>
+          <topic>${prefix}foam_collision</topic>
+        </contact>
+        <plugin name="${prefix}myrmex_gazebo_ros_contact_controller" filename="libgazebo_ros_contact.so">
+          <alwaysOn>true</alwaysOn>
+          <frameName>${prefix}myrmex</frameName>
+          <updateRate>100.0</updateRate>
+          <bumperTopicName>contacts/${prefix}myrmex</bumperTopicName>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
   </xacro:macro>
 
   <xacro:macro name="myrmex_tactile_markers" params="parent topic *origin">
