@@ -64,6 +64,22 @@ tools:
       tactile: shadow
       side:    right
 
+  schunk_hand_right:
+    file: ../robots/schunk_hand.urdf.xacro
+    macro: schunk_hand
+    mount: sdh_mount
+    props:
+      mass:  2.0
+      cog: "0.0 0.0 0.15"
+
+  schunk_hand_left:
+    file: ../robots/schunk_hand.urdf.xacro
+    macro: schunk_hand
+    mount: sdh_mount
+    props:
+      mass:  2.0
+      cog: "0.0 0.0 0.15"
+
   myrmex:
     file: ../robots/myrmex.urdf.xacro
     macro: myrmex

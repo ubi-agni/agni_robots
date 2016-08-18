@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(agni_description)
-find_package(catkin REQUIRED COMPONENTS urdf sr_description lwr_description pa10_7a_description pa10_7c_description)
+find_package(catkin REQUIRED COMPONENTS urdf sr_description lwr_description pa10_7a_description pa10_7c_description schunk_description)
 find_package(xacro 1.10 REQUIRED)
 find_package(flobi_description)
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
     DEPENDS
-    CATKIN_DEPENDS urdf sr_description lwr_description pa10_7a_description pa10_7c_description flobi_description xacro
+    CATKIN_DEPENDS urdf sr_description lwr_description pa10_7a_description pa10_7c_description schunk_description flobi_description xacro
     INCLUDE_DIRS
     LIBRARIES
 )
@@ -94,7 +94,7 @@ install(DIRECTORY launch/
 # testing
 enable_testing()
 foreach(arm - pa10a pa10c kukaL kukaR)
-  foreach(tool - shadow_motor_left shadow_motor_right shadow_muscle_left shadow_muscle_right myrmex poking_stick_ubi poking_stick_rigid)
+  foreach(tool - shadow_motor_left shadow_motor_right shadow_muscle_left shadow_muscle_right schunk_hand_right schunk_hand_left myrmex poking_stick_ubi poking_stick_rigid)
     add_test(
       NAME test-${arm}-${tool}
       COMMAND ${CATKIN_ENV} ${_xacro_py} -o /dev/null --inorder ${CMAKE_CURRENT_SOURCE_DIR}/robots/single.urdf.xacro ARM:=${arm} TOOL:=${tool})
