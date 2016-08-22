@@ -14,6 +14,7 @@ catkin_package(
 
 
 xacro_add_xacro_file(robots/sfb.urdf.xacro INORDER)
+xacro_add_xacro_file(robots/reba.urdf.xacro INORDER)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 if(flobi_description_FOUND)
   xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
