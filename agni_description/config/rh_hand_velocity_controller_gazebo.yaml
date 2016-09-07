@@ -1,0 +1,222 @@
+default_joint_controller_type: sr_mechanism_controllers/SrhJointVelocityController
+sh_rh_ffj0_velocity_controller:
+  joint: rh_FFJ0
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.5
+    i_clamp: 0.8
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_ffj3_velocity_controller:
+  joint: rh_FFJ3
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: 0.0
+    i_clamp: 0.0
+    max_force: 3.0
+    p: -0.1
+
+sh_rh_ffj4_velocity_controller:
+  joint: rh_FFJ4
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -1.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_lfj0_velocity_controller:
+  joint: rh_LFJ0
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.5
+    i_clamp: 0.8
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_lfj3_velocity_controller:
+  joint: rh_LFJ3
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: 0.0
+    i_clamp: 0.0
+    max_force: 3.0
+    p: -0.1
+
+sh_rh_lfj4_velocity_controller:
+  joint: rh_LFJ4
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -1.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_lfj5_velocity_controller:
+  joint: rh_LFJ5
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -1.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_mfj0_velocity_controller:
+  joint: rh_MFJ0
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.5
+    i_clamp: 0.8
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_mfj3_velocity_controller:
+  joint: rh_MFJ3
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: 0.0
+    i_clamp: 0.0
+    max_force: 3.0
+    p: -0.1
+
+sh_rh_mfj4_velocity_controller:
+  joint: rh_MFJ4
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -1.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_rfj0_velocity_controller:
+  joint: rh_RFJ0
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.5
+    i_clamp: 0.8
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_rfj3_velocity_controller:
+  joint: rh_RFJ3
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: 0.0
+    i_clamp: 0.0
+    max_force: 3.0
+    p: -0.1
+
+sh_rh_rfj4_velocity_controller:
+  joint: rh_RFJ4
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -1.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_thj1_velocity_controller:
+  joint: rh_THJ1
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.5
+    i_clamp: 0.8
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_thj2_velocity_controller:
+  joint: rh_THJ2
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.5
+    i_clamp: 0.8
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_thj3_velocity_controller:
+  joint: rh_THJ3
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_thj4_velocity_controller:
+  joint: rh_THJ4
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.0
+    i_clamp: 0.5
+    max_force: 3.0
+    p: 0.0
+
+sh_rh_thj5_velocity_controller:
+  joint: rh_THJ5
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.0
+    i_clamp: 0.7
+    max_force: 5.0
+    p: 0.0
+
+sh_rh_wrj1_velocity_controller:
+  joint: rh_WRJ1
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.0
+    i_clamp: 1.0
+    max_force: 10.0
+    p: 0.0
+
+sh_rh_wrj2_velocity_controller:
+  joint: rh_WRJ2
+  type: sr_mechanism_controllers/SrhJointVelocityController
+  pid:
+    d: 0.0
+    friction_deadband: 100.0
+    i: -2.0
+    i_clamp: 1.0
+    max_force: 10.0
+    p: -0.2
+
+

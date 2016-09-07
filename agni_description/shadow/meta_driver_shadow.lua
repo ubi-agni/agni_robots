@@ -63,7 +63,7 @@ function configureHook()
   d:loadService(bridgename,"rosservice")
   ns=bridge:getProperty("namespace")
   ns:set(namespace)
-  ctrltype=bridge:getProperty("default_joint_controller_type")
+  ctrltype=bridge:getProperty("desired_joint_controller_type")
   --ctrltype:set("sr_mechanism_controllers/SrhMixedPositionVelocityJointController")
 
   ctrl_joints = {'FFJ0', 'FFJ3', 'FFJ4', 'LFJ0', 'LFJ3', 'LFJ4', 'LFJ5', 'MFJ0', 'MFJ3', 'MFJ4', 'RFJ0', 'RFJ3', 'RFJ4',
@@ -120,6 +120,7 @@ function configureHook()
       -- register ports for the compound controller depending on the type using generic names
       -- among CMDJNTPOS, CURJNTPOS, CMDJNT, CURJNT, LOG, ...
       register_port(in_portmap, 'CMDJNTPOS', bridgename..".JointPositionCommand")
+      register_port(in_portmap, 'CMDJNTVEL', bridgename..".JointVelocityCommand")
       register_port(in_portmap, 'CMDJNT', bridgename..".DesiredJoint")
       
       register_port(out_portmap, 'CURJNTPOS', bridgename..".JointPosition")
