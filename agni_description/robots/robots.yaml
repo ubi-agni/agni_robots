@@ -16,12 +16,29 @@ arms:
     props:
       port: 49940
       init_joint_pos: "-0.52 1.04 0 0 0 0 0"
+      auto_on: 1
   kukaR:
     file:  ../robots/kuka_arm.urdf.xacro
     macro: kuka_arm
     props:
       port: 49938
       init_joint_pos: "0.52 1.04 0 0 0 0 0"
+      auto_on: 1
+
+  lwrL:
+    file:  ../robots/kuka_arm.urdf.xacro
+    macro: kuka_arm
+    props:
+      port: 49940
+      init_joint_pos: "-0.52 1.04 0 0 0 0 0"
+      auto_on: 0
+  lwrR:
+    file:  ../robots/kuka_arm.urdf.xacro
+    macro: kuka_arm
+    props:
+      port: 49938
+      init_joint_pos: "0.52 1.04 0 0 0 0 0"
+      auto_on: 0
 
 tools:
   shadow_motor_left:
