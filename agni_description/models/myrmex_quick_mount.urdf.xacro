@@ -73,10 +73,10 @@
           <frameName>${prefix}myrmex_foam</frameName>
           <updateRate>100.0</updateRate>
           <bumperTopicName>contacts/${prefix}myrmex</bumperTopicName>
+          <tactileTopicName>tactile_contact_states/${prefix}myrmex</tactileTopicName>
         </plugin>
       </sensor>
     </gazebo>
-    
   </xacro:macro>
 
   <xacro:macro name="myrmex_tactile_markers" params="parent topic *origin">
