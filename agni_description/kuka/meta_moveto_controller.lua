@@ -42,7 +42,7 @@ function configureHook()
   d:import("rtt_diagnostic_msgs")
   d:import("s_log_saver")
   d:import("agni_rtt_services")
-  d:import("tactile_servoing") 
+  d:import("reba_moveto") 
   d:import("rtt_trajectory_msgs") --for the desired trajectory
   d:import("rtt_std_srvs")
   d:import("rtt_geometry_msgs")
@@ -89,10 +89,11 @@ function configureHook()
   d:addPeer(tcName, comp3name) -- ##CHANGE ME##
   
     -- deploy your components that are part of the wrapper
-  comp1name = namespace.."TSTest" -- ##CHANGE ME##
-  d:loadComponent(comp1name, "TactileServoing") -- ##CHANGE ME##
+  comp1name = namespace.."MTTest" -- ##CHANGE ME##
+  d:loadComponent(comp1name, "RebaMoveTo") -- ##CHANGE ME##
   d:setActivity(comp1name, 0.004, 60, rtt.globals.ORO_SCHED_RT) -- ##CHANGE ME##
   comp1 = d:getPeer(comp1name) -- ##CHANGE ME##
+  comp1:getProperty("robot_prefix"):set(namespace)
   d:addPeer(comp1name, comp3name) -- ##CHANGE ME##
   d:addPeer(tcName, comp1name)
   comp1:configure() -- ##CHANGE ME##
@@ -104,9 +105,8 @@ function configureHook()
   -- among CMDJNTPOS|VEL|EFF, CURJNTPOS|VEL|EFF, CMDJNT, CURJNT, LOG, ...
   -- register ports for the compound controller
   register_port(in_portmap, 'LOG', comp2name..".Log")
-  register_port(out_portmap, 'CMDJNT', comp1name..".DesiredJointRA")
-  register_port(in_portmap, 'CURJNT', comp1name..".RealJointRA")
-  register_port(in_portmap, 'CMDJNT', comp1name..".TaskJointRA")
+  register_port(out_portmap, 'CMDJNT', comp1name..".DesiredJoint")
+  register_port(in_portmap, 'CURJNT', comp1name..".RealJoint")
 --   register_port(in_portmap, 'Int32', comp1name..".ControllerTypeRA")
   
   -- store the mapping in the properties
@@ -125,23 +125,15 @@ function configureHook()
 --   d:connect(comp1name..".DesiredJointRA", comp2name..".Log", rtt.Variable("ConnPolicy")) -- ##CHANGE ME##
   -- ROS in out
   local ros=rtt.provides("ros")
-  d:stream(comp1name..".TaskJointRA",ros:topic("/desiredpose_cmd"))
-  d:stream(comp1name..".ControllerTypeRA",ros:topic("/controller_type"))
-  d:stream(comp1name..".MyrmexRA",ros:topic("/right/contacts/rh_myrmex"))
   d:stream(comp3name..".Attach", ros:topic("/gazebo_attach"))
   d:stream(comp3name..".Attached", ros:topic("/gazebo_attached"))
   
   
   comp1:loadService("rosservice")
-  comp1:provides("rosservice"):connect("increment", "/increment", "std_srvs/Empty")
+  comp1:provides("rosservice"):connect("liftObject_servicecall", "/liftObject_servicecall", "std_srvs/Empty")
   comp1:provides("rosservice"):connect("goHome_servicecall", "/goHome_servicecall", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect("tactileServoing_servicecall", "/tactileServoing_servicecall", "std_srvs/Empty")
   comp1:provides("rosservice"):connect("setGrasp_servicecall", "/setGrasp_servicecall", "reba_srvs/SetPose")
   comp1:provides("rosservice"):connect("localMovement_servicecall", "/localMovement_servicecall", "reba_srvs/Localmv")
-  comp1:provides("rosservice"):connect( "updated", "/updated", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect( "goHomeServer", "/goHomeServer", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect( "setGraspServer", "/setGraspServer", "reba_srvs/SetPose")
-  comp1:provides("rosservice"):connect( "setTargetServer", "/setTargetServer", "std_srvs/Empty")
 
 
   print(namespace.."Wrapper is configured")
