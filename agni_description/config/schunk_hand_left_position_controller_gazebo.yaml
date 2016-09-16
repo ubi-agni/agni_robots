@@ -1,0 +1,74 @@
+default_joint_controller_type: position_controllers/JointPositionController
+lh_sdh_knuckle_joint_position_controller:
+  joint: lh_sdh_knuckle_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_finger_12_joint_position_controller:
+  joint: lh_sdh_finger_12_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_finger_13_joint_position_controller:
+  joint: lh_sdh_finger_13_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_finger_21_joint_position_controller:
+  joint: lh_sdh_finger_21_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_finger_22_joint_position_controller:
+  joint: lh_sdh_finger_22_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_finger_23_joint_position_controller:
+  joint: lh_sdh_finger_23_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_thumb_1_joint_position_controller:
+  joint: lh_sdh_thumb_1_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_thumb_2_joint_position_controller:
+  joint: lh_sdh_thumb_2_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+lh_sdh_thumb_3_joint_position_controller:
+  joint: lh_sdh_thumb_3_joint
+  pid:
+    d: 0.005
+    i: 0.1
+    i_clamp: 0.05
+    p: 0.5
+  type: position_controllers/JointPositionController
+
