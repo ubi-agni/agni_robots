@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot name="tactile_tool" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="tactile_tool" params="prefix:=''">
+	  
+	<link name="${prefix}tactile_tool">
+	<inertial>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<mass value="0.080" />
+		<inertia ixx="0.0002" ixy="0.0" ixz="0.0"
+		iyy="0.0002" iyz="0.0" izz="0.0001" />
+	</inertial>
+	<visual>
+		<origin xyz="0 0 0.1" rpy="0 0 0"/>
+		<geometry>
+			<cylinder radius=".02" length=".2" />
+		</geometry>
+	</visual>
+	</link>
+   
+    <joint name="${prefix}tactiletool_handle_joint" type="fixed">
+      <parent link="${prefix}tactile_tool" />
+      <child link="${prefix}myrmex_quick_mount" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+	  
+    <link name="${prefix}myrmex_quick_mount">
+       <inertial>
+        <origin xyz="0 0 0.03" rpy="0 0 0" />
+        <mass value="0.180" />
+        <inertia ixx="0.0002" ixy="0.0" ixz="0.0"
+        iyy="0.0002" iyz="0.0" izz="0.0001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <geometry>
+          <mesh scale="0.001 0.001 0.001"
+                filename="package://agni_description/models/meshes/myrmex_quick_mount.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.00797" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.06725" length="0.01584"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin xyz="0 0 0.02159" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.060" length="0.0115"/>
+        </geometry>
+      </collision>
+    </link>
+   
+    <joint name="${prefix}myrmex_bumper_joint" type="prismatic">
+      <parent link="${prefix}myrmex_quick_mount" />
+      <child link="${prefix}myrmex_foam" />
+      <origin xyz="0 0 0.23034" rpy="0 0 0"/>
+      <axis xyz="0 0 1" />
+       <limit lower="0.0" upper="0.001" effort="1" velocity="0.1" />
+    </joint>
+    
+    <link name="${prefix}myrmex_foam">
+      <inertial>
+        <origin xyz="0 0 0.0" rpy="0 0 0" />
+        <mass value="0.005" />
+        <inertia ixx="0.000002" ixy="0.0" ixz="0.0"
+        iyy="0.000002" iyz="0.0" izz="0.000001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.095 0.095 0.006"/>
+        </geometry>
+      </visual>
+      <collision name="${prefix}myrmex_foam_collision">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.095 0.095 0.006"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo reference="${prefix}myrmex_foam">
+      <material>Gazebo/Black</material>
+      <sensor type="contact" name="${prefix}myrmex_foam_contact">
+        <always_on>1</always_on>
+        <update_rate>1000.0</update_rate>
+        <contact>
+          <collision>${prefix}myrmex_foam_collision</collision>
+          <topic>${prefix}myrmex_foam_collision</topic>
+        </contact>
+        <plugin name="${prefix}myrmex_gazebo_ros_contact_controller" filename="libgazebo_ros_contact.so">
+          <alwaysOn>true</alwaysOn>
+          <frameName>${prefix}myrmex_foam</frameName>
+          <updateRate>100.0</updateRate>
+          <bumperTopicName>contacts/${prefix}myrmex</bumperTopicName>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
+  </xacro:macro>
+
+  <xacro:macro name="myrmex_tactile_markers" params="parent topic *origin">
+    <xacro:property name="cell_size" value="0.005" />
+    <xacro:property name="myrmex_size" value="16" />
+    <!-- tactile marker mapping description -->
+    <sensor name="myrmex_sensor" update_rate="100">
+      <parent link="${parent}"/>
+      <xacro:insert_block name="origin"/>
+      <tactile>
+        <array rows="${myrmex_size}" cols="${myrmex_size}" 
+            order="row-major" size="${cell_size} ${cell_size}" 
+            offset="${cell_size * myrmex_size/2.0} ${cell_size * myrmex_size/2.0}">
+        </array>
+      </tactile>
+    </sensor>
+  </xacro:macro>
+</robot>

@@ -105,6 +105,14 @@ tools:
       mass:  0.185
       cog: "0.0 0.0 0.01"
 
+  tactiletool:
+    file: ../robots/tactiletool.urdf.xacro
+    macro: tactiletool
+    mount: tactile_tool
+    props:
+      mass:  0.285
+      cog: "0.0 0.0 0.01"
+
   poking_stick_ubi:
     file: ../robots/poking_stick.urdf.xacro
     macro: poking_stick
