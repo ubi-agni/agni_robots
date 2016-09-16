@@ -19,7 +19,7 @@
 	<!-- FRAME -->
 	<xacro:if value="${FRAME not in ['', '-']}">
 		<xacro:if value="${FRAME == 'famula'}">
-			<xacro:include filename="../urdf/frame-half.urdf.xacro"/>
+			<xacro:include filename="../urdf/frame-half_mesh.urdf.xacro"/>
 		</xacro:if>
 		<xacro:if value="${FRAME == 'sfb'}">
 			<xacro:include filename="../urdf/frame.urdf.xacro"/>
