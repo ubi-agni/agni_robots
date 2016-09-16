@@ -122,8 +122,8 @@ function configureHook()
 
       -- set velocity and acceleration limits
       filter = d:getPeer(filtername)
-      filter:getProperty("CUTOFF_FREQUENCY"):set(cutoff)
-      filter:getProperty("TIMESTEP"):set(timestep)
+      filter:getProperty("CUTOFF_FREQUENCY"):set(20.0)
+      filter:getProperty("TIMESTEP"):set(0.004)
       filter:getProperty("MODE"):set(1)
       vel_limits=filter:getProperty("VELOCITY_LIMITS")
       vel_limits:get():resize(7)
@@ -131,8 +131,8 @@ function configureHook()
       acc_limits:get():resize(7)
       -- TODO: Read from file of better request from URDF
       for i=0,6,1 do 
-        vel_limits[i] = 0.8
-       acc_limits[i] = 4.0
+        vel_limits[i] = 1.8
+       acc_limits[i] = 8.0
       end
        
       filter:configure()
