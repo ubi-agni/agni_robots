@@ -86,16 +86,16 @@ tools:
     macro: schunk_hand
     mount: sdh_mount
     props:
-      mass:  2.0
-      cog: "0.0 0.0 0.15"
+      mass:  1.95
+      cog: "0.0 0.0 0.0813"
 
   schunk_hand_left:
     file: ../robots/schunk_hand.urdf.xacro
     macro: schunk_hand
     mount: sdh_mount
     props:
-      mass:  2.0
-      cog: "0.0 0.0 0.15"
+      mass:  1.95
+      cog: "0.0 0.0 0.0813"
 
   myrmex:
     file: ../robots/myrmex.urdf.xacro
