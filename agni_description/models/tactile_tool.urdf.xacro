@@ -76,7 +76,9 @@
       <collision name="${prefix}myrmex_foam_collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="0.095 0.095 0.006"/>
+          <!--box size="0.095 0.095 0.006"/-->
+          <mesh scale="1.0 1.0 1.0"
+                filename="package://agni_description/models/meshes/myrmex_foam.stl"/>
         </geometry>
       </collision>
     </link>
