@@ -14,7 +14,9 @@ iface_spec = {
    ports={},
    properties={
       { name='namespace', datatype='string', desc="namespace as prefix" },
-      { name='port', datatype='int', desc="port on which FRI listens" },
+      { name='port', datatype='int', desc="port on which FRI listens (default 49938)" },
+      { name='filter_cutoff_freq', datatype='float', desc="filter cutoff frequency (default 10.0)" },
+      { name='timestep', datatype='float', desc="timestep of FRI (default 0.001)" },
       { name='in_portmap', datatype='agni_rtt_services/ControlIOMap', desc="input port mapping" },
       { name='out_portmap', datatype='agni_rtt_services/ControlIOMap', desc="output port mapping" },
       { name='resources', datatype='strings', desc="joints controlled by this controller" },
@@ -42,25 +44,39 @@ function configureHook()
 
   -- retrieve the properties from the interface parameters
   namespace = iface.props.namespace:get()
+  port = iface.props.port:get()
+  if port == 0 then
+    port = 49938
+  end
+  timestep = iface.props.timestep:get()
+  if timestep == 0 then
+    timestep = 0.001
+  end
+  cutoff = iface.props.filter_cutoff_freq:get()
+  if cutoff == 0 then
+    cutoff = 10.0
+  end
+ 
   -- advertize the type of controller you set (useful for controller_manager)
   controller_type = tc:getProperty("controller_type")
   -- only position is advertized here as the filter is sending positions
   controller_type:set("position_controllers/JointPositionController")
   resources = tc:getProperty("resources")
 
-  port = iface.props.port:get()
   local in_portmap={}
   local out_portmap={}
 
+  -- diag timestep is 10 times slower than timestep
+  diagtimestep = timestep * 10.0
   diagname = namespace.."LWRDiag"
   d:loadComponent(diagname, "FRIDiagnostics")
-  d:setActivity(diagname, 0.01, 2, rtt.globals.ORO_SCHED_RT)
+  d:setActivity(diagname, diagtimestep, 2, rtt.globals.ORO_SCHED_RT)
   diag = d:getPeer(diagname)
   diag:configure()
   -- add dia to the parent component peers
   d:addPeer(tcName, diagname)        
 
- -- deploy FRI and advertize its input/output
+  -- deploy FRI and advertize its input/output
   friname = namespace.."FRI"
   d:loadComponent(friname, "FRIComponent")
   d:setActivity(friname, 0, 80, rtt.globals.ORO_SCHED_RT)
@@ -103,8 +119,8 @@ function configureHook()
 
       -- set velocity and acceleration limits
       filter = d:getPeer(filtername)
-      filter:getProperty("CUTOFF_FREQUENCY"):set(10.0)
-      filter:getProperty("TIMESTEP"):set(0.002)
+      filter:getProperty("CUTOFF_FREQUENCY"):set(cutoff)
+      filter:getProperty("TIMESTEP"):set(timestep)
       filter:getProperty("MODE"):set(1)
       vel_limits=filter:getProperty("VELOCITY_LIMITS")
       vel_limits:get():resize(7)

@@ -8,8 +8,12 @@ package.path = lua_path..'/scripts'..'/?.lua;' .. package.path
 -- agni functionalities (wait for peer, etc)
 require "agni_tools"
 
-function driver_deploy(d, namespace, driver_name, driver_script, port)
+function driver_deploy(d, namespace, driver_name, driver_script, port, timestep, cutoff_freq)
   name = namespace..driver_name
+  -- backward compatibility with default values for timestep and cutoff_freq
+  timestep = timestep or 0.001
+  cutoff_freq = cutoff_freq or 10.0
+  
   if hasPeer(d, name) then
     print(name.." already loaded")
   else
@@ -28,6 +32,8 @@ function driver_deploy(d, namespace, driver_name, driver_script, port)
     -- configure the component
     driver:getProperty("namespace"):set(namespace)
     driver:getProperty("port"):set(port)
+    driver:getProperty("timestep"):set(timestep)
+    driver:getProperty("filter_cutoff_freq"):set(cutoff_freq)
     driver:getProperty("controller_name"):set(name)
 
     if driver:configure() then
