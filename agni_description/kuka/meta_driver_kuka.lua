@@ -133,9 +133,32 @@ function configureHook()
       end
        
       filter:configure()
+      
+      laoname = namespace.."LwrAutoOn"
+      d:loadComponent(laoname,"RttLwrAutoOn")
+      d:setActivity(laoname, timestep*10.0, 10, rtt.globals.ORO_SCHED_RT)
+      lao = d:getPeer(laoname)
+      ns=lwr_auto_on:getProperty("namespace")
+      ns:set(namespace)
+      cmd_timeout=lao:getProperty("command_timeout")
+      cmd_timeout:set(2.0)
+      brake_timeout=lao:getProperty("brake_timeout")
+      brake_timeout:set(5.0)
+      
+      laostart = lao:configure()
+      if ~laostart then
+        print(namespace.."LwrAutoStart could not be configured, not using it")
+        d:unloadComponent(laoname)
+      else
+        -- add lwr auto on to the parent component peers
+        d:addPeer(tcName, laoname)
+      end
 
       -- register ports for the compound controller
       register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
+      if laostart then
+        register_port(in_portmap, 'CMDJNT', laoname..".DesiredJoint")
+      end
       register_port(out_portmap, 'LOG', filtername..".Log")
       register_port(out_portmap, 'CURJNT', filtername..".CurrentJoint")
 
@@ -156,6 +179,13 @@ function configureHook()
       d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
       d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
+
+      if laostart then
+        d:connect(friname..".fromKRL", laoname..".fromKRL", rtt.Variable("ConnPolicy"))
+        d:connect(friname..".toKRL", laoname..".toKRL", rtt.Variable("ConnPolicy"))
+        d:connect(friname..".RobotState", laoname..".RobotState", rtt.Variable("ConnPolicy"))
+        d:connect(friname..".FRIState", laoname..".FRIState", rtt.Variable("ConnPolicy"))
+      end
 
       -- ROS in out
       local ros=rtt.provides("ros")
