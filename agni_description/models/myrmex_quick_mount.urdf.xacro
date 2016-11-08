@@ -51,7 +51,7 @@
           <box size="0.095 0.095 0.006"/>
         </geometry>
       </visual>
-      <collision name="${prefix}myrmex_foam_collision">
+      <collision name="${prefix}myrmex_foam">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh scale="1.0 1.0 1.0"
