@@ -110,7 +110,7 @@ tools:
     macro: tactiletool
     mount: tactile_tool
     props:
-      mass:  0.285
+      mass:  0.265
       cog: "0.0 0.0 0.01"
 
   poking_stick_ubi:
@@ -119,7 +119,7 @@ tools:
     mount: poking_stick
     props:
       tactile: ubi
-      mass:  0.500
+      mass:  0.505
       cog: "0.0 0.0 0.015"
   
   poking_stick_ubi_ati:
@@ -128,7 +128,7 @@ tools:
     mount: ft_sensor_link
     props:
       tactile: ubi
-      mass:  0.700
+      mass:  0.760
       cog: "0.0 0.0 0.045"
 
   poking_stick_rigid:
@@ -136,7 +136,7 @@ tools:
     macro: poking_stick
     mount: poking_stick
     props:
-      mass:  0.500
+      mass:  0.492
       cog: "0.0 0.0 0.015"
       tactile: ""
       
@@ -146,7 +146,7 @@ tools:
     mount: ft_sensor_link
     props:
       tactile: ubi
-      mass:  0.700
+      mass:  0.747
       cog: "0.0 0.0 0.045"
       
   calibration_tool:
