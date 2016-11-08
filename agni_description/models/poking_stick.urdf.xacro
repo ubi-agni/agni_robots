@@ -3,6 +3,12 @@
 
   <xacro:macro name="poking_stick_generic" params="prefix tactile">
   <link name="${prefix}poking_stick">
+    <inertial>
+        <mass value="0.492" /> <!-- to get a total mass of the real assembly with distal of 505g -->
+        <origin xyz="0 0 0.092" />
+        <inertia ixx="0.000651" ixy="0.0" ixz="0.0"
+		 iyy="0.000651" iyz="0.0" izz="0.000896" />
+    </inertial>
     <visual>
       <origin xyz="0 0 0" 
           rpy="0 0 0"/>
