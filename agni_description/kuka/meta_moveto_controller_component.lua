@@ -45,7 +45,7 @@ function moveto_controller_deploy(d, namespace, meta_component_name, meta_compon
         print(lowlevelctrl_name.." connecting to "..name)
 
         lowlevel_controller:provides("controllerService"):connectIn("CMDJNT",name,"CMDJNT")
-		    lowlevel_controller:provides("controllerService"):connectOut("CURJNT",name,"CURJNT")
+	lowlevel_controller:provides("controllerService"):connectOut("CURJNT",name,"CURJNT")
         lowlevel_controller:provides("controllerService"):connectOut("LOG",name,"LOG")
       end
 

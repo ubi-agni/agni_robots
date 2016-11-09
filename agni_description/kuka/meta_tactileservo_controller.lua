@@ -125,16 +125,17 @@ function configureHook()
 --   d:connect(comp1name..".DesiredJointRA", comp2name..".Log", rtt.Variable("ConnPolicy")) -- ##CHANGE ME##
   -- ROS in out
   local ros=rtt.provides("ros")
-  d:stream(comp1name..".MyrmexRA",ros:topic("/tactile_contact_states/"..namespace.."_myrmex"))
+--   d:stream(comp1name..".MyrmexRA",ros:topic("/tactile_contact_states/rh_myrmex"))
+d:stream(comp1name..".MyrmexRA",ros:topic("/right/contacts/rh_myrmex"))
+  
   d:stream(comp3name..".Attach", ros:topic("/gazebo_attach"))
   d:stream(comp3name..".Attached", ros:topic("/gazebo_attached"))
   
   
   comp1:loadService("rosservice")
-  comp1:provides("rosservice"):connect("goHome_servicecall", "/goHome_servicecall", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect("tactileServoing_servicecall", "/tactileServoing_servicecall", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect("liftobject", "/liftobject", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect("setGrasp_servicecall", "/setGrasp_servicecall", "reba_srvs/SetPose")
+  comp1:provides("rosservice"):connect(namespace.."goHome_servicecall", "/"..namespace.."/goHome_servicecall", "std_srvs/Empty")
+  comp1:provides("rosservice"):connect(namespace.."tactileServoing_servicecall", "/"..namespace.."/tactileServoing_servicecall", "std_srvs/Empty")
+  comp1:provides("rosservice"):connect(namespace.."setGrasp_servicecall", "/"..namespace.."/setGrasp_servicecall", "reba_srvs/SetPose")
 
 
   print(namespace.."Wrapper is configured")

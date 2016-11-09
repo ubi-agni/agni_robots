@@ -130,10 +130,11 @@ function configureHook()
   
   
   comp1:loadService("rosservice")
-  comp1:provides("rosservice"):connect("liftObject_servicecall", "/liftObject_servicecall", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect("goHome_servicecall", "/goHome_servicecall", "std_srvs/Empty")
-  comp1:provides("rosservice"):connect("setGrasp_servicecall", "/setGrasp_servicecall", "reba_srvs/SetPose")
-  comp1:provides("rosservice"):connect("localMovement_servicecall", "/localMovement_servicecall", "reba_srvs/Localmv")
+  comp1:provides("rosservice"):connect(namespace.."liftObject_servicecall", "/"..namespace.."/liftObject_servicecall", "std_srvs/Empty")
+  comp1:provides("rosservice"):connect(namespace.."goHome_servicecall", "/"..namespace.."/goHome_servicecall", "std_srvs/Empty")
+  comp1:provides("rosservice"):connect(namespace.."setGrasp_servicecall", "/"..namespace.."/setGrasp_servicecall", "reba_srvs/SetPose")
+  comp1:provides("rosservice"):connect(namespace.."localMovement_servicecall", "/"..namespace.."/localMovement_servicecall", "reba_srvs/Localmv")
+  
 
 
   print(namespace.."Wrapper is configured")
