@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot name="shadow_hand" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="../urdf/sr_gazebo.urdf.xacro" />
+  <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.urdf.xacro" />
+  <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.tactile.xacro" />
+
+  <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
+                                          tactile:=${props.get('tactile','ubi')}
+                                          side:=${props.get('side','right')}
+                                          prefix:=''">
+    <xacro:shadowhand muscletrans="${'trans' in model}"
+                      muscle="${'muscle' in model}"
+                      bio="${'bio' in tactile}"
+                      bt_sp="${'bt_stp' in tactile}"
+                      ubi="${'ubi' in tactile}"
+                      eli="${'eli' in tactile}"
+                      reflect="${1 if side=='right' else -1}"
+                      prefix="${'' if prefix=='' else prefix+'_'}"  />
+
+    <!-- add tool frame -->
+    <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
+    <joint name="${prefix_}tool_frame" type="fixed">
+      <parent link="${prefix_}forearm"/>
+      <child link="${prefix_}tool_frame"/>
+      <origin rpy="${pi/2} 0 0" xyz="0.0 -0.01 0.327"/>
+    </joint>
+    <link name="${prefix_}tool_frame"/>
+
+    <!-- add tactile markers -->
+    <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"
+                              prefix="${'' if prefix=='' else prefix+'_'}" />
+
+    <!-- add ati sensor -->
+    <xacro:include filename="../models/ati_sensor.urdf.xacro" />
+    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}forearm" adapter_thickness="${props['ati_adapter_thickness']}"/>
+
+    <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
+  </xacro:macro>
+</robot>

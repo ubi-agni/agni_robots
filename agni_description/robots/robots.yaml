@@ -62,6 +62,17 @@ tools:
       side:    right
       mass:  3.8
       cog: "0.0 0.0 0.17"
+      
+  shadow_motor_right_ati:
+    file: ../robots/shadow_hand_ati.urdf.xacro
+    macro: shadow_hand
+    mount: ft_sensor_link
+    props:
+      model:   motor
+      tactile: ubi
+      ati_adapter_thickness: 0.0094
+      mass:  4.055
+      cog: "0.0 0.0 0.20"
 
   shadow_muscle_left:
     file: ../robots/shadow_hand.urdf.xacro
