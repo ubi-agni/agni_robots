@@ -4,38 +4,9 @@
   <xacro:macro name="poking_stick" params="prefix:=''">
 
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
-    <xacro:property name="ati_thickness" value="0.0286"/>
-    <xacro:property name="adapter_thickness" value="0.008"/>
-    <xacro:property name="ati_offset" value="${ati_thickness + adapter_thickness}"/>
-    
-    <!-- ati sensor -->    
-    <link name="${prefix_}ft_sensor_link">
-      <inertial>
-        <mass value="0.255"/>
-        <origin xyz="0 0 ${ati_offset/2.0}"/>
-        <cylinder_inertia_def length="${ati_offset}" radius="0.038" mass="0.255"/>
-      </inertial>
-      <visual>
-        <origin xyz="0 0 ${ati_offset/2.0}" rpy="0 0 0"/>
-        <geometry>
-           <cylinder radius="0.038" length="${ati_offset}" />
-        </geometry>
-        <material name="Silver"/>
-      </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <cylinder radius="0.038" length="${ati_offset}" />
-        </geometry>
-      </collision>
-    </link>
-    
-    <joint name="${prefix_}ft_tool_fixed_joint" type="fixed">
-      <origin xyz="0 0 ${ati_offset}"/>
-      <parent link="${prefix_}ft_sensor_link"/>
-      <child link="${prefix_}poking_stick"/>
-    </joint>
-    
+    <!-- ati sensor -->
+    <xacro:include filename="../models/ati_sensor.urdf.xacro" />
+    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}poking_stick" adapter_thickness="${props['ati_adapter_thickness']}"/>
     
     <!-- poking stick -->
     <xacro:include filename="../models/poking_stick.urdf.xacro" />

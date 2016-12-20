@@ -129,6 +129,7 @@ tools:
     props:
       tactile: ubi
       mass:  0.760
+      ati_adapter_thickness: 0.008
       cog: "0.0 0.0 0.045"
 
   poking_stick_rigid:

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="ati_sensor" params="prefix:='' child:='' ati_thickness:=0.0286 adapter_thickness:=0.008"> 
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
+    <xacro:property name="ati_offset" value="${ati_thickness + adapter_thickness}"/>
+    
+    <xacro:include filename="../urdf/util.urdf.xacro" />
+
+    <!-- ati sensor -->    
+    <link name="${prefix_}ft_sensor_link">
+      <inertial>
+        <mass value="0.255"/>
+        <origin xyz="0 0 ${ati_offset/2.0}"/>
+        <xacro:cylinder_inertia_def length="${ati_offset}" radius="0.038" mass="0.255"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 ${ati_offset/2.0}" rpy="0 0 0"/>
+        <geometry>
+           <cylinder radius="0.038" length="${ati_offset}" />
+        </geometry>
+        <material name="Silver"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.038" length="${ati_offset}" />
+        </geometry>
+      </collision>
+    </link>
+    <!-- if provided, attach the tool stick to the ati sensor -->
+    <xacro:if value="${1 if child else 0}">
+      <joint name="${prefix_}ft_tool_fixed_joint" type="fixed">
+        <origin xyz="0 0 ${ati_offset}"/>
+        <parent link="${prefix_}ft_sensor_link"/>
+        <child link="${child}"/>
+      </joint>
+    </xacro:if>
+  </xacro:macro>
+</robot>
