@@ -1,0 +1,188 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+
+<robot name="bimanual" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="ARM_L" default="-"/>
+  <xacro:arg name="ARM_R" default="-"/>
+  <xacro:arg name="TOOL_L" default="-"/>
+  <xacro:arg name="TOOL_R" default="-"/>
+
+  <xacro:macro name="shadow_motor_joints" params="prefix">
+    <link name="${prefix}_forearm" />
+    <joint name="${prefix}_WRJ2" />
+    <joint name="${prefix}_WRJ1" />
+    <joint name="${prefix}_FFJ4" />
+    <joint name="${prefix}_FFJ3" />
+    <joint name="${prefix}_FFJ2" />
+    <joint name="${prefix}_FFJ1" />
+    <joint name="${prefix}_FFtip" />
+    <joint name="${prefix}_LFJ5" />
+    <joint name="${prefix}_LFJ4" />
+    <joint name="${prefix}_LFJ3" />
+    <joint name="${prefix}_LFJ2" />
+    <joint name="${prefix}_LFJ1" />
+    <joint name="${prefix}_LFtip" />
+    <joint name="${prefix}_MFJ4" />
+    <joint name="${prefix}_MFJ3" />
+    <joint name="${prefix}_MFJ2" />
+    <joint name="${prefix}_MFJ1" />
+    <joint name="${prefix}_MFtip" />
+    <joint name="${prefix}_RFJ4" />
+    <joint name="${prefix}_RFJ3" />
+    <joint name="${prefix}_RFJ2" />
+    <joint name="${prefix}_RFJ1" />
+    <joint name="${prefix}_RFtip" />
+    <joint name="${prefix}_THJ5" />
+    <joint name="${prefix}_THJ4" />
+    <joint name="${prefix}_THJ3" />
+    <joint name="${prefix}_THJ2" />
+    <joint name="${prefix}_THJ1" />
+    <joint name="${prefix}_thtip" />
+  </xacro:macro>
+
+  <xacro:macro name="schunk_hand_joints" params="prefix">
+    <joint name="${prefix}_sdh_palm_joint" />
+    <joint name="${prefix}_sdh_grasp_joint" />
+    <joint name="${prefix}_sdh_tip_joint" />
+    <joint name="${prefix}_sdh_knuckle_joint" />
+    <joint name="${prefix}_sdh_finger_12_joint" />
+    <joint name="${prefix}_sdh_finger_13_joint" />
+    <joint name="${prefix}_sdh_finger_21_joint" />
+    <joint name="${prefix}_sdh_finger_22_joint" />
+    <joint name="${prefix}_sdh_finger_23_joint" />
+    <joint name="${prefix}_sdh_thumb_1_joint" />
+    <joint name="${prefix}_sdh_thumb_2_joint" />
+    <joint name="${prefix}_sdh_thumb_3_joint" />
+  </xacro:macro>
+
+  <!-- left arm -->
+  <xacro:property name="ARM_L" value="$(arg ARM_L)"/>
+    <xacro:if value="${ARM_L not in ['', '-']}">
+    <group name="left_arm">
+      <xacro:if value="${ARM_L in ['kukaL', 'pa10a']}">
+        <chain base_link="la_arm_base_link" tip_link="la_tool_mount" />
+      </xacro:if>
+      <xacro:if value="${ARM_L in ['kukaR', 'pa10c']}">
+        <chain base_link="ra_arm_base_link" tip_link="ra_tool_mount" />
+      </xacro:if>
+    </group>
+  </xacro:if>
+
+  <!-- right arm -->
+  <xacro:property name="ARM_R" value="$(arg ARM_R)"/>
+  <xacro:if value="${ARM_R not in ['', '-']}">
+    <group name="right_arm">
+      <xacro:if value="${ARM_R in ['kukaR', 'pa10c']}">
+        <chain base_link="ra_arm_base_link" tip_link="ra_tool_mount" />
+      </xacro:if>
+      <xacro:if value="${ARM_R in ['kukaL', 'pa10a']}">
+        <chain base_link="la_arm_base_link" tip_link="la_tool_mount" />
+      </xacro:if>
+    </group>
+  </xacro:if>
+
+  <!-- both arms arm -->
+  <xacro:if value="${ARM_R not in ['', '-'] and ARM_L not in ['', '-']} ">
+    <group name="both_arms">
+        <group name="left_arm" />
+        <group name="right_arm" />
+    </group>
+  </xacro:if>
+
+  <!-- right tool -->
+  <xacro:property name="TOOL_R" value="$(arg TOOL_R)"/>
+  <xacro:if value="${TOOL_R not in ['', '-']}">
+    <group name="right_tool">
+      <!-- shadow hand -->
+      <xacro:if value="${TOOL_R == 'shadow_motor_left'}" >
+        <xacro:call macro="shadow_motor_joints" prefix="lh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_R == 'shadow_motor_right'}" >
+        <xacro:call macro="shadow_motor_joints" prefix="rh" />
+      </xacro:if>
+      <!-- schunk hand -->
+      <xacro:if value="${TOOL_R == 'schunk_hand_left'}" >
+        <xacro:call macro="schunk_hand_joints" prefix="lh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_R == 'schunk_hand_right'}" >
+        <xacro:call macro="schunk_hand_joints" prefix="rh" />
+      </xacro:if>
+      <!-- myrmex -->
+      <xacro:if value="${TOOL_R == 'myrmex'}" >
+        <link name="rh_myrmex_quick_mount" />
+        <joint name="rh_myrmex_bumper_joint" />
+      </xacro:if>
+      <!-- poking sticks -->
+      <xacro:if value="${TOOL_R == 'poking_stick_rigid'}" >
+        <link name="rh_poking_stick" />
+      </xacro:if>
+      <xacro:if value="${TOOL_R == 'poking_stick_ubi'}" >
+         <chain base_link="rh_poking_stick" tip_link="rh_ffdistal" />
+      </xacro:if>
+    </group>
+  </xacro:if>
+
+  <xacro:property name="TOOL_L" value="$(arg TOOL_L)"/>
+  <xacro:if value="${TOOL_L not in ['', '-']}">
+    <group name="left_tool">
+      <!-- shadow hand -->
+      <xacro:if value="${TOOL_L == 'shadow_motor_left'}" >
+        <xacro:call macro="shadow_motor_joints" prefix="lh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'shadow_motor_right'}" >
+        <xacro:call macro="shadow_motor_joints" prefix="rh" />
+      </xacro:if>
+      <!-- schunk hand -->
+      <xacro:if value="${TOOL_L == 'schunk_hand_left'}" >
+        <xacro:call macro="schunk_hand_joints" prefix="lh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'schunk_hand_right'}" >
+        <xacro:call macro="schunk_hand_joints" prefix="rh" />
+      </xacro:if>
+      <!-- myrmex -->
+      <xacro:if value="${TOOL_L == 'myrmex'}" >
+        <link name="lh_myrmex_quick_mount" />
+        <joint name="lh_myrmex_bumper_joint" />
+      </xacro:if>
+      <!-- poking sticks -->
+      <xacro:if value="${TOOL_L == 'poking_stick_rigid'}" >
+          <link name="lh_poking_stick" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'poking_stick_ubi'}" >
+         <chain base_link="lh_poking_stick" tip_link="lh_ffdistal" />
+      </xacro:if>
+    </group>
+  </xacro:if>
+
+  <!-- upper body -->
+  <group name="upper_body">
+    <xacro:if value="${ARM_R not in ['', '-']}">
+        <group name="right_arm" />
+     </xacro:if>
+    <xacro:if value="${ARM_L not in ['', '-']}">
+        <group name="left_arm" />
+    </xacro:if>
+    <xacro:if value="${TOOL_R not in ['', '-']}">
+      <group name="right_tool" />
+    </xacro:if>
+    <xacro:if value="${TOOL_L not in ['', '-']}">
+      <group name="left_tool" />
+    </xacro:if>
+  </group>
+
+  <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+  <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+  <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+  <virtualh_joint name="bimanual_frame" type="fixed" parent_frame="world" child_link="frame" />
+  <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+
+</robot>

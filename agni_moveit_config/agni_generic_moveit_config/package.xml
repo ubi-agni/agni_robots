@@ -1,0 +1,18 @@
+<package>
+  <name>agni_generic_moveit_config</name>
+  <version>0.1.0</version>
+  <description>
+     An manually created package with generic configuration and launch files for using the platform_setup.launch and MoveIt!
+  </description>
+  <author email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</author>
+  <maintainer email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</maintainer>
+
+  <license>BSD</license>
+
+  <run_depend>xacro</run_depend>
+  <build_depend>agni_description</build_depend>
+  <run_depend>agni_description</run_depend>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+</package>

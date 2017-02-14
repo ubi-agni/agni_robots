@@ -1,0 +1,14 @@
+<launch>
+  <arg name="ARM_L" default="kukaL"/>
+  <arg name="ARM_R" default="kukaR"/>
+  <arg name="TOOL_L" default="shadow_motor_left"/>
+  <arg name="TOOL_R" default="shadow_motor_right"/>
+  <!-- ARM_R|ARM|L to select the arm type. -->
+  <!-- TOOL_R|TOOL_L are the names of the end-effectors
+       mounted on right and left arms respectively -->
+
+  <!-- set robot description semantic for combined table + robot arm and end-effector  -->
+  <param name="robot_description_semantic" command="$(find xacro)/xacro --inorder '$(find agni_generic_moveit_config)/config/generic_bimanual_platform.srdf.xacro' 
+              ARM_R:=$(arg ARM_R) ARM_L:=$(arg ARM_L) TOOL_R:=$(arg TOOL_R) TOOL_L:=$(arg TOOL_L)" />
+
+</launch>
