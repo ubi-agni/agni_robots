@@ -109,6 +109,11 @@
       <xacro:if value="${TOOL_R == 'shadow_motor_right'}" >
         <xacro:call macro="shadow_motor_joints" prefix="rh" />
       </xacro:if>
+      <xacro:if value="${TOOL_R == 'shadow_motor_right_ati'}" >
+        <link name="rh_ft_sensor_link" />
+        <joint name="rh_ft_tool_fixed_joint" />
+        <xacro:call macro="shadow_motor_joints" prefix="rh" />
+      </xacro:if>
       <!-- schunk hand -->
       <xacro:if value="${TOOL_R == 'schunk_hand_left'}" >
         <xacro:call macro="schunk_hand_joints" prefix="lh" />
@@ -125,8 +130,15 @@
       <xacro:if value="${TOOL_R == 'poking_stick_rigid'}" >
         <link name="rh_poking_stick" />
       </xacro:if>
+      <xacro:if value="${TOOL_R == 'poking_stick_rigid_ati'}" >
+        <link name="rh_ft_sensor_link" />
+        <link name="rh_poking_stick" />
+      </xacro:if>
       <xacro:if value="${TOOL_R == 'poking_stick_ubi'}" >
          <chain base_link="rh_poking_stick" tip_link="rh_ffdistal" />
+      </xacro:if>
+      <xacro:if value="${TOOL_R == 'poking_stick_ubi_ati'}" >
+         <chain base_link="rh_ft_sensor_link" tip_link="rh_ffdistal" />
       </xacro:if>
     </group>
   </xacro:if>
@@ -139,6 +151,11 @@
         <xacro:call macro="shadow_motor_joints" prefix="lh" />
       </xacro:if>
       <xacro:if value="${TOOL_L == 'shadow_motor_right'}" >
+        <xacro:call macro="shadow_motor_joints" prefix="rh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'shadow_motor_right_ati'}" >
+        <link name="rh_ft_sensor_link" />
+        <joint name="rh_ft_tool_fixed_joint" />
         <xacro:call macro="shadow_motor_joints" prefix="rh" />
       </xacro:if>
       <!-- schunk hand -->
@@ -157,8 +174,15 @@
       <xacro:if value="${TOOL_L == 'poking_stick_rigid'}" >
           <link name="lh_poking_stick" />
       </xacro:if>
+      <xacro:if value="${TOOL_L == 'poking_stick_rigid_ati'}" >
+        <link name="lh_ft_sensor_link" />
+        <link name="lh_poking_stick" />
+      </xacro:if>
       <xacro:if value="${TOOL_L == 'poking_stick_ubi'}" >
          <chain base_link="lh_poking_stick" tip_link="lh_ffdistal" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'poking_stick_ubi_ati'}" >
+         <chain base_link="lh_ft_sensor_link" tip_link="lh_ffdistal" />
       </xacro:if>
     </group>
   </xacro:if>
