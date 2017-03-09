@@ -186,14 +186,31 @@
       </xacro:if>
     </group>
   </xacro:if>
+  
+  <!-- both arms arm -->
+  <group name="both_arms_hand">
+    <xacro:if value="${ARM_R not in ['', '-']}">
+      <group name="right_arm" />
+     </xacro:if>
+    <xacro:if value="${ARM_L not in ['', '-']}">
+      <group name="left_arm" />
+    </xacro:if>
+    <xacro:if value="${TOOL_R not in ['', '-']}">
+      <group name="right_tool" />
+    </xacro:if>
+    <xacro:if value="${TOOL_L not in ['', '-']}">
+      <group name="left_tool" />
+    </xacro:if>
+  </group>
+
 
   <!-- upper body -->
   <group name="upper_body">
     <xacro:if value="${ARM_R not in ['', '-']}">
-        <group name="right_arm" />
-     </xacro:if>
+      <group name="right_arm" />
+    </xacro:if>
     <xacro:if value="${ARM_L not in ['', '-']}">
-        <group name="left_arm" />
+      <group name="left_arm" />
     </xacro:if>
     <xacro:if value="${TOOL_R not in ['', '-']}">
       <group name="right_tool" />
