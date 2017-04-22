@@ -2,7 +2,8 @@
 <robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:macro name="myrmex_quick_mount" params="prefix:=''">
-    <link name="${prefix}myrmex_quick_mount">
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
+    <link name="${prefix_}myrmex_quick_mount">
        <inertial>
         <origin xyz="0 0 0.03" rpy="0 0 0" />
         <mass value="0.180" />
@@ -30,15 +31,15 @@
       </collision>
     </link>
    
-    <joint name="${prefix}myrmex_bumper_joint" type="prismatic">
-      <parent link="${prefix}myrmex_quick_mount" />
-      <child link="${prefix}myrmex_foam" />
+    <joint name="${prefix_}myrmex_bumper_joint" type="prismatic">
+      <parent link="${prefix_}myrmex_quick_mount" />
+      <child link="${prefix_}myrmex_foam" />
       <origin xyz="0 0 0.03034" rpy="0 0 0"/>
       <axis xyz="0 0 1" />
        <limit lower="0.0" upper="0.001" effort="1" velocity="0.1" />
     </joint>
     
-    <link name="${prefix}myrmex_foam">
+    <link name="${prefix_}myrmex_foam">
       <inertial>
         <origin xyz="0 0 0.0" rpy="0 0 0" />
         <mass value="0.005" />
@@ -51,7 +52,7 @@
           <box size="0.095 0.095 0.006"/>
         </geometry>
       </visual>
-      <collision name="${prefix}myrmex_foam">
+      <collision name="${prefix_}myrmex_foam">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh scale="1.0 1.0 1.0"
@@ -61,37 +62,41 @@
       </collision>
     </link>
 
-    <gazebo reference="${prefix}myrmex_foam">
+    <gazebo reference="${prefix_}myrmex_foam">
       <material>Gazebo/Black</material>
-      <sensor type="contact" name="${prefix}myrmex_foam_contact">
+      <sensor type="contact" name="${prefix_}myrmex_sensor">
         <always_on>1</always_on>
         <update_rate>1000.0</update_rate>
         <contact>
-          <collision>${prefix}myrmex_foam_collision</collision>
-          <topic>${prefix}myrmex_foam_collision</topic>
+          <collision>${prefix_}myrmex_foam_collision</collision>
+          <topic>${prefix_}myrmex_foam_collision</topic>
         </contact>
-        <plugin name="${prefix}myrmex_gazebo_ros_contact_controller" filename="libgazebo_ros_contact.so">
+        <plugin name="${prefix_}myrmex_gazebo_ros_tactile_controller" filename="libgazebo_ros_contact.so">
           <alwaysOn>true</alwaysOn>
-          <frameName>${prefix}myrmex_foam</frameName>
+          <robotNamespace>${prefix}</robotNamespace>
+          <frameName>${prefix_}myrmex_foam</frameName>
           <updateRate>100.0</updateRate>
-          <bumperTopicName>contacts/${prefix}myrmex</bumperTopicName>
-          <tactileTopicName>tactile_contact_states/${prefix}myrmex</tactileTopicName>
+          <bumperTopicName>contacts/${prefix_}myrmex</bumperTopicName>
+          <tactileTopicName>tactile_contact_states/${prefix_}myrmex</tactileTopicName>
         </plugin>
       </sensor>
     </gazebo>
   </xacro:macro>
+  
 
-  <xacro:macro name="myrmex_tactile_markers" params="parent topic *origin">
+  <xacro:macro name="myrmex_tactile_markers" params="parent channel prefix:='' *origin">
     <xacro:property name="cell_size" value="0.005" />
+    <xacro:property name="cell_spacing" value="0.005" />
     <xacro:property name="myrmex_size" value="16" />
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
     <!-- tactile marker mapping description -->
-    <sensor name="myrmex_sensor" update_rate="100">
+    <sensor name="${prefix_}myrmex_sensor" update_rate="100">
       <parent link="${parent}"/>
       <xacro:insert_block name="origin"/>
-      <tactile>
+      <tactile channel="${prefix_}${channel}">
         <array rows="${myrmex_size}" cols="${myrmex_size}" 
             order="row-major" size="${cell_size} ${cell_size}" 
-            offset="${cell_size * myrmex_size/2.0} ${cell_size * myrmex_size/2.0}">
+            offset="${cell_spacing * (myrmex_size -1)/2.0} ${cell_spacing * (myrmex_size -1)/2.0}">
         </array>
       </tactile>
     </sensor>
