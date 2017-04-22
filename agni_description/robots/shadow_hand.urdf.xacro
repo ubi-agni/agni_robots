@@ -7,7 +7,8 @@
   <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
                                           tactile:=${props.get('tactile','ubi')}
                                           side:=${props.get('side','right')}
-                                          prefix:=''">
+                                          prefix:=''
+                                          lf:=${props.get('lf','True')}">
     <xacro:shadowhand muscletrans="${'trans' in model}"
                       muscle="${'muscle' in model}"
                       bio="${'bio' in tactile}"
@@ -15,7 +16,8 @@
                       ubi="${'ubi' in tactile}"
                       eli="${'eli' in tactile}"
                       reflect="${1 if side=='right' else -1}"
-                      prefix="${'' if prefix=='' else prefix+'_'}"  />
+                      prefix="${'' if prefix=='' else prefix+'_'}"
+                      lf="${lf}"  />
 
     <!-- add tool frame -->
     <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
@@ -28,7 +30,8 @@
 
     <!-- add tactile markers -->
     <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"
-                              prefix="${'' if prefix=='' else prefix+'_'}" />
+                              prefix="${'' if prefix=='' else prefix+'_'}"
+                              lf="${lf}" />
 
     <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
   </xacro:macro>
