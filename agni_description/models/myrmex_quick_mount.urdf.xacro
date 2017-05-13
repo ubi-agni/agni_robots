@@ -71,7 +71,7 @@
           <collision>${prefix_}myrmex_foam_collision</collision>
           <topic>${prefix_}myrmex_foam_collision</topic>
         </contact>
-        <plugin name="${prefix_}myrmex_gazebo_ros_tactile_controller" filename="libgazebo_ros_contact.so">
+        <plugin name="${prefix_}myrmex_gazebo_ros_tactile_controller" filename="libgazebo_ros_tactile.so">
           <alwaysOn>true</alwaysOn>
           <robotNamespace>${prefix}</robotNamespace>
           <frameName>${prefix_}myrmex_foam</frameName>
