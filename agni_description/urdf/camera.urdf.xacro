@@ -1,49 +1,53 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <!-- The reference frame is the depth optical frame, all other frames are built around it -->
+  <!-- The reference frame is depth optical frame if has_depth, otherwise camera_rgb_optical, all other frames are built around it -->
 
   <xacro:include filename="../urdf/gazebo_camera.urdf.xacro"/>
   <!-- do not name the macro 'camera', it conflicts with gazebo camera tag -->
-  <xacro:macro name="camera_body" params="parent name fps hfov width height has_depth *origin">
-    
-    <link name="world" />
-    
-    <joint name="${name}_camera_depth_optical_joint" type="fixed">
-      <xacro:insert_block name="origin"/>
-      <parent link="world"/>
-      <child link="${name}_camera_depth_optical_frame" />
-    </joint>
-    
-    <link name="${name}_camera_depth_optical_frame">
-      <inertial>
-        <mass value="0.001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.000002" ixy="0.0" ixz="0.0"
-           iyy="0.00001" iyz="0.0"
-           izz="0.000002" />
-      </inertial>
-    </link>
+  <xacro:macro name="camera_body" params="parent name fps hfov width height has_depth *origin has_second_origin:=0 *second_origin">
+    <xacro:if value="${1 if 'world' in parent else 0}">
+      <link name="${parent}" />
+    </xacro:if>
+    <!-- do not name the macro 'camera', it conflicts with gazebo camera tag -->
+    <xacro:if value="${has_depth}">
+      <!-- attach depth to parent -->
+      <joint name="${name}_camera_depth_optical_joint" type="fixed">
+        <xacro:insert_block name="origin"/>
+        <parent link="${parent}"/>
+        <child link="${name}_camera_depth_optical_frame" />
+      </joint>
 
-    <joint name="${name}_camera_depth_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
-      <parent link="${name}_camera_depth_optical_frame" />
-      <child link="${name}_camera_depth_frame" />
-    </joint>
+      <link name="${name}_camera_depth_optical_frame">
+        <inertial>
+          <mass value="0.001" />
+          <origin xyz="0 0 0" />
+          <inertia ixx="0.000002" ixy="0.0" ixz="0.0"
+             iyy="0.00001" iyz="0.0"
+             izz="0.000002" />
+        </inertial>
+      </link>
 
-    <link name="${name}_camera_depth_frame">
-      <inertial>
-        <mass value="0.01" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.00001" ixy="0.0" ixz="0.0"
-        iyy="0.0001" iyz="0.0"
-        izz="0.00001" />
-      </inertial>
-    </link> 
-    
-    <joint name="base_${name}_camera_depth_joint" type="fixed">
-      <origin xyz="0 -0.018 0" rpy="0 0 0" />
-      <parent link="${name}_camera_depth_frame" />
-      <child link="${name}_camera_link" />
-    </joint>
+      <joint name="${name}_camera_depth_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
+        <parent link="${name}_camera_depth_optical_frame" />
+        <child link="${name}_camera_depth_frame" />
+      </joint>
+
+      <link name="${name}_camera_depth_frame">
+        <inertial>
+          <mass value="0.01" />
+          <origin xyz="0 0 0" />
+          <inertia ixx="0.00001" ixy="0.0" ixz="0.0"
+          iyy="0.0001" iyz="0.0"
+          izz="0.00001" />
+        </inertial>
+      </link> 
+
+      <joint name="base_${name}_camera_depth_joint" type="fixed">
+        <origin xyz="0 -0.018 0" rpy="0 0 0" />
+        <parent link="${name}_camera_depth_frame" />
+        <child link="${name}_camera_link" />
+      </joint>
+    </xacro:if>
     
     <link name="${name}_camera_link">
       <inertial>
@@ -67,12 +71,23 @@
       </collision>
     </link>
     
-    <joint name="${name}_camera_rgb_joint" type="fixed">
-      <origin xyz="0 -0.005 0" rpy="0 0 0" />
-      <parent link="${name}_camera_link" />
-      <child link="${name}_camera_rgb_frame" />
-    </joint>
-
+    <xacro:if value="${has_depth}">
+      <xacro:unless value="${has_second_origin}">
+        <!-- attach rgb to camera_link if has depth but not attached to parent -->
+        <joint name="base_${name}_camera_rgb_joint" type="fixed">
+          <origin xyz="0 -0.005 0" rpy="0 0 0" /> <!-- CHECK THIS OFFSET -->
+          <parent link="${name}_camera_link" />
+          <child link="${name}_camera_rgb_frame" />
+        </joint>
+      </xacro:unless>
+    </xacro:if>
+    <xacro:unless value="${has_depth}">
+      <joint name="base_${name}_camera_rgb_joint" type="fixed">
+        <origin xyz="0 0.005 0" rpy="0 0 0" /> <!-- CHECK THIS OFFSET -->
+        <parent link="${name}_camera_rgb_frame" />
+        <child link="${name}_camera_link" />
+      </joint>
+    </xacro:unless>
     <link name="${name}_camera_rgb_frame">
       <inertial>
         <mass value="0.001" />
@@ -82,13 +97,6 @@
            izz="0.000001" />
       </inertial>
     </link>
-    
-    <joint name="${name}_camera_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
-      <parent link="${name}_camera_rgb_frame" />
-      <child link="${name}_camera_rgb_optical_frame" />
-    </joint>
-
     <link name="${name}_camera_rgb_optical_frame">
       <inertial>
         <mass value="0.001" />
@@ -98,9 +106,60 @@
            izz="0.000001" />
       </inertial>
     </link>
+    <xacro:if value="${has_depth}">
+      <xacro:if value="${has_second_origin}">
+        <!-- attach in this order if rgb attached to parent -->
+        <joint name="${name}_camera_rgb_joint" type="fixed">
+          <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
+          <parent link="${name}_camera_rgb_optical_frame" />
+          <child link="${name}_camera_rgb_frame" />
+        </joint>      
+      </xacro:if>
+      <xacro:unless value="${has_second_origin}">
+        <!-- attach in this order if rgb not attached to parent -->
+        <joint name="${name}_camera_rgb__joint" type="fixed">
+          <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+          <parent link="${name}_camera_rgb_frame" />
+          <child link="${name}_camera_rgb_optical_frame" />
+        </joint>
+      </xacro:unless>
+    </xacro:if>
+    <xacro:unless value="${has_depth}">
+      <!-- attach in this order if rgb attached to parent -->
+      <joint name="${name}_camera_rgb_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
+        <parent link="${name}_camera_rgb_optical_frame" />
+        <child link="${name}_camera_rgb_frame" />
+      </joint>      
+    </xacro:unless>
+    
+    <xacro:if value="${has_depth}">
+      <xacro:if value="${has_second_origin}">
+        <!-- attach rgb to parent -->
+        <joint name="${name}_camera_rgb_optical_joint" type="fixed">
+          <xacro:insert_block name="second_origin"/>
+          <parent link="${parent}"/>
+          <child link="${name}_camera_rgb_optical_frame" />
+        </joint>
+      </xacro:if>
+    </xacro:if>
+    <xacro:unless value="${has_depth}">
+      <!-- attach rgb to parent -->
+      <joint name="${name}_camera_rgb_optical_joint" type="fixed">
+        <xacro:insert_block name="origin"/>
+        <parent link="${parent}"/>
+        <child link="${name}_camera_rgb_optical_frame" />
+      </joint>
+    </xacro:unless>
+    
 
     <!-- Gazebo camera sensor for simulation -->
-   <gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="1"/> 
+    <xacro:if value="${has_depth}">
+      <gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="${has_depth}"/> 
+    </xacro:if>
+    <xacro:unless value="${has_depth}">
+      <gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="${has_depth}"/> 
+    </xacro:unless>
   </xacro:macro>
 
 </robot>
