@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <config>
 	<section id="camera">
-		<data id="name" type="string">kinectd</data>
-		<data id="position" type="Vec">| 18.5845 |
-| 1273.17 |
-| 1031.67 |
+		<data id="name" type="string">kinectc</data>
+		<data id="position" type="Vec">| -7.17899 |
+| 1297.93 |
+| 1061.07 |
 | 1 |</data>
-		<data id="norm" type="Vec">| -0.0137479 |
-| -0.767848 |
-| -0.640485 |
+		<data id="norm" type="Vec">| -0.0101718 |
+| -0.786026 |
+| -0.61811 |
 | 1 |</data>
-		<data id="up" type="Vec">| 0.0160765 |
-| 0.640293 |
-| -0.767963 |
+		<data id="up" type="Vec">| 0.0203467 |
+| 0.617852 |
+| -0.786031 |
 | 1 |</data>
 		<data id="f" type="float">1</data>
 		<data id="principal-point-offset" type="Point32f">(160,120)</data>
-		<data id="sampling-resolution-x" type="float">287.404</data>
-		<data id="sampling-resolution-y" type="float">287.322</data>
-		<data id="skew" type="float">0.571261</data>
+		<data id="sampling-resolution-x" type="float">268.773</data>
+		<data id="sampling-resolution-y" type="float">268.591</data>
+		<data id="skew" type="float">0.702655</data>
 		<section id="render-params">
 			<data id="chip-size" type="Size">320x240</data>
 			<data id="clip-z-near" type="float">1</data>
@@ -28,11 +28,11 @@
 			<data id="viewport-z-max" type="float">1</data>
 		</section>
 		<data id="for-direct-embedding-in-C++" type="string">
-Camera(Vec(18.5845,1273.17,1031.67,1),
-       Vec(-0.0137479,-0.767848,-0.640485,1),
-       Vec(0.0160765,0.640293,-0.767963,1),
-      1, Point32f(160,120),287.404,287.322,
-      0.571261, Camera::RenderParams(Size(320,240),
+Camera(Vec(-7.17899,1297.93,1061.07,1),
+       Vec(-0.0101718,-0.786026,-0.61811,1),
+       Vec(0.0203467,0.617852,-0.786031,1),
+      1, Point32f(160,120),268.773,268.591,
+      0.702655, Camera::RenderParams(Size(320,240),
                          1,10000, 
                          Rect(0,0,320,240),
                          0,1));
