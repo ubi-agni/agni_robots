@@ -411,41 +411,41 @@ Visualization Manager:
         Value: true
         ff:
           Value: true
-          lh_ffdistal:
+          lh_ffdistal_sensor:
             Value: true
             data range:
               maximum: 1
-          lh_ffmiddle:
+          lh_ffmiddle_sensor:
             Value: true
             data range:
               maximum: 1
-          lh_ffproximal:
+          lh_ffproximal_sensor:
             Value: true
             data range:
               maximum: 1
-          rh_ffdistal:
-            Value: true
-            data range:
-              maximum: 1
-              minimum: 0
-          rh_ffmiddle:
+          rh_ffdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_ffproximal:
+          rh_ffmiddle_sensor:
+            Value: true
+            data range:
+              maximum: 1
+              minimum: 0
+          rh_ffproximal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
         lf:
           Value: true
-          lh_lfdistal:
+          lh_lfdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          lh_lfmiddle:
+          lh_lfmiddle_sensor:
             Value: true
             data range:
               maximum: 1
@@ -455,93 +455,93 @@ Visualization Manager:
             data range:
               maximum: 1
               minimum: 0
-          rh_lfdistal:
+          rh_lfdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_lfmiddle:
+          rh_lfmiddle_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_lfproximal:
+          rh_lfproximal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
         mf:
           Value: true
-          lh_mfdistal:
+          lh_mfdistal_sensor:
             Value: true
             data range:
               maximum: 1
-          lh_mfmiddle:
-            Value: true
-            data range:
-              maximum: 1
-              minimum: 0
-          lh_mfproximal:
+          lh_mfmiddle_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_mfdistal:
+          lh_mfproximal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_mfmiddle:
+          rh_mfdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_mfproximal:
+          rh_mfmiddle_sensor:
+            Value: true
+            data range:
+              maximum: 1
+              minimum: 0
+          rh_mfproximal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
         palm:
           Value: true
-          lh_lfmetacarpal:
+          lh_lfmetacarpal_sensor:
             Value: true
             data range:
               maximum: 4096
-          lh_palm:
+          lh_palm_sensor:
             Value: true
             data range:
               maximum: 4096
-          rh_lfmetacarpal:
+          rh_lfmetacarpal_sensor:
             Value: true
             data range:
               maximum: 1
-          rh_palm:
+          rh_palm_sensor:
             Value: true
             data range:
               maximum: 1
         rf:
           Value: true
-          lh_rfdistal:
+          lh_rfdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          lh_rfmiddle:
+          lh_rfmiddle_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          lh_rfproximal:
+          lh_rfproximal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_rfdistal:
+          rh_rfdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_rfmiddle:
+          rh_rfmiddle_sensor:
             Value: true
             data range:
               maximum: 1
@@ -553,12 +553,12 @@ Visualization Manager:
               minimum: 0
         th:
           Value: true
-          lh_thdistal:
+          lh_thdistal_sensor:
             Value: true
             data range:
               maximum: 1
               minimum: 0
-          rh_thdistal:
+          rh_thdistal_sensor:
             Value: true
             data range:
               maximum: 1
