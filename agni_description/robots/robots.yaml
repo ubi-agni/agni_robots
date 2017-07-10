@@ -71,6 +71,8 @@ tools:
     props:
       model:   motor
       tactile: ubi
+      side:    right
+      #lf: false
       ati_adapter_thickness: 0.0094
       mass:  4.055
       cog: "0.0 0.0 0.20"

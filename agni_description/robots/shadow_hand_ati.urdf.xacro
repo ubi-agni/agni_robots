@@ -7,7 +7,10 @@
   <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
                                           tactile:=${props.get('tactile','ubi')}
                                           side:=${props.get('side','right')}
-                                          prefix:=''">
+                                          prefix:=''
+                                          lf:=${props.get('lf','True')} ">
+    <xacro:property name="ns" value="${prefix}"/>
+    <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
     <xacro:shadowhand muscletrans="${'trans' in model}"
                       muscle="${'muscle' in model}"
                       bio="${'bio' in tactile}"
@@ -15,10 +18,10 @@
                       ubi="${'ubi' in tactile}"
                       eli="${'eli' in tactile}"
                       reflect="${1 if side=='right' else -1}"
-                      prefix="${'' if prefix=='' else prefix+'_'}"  />
+                      prefix="${prefix_}"
+                      lf="${lf}" />
 
     <!-- add tool frame -->
-    <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
     <joint name="${prefix_}tool_frame" type="fixed">
       <parent link="${prefix_}forearm"/>
       <child link="${prefix_}tool_frame"/>
@@ -28,7 +31,8 @@
 
     <!-- add tactile markers -->
     <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"
-                              prefix="${'' if prefix=='' else prefix+'_'}" />
+                              prefix="${'' if prefix=='' else prefix+'_'}"
+                              lf="${lf}" />
 
     <!-- add ati sensor -->
     <xacro:include filename="../models/ati_sensor.urdf.xacro" />
