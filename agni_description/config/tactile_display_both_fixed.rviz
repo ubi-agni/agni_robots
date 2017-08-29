@@ -450,7 +450,7 @@ Visualization Manager:
             data range:
               maximum: 1
               minimum: 0
-          lh_lfproximal:
+          lh_lfproximal_sensor:
             Value: true
             data range:
               maximum: 1
@@ -546,7 +546,7 @@ Visualization Manager:
             data range:
               maximum: 1
               minimum: 0
-          rh_rfproximal:
+          rh_rfproximal_sensor:
             Value: true
             data range:
               maximum: 1
