@@ -414,154 +414,154 @@ Visualization Manager:
           lh_ffdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
           lh_ffmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
           lh_ffproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
           rh_ffdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_ffmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_ffproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
         lf:
           Value: true
           lh_lfdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           lh_lfmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           lh_lfproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_lfdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_lfmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_lfproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
         mf:
           Value: true
           lh_mfdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
           lh_mfmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           lh_mfproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_mfdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_mfmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_mfproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
         palm:
           Value: true
           lh_lfmetacarpal_sensor:
             Value: true
             data range:
-              maximum: 4096
+              maximum: 0.1
           lh_palm_sensor:
             Value: true
             data range:
-              maximum: 4096
+              maximum: 0.1
           rh_lfmetacarpal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
           rh_palm_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
         rf:
           Value: true
           lh_rfdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           lh_rfmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           lh_rfproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_rfdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_rfmiddle_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_rfproximal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
         th:
           Value: true
           lh_thdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
           rh_thdistal_sensor:
             Value: true
             data range:
-              maximum: 1
+              maximum: 0.1
               minimum: 0
       topic: /tactile_states
     - Alpha: 1
