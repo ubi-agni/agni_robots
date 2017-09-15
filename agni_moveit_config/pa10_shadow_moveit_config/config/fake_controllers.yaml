@@ -419,3 +419,9 @@ controller_list:
       - ra_E2
       - ra_W1
       - ra_W2
+
+initial:
+  - group: left_arm
+    pose: home
+  - group: right_arm
+    pose: home
