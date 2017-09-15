@@ -1,0 +1,19 @@
+controller_list:
+  - name: fake_left_arm_controller
+    joints:
+      - la_arm_0_joint
+      - la_arm_1_joint
+      - la_arm_2_joint
+      - la_arm_3_joint
+      - la_arm_4_joint
+      - la_arm_5_joint
+      - la_arm_6_joint
+  - name: fake_right_arm_controller
+    joints:
+      - ra_arm_0_joint
+      - ra_arm_1_joint
+      - ra_arm_2_joint
+      - ra_arm_3_joint
+      - ra_arm_4_joint
+      - ra_arm_5_joint
+      - ra_arm_6_joint

@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: ""
+    relative_path: /homes/qli/kuka_reba.urdf
+  SRDF:
+    relative_path: config/bimanual.srdf
+  CONFIG:
+    author_name: qli
+    author_email: qli@techfak.uni-bielefeld.de
+    generated_timestamp: 1505315291
