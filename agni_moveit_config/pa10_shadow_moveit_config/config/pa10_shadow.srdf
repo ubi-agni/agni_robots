@@ -186,6 +186,58 @@
         <joint name="lh_THJ5" value="0" />
     </group_state>
 
+    <group_state name="open" group="left_hand">
+        <joint name="lh_FFJ1" value="0" />
+        <joint name="lh_FFJ2" value="0" />
+        <joint name="lh_FFJ3" value="0" />
+        <joint name="lh_FFJ4" value="0" />
+        <joint name="lh_LFJ1" value="0" />
+        <joint name="lh_LFJ2" value="0" />
+        <joint name="lh_LFJ3" value="0" />
+        <joint name="lh_LFJ4" value="0" />
+        <joint name="lh_LFJ5" value="0" />
+        <joint name="lh_MFJ1" value="0" />
+        <joint name="lh_MFJ2" value="0" />
+        <joint name="lh_MFJ3" value="0" />
+        <joint name="lh_MFJ4" value="0" />
+        <joint name="lh_RFJ1" value="0" />
+        <joint name="lh_RFJ2" value="0" />
+        <joint name="lh_RFJ3" value="0" />
+        <joint name="lh_RFJ4" value="0" />
+        <joint name="lh_THJ1" value="0.2169" />
+        <joint name="lh_THJ2" value="0" />
+        <joint name="lh_THJ3" value="0" />
+        <joint name="lh_THJ4" value="0.8032" />
+        <joint name="lh_THJ5" value="-0.6653" />
+        <joint name="lh_WRJ1" value="0" />
+        <joint name="lh_WRJ2" value="0" />
+    </group_state>
+    <group_state name="closed" group="left_hand">
+        <joint name="lh_FFJ1" value="0.6248" />
+        <joint name="lh_FFJ2" value="0.7116" />
+        <joint name="lh_FFJ3" value="1.0413" />
+        <joint name="lh_FFJ4" value="-0.012" />
+        <joint name="lh_LFJ1" value="0.6856" />
+        <joint name="lh_LFJ2" value="0.8331" />
+        <joint name="lh_LFJ3" value="1.3538" />
+        <joint name="lh_LFJ4" value="0" />
+        <joint name="lh_LFJ5" value="0" />
+        <joint name="lh_MFJ1" value="0.9546" />
+        <joint name="lh_MFJ2" value="0.7376" />
+        <joint name="lh_MFJ3" value="1.2499" />
+        <joint name="lh_MFJ4" value="0" />
+        <joint name="lh_RFJ1" value="0.6769" />
+        <joint name="lh_RFJ2" value="0.7897" />
+        <joint name="lh_RFJ3" value="1.3277" />
+        <joint name="lh_RFJ4" value="0" />
+        <joint name="lh_THJ1" value="0.9199" />
+        <joint name="lh_THJ2" value="0.6364" />
+        <joint name="lh_THJ3" value="0.0081" />
+        <joint name="lh_THJ4" value="1.2217" />
+        <joint name="lh_THJ5" value="-0.3529" />
+        <joint name="lh_WRJ1" value="0" />
+        <joint name="lh_WRJ2" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_hand" parent_group="right_arm"/>
     <end_effector name="rh_tool_frame" parent_link="rh_tool_frame" group="right_hand" parent_group="right_arm"/>
