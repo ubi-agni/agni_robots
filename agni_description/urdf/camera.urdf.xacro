@@ -3,11 +3,10 @@
 
   <xacro:include filename="../urdf/gazebo_camera.urdf.xacro"/>
   <!-- do not name the macro 'camera', it conflicts with gazebo camera tag -->
-  <xacro:macro name="camera_body" params="parent name fps hfov width height has_depth *origin has_second_origin:=0 *second_origin">
+  <xacro:macro name="camera_body" params="parent name fps hfov width height hfov2:=- width2:=- height2:=- has_depth *origin has_second_origin:=0 *second_origin">
     <xacro:if value="${1 if 'world' in parent else 0}">
       <link name="${parent}" />
     </xacro:if>
-    <!-- do not name the macro 'camera', it conflicts with gazebo camera tag -->
     <xacro:if value="${has_depth}">
       <!-- attach depth to parent -->
       <joint name="${name}_camera_depth_optical_joint" type="fixed">
@@ -151,15 +150,22 @@
         <child link="${name}_camera_rgb_optical_frame" />
       </joint>
     </xacro:unless>
-    
 
     <!-- Gazebo camera sensor for simulation -->
-    <xacro:if value="${has_depth}">
-      <gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="${has_depth}"/> 
+    <!-- if second origin is given, then create separate sensors (one depth, one rgb) and not a kinect with embedded color/depth -->
+    <xacro:if value="${has_depth and not has_second_origin}">
+      <gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="1" has_color="1"/> 
     </xacro:if>
-    <xacro:unless value="${has_depth}">
-      <gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="${has_depth}"/> 
-    </xacro:unless>
+    <xacro:if value="${has_depth and has_second_origin}">
+      <xacro:property name="second_hfov" value="${hfov if hfov2=='-' else hfov2}" />
+      <xacro:property name="second_width" value="${width if width2=='-' else width2}" />
+      <xacro:property name="second_height" value="${height if height2=='-' else height2}" />
+      <gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="1" has_color="0"/> 
+      <gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${second_hfov}" width="${second_width}" height="${second_height}" has_depth="0" has_color="1"/> 
+    </xacro:if>
+    <xacro:if value="${not has_depth}">
+      <gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" has_depth="0" has_color="1"/> 
+    </xacro:if>
   </xacro:macro>
 
 </robot>
