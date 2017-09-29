@@ -117,7 +117,7 @@ tools:
     mount: myrmex_quick_mount
     props:
       mass:  0.185
-      cog: "0.0 0.0 0.01"
+      cog: "0.0 0.0 0.03" # from bottom of myrmex = mount flange
 
   tactiletool:
     file: ../robots/tactiletool.urdf.xacro
@@ -134,7 +134,7 @@ tools:
     props:
       tactile: ubi
       mass:  0.505
-      cog: "0.0 0.0 0.015"
+      cog: "0.0 0.0 0.0161" # from bottom of poking stick = mount flange
   
   poking_stick_ubi_ati:
     file: ../robots/poking_stick_ati.urdf.xacro
@@ -144,15 +144,15 @@ tools:
       tactile: ubi
       mass:  0.760
       ati_adapter_thickness: 0.008
-      cog: "0.0 0.0 0.045"
+      cog: "0.0 0.0 0.0412" # from bottom of ati = mount flange
 
   poking_stick_rigid:
     file: ../robots/poking_stick.urdf.xacro
     macro: poking_stick
     mount: poking_stick
     props:
-      mass:  0.492
-      cog: "0.0 0.0 0.015"
+      mass:  0.427
+      cog: "0.0 0.0 0.0124" #from bottom of poking stick = kuka flange
       tactile: ""
       
   poking_stick_rigid_ati:
@@ -160,9 +160,9 @@ tools:
     macro: poking_stick
     mount: ft_sensor_link
     props:
-      tactile: ubi
-      mass:  0.747
-      cog: "0.0 0.0 0.045"
+      tactile: ""
+      mass:  0.682
+      cog: "0.0 0.0 0.0374" # from bottom of ati = mount flange
       
   calibration_tool:
     file: ../robots/calibration_tool.urdf.xacro
