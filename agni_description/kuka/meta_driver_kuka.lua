@@ -88,9 +88,11 @@ function configureHook()
     d:addPeer(tcName, friname)  
 
     -- register ports for the compound controller
-    -- fri should not advertize this port to the exterior, it must be thorough the filter for protection
+    -- fri should not advertize this port to the exterior, it must be through the filter for protection
     --register_port(in_portmap, 'CMDJNTPOS', friname..".JointPositionCommand")
     register_port(out_portmap, 'CURJNTPOS', friname..".JointPosition")
+    register_port(out_portmap, 'CURCARTPOSE', friname..".CartesianPosition")
+    register_port(out_portmap, 'CURCARTWRE', friname..".CartesianWrench")
 
     -- deploy joint state publisher
     jspname = namespace.."JntPub"
