@@ -6,7 +6,7 @@
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
     <!-- ati sensor -->
     <xacro:include filename="../models/ati_sensor.urdf.xacro" />
-    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}poking_stick" adapter_thickness="${props['ati_adapter_thickness']}"/>
+    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}poking_stick" adapter_thickness=" ${props.get('ati_adapter_thickness','0.008')}"/>
     
     <!-- poking stick -->
     <xacro:include filename="../models/poking_stick.urdf.xacro" />
