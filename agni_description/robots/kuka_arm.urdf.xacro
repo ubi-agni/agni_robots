@@ -13,6 +13,7 @@
       <xacro:lwr_arm_gazebo_controller prefix="${prefix}" namespace="${prefix}" 
                                        port="${props['port']}"
                                        init_joint_pos="${props['init_joint_pos']}"
+                                       igains="${props.get('igains', '')}"
                                        auto_on="${props['auto_on']}"/>
     </xacro:if>
   </xacro:macro>
