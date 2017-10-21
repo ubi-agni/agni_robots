@@ -1,6 +1,6 @@
 <robot xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:xacro="http://www.ros.org/wiki/xacro" name="gazebo_camera">
 
-  <xacro:macro name="gazebo_camera" params="linkref name fps hfov width:=640 height:=480 has_depth:=0 has_color:=1">
+  <xacro:macro name="gazebo_camera" params="linkref name fps hfov width:=640 height:=480 cx:=0 cy:=0 has_depth:=0 has_color:=1">
     <gazebo reference="${linkref}">  
       <xacro:if value="${has_depth and has_color}">
         <sensor type="depth" name="${name}">
@@ -21,7 +21,7 @@
           <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
             <cameraName>kinect</cameraName>
             <alwaysOn>true</alwaysOn>
-            <updateRate>0</updateRate>
+            <updateRate>0</updateRate> <!-- 0 will make the plugin use the sensor update_rate -->
             <imageTopicName>rgb/image_raw</imageTopicName>
             <depthImageTopicName>depth/image_raw</depthImageTopicName>
             <pointCloudTopicName>depth/points</pointCloudTopicName>
@@ -36,6 +36,10 @@
             <distortion_t2>0.0</distortion_t2>
             <pointCloudCutoff>0.4</pointCloudCutoff>
             <pointCloudCutoffMax>2.0</pointCloudCutoffMax>
+            <CxPrime>${cx}</CxPrime>
+            <Cx>${cx}</Cx>
+            <Cy>${cy}</Cy>
+            <focalLength>0</focalLength> <!-- 0 forces calculation from hfov -->
           </plugin>
         </sensor>
       </xacro:if>
@@ -63,7 +67,7 @@
           <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
             <cameraName>camera</cameraName>
             <alwaysOn>true</alwaysOn>
-            <updateRate>0</updateRate>
+            <updateRate>0</updateRate> <!-- 0 will make the plugin use the sensor update_rate -->
             <imageTopicName>rgb/image_raw</imageTopicName>
             <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
             <frameName>${name}_camera_rgb_optical_frame</frameName>
@@ -73,6 +77,10 @@
             <distortion_k3>0.0</distortion_k3>
             <distortion_t1>0.0</distortion_t1>
             <distortion_t2>0.0</distortion_t2>
+            <CxPrime>${cx}</CxPrime>
+            <Cx>${cx}</Cx>
+            <Cy>${cy}</Cy>
+            <focalLength>0</focalLength> <!-- 0 forces calculation from hfov -->
           </plugin>
         </sensor>
       </xacro:if>
@@ -109,10 +117,10 @@
             <distortion_t1>0.0</distortion_t1>
             <distortion_t2>0.0</distortion_t2>
             <pointCloudCutoff>0.4</pointCloudCutoff>
-            <CxPrime>0</CxPrime>
-            <Cx>0</Cx>
-            <Cy>0</Cy>
-            <focalLength>0</focalLength>
+            <CxPrime>${cx}</CxPrime>
+            <Cx>${cx}</Cx>
+            <Cy>${cy}</Cy>
+            <focalLength>0</focalLength> <!-- 0 forces calculation from hfov -->
             <hackBaseline>0</hackBaseline>
           </plugin>
         </sensor>
