@@ -15,6 +15,6 @@ agni_description_path = rttros.find_rospack("agni_description")
 package.path = agni_description_path..'/kuka'..'/?.lua;' .. package.path 
 require("meta_driver_kuka_component")
 
-driver_undeploy(d, "la", "kuka_driver")
+kuka_driver_undeploy(d, "la", "kuka_driver")
 
 

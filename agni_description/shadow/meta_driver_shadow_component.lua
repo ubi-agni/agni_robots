@@ -8,7 +8,7 @@ package.path = lua_path..'/scripts'..'/?.lua;' .. package.path
 -- agni functionalities (wait for peer, etc)
 require "agni_tools"
 
-function driver_deploy(d, namespace, driver_name, driver_script)
+function shadow_driver_deploy(d, namespace, driver_name, driver_script)
   name = namespace..driver_name
   if hasPeer(d, name) then
     print(name.." already loaded")
@@ -41,7 +41,7 @@ function driver_deploy(d, namespace, driver_name, driver_script)
   end
 end
 
-function driver_undeploy(d, namespace, driver_name)
+function shadow_driver_undeploy(d, namespace, driver_name)
   -- access the cm
   name = namespace..driver_name
   if hasPeer(d, name) then

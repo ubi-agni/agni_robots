@@ -8,7 +8,7 @@ package.path = lua_path..'/scripts'..'/?.lua;' .. package.path
 -- agni functionalities (wait for peer, etc)
 require "agni_tools"
 
-function driver_deploy(d, namespace, driver_name, driver_script, port, timestep, cutoff_freq)
+function kuka_driver_deploy(d, namespace, driver_name, driver_script, port, timestep, cutoff_freq)
   name = namespace..driver_name
   -- backward compatibility with default values for timestep and cutoff_freq
   timestep = timestep or 0.001
@@ -47,7 +47,7 @@ function driver_deploy(d, namespace, driver_name, driver_script, port, timestep,
   end
 end
 
-function driver_undeploy(d, namespace, driver_name)
+function kuka_driver_undeploy(d, namespace, driver_name)
   -- access the cm
   name = namespace..driver_name
   if hasPeer(d, name) then
