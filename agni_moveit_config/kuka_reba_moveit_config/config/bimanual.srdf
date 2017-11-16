@@ -10,56 +10,62 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="left_arm">
-        <link name="world" />
-        <link name="la_arm_base_link" />
-        <link name="la_arm_1_link" />
-        <link name="la_arm_2_link" />
-        <link name="la_arm_3_link" />
-        <link name="la_arm_4_link" />
-        <link name="la_arm_5_link" />
-        <link name="la_arm_6_link" />
-        <link name="la_arm_7_link" />
-        <link name="la_tool_mount" />
-        <link name="lh_poking_stick" />
-        <joint name="la_arm_mount" />
-        <joint name="la_arm_0_joint" />
-        <joint name="la_arm_1_joint" />
-        <joint name="la_arm_2_joint" />
-        <joint name="la_arm_3_joint" />
-        <joint name="la_arm_4_joint" />
-        <joint name="la_arm_5_joint" />
-        <joint name="la_arm_6_joint" />
-        <joint name="la_arm_hand_fixed_joint" />
-        <joint name="lh_tool_mount" />
-        <chain base_link="world" tip_link="lh_poking_stick" />
+        <chain base_link="la_arm_base_link" tip_link="la_tool_mount" />
     </group>
     <group name="right_arm">
-        <link name="world" />
-        <link name="ra_arm_base_link" />
-        <link name="ra_arm_1_link" />
-        <link name="ra_arm_2_link" />
-        <link name="ra_arm_3_link" />
-        <link name="ra_arm_4_link" />
-        <link name="ra_arm_5_link" />
-        <link name="ra_arm_6_link" />
-        <link name="ra_arm_7_link" />
-        <link name="ra_tool_mount" />
-        <link name="rh_myrmex_quick_mount" />
-        <joint name="ra_arm_mount" />
-        <joint name="ra_arm_0_joint" />
-        <joint name="ra_arm_1_joint" />
-        <joint name="ra_arm_2_joint" />
-        <joint name="ra_arm_3_joint" />
-        <joint name="ra_arm_4_joint" />
-        <joint name="ra_arm_5_joint" />
-        <joint name="ra_arm_6_joint" />
-        <joint name="ra_arm_hand_fixed_joint" />
-        <joint name="rh_tool_mount" />
-        <chain base_link="world" tip_link="rh_myrmex_quick_mount" />
+        <chain base_link="ra_arm_base_link" tip_link="ra_tool_mount" />
     </group>
+    <group name="left_tool">
+        <link name="lh_poking_stick" />
+    </group>
+    <group name="right_tool">
+        <link name="rh_myrmex_quick_mount" />
+        <link name="rh_myrmex_foam" />
+    </group>
+    <group name="left_armtool">
+        <group name="left_arm" />
+        <group name="left_tool" />
+    </group>
+    <group name="right_armtool">
+        <group name="right_arm" />
+        <group name="right_tool" />
+    </group>
+    <group name="upper_body">
+        <group name="left_armtool" />
+        <group name="right_armtool" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="parked" group="upper_body">
+        <joint name="la_arm_0_joint" value="-0.567" />
+        <joint name="la_arm_1_joint" value="1.0126" />
+        <joint name="la_arm_2_joint" value="0" />
+        <joint name="la_arm_3_joint" value="0" />
+        <joint name="la_arm_4_joint" value="0" />
+        <joint name="la_arm_5_joint" value="0" />
+        <joint name="la_arm_6_joint" value="0" />
+        <joint name="ra_arm_0_joint" value="0.567" />
+        <joint name="ra_arm_1_joint" value="1.0126" />
+        <joint name="ra_arm_2_joint" value="0" />
+        <joint name="ra_arm_3_joint" value="0" />
+        <joint name="ra_arm_4_joint" value="0" />
+        <joint name="ra_arm_5_joint" value="0" />
+        <joint name="ra_arm_6_joint" value="0" />
+        <joint name="rh_myrmex_bumper_joint" value="0" />
+    </group_state>
+    <group_state name="initial" group="left_armtool">
+        <joint name="la_arm_0_joint" value="1.4418" />
+        <joint name="la_arm_1_joint" value="0.4665" />
+        <joint name="la_arm_2_joint" value="-0.5994" />
+        <joint name="la_arm_3_joint" value="-1.6043" />
+        <joint name="la_arm_4_joint" value="0.3402" />
+        <joint name="la_arm_5_joint" value="0.8306" />
+        <joint name="la_arm_6_joint" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="myrmex" parent_link="ra_tool_mount" group="right_arm" />
-    <end_effector name="poking_sti" parent_link="la_tool_mount" group="left_arm" />
+    <end_effector name="right_tool" parent_link="ra_tool_mount" group="right_tool" parent_group="right_arm" />
+    <end_effector name="left_tool" parent_link="la_tool_mount" group="left_tool" parent_group="left_arm" />
+    <end_effector name="poking_tip" parent_link="lh_poking_stick" group="left_tool" parent_group="left_armtool" />
+    <end_effector name="right_myrmex_tip" parent_link="rh_myrmex_foam" group="right_tool" parent_group="right_armtool" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="frame" link2="la_arm_1_link" reason="Never" />
     <disable_collisions link1="frame" link2="la_arm_2_link" reason="Never" />
@@ -74,7 +80,6 @@
     <disable_collisions link1="la_arm_1_link" link2="la_arm_6_link" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="la_arm_7_link" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="la_arm_base_link" reason="Adjacent" />
-    <disable_collisions link1="la_arm_1_link" link2="lh_poking_stick" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="ra_arm_1_link" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="la_arm_1_link" link2="ra_arm_3_link" reason="Never" />
@@ -106,24 +111,19 @@
     <disable_collisions link1="la_arm_4_link" link2="la_arm_base_link" reason="Never" />
     <disable_collisions link1="la_arm_4_link" link2="lh_poking_stick" reason="Never" />
     <disable_collisions link1="la_arm_4_link" link2="ra_arm_1_link" reason="Never" />
-    <disable_collisions link1="la_arm_4_link" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="la_arm_4_link" link2="ra_arm_base_link" reason="Never" />
     <disable_collisions link1="la_arm_5_link" link2="la_arm_6_link" reason="Adjacent" />
     <disable_collisions link1="la_arm_5_link" link2="la_arm_7_link" reason="Default" />
-    <disable_collisions link1="la_arm_5_link" link2="la_arm_base_link" reason="Never" />
     <disable_collisions link1="la_arm_6_link" link2="la_arm_7_link" reason="Adjacent" />
     <disable_collisions link1="la_arm_6_link" link2="la_arm_base_link" reason="Never" />
     <disable_collisions link1="la_arm_6_link" link2="lh_poking_stick" reason="Never" />
     <disable_collisions link1="la_arm_7_link" link2="la_arm_base_link" reason="Never" />
     <disable_collisions link1="la_arm_7_link" link2="lh_poking_stick" reason="Adjacent" />
-    <disable_collisions link1="la_arm_7_link" link2="rh_myrmex_foam" reason="Never" />
-    <disable_collisions link1="la_arm_base_link" link2="lh_poking_stick" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_1_link" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_3_link" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_4_link" reason="Never" />
     <disable_collisions link1="la_arm_base_link" link2="ra_arm_base_link" reason="Adjacent" />
-    <disable_collisions link1="lh_poking_stick" link2="rh_myrmex_foam" reason="Never" />
     <disable_collisions link1="ra_arm_1_link" link2="ra_arm_2_link" reason="Adjacent" />
     <disable_collisions link1="ra_arm_1_link" link2="ra_arm_3_link" reason="Never" />
     <disable_collisions link1="ra_arm_1_link" link2="ra_arm_4_link" reason="Never" />
@@ -156,7 +156,6 @@
     <disable_collisions link1="ra_arm_4_link" link2="rh_myrmex_quick_mount" reason="Never" />
     <disable_collisions link1="ra_arm_5_link" link2="ra_arm_6_link" reason="Adjacent" />
     <disable_collisions link1="ra_arm_5_link" link2="ra_arm_7_link" reason="Default" />
-    <disable_collisions link1="ra_arm_5_link" link2="ra_arm_base_link" reason="Never" />
     <disable_collisions link1="ra_arm_6_link" link2="ra_arm_7_link" reason="Adjacent" />
     <disable_collisions link1="ra_arm_6_link" link2="ra_arm_base_link" reason="Never" />
     <disable_collisions link1="ra_arm_6_link" link2="rh_myrmex_foam" reason="Never" />
@@ -164,7 +163,5 @@
     <disable_collisions link1="ra_arm_7_link" link2="ra_arm_base_link" reason="Never" />
     <disable_collisions link1="ra_arm_7_link" link2="rh_myrmex_foam" reason="Never" />
     <disable_collisions link1="ra_arm_7_link" link2="rh_myrmex_quick_mount" reason="Adjacent" />
-    <disable_collisions link1="ra_arm_base_link" link2="rh_myrmex_foam" reason="Never" />
-    <disable_collisions link1="ra_arm_base_link" link2="rh_myrmex_quick_mount" reason="Never" />
     <disable_collisions link1="rh_myrmex_foam" link2="rh_myrmex_quick_mount" reason="Adjacent" />
 </robot>

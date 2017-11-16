@@ -7,4 +7,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: qli
     author_email: qli@techfak.uni-bielefeld.de
-    generated_timestamp: 1505315291
+    generated_timestamp: 1505469298
