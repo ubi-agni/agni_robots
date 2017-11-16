@@ -1,0 +1,77 @@
+controller_list:
+  - name: fake_leftarm_controller
+    joints:
+      - la_arm_0_joint
+      - la_arm_1_joint
+      - la_arm_2_joint
+      - la_arm_3_joint
+      - la_arm_4_joint
+      - la_arm_5_joint
+      - la_arm_6_joint
+  - name: fake_rightarm_controller
+    joints:
+      - ra_arm_0_joint
+      - ra_arm_1_joint
+      - ra_arm_2_joint
+      - ra_arm_3_joint
+      - ra_arm_4_joint
+      - ra_arm_5_joint
+      - ra_arm_6_joint
+  - name: fake_lefttool_controller
+    joints:
+      - lh_myrmex_bumper_joint
+  - name: fake_rightool_controller
+    joints:
+      []
+  - name: fake_leftarmtool_controller
+    joints:
+      - la_arm_0_joint
+      - la_arm_1_joint
+      - la_arm_2_joint
+      - la_arm_3_joint
+      - la_arm_4_joint
+      - la_arm_5_joint
+      - la_arm_6_joint
+      - lh_myrmex_bumper_joint
+  - name: fake_rightarmtool_controller
+    joints:
+      - ra_arm_0_joint
+      - ra_arm_1_joint
+      - ra_arm_2_joint
+      - ra_arm_3_joint
+      - ra_arm_4_joint
+      - ra_arm_5_joint
+      - ra_arm_6_joint
+  - name: fake_torso_controller
+    joints:
+      - la_arm_0_joint
+      - la_arm_1_joint
+      - la_arm_2_joint
+      - la_arm_3_joint
+      - la_arm_4_joint
+      - la_arm_5_joint
+      - la_arm_6_joint
+      - lh_myrmex_bumper_joint
+      - ra_arm_0_joint
+      - ra_arm_1_joint
+      - ra_arm_2_joint
+      - ra_arm_3_joint
+      - ra_arm_4_joint
+      - ra_arm_5_joint
+      - ra_arm_6_joint
+  - name: fake_BiArm_controller
+    joints:
+      - la_arm_0_joint
+      - la_arm_1_joint
+      - la_arm_2_joint
+      - la_arm_3_joint
+      - la_arm_4_joint
+      - la_arm_5_joint
+      - la_arm_6_joint
+      - ra_arm_0_joint
+      - ra_arm_1_joint
+      - ra_arm_2_joint
+      - ra_arm_3_joint
+      - ra_arm_4_joint
+      - ra_arm_5_joint
+      - ra_arm_6_joint
