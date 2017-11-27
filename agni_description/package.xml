@@ -6,8 +6,9 @@
 
   <license>BSD</license>
 
-  <url type="repository">vol/ni/src/git/agniros.git</url>
-  <author>Guillaume Walck, Robert Haschke</author>
+  <url type="repository">https://github.com/ubi-agni/agni_robots</url>
+  <author>Guillaume Walck</author>
+  <author>Robert Haschke</author>
 
   <!-- Dependencies which this package needs to build itself. -->
   <buildtool_depend>catkin</buildtool_depend>
