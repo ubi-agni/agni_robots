@@ -33,6 +33,9 @@
         <group name="right_thumb" />
     </group>
     <group name="right_hand">
+        <link name="rh_forearm" />
+        <link name="rh_wrist" />
+        <link name="rh_palm" />
         <joint name="rh_WRJ2" />
         <joint name="rh_WRJ1" />
         <group name="right_fingers" />
@@ -61,6 +64,9 @@
         <group name="left_thumb" />
     </group>
     <group name="left_hand">
+        <link name="lh_forearm" />
+        <link name="lh_wrist" />
+        <link name="lh_palm" />
         <joint name="lh_WRJ2" />
         <joint name="lh_WRJ1" />
         <group name="left_fingers" />
