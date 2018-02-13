@@ -117,14 +117,19 @@
 			<!-- virtual fence -->
 			<!-- top plane -->
 			<collision>
-				<xacro:property name="rearBarY" value="${mountingYpos + mountingspacing/2}"/>
-				<origin xyz="0 ${rearBarY + (depth-rearBarY)/2} ${height+(thickness-0.35)/2}"
+				<origin xyz="0 ${depth/2} ${height+(thickness-0.35)/2}"
 				        rpy="0 0 0"/>
-				<geometry><box size="${width} ${depth-rearBarY} ${0.02}"/></geometry>
+				<geometry><box size="${width} ${depth} ${0.02}"/></geometry>
 			</collision>
 			<!-- back plane -->
 			<collision>
 				<origin xyz="0 ${depth + thickness/2} ${height/2}"
+				        rpy="0 0 0"/>
+				<geometry><box size="${width} ${thickness} ${height}"/></geometry>
+			</collision>
+			<!-- front plane -->
+			<collision>
+				<origin xyz="0 ${-thickness/2} ${height/2}"
 				        rpy="0 0 0"/>
 				<geometry><box size="${width} ${thickness} ${height}"/></geometry>
 			</collision>
