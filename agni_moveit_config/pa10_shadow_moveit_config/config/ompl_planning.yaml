@@ -176,7 +176,6 @@ right_hand:
     - SPARStwokConfigDefault
   projection_evaluator: joints(rh_WRJ2,rh_WRJ1)
   longest_valid_segment_fraction: 0.05
-
 left_fingers:
   planner_configs:
     - SBLkConfigDefault
@@ -190,8 +189,6 @@ left_fingers:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-  projection_evaluator: joints(lh_FFJ4,lh_FFJ3)
-  longest_valid_segment_fraction: 0.05
     - FMTkConfigDefault
     - BFMTkConfigDefault
     - PDSTkConfigDefault
@@ -204,6 +201,8 @@ left_fingers:
     - LazyPRMstarkConfigDefault
     - SPARSkConfigDefault
     - SPARStwokConfigDefault
+  projection_evaluator: joints(lh_FFJ4,lh_FFJ3)
+  longest_valid_segment_fraction: 0.05
 right_fingers:
   planner_configs:
     - SBLkConfigDefault
@@ -231,7 +230,6 @@ right_fingers:
     - SPARStwokConfigDefault
   projection_evaluator: joints(rh_FFJ4,rh_FFJ3)
   longest_valid_segment_fraction: 0.05
-
 right_first_finger:
   planner_configs:
     - SBLkConfigDefault
