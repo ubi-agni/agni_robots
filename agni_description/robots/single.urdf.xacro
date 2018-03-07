@@ -21,6 +21,9 @@
 		<xacro:if value="${FRAME == 'famula'}">
 			<xacro:include filename="../urdf/frame-half_mesh.urdf.xacro"/>
 		</xacro:if>
+		<xacro:if value="${FRAME == 'moveable_famula'}">
+			<xacro:include filename="../urdf/frame-moveable.urdf.xacro"/>
+		</xacro:if>
 		<xacro:if value="${FRAME == 'sfb'}">
 			<xacro:include filename="../urdf/frame.urdf.xacro"/>
 		</xacro:if>

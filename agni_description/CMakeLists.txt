@@ -18,6 +18,8 @@ list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 if(flobi_description_FOUND)
   xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
   list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+  xacro_add_xacro_file(robots/moveable_famula.urdf.xacro INORDER)
+  list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 endif()
 
 # sfb frame
@@ -26,6 +28,8 @@ list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # famula frame
 xacro_add_xacro_file(robots/single.urdf.xacro robots/famula_frame.urdf INORDER REMAP FRAME:=famula)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_famula_frame.urdf INORDER REMAP FRAME:=moveable_famula)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right pa10

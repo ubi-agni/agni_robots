@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://www.ros.org/wiki/xacro"
+      xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+      xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+      xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
+
+	<xacro:include filename="../urdf/materials.urdf.xacro"/>
+
+	<xacro:macro name="bar" params="thickness len *origin">
+		<visual>
+			<xacro:insert_block name="origin"/>
+			<geometry><box size="${thickness} ${thickness} ${len}"/></geometry>
+			<material name="Silver"/>
+		</visual>
+		<collision>
+			<xacro:insert_block name="origin"/>
+			<geometry><box size="${thickness} ${thickness} ${len}"/></geometry>
+		</collision>
+	</xacro:macro>
+
+	<xacro:macro name="frame" params="prefix:='' parent:=''
+	   thickness:=${cal_frame_thick} pole_front_dist:=${cal_frame_pole_front_dist}
+	   width:=${cal_frame_width} depth:=${cal_frame_depth} height:=${cal_frame_height}
+	   tableHeight:=${cal_frame_table_height} triangle_pos:=${cal_triangle_pos}">
+
+		<xacro:property name="mount_triangle_length" value="0.26" />
+		<xacro:property name="mount_triangle_thickness" value="0.02"/>
+
+		<link name="${prefix}frame">
+			<inertial>
+				<mass value="100.0" />
+				<origin xyz="0 1.2 0.3" rpy="0 0 0"/>
+				<inertia ixx="4.0" ixy="0" ixz="0" iyy="4.0" iyz="0" izz="4.0"/>
+			</inertial>
+
+			<!-- left central pole -->
+			<xacro:bar thickness="${thickness}" len="${thickness+tableHeight+(height)/2}">
+				<origin xyz="${-thickness} ${pole_front_dist+thickness/2} ${-(2*tableHeight-height)/4-thickness/2}"/>
+			</xacro:bar>
+
+			<!-- right central pole -->
+			<xacro:bar thickness="${thickness}" len="${thickness+tableHeight+(height)/2}">
+				<origin xyz="${thickness} ${pole_front_dist+thickness/2} ${-(2*tableHeight-height)/4-thickness/2}"/>
+			</xacro:bar>
+
+			<!-- kuka mount triangle -->
+			<xacro:macro name="plate" 
+			             params="thickness:=${mount_triangle_thickness} 
+			                     length:=${mount_triangle_length} *origin">
+				<visual>
+					<xacro:insert_block name="origin"/>
+					<geometry><box size="${length} ${length} ${thickness}"/></geometry>
+					<material name="Silver"/>
+				</visual>
+				<collision>
+					<xacro:insert_block name="origin"/>
+					<geometry><box size="${length} ${length} ${thickness - 0.005}"/></geometry>
+				</collision>
+			</xacro:macro>
+
+			<xacro:property name="mtth" value="${mount_triangle_thickness}"/>
+			<xacro:property name="mtlen" value="${mount_triangle_length}"/>
+			<!-- left plate -->
+
+			<xacro:plate>
+				<origin xyz="${triangle_pos['leftX']-mtth/2*cos(30/180.0*pi)}
+				             ${triangle_pos['Y']}
+				             ${triangle_pos['Z']-mtth/2*sin(30/180.0*pi)}"
+				        rpy="0 ${pi/3} 0"/>
+			</xacro:plate>
+			<!-- right plate -->
+
+			<xacro:plate>
+				<origin xyz="${triangle_pos['rightX']+mtth/2*cos(30/180.0*pi)}
+				             ${triangle_pos['Y']}
+				             ${triangle_pos['Z']-mtth/2*sin(30/180.0*pi)}"
+				        rpy="0 ${-pi/3} 0"/>
+			</xacro:plate>
+			<!-- lower plate -->
+
+			<xacro:plate>
+				<origin xyz="0 ${triangle_pos['Y']} ${triangle_pos['Z']-sin(30/180.0*pi)*mtth-mtlen/2*sin(60/180.0*pi)-mtth/2}"
+				        rpy="0 0 0"/>
+			</xacro:plate>
+
+			<!-- table plane -->
+			<visual>
+				<origin xyz="0 ${depth/2} -0.01"
+				        rpy="0 0 0"/>
+				<geometry><box size="${width} ${depth} ${0.02}"/></geometry>
+				<material name="Silver"/>
+			</visual>
+			<collision>
+				<origin xyz="0 ${depth/2} -0.01"
+				        rpy="0 0 0"/>
+				<geometry><box size="${width} ${depth} ${0.02}"/></geometry>
+			</collision>
+
+		</link>
+
+		<gazebo reference="${prefix}frame">
+			<material value="Gazebo/Grey"/>
+		</gazebo>
+
+		<xacro:if value="${parent != ''}">
+			<joint name="${prefix}frame_joint" type="fixed">
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<parent link="${parent}"/>
+				<child link="${prefix}frame"/>
+			</joint>
+		</xacro:if>
+
+	</xacro:macro>
+
+</root>

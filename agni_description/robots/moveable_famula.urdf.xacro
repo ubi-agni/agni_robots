@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
+
+	<xacro:arg name="SIM" default="1"/>
+	<xacro:arg name="CALIB" default="moveable_famula"/>
+
+	<xacro:property name="parent" value="world"/>
+	<link name="${parent}"/>
+
+	<!-- frame -->
+	<xacro:include filename="../urdf/frame-moveable.urdf.xacro"/>
+	<xacro:include filename="../calibration/moveable_famula_frame_cal.xml"/>
+	<xacro:frame parent="${parent}"/>
+
+	<xacro:include filename="../urdf/helpers.urdf.xacro" />
+
+	<xacro:arm_with_tool parent="frame" prefix="r"
+	                     arm_type="kukaR" tool_type="shadow_motor_right" />
+	<xacro:arm_with_tool parent="frame" prefix="l"
+	                     arm_type="kukaL" tool_type="shadow_motor_left"/>
+ 
+	<!-- floka -->
+	<xacro:include filename="$(find flobi_description)/xacro/floka.urdf.xacro" />
+	<xacro:floka parent="frame" prefix="floka_" neutral="1">
+		<origin xyz="${cal_flobi_pos['X']} ${cal_flobi_pos['Y']} ${cal_flobi_pos['Z']}"
+		        rpy="0 0 ${-pi/2.0}"/>
+	</xacro:floka>
+</robot>
