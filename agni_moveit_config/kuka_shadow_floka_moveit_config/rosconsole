@@ -1,0 +1,5 @@
+log4j.logger.ros.moveit_kinematics.kdl=INFO
+log4j.logger.ros.moveit_planners_ompl=INFO
+log4j.logger.ros.moveit_ros_planning=INFO
+log4j.logger.ros.moveit_task_constructor_core=INFO
+
