@@ -77,13 +77,13 @@
 				        rpy="0 ${-pi/3} 0"/>
 			</xacro:plate>
 			<!-- lower plate -->
-
+ 
 			<xacro:plate>
 				<origin xyz="0 ${triangle_pos['Y']} ${triangle_pos['Z']-sin(30/180.0*pi)*mtth-mtlen/2*sin(60/180.0*pi)-mtth/2}"
 				        rpy="0 0 0"/>
 			</xacro:plate>
 
-			<!-- table plane 
+			<!-- table plane -->
 			<visual>
 				<origin xyz="0 ${depth/2} -0.01"
 				        rpy="0 0 0"/>
@@ -95,7 +95,7 @@
 				        rpy="0 0 0"/>
 				<geometry><box size="${width} ${depth} ${0.02}"/></geometry>
 			</collision>
--->
+
 		</link>
 
 		<gazebo reference="${prefix}frame">
