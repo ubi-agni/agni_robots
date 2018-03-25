@@ -313,13 +313,13 @@
         <joint name="lh_THJ5" value="0" />
         <joint name="lh_WRJ1" value="0" />
         <joint name="lh_WRJ2" value="0" />
-        <joint name="la_arm_0_joint" value="-0.5271" />
-        <joint name="la_arm_1_joint" value="1.0413" />
+        <joint name="la_arm_0_joint" value="-0.541" />
+        <joint name="la_arm_1_joint" value="0.977" />
         <joint name="la_arm_2_joint" value="0" />
-        <joint name="la_arm_3_joint" value="0" />
-        <joint name="la_arm_4_joint" value="0" />
-        <joint name="la_arm_5_joint" value="0" />
-        <joint name="la_arm_6_joint" value="0" />
+        <joint name="la_arm_3_joint" value="-0.13" />
+        <joint name="la_arm_4_joint" value="-0.052" />
+        <joint name="la_arm_5_joint" value="-0.13" />
+        <joint name="la_arm_6_joint" value="0.035" />
         <joint name="rh_FFJ1" value="0" />
         <joint name="rh_FFJ2" value="0" />
         <joint name="rh_FFJ3" value="0" />
@@ -344,13 +344,13 @@
         <joint name="rh_THJ5" value="0" />
         <joint name="rh_WRJ1" value="0" />
         <joint name="rh_WRJ2" value="0" />
-        <joint name="ra_arm_0_joint" value="0.5271" />
-        <joint name="ra_arm_1_joint" value="1.0404" />
+        <joint name="ra_arm_0_joint" value="0.541" />
+        <joint name="ra_arm_1_joint" value="0.977" />
         <joint name="ra_arm_2_joint" value="0" />
-        <joint name="ra_arm_3_joint" value="0" />
-        <joint name="ra_arm_4_joint" value="0" />
-        <joint name="ra_arm_5_joint" value="0" />
-        <joint name="ra_arm_6_joint" value="0" />
+        <joint name="ra_arm_3_joint" value="-0.13" />
+        <joint name="ra_arm_4_joint" value="-0.052" />
+        <joint name="ra_arm_5_joint" value="-0.13" />
+        <joint name="ra_arm_6_joint" value="0.035" />
     </group_state>
     <group_state name="upperbody_home" group="upper_body">
         <joint name="lh_FFJ1" value="0" />
@@ -377,13 +377,13 @@
         <joint name="lh_THJ5" value="0" />
         <joint name="lh_WRJ1" value="0" />
         <joint name="lh_WRJ2" value="0" />
-        <joint name="la_arm_0_joint" value="0.0659" />
-        <joint name="la_arm_1_joint" value="-0.7867" />
-        <joint name="la_arm_2_joint" value="1.3837" />
-        <joint name="la_arm_3_joint" value="-1.6198" />
-        <joint name="la_arm_4_joint" value="-0.2306" />
-        <joint name="la_arm_5_joint" value="0.8099" />
-        <joint name="la_arm_6_joint" value="0.3953" />
+        <joint name="la_arm_0_joint" value="1.5708" />
+        <joint name="la_arm_1_joint" value="0" />
+        <joint name="la_arm_2_joint" value="1.0472 " />
+        <joint name="la_arm_3_joint" value="-2.0071" />
+        <joint name="la_arm_4_joint" value="-1.5708" />
+        <joint name="la_arm_5_joint" value=" 1.5708" />
+        <joint name="la_arm_6_joint" value=" 1.5708" />
         <joint name="rh_FFJ1" value="0" />
         <joint name="rh_FFJ2" value="0" />
         <joint name="rh_FFJ3" value="0" />
@@ -408,35 +408,54 @@
         <joint name="rh_THJ5" value="0" />
         <joint name="rh_WRJ1" value="0" />
         <joint name="rh_WRJ2" value="0" />
-        <joint name="ra_arm_0_joint" value="-0.0659" />
-        <joint name="ra_arm_1_joint" value="-0.7636" />
-        <joint name="ra_arm_2_joint" value="-1.219" />
-        <joint name="ra_arm_3_joint" value="-1.5966" />
-        <joint name="ra_arm_4_joint" value="-0.2306" />
-        <joint name="ra_arm_5_joint" value="0.9487" />
-        <joint name="ra_arm_6_joint" value="-0.0329" />
+        <joint name="ra_arm_0_joint" value="-1.5708" />
+        <joint name="ra_arm_1_joint" value="0" />
+        <joint name="ra_arm_2_joint" value="-1.0472 " />
+        <joint name="ra_arm_3_joint" value="-2.0071" />
+        <joint name="ra_arm_4_joint" value=" 1.5708" />
+        <joint name="ra_arm_5_joint" value=" 1.5708" />
+        <joint name="ra_arm_6_joint" value="-1.5708" />
+        
+    </group_state>
+    <group_state name="left_home" group="left_arm">
+        <joint name="la_arm_0_joint" value="1.5708" />
+        <joint name="la_arm_1_joint" value="0" />
+        <joint name="la_arm_2_joint" value="1.0472 " />
+        <joint name="la_arm_3_joint" value="-2.0071" />
+        <joint name="la_arm_4_joint" value="-1.5708" />
+        <joint name="la_arm_5_joint" value=" 1.5708" />
+        <joint name="la_arm_6_joint" value=" 1.5708" />
+    </group_state>
+    <group_state name="right_home" group="right_arm">
+        <joint name="ra_arm_0_joint" value="-1.5708" />
+        <joint name="ra_arm_1_joint" value="0" />
+        <joint name="ra_arm_2_joint" value="-1.0472 " />
+        <joint name="ra_arm_3_joint" value="-2.0071" />
+        <joint name="ra_arm_4_joint" value=" 1.5708" />
+        <joint name="ra_arm_5_joint" value=" 1.5708" />
+        <joint name="ra_arm_6_joint" value="-1.5708" />
     </group_state>
     <group_state name="left_home" group="left_armhand">
         <joint name="lh_WRJ1" value="0" />
         <joint name="lh_WRJ2" value="0" />
-        <joint name="la_arm_0_joint" value="0.0659" />
-        <joint name="la_arm_1_joint" value="-0.7867" />
-        <joint name="la_arm_2_joint" value="1.3837" />
-        <joint name="la_arm_3_joint" value="-1.6198" />
-        <joint name="la_arm_4_joint" value="-0.2306" />
-        <joint name="la_arm_5_joint" value="0.8099" />
-        <joint name="la_arm_6_joint" value="0.3953" />
+        <joint name="la_arm_0_joint" value="1.5708" />
+        <joint name="la_arm_1_joint" value="0" />
+        <joint name="la_arm_2_joint" value="1.0472 " />
+        <joint name="la_arm_3_joint" value="-2.0071" />
+        <joint name="la_arm_4_joint" value="-1.5708" />
+        <joint name="la_arm_5_joint" value=" 1.5708" />
+        <joint name="la_arm_6_joint" value=" 1.5708" />
     </group_state>
     <group_state name="right_home" group="right_armhand">
         <joint name="rh_WRJ1" value="0" />
         <joint name="rh_WRJ2" value="0" />
-        <joint name="ra_arm_0_joint" value="-0.0659" />
-        <joint name="ra_arm_1_joint" value="-0.7636" />
-        <joint name="ra_arm_2_joint" value="-1.219" />
-        <joint name="ra_arm_3_joint" value="-1.5966" />
-        <joint name="ra_arm_4_joint" value="-0.2306" />
-        <joint name="ra_arm_5_joint" value="0.9487" />
-        <joint name="ra_arm_6_joint" value="-0.0329" />
+        <joint name="ra_arm_0_joint" value="-1.5708" />
+        <joint name="ra_arm_1_joint" value="0" />
+        <joint name="ra_arm_2_joint" value="-1.0472 " />
+        <joint name="ra_arm_3_joint" value="-2.0071" />
+        <joint name="ra_arm_4_joint" value=" 1.5708" />
+        <joint name="ra_arm_5_joint" value=" 1.5708" />
+        <joint name="ra_arm_6_joint" value="-1.5708" />
     </group_state>
     <group_state name="left_hand_home" group="left_hand">
         <joint name="lh_FFJ1" value="0" />
