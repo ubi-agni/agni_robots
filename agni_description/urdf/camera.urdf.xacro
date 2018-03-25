@@ -60,13 +60,23 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://sr_description/other/model/kinect.dae"/>
+          <xacro:if value="${name=='kinectd'}">
+            <mesh filename="package://sr_description/other/model/kinect.dae"/>
+          </xacro:if>
+          <xacro:unless value="${name=='kinectd'}">
+            <box size="0.01 .01 0.01"/>
+          </xacro:unless>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <box size="0.0730 .2760 0.0720"/>
+          <xacro:if value="${name=='kinectd'}">
+            <box size="0.0730 .2760 0.0720"/>
+          </xacro:if>
+          <xacro:unless value="${name=='kinectd'}">
+            <box size="0.01 .01 0.01"/>
+          </xacro:unless>
         </geometry>
       </collision>
     </link>
