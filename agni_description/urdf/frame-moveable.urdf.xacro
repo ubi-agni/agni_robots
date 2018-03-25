@@ -83,7 +83,7 @@
 				        rpy="0 0 0"/>
 			</xacro:plate>
 
-			<!-- table plane -->
+			<!-- table plane 
 			<visual>
 				<origin xyz="0 ${depth/2} -0.01"
 				        rpy="0 0 0"/>
@@ -95,7 +95,7 @@
 				        rpy="0 0 0"/>
 				<geometry><box size="${width} ${depth} ${0.02}"/></geometry>
 			</collision>
-
+-->
 		</link>
 
 		<gazebo reference="${prefix}frame">

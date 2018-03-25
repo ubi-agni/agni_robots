@@ -61,6 +61,13 @@ list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
+# left right kuka shadow_hand_motor_ubi moveable platform
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_right_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=kukaR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=kukaL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+
+
 # install the generated files
 xacro_install(xacro ${xacro_outputs} DESTINATION robots)
 
