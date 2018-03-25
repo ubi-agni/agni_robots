@@ -3,7 +3,7 @@
   <!-- arm base -->
   <xacro:property name="cal_x"     value="-0.0803" /><!-- -0.08232 -->
   <xacro:property name="cal_y"     value="0.8966" /><!-- 0.897 -->
-  <xacro:property name="cal_z"     value="0.2948" /><!-- 0.29758 -->
+  <xacro:property name="cal_z"     value="0.3266" /><!-- 0.29758 -->
   <xacro:property name="cal_roll"  value="-0.7071" /><!---0.71215 -->
   <xacro:property name="cal_pitch" value="0.8318" /><!-- 0.84840 -->
   <xacro:property name="cal_yaw"   value="2.2734" /> <!-- 2.28576 -->

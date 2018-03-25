@@ -14,8 +14,8 @@
   <xacro:property name="mount_triangle_length"   value="0.26" />
   <xacro:property name="mount_triangle_thickness" value="0.02" />
 
-  <xacro:include filename="famula/kukaL_cal.xml" ns="left"/>
-  <xacro:include filename="famula/kukaR_cal.xml" ns="right"/>
+  <xacro:include filename="moveable_famula/kukaL_cal.xml" ns="left"/>
+  <xacro:include filename="moveable_famula/kukaR_cal.xml" ns="right"/>
 
   <!-- [leftX | rightX], Y, Z is the mounting position of the arms -->
   <xacro:property name="cal_triangle_pos" value="${dict(
