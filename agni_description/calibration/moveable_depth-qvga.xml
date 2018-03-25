@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <config>
 	<section id="camera">
-		<data id="name" type="string">kinectd</data>
+		<data id="name" type="string">sr300</data>
 		<data id="position" type="Vec">| 18.5845 |
 | 783.0 |
-| 457.67 |
+| 507.67 |
 | 1 |</data>
 		<data id="norm" type="Vec">| -0.0137479 |
 | -0.767848 |
