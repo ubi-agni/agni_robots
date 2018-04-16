@@ -23,7 +23,7 @@ controller_list:
      - la_arm_4_joint
      - la_arm_5_joint
      - la_arm_6_joint
- - name: rh/rh_hand_trajectory_controller
+ - name: rh/hand_trajectory_controller
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory
    default: true
@@ -52,7 +52,7 @@ controller_list:
      - rh_THJ1
      - rh_WRJ2
      - rh_WRJ1
- - name: lh/lh_hand_trajectory_controller
+ - name: lh/hand_trajectory_controller
    action_ns: follow_joint_trajectory
    type: FollowJointTrajectory
    default: true
