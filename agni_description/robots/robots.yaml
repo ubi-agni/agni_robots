@@ -110,6 +110,15 @@ tools:
     props:
       mass:  1.95
       cog: "0.0 0.0 0.0813"
+      
+  schunk_hand_left_ati:
+    file: ../robots/schunk_hand_ati.urdf.xacro
+    macro: schunk_hand
+    mount: ft_sensor_link
+    props:
+      mass:  2.205
+      cog: "0.0 0.0 0.1179"
+      ati_adapter_thickness: 0.008
 
   myrmex:
     file: ../robots/myrmex.urdf.xacro
