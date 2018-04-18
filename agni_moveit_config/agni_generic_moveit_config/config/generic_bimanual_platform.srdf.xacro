@@ -127,6 +127,16 @@
       <xacro:if value="${TOOL_R == 'schunk_hand_right'}" >
         <xacro:call macro="schunk_hand_joints" prefix="rh" />
       </xacro:if>
+      <xacro:if value="${TOOL_R == 'schunk_hand_left_ati'}" >
+        <link name="lh_ft_sensor_link" />
+        <joint name="lh_ft_tool_fixed_joint" />
+        <xacro:call macro="schunk_hand_joints" prefix="lh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_R == 'schunk_hand_right_ati'}" >
+        <link name="rh_ft_sensor_link" />
+        <joint name="rh_ft_tool_fixed_joint" />
+        <xacro:call macro="schunk_hand_joints" prefix="rh" />
+      </xacro:if>
       <!-- myrmex -->
       <xacro:if value="${TOOL_R == 'myrmex'}" >
         <link name="rh_myrmex_quick_mount" />
@@ -180,6 +190,16 @@
         <xacro:call macro="schunk_hand_joints" prefix="lh" />
       </xacro:if>
       <xacro:if value="${TOOL_L == 'schunk_hand_right'}" >
+        <xacro:call macro="schunk_hand_joints" prefix="rh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'schunk_hand_left_ati'}" >
+        <link name="lh_ft_sensor_link" />
+        <joint name="lh_ft_tool_fixed_joint" />
+        <xacro:call macro="schunk_hand_joints" prefix="lh" />
+      </xacro:if>
+      <xacro:if value="${TOOL_L == 'schunk_hand_right_ati'}" >
+        <link name="rh_ft_sensor_link" />
+        <joint name="rh_ft_tool_fixed_joint" />
         <xacro:call macro="schunk_hand_joints" prefix="rh" />
       </xacro:if>
       <!-- myrmex -->
