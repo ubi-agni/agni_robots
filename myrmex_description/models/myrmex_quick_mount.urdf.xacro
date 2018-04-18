@@ -2,7 +2,7 @@
 <robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:macro name="myrmex_quick_mount" params="prefix:=''">
-    <xacro:include filename="../models/myrmex_tactile_surface.urdf.xacro" />
+    <xacro:include filename="$(find myrmex_description)/models/myrmex_tactile_surface.urdf.xacro" />
     
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
     <link name="${prefix_}myrmex_quick_mount">
@@ -16,7 +16,7 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh scale="0.001 0.001 0.001"
-                filename="package://agni_description/models/meshes/myrmex_quick_mount.dae"/>
+                filename="package://myrmex_description/models/meshes/myrmex_quick_mount.dae"/>
         </geometry>
       </visual>
       <collision>

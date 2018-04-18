@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="myrmex" params="prefix:=''">
-    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
     <!-- myrmex -->
-    <xacro:include filename="../models/myrmex_quick_mount.urdf.xacro" />
+    <xacro:include filename="$(find myrmex_description)/models/myrmex_quick_mount.urdf.xacro" />
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
     <xacro:myrmex_quick_mount prefix="${prefix}"/>
 
     <xacro:myrmex_tactile_markers parent="${prefix_}myrmex_quick_mount" prefix="${prefix}" channel="myrmex">

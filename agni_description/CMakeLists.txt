@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(agni_description)
-find_package(catkin REQUIRED COMPONENTS urdf sr_description lwr_description pa10_7a_description pa10_7c_description schunk_description)
+find_package(catkin REQUIRED COMPONENTS urdf sr_description lwr_description pa10_7a_description pa10_7c_description schunk_description myrmex_description)
 find_package(xacro 1.10 REQUIRED)
 find_package(flobi_description)
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
     DEPENDS
-    CATKIN_DEPENDS urdf sr_description lwr_description pa10_7a_description pa10_7c_description schunk_description flobi_description xacro
+    CATKIN_DEPENDS urdf sr_description lwr_description pa10_7a_description pa10_7c_description schunk_description flobi_description myrmex_description xacro
     INCLUDE_DIRS
     LIBRARIES
 )
