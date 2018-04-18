@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="myrmex_3x3_board" xmlns:xacro="http://www.ros.org/wiki/xacro">
+   <link name="world"/>
+   <xacro:arg name="board_row_nb" default="3"/>
+   <xacro:arg name="board_col_nb" default="3"/>
+   <xacro:include filename="../models/myrmex_tactile_surface.urdf.xacro" />
+   <xacro:myrmex_tactile_surface prefix="" parent="world" size_x="$(arg board_row_nb)" size_y="$(arg board_col_nb)"/>
+  
+   <xacro:myrmex_tactile_markers parent="world" prefix="" channel="myrmex_sensor" size_x="$(arg board_row_nb)" size_y="$(arg board_col_nb)">
+      <origin xyz="0 0 0.001" rpy="0 0 0"/>
+   </xacro:myrmex_tactile_markers>
+</robot>
