@@ -30,10 +30,12 @@ import functools
 import time
 from rqt_robot_dashboard.dashboard import Dashboard
 
-from python_qt_binding.QtCore import QSize
-from QtGui import QPushButton, QVBoxLayout, QHBoxLayout, QWidget, \
-    QCheckBox, QMessageBox
-from python_qt_binding.QtCore import QTimer
+from python_qt_binding.QtGui import QFont
+from python_qt_binding.QtCore import QSize, QRect, Qt, QTimer, \
+    QObject, QMetaObject, pyqtSignal
+from QtWidgets import QPushButton, QWidget, QLabel, QSlider, \
+    QCheckBox, QMessageBox, QLayout, QVBoxLayout, QHBoxLayout 
+
 
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 from sr_utilities.hand_finder import HandFinder
