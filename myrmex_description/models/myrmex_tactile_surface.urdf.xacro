@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <robot name="myrmex_quick_mount" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="myrmex_tactile_surface" params="prefix:='' parent size_x:=1 size_y:=1">
+  <xacro:macro name="myrmex_tactile_surface" params="prefix:='' parent size_x:=1 size_y:=1 foam_size_x:=0.095 foam_size_y:=0.095 ">
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
-    
    
     <joint name="${prefix_}myrmex_bumper_joint" type="prismatic">
       <parent link="${parent}" />
@@ -24,18 +23,20 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <xacro:if value="${1 if (size_x==1 and size_y==1) else 0}" >
-          <mesh scale="1.0 1.0 1.0"
+            <xacro:property name="scale_x" value="${foam_size_x/0.095}" />
+            <xacro:property name="scale_y" value="${foam_size_y/0.095}" />
+            <mesh scale="${scale_x} ${scale_y} 1.0"
                 filename="package://myrmex_description/models/meshes/myrmex_foam.stl"/>
           </xacro:if>
           <xacro:unless value="${1 if (size_x==1 and size_y==1) else 0}" >
-            <box size="${0.095*size_x} ${0.095*size_y} 0.006"/>
+            <box size="${foam_size_x*size_x} ${foam_size_y*size_y} 0.006"/>
           </xacro:unless>
         </geometry>
       </visual>
       <collision name="${prefix_}myrmex_foam">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="${0.095*size_x} ${0.095*size_y} 0.006"/>
+          <box size="${foam_size_x*size_x} ${foam_size_y*size_y} 0.006"/>
         </geometry>
       </collision>
     </link>
