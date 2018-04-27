@@ -16,9 +16,9 @@
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
 
 	<xacro:arm_with_tool parent="frame" prefix="r"
-	                     arm_type="kukaR" tool_type="shadow_motor_right" />
+	                     arm_type="lwrR" tool_type="shadow_motor_right" />
 	<xacro:arm_with_tool parent="frame" prefix="l"
-	                     arm_type="kukaL" tool_type="shadow_motor_left"/>
+	                     arm_type="lwrL" tool_type="shadow_motor_left"/>
  
 	<!-- floka -->
 	<xacro:include filename="$(find flobi_description)/xacro/floka.urdf.xacro" />
