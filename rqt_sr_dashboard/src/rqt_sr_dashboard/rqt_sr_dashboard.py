@@ -30,14 +30,15 @@ import functools
 import time
 from rqt_robot_dashboard.dashboard import Dashboard
 
-from python_qt_binding.QtGui import QFont
+from python_qt_binding.QtGui import QFont, QColor
 from python_qt_binding.QtCore import QSize, QRect, Qt, QTimer, \
     QObject, QMetaObject, pyqtSignal
-from QtWidgets import QPushButton, QWidget, QLabel, QSlider, \
-    QCheckBox, QMessageBox, QLayout, QVBoxLayout, QHBoxLayout 
+from QtWidgets import QPushButton, QWidget, QLabel, QSlider, QTreeWidgetItem, \
+    QCheckBox, QMessageBox, QLayout, QVBoxLayout, QHBoxLayout, QTreeWidget
 
 
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
+from sensor_msgs.msg import JointState
 from sr_utilities.hand_finder import HandFinder
 from .controller_switcher import ControllerSwitcher
 
@@ -48,6 +49,12 @@ NOT_RUNNING = 0
 PARTIALLY_RUNNING = 1
 ALL_RUNNING = 2
 
+HIGH_FORCE = 220
+LOW_FORCE = 120
+
+green = QColor(153, 231, 96)
+orange = QColor(247, 206, 134)
+red = QColor(236, 178, 178)
 
 class RqtSrDashboard(Dashboard):
     """
@@ -55,6 +62,10 @@ class RqtSrDashboard(Dashboard):
     """
 
     def setup(self, context):
+        """
+
+        :type self: object
+        """
         self.name = 'Shadow Robot Buttons Dashboard'
         self.max_icon_size = QSize(50, 30)
 
@@ -67,14 +78,37 @@ class RqtSrDashboard(Dashboard):
         self._driver_running = {}
         self._ctrl_state = {}
         self._last_seen = {}
+        self._force_val= {}
         # setting the prefixes
         self._hand_finder = HandFinder()
         hand_parameters = self._hand_finder.get_hand_parameters()
 
+        # create a joint list for force display
+        joints = self._hand_finder.get_hand_joints()
+        self._joint_list = QTreeWidget()
+        self._joint_list.setColumnCount(len(joints))
+        self._prefix_to_col = {}
+        header_labels = ["Joint"]
+        line_labels = [""]*(1+len(joints))
+        self._force_val = {}
+        for i, prefix in enumerate(joints):
+            self._prefix_to_col[prefix] = 1 + i
+            header_labels.append(prefix)
+            for joint in joints[prefix]:
+                [joint_prefix, base_jointname] = joint.split("_")
+                if base_jointname in self._force_val:
+                    self._force_val[base_jointname].setBackground(1 + i, QColor(green))
+                else:  # create a new line
+                    line_labels[0] = base_jointname
+                    self._force_val[base_jointname] = QTreeWidgetItem(self._joint_list, line_labels)
+                    self._force_val[base_jointname].setBackground(1 + i, QColor(green))
+                    self._joint_list.addTopLevelItem(self._force_val[base_jointname])
+        self._joint_list.setHeaderLabels(header_labels)
+
         # create as many buttons as hands found
         for hand in hand_parameters.mapping:
-            self._state_buttons[hand_parameters.mapping[hand]] = ControlStateButton(hand_parameters.mapping[hand],
-                                                                                    self)
+            self._state_buttons[hand_parameters.mapping[hand]] = ControlStateButton(hand_parameters.mapping[hand], self)
+
             # we do not consider the trajectory controllers
             self._cs[hand_parameters.mapping[hand]] = ControllerSwitcher(namespace=hand_parameters.mapping[hand],
                                                                          only_low_level_ctrl=True)
@@ -98,6 +132,7 @@ class RqtSrDashboard(Dashboard):
         # place buttons
         vlayout.addWidget(self.btn_control)
         vlayout.addWidget(self.btn_standby)
+        vlayout.addWidget(self._joint_list)
 
         # signals for buttons
         self.btn_control.clicked.connect(functools.partial(self.on_btn_control_clicked, hand_name=None))
@@ -108,12 +143,16 @@ class RqtSrDashboard(Dashboard):
         # self._main_widget.addLayout(hlayout)
         self._widget_initialized = True
 
-        # create diagnostic subscribers
+        # create diagnostic subscribers and js subscribers
         self._diag_sub = {}
+        self._js_sub = {}
         for hand in hand_parameters.mapping:
             self._diag_sub[hand_parameters.mapping[hand]] = rospy.Subscriber(
                 "/" + hand_parameters.mapping[hand] + "/diagnostics/", DiagnosticArray,
                 functools.partial(self.diag_callback, hand_name=hand_parameters.mapping[hand]))
+            self._js_sub[hand_parameters.mapping[hand]] = rospy.Subscriber(
+                "/" + hand_parameters.mapping[hand] + "/joint_states/", JointState,
+                functools.partial(self.js_callback, hand_name=hand_parameters.mapping[hand]))
 
         self._timer = QTimer()
         self._timer.timeout.connect(self.check_state_callback)
@@ -210,6 +249,31 @@ class RqtSrDashboard(Dashboard):
         if state_changed:
             self.update_state()
 
+    def js_callback(self, msg, hand_name):
+        """
+        callback to process joint_states messages
+        :param msg:
+        :type msg: JointState
+        """
+
+        for i, joint_name in enumerate(msg.name):
+            [prefix, base_jointname] = joint_name.split("_")
+            if prefix in self._prefix_to_col:
+                col = self._prefix_to_col[prefix]
+            else:
+                continue
+            if base_jointname in self._force_val:
+                self._force_val[base_jointname].setText(col, str('%.2f' % msg.effort[i]))
+
+                if msg.effort[i] > HIGH_FORCE:
+                    self._force_val[base_jointname].setBackground(col, QColor(red))
+                else:
+                    if msg.effort[i] > LOW_FORCE:
+                        self._force_val[base_jointname].setBackground(col, QColor(orange))
+                    else:
+                        self._force_val[base_jointname].setBackground(col, QColor(green))
+        self._joint_list.update()
+
     def update_state(self):
 
         enable_buttons = 0
@@ -247,3 +311,4 @@ class RqtSrDashboard(Dashboard):
         self._timer.stop()
         for hand in self._diag_sub:
             self._diag_sub[hand].unregister()
+            self._js_sub[hand].unregister()
