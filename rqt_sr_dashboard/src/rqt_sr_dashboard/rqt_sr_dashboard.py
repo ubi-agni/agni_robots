@@ -24,16 +24,16 @@
 #
 
 # author Guillaume WALCK (2016)
-
 import rospy
 import functools
 import time
 from rqt_robot_dashboard.dashboard import Dashboard
 
-from python_qt_binding.QtGui import QFont, QColor
-from python_qt_binding.QtCore import QSize, QRect, Qt, QTimer, \
+
+from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtCore import QSize, QRect, Qt, QTimer, \
     QObject, QMetaObject, pyqtSignal
-from QtWidgets import QPushButton, QWidget, QLabel, QSlider, QTreeWidgetItem, \
+from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QSlider, QTreeWidgetItem, \
     QCheckBox, QMessageBox, QLayout, QVBoxLayout, QHBoxLayout, QTreeWidget
 
 
@@ -86,6 +86,7 @@ class RqtSrDashboard(Dashboard):
         # create a joint list for force display
         joints = self._hand_finder.get_hand_joints()
         self._joint_list = QTreeWidget()
+        self._joint_list.setAnimated(True)
         self._joint_list.setColumnCount(len(joints))
         self._prefix_to_col = {}
         header_labels = ["Joint"]
@@ -104,6 +105,8 @@ class RqtSrDashboard(Dashboard):
                     self._force_val[base_jointname].setBackground(1 + i, QColor(green))
                     self._joint_list.addTopLevelItem(self._force_val[base_jointname])
         self._joint_list.setHeaderLabels(header_labels)
+
+
 
         # create as many buttons as hands found
         for hand in hand_parameters.mapping:
@@ -137,6 +140,9 @@ class RqtSrDashboard(Dashboard):
         # signals for buttons
         self.btn_control.clicked.connect(functools.partial(self.on_btn_control_clicked, hand_name=None))
         self.btn_standby.clicked.connect(functools.partial(self.on_btn_standby_clicked, hand_name=None))
+
+        ##self._datachanged = pyqtSignal(str)
+        ##self._datachanged['QString'].connect(self.updaterSlot)
 
         self._main_widget.setLayout(vlayout)
         self.context.add_widget(self._main_widget)
@@ -255,7 +261,6 @@ class RqtSrDashboard(Dashboard):
         :param msg:
         :type msg: JointState
         """
-
         for i, joint_name in enumerate(msg.name):
             [prefix, base_jointname] = joint_name.split("_")
             if prefix in self._prefix_to_col:
@@ -272,7 +277,14 @@ class RqtSrDashboard(Dashboard):
                         self._force_val[base_jointname].setBackground(col, QColor(orange))
                     else:
                         self._force_val[base_jointname].setBackground(col, QColor(green))
+
         self._joint_list.update()
+        ##self._datachanged['QString'].emit("")
+
+    def updaterSlot(self, data):
+
+        self._joint_list.update()
+        #self._joint_list.setCurrentItem(self._force_val["FFJ1"])
 
     def update_state(self):
 

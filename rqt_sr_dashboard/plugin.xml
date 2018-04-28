@@ -14,4 +14,19 @@
       <statustip>A Python GUI plugin to interact with the robot state.</statustip>
     </qtgui>
   </class>
+  <class name="SrForceDisplay" type="rqt_sr_dashboard.rqt_force_display.SrForceDisplay" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      A Python GUI plugin to display the forces in shadow hands
+    </description>
+    <qtgui>
+      <group>
+        <label>Robot</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins related to specific robots.</statustip>
+      </group>
+      <label>SR Force Display</label>
+      <icon type="theme">task-past-due</icon>
+      <statustip>A Python GUI plugin to display the forces in shadow hands</statustip>
+    </qtgui>
+  </class>
 </library>
