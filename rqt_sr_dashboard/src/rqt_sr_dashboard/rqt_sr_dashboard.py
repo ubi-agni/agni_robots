@@ -32,7 +32,7 @@ from rqt_robot_dashboard.dashboard import Dashboard
 
 from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import QSize, QRect, Qt, QTimer, \
-    QObject, QMetaObject, pyqtSignal
+    QObject, QMetaObject, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import QPushButton, QWidget, QLabel, QSlider, QTreeWidgetItem, \
     QCheckBox, QMessageBox, QLayout, QVBoxLayout, QHBoxLayout, QTreeWidget
 
@@ -61,6 +61,8 @@ class RqtSrDashboard(Dashboard):
     Dashboard for Shadow Hands
     """
 
+    _datachanged = pyqtSignal()
+
     def setup(self, context):
         """
 
@@ -78,7 +80,8 @@ class RqtSrDashboard(Dashboard):
         self._driver_running = {}
         self._ctrl_state = {}
         self._last_seen = {}
-        self._force_val= {}
+        self._force_display= {}
+        self._last_force_val = {}
         # setting the prefixes
         self._hand_finder = HandFinder()
         hand_parameters = self._hand_finder.get_hand_parameters()
@@ -91,22 +94,20 @@ class RqtSrDashboard(Dashboard):
         self._prefix_to_col = {}
         header_labels = ["Joint"]
         line_labels = [""]*(1+len(joints))
-        self._force_val = {}
+        self._force_display = {}
         for i, prefix in enumerate(joints):
             self._prefix_to_col[prefix] = 1 + i
             header_labels.append(prefix)
             for joint in joints[prefix]:
                 [joint_prefix, base_jointname] = joint.split("_")
-                if base_jointname in self._force_val:
-                    self._force_val[base_jointname].setBackground(1 + i, QColor(green))
+                if base_jointname in self._force_display:
+                    self._force_display[base_jointname].setBackground(1 + i, QColor(green))
                 else:  # create a new line
                     line_labels[0] = base_jointname
-                    self._force_val[base_jointname] = QTreeWidgetItem(self._joint_list, line_labels)
-                    self._force_val[base_jointname].setBackground(1 + i, QColor(green))
-                    self._joint_list.addTopLevelItem(self._force_val[base_jointname])
+                    self._force_display[base_jointname] = QTreeWidgetItem(self._joint_list, line_labels)
+                    self._force_display[base_jointname].setBackground(1 + i, QColor(green))
+                    self._joint_list.addTopLevelItem(self._force_display[base_jointname])
         self._joint_list.setHeaderLabels(header_labels)
-
-
 
         # create as many buttons as hands found
         for hand in hand_parameters.mapping:
@@ -141,8 +142,7 @@ class RqtSrDashboard(Dashboard):
         self.btn_control.clicked.connect(functools.partial(self.on_btn_control_clicked, hand_name=None))
         self.btn_standby.clicked.connect(functools.partial(self.on_btn_standby_clicked, hand_name=None))
 
-        ##self._datachanged = pyqtSignal(str)
-        ##self._datachanged['QString'].connect(self.updaterSlot)
+        self._datachanged.connect(self.updaterSlot)
 
         self._main_widget.setLayout(vlayout)
         self.context.add_widget(self._main_widget)
@@ -163,6 +163,10 @@ class RqtSrDashboard(Dashboard):
         self._timer = QTimer()
         self._timer.timeout.connect(self.check_state_callback)
         self._timer.start(CHECK_STATE_TIMEOUT * 1000.0)
+        
+        self._monitor_timer = QTimer()
+        self._monitor_timer.timeout.connect(self.updaterSlot)
+        self._monitor_timer.start(500.0)
 
     def on_btn_control_clicked(self, hand_name=None):
         """
@@ -263,28 +267,34 @@ class RqtSrDashboard(Dashboard):
         """
         for i, joint_name in enumerate(msg.name):
             [prefix, base_jointname] = joint_name.split("_")
+            if prefix not in self._last_force_val:
+                self._last_force_val[prefix] = {}
+            self._last_force_val[prefix][base_jointname] =  msg.effort[i]
+           
+        # was updating too often self._datachanged.emit()
+
+    @pyqtSlot()
+    def updaterSlot(self):
+
+        for prefix in self._last_force_val:
             if prefix in self._prefix_to_col:
                 col = self._prefix_to_col[prefix]
             else:
                 continue
-            if base_jointname in self._force_val:
-                self._force_val[base_jointname].setText(col, str('%.2f' % msg.effort[i]))
+            for base_jointname in self._last_force_val[prefix]:
+                if base_jointname in self._force_display:
+                    self._force_display[base_jointname].setText(col, str('%.0f' % self._last_force_val[prefix][base_jointname]))
 
-                if msg.effort[i] > HIGH_FORCE:
-                    self._force_val[base_jointname].setBackground(col, QColor(red))
-                else:
-                    if msg.effort[i] > LOW_FORCE:
-                        self._force_val[base_jointname].setBackground(col, QColor(orange))
+                    if abs(self._last_force_val[prefix][base_jointname]) > HIGH_FORCE:
+                        self._force_display[base_jointname].setBackground(col, QColor(red))
                     else:
-                        self._force_val[base_jointname].setBackground(col, QColor(green))
+                        if abs(self._last_force_val[prefix][base_jointname]) > LOW_FORCE:
+                            self._force_display[base_jointname].setBackground(col, QColor(orange))
+                        else:
+                            self._force_display[base_jointname].setBackground(col, QColor(green))
 
         self._joint_list.update()
-        ##self._datachanged['QString'].emit("")
-
-    def updaterSlot(self, data):
-
-        self._joint_list.update()
-        #self._joint_list.setCurrentItem(self._force_val["FFJ1"])
+        
 
     def update_state(self):
 
@@ -321,6 +331,8 @@ class RqtSrDashboard(Dashboard):
 
     def shutdown_dashboard(self):
         self._timer.stop()
+        self._monitor_timer.stop()
         for hand in self._diag_sub:
             self._diag_sub[hand].unregister()
             self._js_sub[hand].unregister()
+
