@@ -43,6 +43,12 @@ list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaL PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
+# left right lwr (no auto_on)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_lwr.urdf INORDER REMAP CALIB:=famula ARM:=lwrR PREFIX:=r SIM:=1)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_lwr.urdf INORDER REMAP CALIB:=famula ARM:=lwrL PREFIX:=l SIM:=1)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+
 # left right shadow motor hand
 xacro_add_xacro_file(robots/single.urdf.xacro robots/right_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_right PREFIX:=r PARENT:=-)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
@@ -62,9 +68,9 @@ xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka_shadow_hand_motor
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right kuka shadow_hand_motor_ubi moveable platform
-xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_right_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=kukaR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_right_lwr_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=lwrR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=kukaL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_left_lwr_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=lwrL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 
