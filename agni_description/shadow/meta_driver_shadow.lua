@@ -164,6 +164,11 @@ function configureHook()
 
       -- ROS in out
       local ros=rtt.provides("ros")
+      d:stream(efflimname..".DebugFatigueOutput",ros:topic("/"..namespace.."/fatigue_effort_limiter/output"))
+      d:stream(efflimname..".DebugFatigueAccterm",ros:topic("/"..namespace.."/fatigue_effort_limiter/accterm"))
+      d:stream(efflimname..".DebugGraspOutput",ros:topic("/"..namespace.."/grasp_effort_limiter/output"))
+      d:stream(efflimname..".DebugGraspAccterm",ros:topic("/"..namespace.."/grasp_effort_limiter/accterm"))
+
       d:stream(bridgename..".joint_states",ros:topic("/"..namespace.."/joint_states"))
 
       print(namespace.."Wrapper is configured")
