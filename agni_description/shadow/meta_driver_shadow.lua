@@ -142,6 +142,7 @@ function configureHook()
       d:connect(bridgename..".CtrlJointPosition", efflimname..".JointPosition", rtt.Variable("ConnPolicy"))
       d:connect(bridgename..".CtrlJointEffort", efflimname..".JointEffort", rtt.Variable("ConnPolicy"))
       d:connect(bridgename..".CtrlJointPositionCommand", efflimname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
+      d:connect(bridgename..".JointMaxForce", efflimname..".JointMaxForce", rtt.Variable("ConnPolicy"))
 
       -- ROS in out
       local ros=rtt.provides("ros")
