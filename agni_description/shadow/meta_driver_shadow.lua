@@ -3,7 +3,7 @@ require "rttros"
 tc=rtt.getTC()
 
 metacontroller_path = rttros.find_rospack("agni_rtt_services")
-package.path = metacontroller_path..'/scripts'..'/?.lua;' .. package.path 
+package.path = metacontroller_path..'/scripts'..'/?.lua;' .. package.path
 require("meta-component_common")
 
 --wrapper interface definition (should not be changed)
@@ -19,7 +19,7 @@ iface_spec = {
       { name='controller_type', datatype='string', desc="controller type ex: position_controllers/JointTrajectoryController" },
    }
 }
- 
+
 -- this create the interface (must be global)
 iface=rttlib.create_if(iface_spec)
 
@@ -40,16 +40,16 @@ function configureHook()
   d:import("rtt_controller_manager_msgs")
   d:import("rtt_control_msgs")
   d:import("rtt_trajectory_msgs")
-  
+
   --rtt.setLogLevel("Warning")
-  
+
   -- retrieve the properties from the interface parameters
   namespace = iface.props.namespace:get()
   -- advertize the type of controller you set (useful for controller_manager)
   controller_type = tc:getProperty("controller_type")
   controller_type:set("position_controllers/JointPositionController")
   resources = tc:getProperty("resources")
-  
+
   -- prepare ports
   port = iface.props.port:get()
   local in_portmap={}
@@ -58,7 +58,7 @@ function configureHook()
   -- SR BRIDGE
   bridgename = namespace.."bridge"
   d:loadComponent(bridgename, "RTTSrBridge")
-  d:setActivity(bridgename, 0, 20, rtt.globals.ORO_SCHED_RT) 
+  d:setActivity(bridgename, 0, 20, rtt.globals.ORO_SCHED_RT)
   bridge = d:getPeer(bridgename)
   d:loadService(bridgename,"rosservice")
   ns=bridge:getProperty("namespace")
@@ -85,34 +85,52 @@ function configureHook()
   end
 
   if bridge:configure() then
-  
+
     -- add bridgename to the wrapper component peers
     d:addPeer(tcName, bridgename)
-    
+
     -- EFFORT LIMITER
-    efflimname = namespace.."EffLim" 
-    d:loadComponent(efflimname, "RTTSrEffortLimiter") 
-    d:setActivity(efflimname, 0, 20, rtt.globals.ORO_SCHED_RT) 
+    efflimname = namespace.."EffLim"
+    d:loadComponent(efflimname, "RTTSrGraspFatigueLimiter")
+    d:setActivity(efflimname, 0, 20, rtt.globals.ORO_SCHED_RT)
     EffLim = d:getPeer(efflimname)
     ns=EffLim:getProperty("namespace")
     ns:set(namespace)
     ndof=EffLim:getProperty("nDOF"):set(20)
-    pth=EffLim:getProperty("pain_thresholds")
-    pth:get():resize(20)
-    pen=EffLim:getProperty("pain_endurances")
-    pen:get():resize(20)
+
+    fth=EffLim:getProperty("fatigue_thresholds")
+    fth:get():resize(20)
+    fen=EffLim:getProperty("fatigue_endurances")
+    fen:get():resize(20)
+    gth=EffLim:getProperty("grasp_thresholds")
+    gth:get():resize(20)
+    gen=EffLim:getProperty("grasp_endurances")
+    gen:get():resize(20)
     hl=EffLim:getProperty("high_limits")
     hl:get():resize(20)
     ll=EffLim:getProperty("low_limits")
     ll:get():resize(20)
-    -- set limits
-    for i=0,19,1 do 
-      pth[i] = 150.0
-      pen[i] = 3000.0
-      ll[i] = 0.2
-      hl[i] = 0.7
-    end 
-    
+
+    -- set limits (with Big motors and Big motors on thin tendons)
+    for i=0,19,1 do
+      if i==18 or i==19 then  -- WRJ1-2
+        fth[i] = 120.0 * 0.7
+        gth[i] = 180.0 * 0.7
+      else
+        if i==16 or i==17 then -- THJ4-5
+          fth[i] = (120.0-50.0) * 0.7
+          gth[i] = (180.0-50.0) * 0.7
+        else
+          fth[i] = 150.0 * 0.7
+          gth[i] = 220.0 * 0.7
+        end
+      end
+      fen[i] = 500.0
+      gen[i] = 50.0
+      ll[i] = 0.0
+      hl[i] = 1.0
+    end
+
     if EffLim:configure() then
       -- add efflimname to the wrapper component peers
       d:addPeer(tcName, efflimname) -- ##CHANGE ME##
@@ -122,7 +140,7 @@ function configureHook()
       register_port(in_portmap, 'CMDJNTPOS', bridgename..".JointPositionCommand")
       register_port(in_portmap, 'CMDJNTVEL', bridgename..".JointVelocityCommand")
       register_port(in_portmap, 'CMDJNT', bridgename..".DesiredJoint")
-      
+
       register_port(out_portmap, 'CURJNTPOS', bridgename..".JointPosition")
       register_port(out_portmap, 'CURJNTVEL', bridgename..".JointVelocity")
       register_port(out_portmap, 'CURJNTEFF', bridgename..".JointEffort")
@@ -130,13 +148,13 @@ function configureHook()
       -- store the mapping in the properties
       storeMapping("in_portmap",in_portmap)
       storeMapping("out_portmap",out_portmap)
-      
+
       -- set the resource to match the joints
-      resources:get():resize(24) 
+      resources:get():resize(24)
       -- fill the resource
       for i=0,23,1 do
         resources[i] = joint_names[i]
-      end 
+      end
 
       -- internal connection
       d:connect(bridgename..".CtrlJointPosition", efflimname..".JointPosition", rtt.Variable("ConnPolicy"))
