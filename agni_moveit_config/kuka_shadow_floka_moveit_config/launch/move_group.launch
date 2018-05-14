@@ -45,7 +45,11 @@
     <param name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
     <param name="max_safe_path_cost" value="$(arg max_safe_path_cost)"/>
     <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
+    <param name="capabilities" value="move_group/OnlineCollisionPredictor" />
 
+
+    <param name="online_collision_checker/rate" value="10" />
+    <param name="online_collision_checker/horizon" value="5.0" />
     <!-- load these non-default MoveGroup capabilities -->
     <!--
     <param name="capabilities" value="
