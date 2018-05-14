@@ -21,7 +21,7 @@
 	<xacro:macro name="frame" params="prefix:='' parent:=''
 	   thickness:=${cal_frame_thick} pole_front_dist:=${cal_frame_pole_front_dist}
 	   width:=${cal_frame_width} depth:=${cal_frame_depth} height:=${cal_frame_height}
-	   tableHeight:=${cal_frame_table_height} triangle_pos:=${cal_triangle_pos}">
+	   tableHeight:=${cal_frame_table_height} triangle_pos:=${cal_triangle_pos} use_virtual_fence:=0">
 
 		<xacro:property name="mount_triangle_length" value="0.26" />
 		<xacro:property name="mount_triangle_thickness" value="0.02"/>
@@ -95,6 +95,33 @@
 				        rpy="0 0 0"/>
 				<geometry><box size="${width} ${depth} ${0.02}"/></geometry>
 			</collision>
+
+			<xacro:if value="${use_virtual_fence}">
+				<!-- virtual fence -->
+				<!-- side plane -->
+				<collision>
+					<origin xyz="${-width/2} ${depth/2} ${height/2}"
+						rpy="0 0 0"/>
+					<geometry><box size="${0.02} ${depth} ${height}"/></geometry>
+				</collision>
+				<collision>
+					<origin xyz="${++width/2} ${depth/2} ${height/2}"
+						rpy="0 0 0"/>
+					<geometry><box size="${0.02} ${depth} ${height}"/></geometry>
+				</collision>
+				<!-- back plane -->
+				<collision>
+					<origin xyz="0 ${triangle_pos['Y'] + 0.2} ${height/2}"
+						rpy="0 0 0"/>
+					<geometry><box size="${width} ${0.02} ${height}"/></geometry>
+				</collision>
+				<!-- front plane -->
+				<collision>
+					<origin xyz="0 ${0-0.01} ${height/2}"
+						rpy="0 0 0"/>
+					<geometry><box size="${width} ${0.02} ${height}"/></geometry>
+				</collision>
+			</xacro:if>
 
 		</link>
 

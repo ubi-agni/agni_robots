@@ -11,7 +11,7 @@
 	<!-- frame -->
 	<xacro:include filename="../urdf/frame-moveable.urdf.xacro"/>
 	<xacro:include filename="../calibration/moveable_famula_frame_cal.xml"/>
-	<xacro:frame parent="${parent}"/>
+	<xacro:frame parent="${parent}" use_virtual_fence="1" />
 
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
 
