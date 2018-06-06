@@ -91,7 +91,7 @@
   </xacro:if>
 
   <!-- both arms arm -->
-  <xacro:if value="${ARM_R not in ['', '-'] and ARM_L not in ['', '-']} ">
+  <xacro:if value="${ARM_R not in ['', '-'] and ARM_L not in ['', '-']}">
     <group name="both_arms">
         <group name="left_arm" />
         <group name="right_arm" />
