@@ -27,9 +27,12 @@
 		<xacro:if value="${FRAME == 'sfb'}">
 			<xacro:include filename="../urdf/frame.urdf.xacro"/>
 		</xacro:if>
-
-		<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
-		<xacro:frame parent="${parent}"/>
+		<!-- if FRAME defined, but none of these two, 
+		FRAME can still be used for finding CALIB folders -->
+		<xacro:if value="${FRAME in ['famula', 'sfb', 'moveable_famula']}">
+			<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
+			<xacro:frame parent="${parent}"/>
+		</xacro:if>
 	</xacro:if>
 
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
