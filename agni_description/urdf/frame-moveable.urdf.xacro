@@ -60,6 +60,7 @@
 
 			<xacro:property name="mtth" value="${mount_triangle_thickness}"/>
 			<xacro:property name="mtlen" value="${mount_triangle_length}"/>
+
 			<!-- left plate -->
 
 			<xacro:plate>
@@ -68,6 +69,7 @@
 				             ${triangle_pos['Z']-mtth/2*sin(30/180.0*pi)}"
 				        rpy="0 ${pi/3} 0"/>
 			</xacro:plate>
+
 			<!-- right plate -->
 
 			<xacro:plate>
@@ -76,12 +78,22 @@
 				             ${triangle_pos['Z']-mtth/2*sin(30/180.0*pi)}"
 				        rpy="0 ${-pi/3} 0"/>
 			</xacro:plate>
+
 			<!-- lower plate -->
  
 			<xacro:plate>
 				<origin xyz="0 ${triangle_pos['Y']} ${triangle_pos['Z']-sin(30/180.0*pi)*mtth-mtlen/2*sin(60/180.0*pi)-mtth/2}"
 				        rpy="0 0 0"/>
 			</xacro:plate>
+
+			<!-- cover front plate (no visual which would require a mesh) -->
+			<collision>
+					<origin xyz="${(triangle_pos['leftX']+triangle_pos['rightX'])/2.0}
+				               ${triangle_pos['Y']-mtlen/2-mtth/2.0}
+				               ${triangle_pos['Z']-0.01}"
+				        rpy="0 0 0"/>
+					<geometry><box size="${mtlen*2*sin(30/180.0*pi)} ${mtth} ${mtlen*cos(30/180.0*pi)} "/></geometry>
+			</collision>
 
 			<!-- table plane -->
 			<visual>
