@@ -922,14 +922,22 @@
     <disable_collisions link1="floka_NECK_ROLL_LINK" link2="ra_arm_1_link" reason="Never" />
     <disable_collisions link1="floka_NECK_ROLL_LINK" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="floka_NECK_ROLL_LINK" link2="ra_arm_base_link" reason="Never" />
+    <disable_collisions link1="floka_NECK_ROLL_LINK" link2="frame" reason="AdjacentIfPadding" />
     <disable_collisions link1="floka_BASE_LINK" link2="frame" reason="Adjacent" />
-    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_CENTER_LOWER_LINK" reason="Adjacent" />
+    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_CENTER_LOWER_LINK" reason="AdjacentIfPadding" />
+    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_CENTER_UPPER_LINK" reason="AdjacentIfPadding" />
+    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_LEFT_UPPER_LINK" reason="AdjacentIfPadding" />
+    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_RIGHT_UPPER_LINK" reason="AdjacentIfPadding" />
+    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_LEFT_LOWER_LINK" reason="AdjacentIfPadding" />
+    <disable_collisions link1="floka_BASE_LINK" link2="floka_LIP_RIGHT_LOWER_LINK" reason="AdjacentIfPadding" />
     <disable_collisions link1="floka_BASE_LINK" link2="la_arm_1_link" reason="Never" />
     <disable_collisions link1="floka_BASE_LINK" link2="la_arm_2_link" reason="Never" />
     <disable_collisions link1="floka_BASE_LINK" link2="la_arm_base_link" reason="Never" />
     <disable_collisions link1="floka_BASE_LINK" link2="ra_arm_1_link" reason="Never" />
     <disable_collisions link1="floka_BASE_LINK" link2="ra_arm_2_link" reason="Never" />
     <disable_collisions link1="floka_BASE_LINK" link2="ra_arm_base_link" reason="Never" />
+
+    
     <disable_collisions link1="frame" link2="la_arm_1_link" reason="Never" />
     <disable_collisions link1="frame" link2="la_arm_2_link" reason="Never" />
     <disable_collisions link1="frame" link2="la_arm_base_link" reason="Adjacent" />
