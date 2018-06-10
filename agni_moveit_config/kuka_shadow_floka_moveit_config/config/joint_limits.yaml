@@ -16,12 +16,12 @@ joint_limits:
     max_acceleration: 0
   ra_arm_2_joint:
     has_velocity_limits: true
-    max_velocity: 2.26892802759
+    max_velocity: 1.0 #2.26892802759
     has_acceleration_limits: false
     max_acceleration: 0
   la_arm_3_joint:
     has_velocity_limits: true
-    max_velocity: 2.26892802759
+    max_velocity: 1.0 #2.26892802759
     has_acceleration_limits: false
     max_acceleration: 0
   lh_FFJ1:
@@ -76,7 +76,7 @@ joint_limits:
     max_acceleration: 0
   ra_arm_1_joint:
     has_velocity_limits: true
-    max_velocity: 1.91986217719
+    max_velocity: 1.0 #1.91986217719
     has_acceleration_limits: false
     max_acceleration: 0
   rh_WRJ1:
@@ -86,7 +86,7 @@ joint_limits:
     max_acceleration: 0
   la_arm_2_joint:
     has_velocity_limits: true
-    max_velocity: 2.26892802759
+    max_velocity: 1.0 #2.26892802759
     has_acceleration_limits: false
     max_acceleration: 0
   floka_eyes_left_ud_joint:
@@ -141,7 +141,7 @@ joint_limits:
     max_acceleration: 0
   ra_arm_3_joint:
     has_velocity_limits: true
-    max_velocity: 2.26892802759
+    max_velocity: 1.0 #2.26892802759
     has_acceleration_limits: false
     max_acceleration: 0
   la_arm_6_joint:
@@ -156,7 +156,7 @@ joint_limits:
     max_acceleration: 0
   la_arm_4_joint:
     has_velocity_limits: true
-    max_velocity: 2.26892802759
+    max_velocity: 1.0 # 2.26892802759
     has_acceleration_limits: false
     max_acceleration: 0
   floka_eyes_right_ud_joint:
@@ -246,7 +246,7 @@ joint_limits:
     max_acceleration: 0
   la_arm_5_joint:
     has_velocity_limits: true
-    max_velocity: 3.14159265359
+    max_velocity: 1.0 #3.14159265359
     has_acceleration_limits: false
     max_acceleration: 0
   lh_FFJ4:
@@ -256,17 +256,17 @@ joint_limits:
     max_acceleration: 0
   ra_arm_5_joint:
     has_velocity_limits: true
-    max_velocity: 3.14159265359
+    max_velocity: 1.0 #3.14159265359
     has_acceleration_limits: false
     max_acceleration: 0
   ra_arm_4_joint:
     has_velocity_limits: true
-    max_velocity: 2.26892802759
+    max_velocity: 1.0 #2.26892802759
     has_acceleration_limits: false
     max_acceleration: 0
   ra_arm_0_joint:
     has_velocity_limits: true
-    max_velocity: 1.91986217719
+    max_velocity: 1.0 #1.91986217719
     has_acceleration_limits: false
     max_acceleration: 0
   lh_WRJ2:
@@ -281,7 +281,7 @@ joint_limits:
     max_acceleration: 0
   la_arm_1_joint:
     has_velocity_limits: true
-    max_velocity: 1.91986217719
+    max_velocity: 1.0 #1.91986217719
     has_acceleration_limits: false
     max_acceleration: 0
   rh_LFJ2:
@@ -326,7 +326,7 @@ joint_limits:
     max_acceleration: 0
   la_arm_0_joint:
     has_velocity_limits: true
-    max_velocity: 1.91986217719
+    max_velocity: 1.0 #1.91986217719
     has_acceleration_limits: false
     max_acceleration: 0
   rh_FFJ2:
