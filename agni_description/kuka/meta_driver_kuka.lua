@@ -130,8 +130,8 @@ function configureHook()
       acc_limits:get():resize(7)
       -- TODO: Read from file of better request from URDF
       for i=0,6,1 do 
-        vel_limits[i] = 1.8
-       acc_limits[i] = 8.0
+        vel_limits[i] = 0.8
+       acc_limits[i] = 4.0
       end
        
       filter:configure()
