@@ -19,10 +19,10 @@
 	                     arm_type="lwrR" tool_type="shadow_motor_right" />
 	<xacro:arm_with_tool parent="frame" prefix="l"
 	                     arm_type="lwrL" tool_type="shadow_motor_left"/>
- 
+
 	<!-- floka -->
 	<xacro:include filename="$(find flobi_description)/xacro/floka.urdf.xacro" />
-	<xacro:floka parent="frame" prefix="floka_" neutral="1">
+	<xacro:floka parent="frame" prefix="floka_" neutral="1" safety_padding="0.1">
 		<origin xyz="${cal_flobi_pos['X']} ${cal_flobi_pos['Y']} ${cal_flobi_pos['Z']}"
 		        rpy="0 0 ${-pi/2.0}"/>
 	</xacro:floka>
