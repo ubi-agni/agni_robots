@@ -2,6 +2,9 @@
 
   <include file="$(find kuka_shadow_floka_moveit_config)/launch/planning_context.launch" />
 
+  <arg name="prediction_horizon" default="1.0" />
+  
+
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
@@ -49,7 +52,7 @@
 
 
     <param name="online_collision_checker/rate" value="10" />
-    <param name="online_collision_checker/horizon" value="5.0" />
+    <param name="online_collision_checker/horizon" value="$(arg prediction_horizon)" />
     <!-- load these non-default MoveGroup capabilities -->
     <!--
     <param name="capabilities" value="

@@ -8,6 +8,7 @@
   <xacro:property name="cal_frame_table_height"  value="1.00" />
   <xacro:property name="cal_frame_pole_front_dist"  value="1.050" />
   
+  <!-- offset from the top of the triangle, y=0 at robot center (midway of triangle plates) -->
   <xacro:property name="cal_flobi_offset_y"  value="0.0" />
   <xacro:property name="cal_flobi_offset_z"  value="0.0" />
 
