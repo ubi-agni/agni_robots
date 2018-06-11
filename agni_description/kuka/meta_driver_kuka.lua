@@ -40,6 +40,7 @@ function configureHook()
   d:import("flwr_filter")
   d:import("agni_rtt_services")
   d:import("rtt_sensor_msgs")
+  d:import("rtt_geometry_msgs")
   d:import("rtt_diagnostic_msgs")
 
   -- retrieve the properties from the interface parameters
