@@ -4,7 +4,6 @@
 
   <arg name="prediction_horizon" default="1.0" />
   
-
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
@@ -48,13 +47,13 @@
     <param name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
     <param name="max_safe_path_cost" value="$(arg max_safe_path_cost)"/>
     <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
-    <param name="capabilities" value="move_group/OnlineCollisionPredictor
-                                      move_group/ApplyPlanningSceneService
+    <param name="capabilities" value="move_group/ApplyPlanningSceneService
                                       move_group/ExecuteTaskSolutionCapability
                                       "/>
-
+    <!-- move_group/OnlineCollisionPredictor
     <param name="online_collision_checker/rate" value="10" />
     <param name="online_collision_checker/horizon" value="$(arg prediction_horizon)" />
+     -->
     <!-- load these non-default MoveGroup capabilities -->
     <!--
     <param name="capabilities" value="
