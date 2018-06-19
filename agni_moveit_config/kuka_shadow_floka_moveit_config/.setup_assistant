@@ -8,4 +8,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: Guillaume Walck
     author_email: gwalck@techfak.uni-bielefeld.de
-    generated_timestamp: 1528759044
+    generated_timestamp: 1529523639
