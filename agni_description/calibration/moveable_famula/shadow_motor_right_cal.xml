@@ -3,7 +3,7 @@
   <!-- hand mount -->
   <xacro:property name="cal_x" value="0.0" />
   <xacro:property name="cal_y" value="0.0" />
-  <xacro:property name="cal_z" value="0.0151" />
+  <xacro:property name="cal_z" value="0.0421" />
   <xacro:property name="cal_yaw"   value="${-pi}" /> 
   <xacro:property name="cal_pitch" value="0.0" />
   <xacro:property name="cal_roll" value="0.0" />
