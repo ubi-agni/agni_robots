@@ -804,31 +804,22 @@
         <joint name="la_arm_6_joint" value="-2.75" />
     </group_state>
     <group_state name="juggleRightA" group="right_arm">
-        <joint name="ra_arm_0_joint" value="-1.73" />
-        <joint name="ra_arm_1_joint" value="0.796" />
-        <joint name="ra_arm_2_joint" value="0.471" />
-        <joint name="ra_arm_3_joint" value="-1.8706" />
-        <joint name="ra_arm_4_joint" value="-0.248" />
-        <joint name="ra_arm_5_joint" value="0.388" />
+        <joint name="ra_arm_0_joint" value="-1.667" />
+        <joint name="ra_arm_1_joint" value="0.889" />
+        <joint name="ra_arm_2_joint" value="0.432" />
+        <joint name="ra_arm_3_joint" value="-1.792" />
+        <joint name="ra_arm_4_joint" value="-0.268" />
+        <joint name="ra_arm_5_joint" value="0.364" />
         <joint name="ra_arm_6_joint" value="2.16" />
     </group_state>
     <group_state name="juggleRightB" group="right_arm">
-        <joint name="ra_arm_0_joint" value="-1.73" />
-        <joint name="ra_arm_1_joint" value="0.796" />
-        <joint name="ra_arm_2_joint" value="0.471" />
-        <joint name="ra_arm_3_joint" value="-1.8706" />
-        <joint name="ra_arm_4_joint" value="-0.248" />
-        <joint name="ra_arm_5_joint" value="0.388" />
-        <joint name="ra_arm_6_joint" value="1.50" />
-    </group_state>
-    <group_state name="juggleMiddleA" group="left_arm">
-        <joint name="la_arm_0_joint" value="1.59" />
-        <joint name="la_arm_1_joint" value="0.7855" />
-        <joint name="la_arm_2_joint" value="-0.5" />
-        <joint name="la_arm_3_joint" value="-1.87" />
-        <joint name="la_arm_4_joint" value="-0.01" />
-        <joint name="la_arm_5_joint" value="0.307" />
-        <joint name="la_arm_6_joint" value="-1.700" />
+        <joint name="ra_arm_0_joint" value="-1.667" />
+        <joint name="ra_arm_1_joint" value="0.889" />
+        <joint name="ra_arm_2_joint" value="0.432" />
+        <joint name="ra_arm_3_joint" value="-1.792" />
+        <joint name="ra_arm_4_joint" value="-0.268" />
+        <joint name="ra_arm_5_joint" value="0.364" />
+        <joint name="ra_arm_6_joint" value="1.523" />
     </group_state>
     <group_state name="juggleMiddleB" group="left_arm">
         <joint name="la_arm_0_joint" value="1.49" />
@@ -839,23 +830,14 @@
         <joint name="la_arm_5_joint" value="0.991" />
         <joint name="la_arm_6_joint" value="-2.665" />
     </group_state>
-    <group_state name="juggleMiddleA" group="right_arm">
-        <joint name="ra_arm_0_joint" value="-1.29" />
-        <joint name="ra_arm_1_joint" value="0.718" />
-        <joint name="ra_arm_2_joint" value="-0.168" />
-        <joint name="ra_arm_3_joint" value="-1.708" />
-        <joint name="ra_arm_4_joint" value="0.639" />
-        <joint name="ra_arm_5_joint" value="0.791" />
-        <joint name="ra_arm_6_joint" value="2.32" />
-    </group_state>
     <group_state name="juggleMiddleB" group="right_arm">
-        <joint name="ra_arm_0_joint" value="-1.29" />
-        <joint name="ra_arm_1_joint" value="0.718" />
-        <joint name="ra_arm_2_joint" value="-0.168" />
-        <joint name="ra_arm_3_joint" value="-1.708" />
-        <joint name="ra_arm_4_joint" value="0.639" />
-        <joint name="ra_arm_5_joint" value="0.791" />
-        <joint name="ra_arm_6_joint" value="2.32" />
+        <joint name="ra_arm_0_joint" value="-1.408" />
+        <joint name="ra_arm_1_joint" value="0.784" />
+        <joint name="ra_arm_2_joint" value="0.006" />
+        <joint name="ra_arm_3_joint" value="-1.827" />
+        <joint name="ra_arm_4_joint" value="0.822" />
+        <joint name="ra_arm_5_joint" value="0.504" />
+        <joint name="ra_arm_6_joint" value="2.10" />
     </group_state>
     <group_state name="juggleLeftA" group="left_arm">
         <joint name="la_arm_0_joint" value="1.59" />
