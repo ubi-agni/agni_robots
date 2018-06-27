@@ -41,6 +41,20 @@
         <cylinder radius="0.06725" length="0.015"/>
       </geometry>
     </collision>
+    <collision>
+      <origin xyz="0 0 ${0.005+0.015}" 
+          rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.01"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 ${0.005+0.010+0.015}" 
+          rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.01"/>
+      </geometry>
+    </collision>
     <xacro:if value="${'ubi' in tactile}">
       <collision>
         <origin xyz="0 0 0.07375" 
