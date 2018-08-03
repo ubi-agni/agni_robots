@@ -8,10 +8,10 @@ Panels:
         - /MotionPlanning1/Planning Request1
         - /TF1
         - /TF1/Frames1
-        - /TF1/Frames1/rh_ffdistal1
         - /RobotModel1
+        - /reba_pointcloud1
       Splitter Ratio: 0.742560029
-    Tree Height: 489
+    Tree Height: 491
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -117,12 +117,76 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          lh_myrmex_foam:
+          lh_cable_adapter_frame:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          lh_myrmex_quick_mount:
+          lh_ft_sensor_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_11_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_12_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_13_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_21_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_22_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_23_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_grasp_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lh_sdh_palm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_thumb_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_thumb_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_thumb_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_tip_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -279,12 +343,76 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          lh_myrmex_foam:
+          lh_cable_adapter_frame:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          lh_myrmex_quick_mount:
+          lh_ft_sensor_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_11_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_12_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_13_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_21_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_22_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_finger_23_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_grasp_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          lh_sdh_palm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_thumb_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_thumb_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_thumb_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lh_sdh_tip_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -358,12 +486,6 @@ Visualization Manager:
         All Enabled: false
         frame:
           Value: false
-        kinectd_camera_link:
-          Value: false
-        kinectd_camera_rgb_frame:
-          Value: false
-        kinectd_camera_rgb_optical_frame:
-          Value: false
         la_arm_1_link:
           Value: false
         la_arm_2_link:
@@ -382,9 +504,45 @@ Visualization Manager:
           Value: false
         la_tool_mount:
           Value: false
-        lh_myrmex_foam:
+        lh_cable_adapter_frame:
           Value: false
-        lh_myrmex_quick_mount:
+        lh_ft_sensor_link:
+          Value: false
+        lh_sdh_finger_11_link:
+          Value: false
+        lh_sdh_finger_12_link:
+          Value: false
+        lh_sdh_finger_13_link:
+          Value: false
+        lh_sdh_finger_21_link:
+          Value: false
+        lh_sdh_finger_22_link:
+          Value: false
+        lh_sdh_finger_23_link:
+          Value: false
+        lh_sdh_grasp_link:
+          Value: false
+        lh_sdh_mount:
+          Value: false
+        lh_sdh_palm_link:
+          Value: false
+        lh_sdh_thumb_1_link:
+          Value: false
+        lh_sdh_thumb_2_link:
+          Value: false
+        lh_sdh_thumb_3_link:
+          Value: false
+        lh_sdh_tip_link:
+          Value: false
+        prosilica_camera_depth_frame:
+          Value: false
+        prosilica_camera_depth_optical_frame:
+          Value: false
+        prosilica_camera_link:
+          Value: false
+        prosilica_camera_rgb_frame:
+          Value: false
+        prosilica_camera_rgb_optical_frame:
           Value: false
         ra_arm_1_link:
           Value: false
@@ -419,10 +577,6 @@ Visualization Manager:
         world:
           frame:
             {}
-          kinectd_camera_rgb_optical_frame:
-            kinectd_camera_rgb_frame:
-              kinectd_camera_link:
-                {}
           la_arm_base_link:
             la_arm_1_link:
               la_arm_2_link:
@@ -432,9 +586,33 @@ Visualization Manager:
                       la_arm_6_link:
                         la_arm_7_link:
                           la_tool_mount:
-                            lh_myrmex_quick_mount:
-                              lh_myrmex_foam:
-                                {}
+                            lh_ft_sensor_link:
+                              lh_sdh_mount:
+                                lh_cable_adapter_frame:
+                                  lh_sdh_palm_link:
+                                    lh_sdh_finger_11_link:
+                                      lh_sdh_finger_12_link:
+                                        lh_sdh_finger_13_link:
+                                          {}
+                                    lh_sdh_finger_21_link:
+                                      lh_sdh_finger_22_link:
+                                        lh_sdh_finger_23_link:
+                                          {}
+                                    lh_sdh_grasp_link:
+                                      {}
+                                    lh_sdh_thumb_1_link:
+                                      lh_sdh_thumb_2_link:
+                                        lh_sdh_thumb_3_link:
+                                          {}
+                                    lh_sdh_tip_link:
+                                      {}
+          prosilica_camera_depth_optical_frame:
+            prosilica_camera_depth_frame:
+              prosilica_camera_link:
+                {}
+          prosilica_camera_rgb_optical_frame:
+            prosilica_camera_rgb_frame:
+              {}
           ra_arm_base_link:
             ra_arm_1_link:
               ra_arm_2_link:
@@ -508,12 +686,76 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        lh_myrmex_foam:
+        lh_cable_adapter_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lh_myrmex_quick_mount:
+        lh_ft_sensor_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_finger_11_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_finger_12_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_finger_13_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_finger_21_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_finger_22_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_finger_23_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_grasp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        lh_sdh_palm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_thumb_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_thumb_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_thumb_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lh_sdh_tip_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -582,9 +824,40 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: reba_pointcloud
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Points
+      Topic: /camera/depth/points
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
+    Default Light: true
     Fixed Frame: world
     Frame Rate: 30
   Name: root
@@ -597,7 +870,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.21567106
+      Distance: 4.89814281
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -612,15 +885,15 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.0447969772
+      Pitch: 0.614796698
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 4.58494234
+      Yaw: 1.55176699
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1168
+  Height: 1171
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -629,9 +902,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000034f0000043cfc0200000007fb000000100044006900730070006c006100790073010000003a00000277000000c600fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b00000009e00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000003e00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002b7000001bf000001a600ffffff000003cf0000043c00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000001000000000000034f0000043ffc0200000007fb000000100044006900730070006c006100790073010000003a00000279000000c600fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b00000009e00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000003e00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002b9000001c0000001a600ffffff0000042b0000043f00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1828
-  X: 77
+  Width: 1920
+  X: 1920
   Y: 0

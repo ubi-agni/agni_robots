@@ -20,7 +20,7 @@
 	<!-- FRAME -->
 	<xacro:if value="${FRAME not in ['', '-']}">
 		<xacro:property name="FRAME" value="$(arg FRAME)"/>
-		<xacro:if value="${FRAME == 'famula'}">
+		<xacro:if value="${FRAME in ['famula', 'reba_vtfs']}">
 			<xacro:include filename="../urdf/frame-half.urdf.xacro"/>
 		</xacro:if>
 		<xacro:if value="${FRAME == 'sfb'}">
@@ -29,7 +29,7 @@
 
 		<!-- if FRAME defined, but none of these two, 
 		    FRAME can still be used for finding CALIB folders -->
-		<xacro:if value="${FRAME in ['famula', 'sfb']}">
+		<xacro:if value="${FRAME in ['famula', 'sfb', 'reba_vtfs']}">
 			<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
 			<xacro:frame parent="${parent}"/>
 		</xacro:if>
