@@ -3,11 +3,13 @@
    <link name="world"/>
    <xacro:arg name="board_row_nb" default="3"/>
    <xacro:arg name="board_col_nb" default="3"/>
+   <xacro:arg name="pos_xyz" default="0 0 0"/>
+   <xacro:arg name="ori_rpy" default="0 0 0"/>
    
   <joint name="board_base_joint" type="fixed">
       <parent link="world" />
       <child link="board_base" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="$(arg pos_xyz)" rpy="$(arg ori_rpy)"/>
   </joint>
    
    <link name="board_base">
