@@ -120,6 +120,15 @@ tools:
       cog: "0.0 0.0 0.1179"
       ati_adapter_thickness: 0.008
 
+  fake_sdh_cup_left:
+    file: ../robots/fake_sdh_cup.urdf.xacro
+    macro: fake_sdh_cup
+    mount: ft_sensor_link
+    props:
+      mass:  2.305
+      cog: "0.0 0.0 0.1279"
+      ati_adapter_thickness: 0.008
+
   myrmex:
     file: ../robots/myrmex.urdf.xacro
     macro: myrmex

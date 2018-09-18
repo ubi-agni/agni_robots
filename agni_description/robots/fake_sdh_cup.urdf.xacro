@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot name="tactile_tool" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="fake_sdh_cup" params="prefix:=''">
+
+    <link name="${prefix_}sdh_mount" />
+
+     <!-- add ati sensor -->
+    <xacro:include filename="../models/ati_sensor.urdf.xacro" />
+    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}sdh_mount" adapter_thickness="${props['ati_adapter_thickness']}"/>
+
+    <!-- add cable adapter + female FCS part + red ring to schunk base frame -->
+    <xacro:property name="cable_fcs_adapter_thickness" value="0.02" />
+    <xacro:property name="cable_fcs_adapter_mass" value="0.030" />
+    <joint name="${prefix_}cable_adapter_joint" type="fixed">
+      <parent link="${prefix_}sdh_mount"/>
+      <child link="${prefix_}cable_adapter_frame"/>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.020"/>
+    </joint>
+    <link name="${prefix_}cable_adapter_frame" >
+      <inertial>
+        <mass value="${cable_fcs_adapter_mass}"/> <!-- estimated not measured -->
+        <origin xyz="0 0 ${-cable_fcs_adapter_thickness/2.0}"/>
+        <xacro:cylinder_inertia_def length="${cable_fcs_adapter_thickness}" radius="0.038" mass="${cable_fcs_adapter_mass}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 ${-cable_fcs_adapter_thickness/2.0}" rpy="0 0 0"/>
+        <geometry>
+           <cylinder radius="0.038" length="${cable_fcs_adapter_thickness}" />
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-cable_fcs_adapter_thickness/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.038" length="${cable_fcs_adapter_thickness}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:include filename="$(find schunk_description)/urdf/sdh/sdh.urdf.xacro" />
+    <xacro:call macro="schunk_sdh" parent="${prefix_}cable_adapter_frame" name="${prefix_}sdh" >
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:call>
+
+    <joint name="${prefix_}cup_placement_joint" type="fixed">
+      <parent link="${prefix_}sdh_grasp_link"/>
+      <child link="${prefix_}fake_cup"/>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.1"/>
+    </joint>
+
+    <xacro:property name="cup_radius" value="0.04" />
+    <xacro:property name="cup_length" value="0.1" />
+    <xacro:property name="cup_weight" value="0.1" />
+    <link name="${prefix_}fake_cup" >
+      <inertial>
+        <mass value="${cup_weight}"/> <!-- estimated not measured -->
+        <origin xyz="0 0 ${cup_length}"/>
+        <xacro:cylinder_inertia_def length="${cup_length}" radius="${cup_radius}" mass="${cup_weight}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 ${-cup_length/2.0}" rpy="0 0 0"/>
+        <geometry>
+           <cylinder radius="${cup_radius}" length="${cup_length}" />
+        </geometry>
+        <material name="Green"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-cup_length/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${cup_radius}" length="${cup_length}" />
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>
