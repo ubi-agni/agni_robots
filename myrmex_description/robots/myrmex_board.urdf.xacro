@@ -5,6 +5,7 @@
    <xacro:arg name="board_col_nb" default="3"/>
    <xacro:arg name="pos_xyz" default="0 0 0"/>
    <xacro:arg name="ori_rpy" default="0 0 0"/>
+   <xacro:arg name="ns" default=""/>
    
   <joint name="board_base_joint" type="fixed">
       <parent link="world" />
@@ -36,10 +37,11 @@
     </link>
    
    <xacro:include filename="$(find myrmex_description)/models/myrmex_tactile_surface.urdf.xacro" />
-   <xacro:myrmex_tactile_surface prefix="" parent="board_base" size_x="$(arg board_row_nb)" size_y="$(arg board_col_nb)" 
+   <xacro:myrmex_tactile_surface prefix="$(arg ns)" parent="board_base" size_x="$(arg board_row_nb)" size_y="$(arg board_col_nb)" 
                                  foam_size_x="0.08" foam_size_y="0.08" />
-  
-   <xacro:myrmex_tactile_markers parent="world" prefix="" channel="myrmex_sensor" size_x="$(arg board_row_nb)" size_y="$(arg board_col_nb)">
+   <xacro:property name="ns" value="$(arg ns)" />
+   <xacro:property name="prefix_" value="${ns + '_' if ns else ''}" />
+   <xacro:myrmex_tactile_markers parent="${prefix_}myrmex_foam" prefix="$(arg ns)" channel="myrmex_sensor" size_x="$(arg board_row_nb)" size_y="$(arg board_col_nb)">
       <origin xyz="0 0 0.001" rpy="0 0 0"/>
    </xacro:myrmex_tactile_markers>
 </robot>
