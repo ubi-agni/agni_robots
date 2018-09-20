@@ -1,7 +1,7 @@
 <launch>
    <arg name="board_row_nb" default="3"/>
    <arg name="board_col_nb" default="3"/>
-   <arg name="pos_xyz" default="0.5 0.3 0.01"/>
+   <arg name="pos_xyz" default="0.5 0.5 0.01"/>
    <arg name="ori_rpy" default="0 0 0"/>
    <arg name="namespace" default=""/>
 
