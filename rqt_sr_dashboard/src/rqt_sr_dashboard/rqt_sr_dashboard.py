@@ -123,6 +123,7 @@ class RqtSrDashboard(Dashboard):
             self._last_seen[hand_parameters.mapping[hand]] = rospy.Time(0)
 
         self._main_widget = QWidget()
+        self._main_widget.setWindowTitle("SR Dashboard")
         vlayout = QVBoxLayout()
 
         # create buttons
