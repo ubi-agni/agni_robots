@@ -3,7 +3,7 @@
     This is a format for representing semantic information about the robot structure.
     A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
 -->
-<robot name="arms">
+<robot name="bimanual">
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
@@ -150,8 +150,8 @@
         <joint name="la_arm_6_joint" value="-1.700" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_arm" parent_group="right_arm" />
-    <end_effector name="la_tool_mount" parent_link="la_tool_mount" group="left_arm" parent_group="left_arm" />
+    <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_arm" parent_group="" />
+    <end_effector name="la_tool_mount" parent_link="la_tool_mount" group="left_arm" parent_group="" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
   
     <disable_collisions link1="frame" link2="la_arm_1_link" reason="Never" />
