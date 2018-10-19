@@ -37,10 +37,14 @@ xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10.urdf INORDER REM
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
+xacro_add_xacro_file(robots/bimanual.urdf.xacro robots/pa10.urdf INORDER REMAP  FRAME:=famula ARM_R:=pa10c ARM_L:=pa10a FLOBI:=0 TOOL_R:=- TOOL_L:=- SIM:=1)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 # left right kuka
 xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaR PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaL PREFIX:=l SIM:=1)
+list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})           
+xacro_add_xacro_file(robots/bimanual.urdf.xacro robots/kuka.urdf INORDER REMAP  FRAME:=famula ARM_R:=kukaR ARM_L:=kukaL FLOBI:=0 TOOL_R:=- TOOL_L:=- SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right lwr (no auto_on)
