@@ -34,9 +34,9 @@
                               prefix="${'' if prefix=='' else prefix+'_'}"
                               lf="${lf}" />
 
-    <!-- add ati sensor -->
-    <xacro:include filename="../models/ati_sensor.urdf.xacro" />
-    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}forearm" adapter_thickness="${props['ati_adapter_thickness']}"/>
+    <!-- add ati sensor with our special mount adaptor for kuka 0.0094 m thick -->
+    <xacro:include filename="$(find ati_sensor_description)/urdf/ati_sensor.urdf.xacro" />
+    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}forearm" model="gamma" sim="true" interface_height="0.0094"/>
 
     <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
   </xacro:macro>
