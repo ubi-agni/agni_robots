@@ -51,6 +51,19 @@ tools:
       side:    left
       mass:  3.8
       cog: "0.0 0.0 0.17"
+  
+  shadow_motor_left_ati_fcs:
+    file: ../robots/shadow_hand_ati.urdf.xacro
+    macro: shadow_hand
+    mount: ft_sensor_link
+    props:
+      model:   motor
+      tactile: ubi
+      side:    left
+      #lf: false
+      ati_adapter_thickness: 0.0253  # 9.4 + 15.9mm for FCS
+      mass:  4.055
+      cog: "0.0 0.0 0.20"
 
   shadow_motor_right:
     file: ../robots/shadow_hand.urdf.xacro
