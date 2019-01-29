@@ -168,8 +168,12 @@ function configureHook()
       d:stream(efflimname..".DebugFatigueAccterm",ros:topic("/"..namespace.."/fatigue_effort_limiter/accterm"))
       d:stream(efflimname..".DebugGraspOutput",ros:topic("/"..namespace.."/grasp_effort_limiter/output"))
       d:stream(efflimname..".DebugGraspAccterm",ros:topic("/"..namespace.."/grasp_effort_limiter/accterm"))
-
       d:stream(bridgename..".joint_states",ros:topic("/"..namespace.."/joint_states"))
+      EffLim:loadService("rosservice")
+      EffLim:provides("rosservice"):connect("setFatigueEndurance", "/"..namespace.."/fatigue_effort_limiter/setEndurance", "agni_sr_effort_limiter/setEndurance")
+      EffLim:provides("rosservice"):connect("setFatigueThreshold", "/"..namespace.."/fatigue_effort_limiter/setThreshold", "agni_sr_effort_limiter/setThreshold")
+      EffLim:provides("rosservice"):connect("setGraspEndurance", "/"..namespace.."/grasp_effort_limiter/setEndurance", "agni_sr_effort_limiter/setEndurance")
+      EffLim:provides("rosservice"):connect("setGraspThreshold", "/"..namespace.."/grasp_effort_limiter/setThreshold", "agni_sr_effort_limiter/setThreshold")
 
       print(namespace.."Wrapper is configured")
       return true
