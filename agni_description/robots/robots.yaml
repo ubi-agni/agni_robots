@@ -150,6 +150,15 @@ tools:
       mass:  0.185
       cog: "0.0 0.0 0.03" # from bottom of myrmex = mount flange
 
+  myrmex_ati:
+    file: ../robots/myrmex_ati.urdf.xacro
+    macro: myrmex
+    mount: ft_sensor_link
+    props:
+      mass:  0.385
+      cog: "0.0 0.0 0.06" # from bottom of myrmex = mount flange
+      ati_adapter_thickness: 0.008
+
   tactiletool:
     file: ../robots/tactiletool.urdf.xacro
     macro: tactiletool

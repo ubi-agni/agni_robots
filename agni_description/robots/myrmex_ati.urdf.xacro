@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="myrmex" params="prefix:=''">
+    <!-- myrmex -->
+    <xacro:include filename="$(find myrmex_description)/models/myrmex_quick_mount.urdf.xacro" />
+    <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
+
+    <xacro:myrmex_quick_mount prefix="${prefix}"/>
+    <!-- add ati sensor with our special mount adaptor for kuka 0.0094 m thick -->
+    <xacro:include filename="$(find ati_sensor_description)/urdf/ati_sensor.urdf.xacro" />
+    <!-- explicitely request no controller which currently conflicts with shadow hand gazebo_ros_control handler not aware of force_torque interfaces -->
+    <xacro:ati_sensor prefix="${prefix}" child="${prefix_}myrmex_quick_mount" model="gamma" sim="true" controller="false" interface_height="0.0094"/>
+
+    <xacro:myrmex_tactile_markers parent="${prefix_}myrmex_quick_mount" prefix="${prefix}" channel="myrmex">
+      <origin xyz="0 0 0.034" rpy="0 0 0"/>
+    </xacro:myrmex_tactile_markers>
+  </xacro:macro>
+</robot>
