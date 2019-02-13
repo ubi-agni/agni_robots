@@ -17,7 +17,7 @@
 	<xacro:include filename="$(find sr_description)/materials.urdf.xacro" />
 
 	<xacro:arm_with_tool parent="frame" prefix="r"
-	                     arm_type="pa10c" tool_type="shadow_motor_right"/>
+	                     arm_type="pa10c" tool_type="shadow_motor_right_ati"/>
 	<xacro:arm_with_tool parent="frame" prefix="l"
-	                     arm_type="pa10a" tool_type="shadow_motor_left"/>
+	                     arm_type="pa10a" tool_type="shadow_motor_left_ati"/>
 </robot>
