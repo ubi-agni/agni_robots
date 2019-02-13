@@ -397,10 +397,12 @@
     <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_hand" parent_group="right_arm"/>
     <end_effector name="rh_tool_frame" parent_link="rh_tool_frame" group="right_hand" parent_group="right_arm"/>
     <end_effector name="rh_palm" parent_link="rh_palm" group="right_fingers" parent_group="right_arm_palm" />
+    <end_effector name="right_hand" parent_link="ra_arm_7_link" group="right_hand" parent_group="right_arm" />
 
     <end_effector name="la_tool_mount" parent_link="la_tool_mount" group="left_hand" parent_group="left_arm"/>
     <end_effector name="lh_tool_frame" parent_link="lh_tool_frame" group="left_hand" parent_group="left_arm"/>
     <end_effector name="lh_palm" parent_link="lh_palm" group="left_fingers" parent_group="left_arm_palm" />
+    <end_effector name="left_hand" parent_link="la_arm_7_link" group="left_hand" parent_group="left_arm" />
 
     <end_effector name="left_hand_first_finger" parent_link="lh_fftip" group="left_first_finger" parent_group="left_fingers" />
     <end_effector name="left_hand_middle_finger" parent_link="lh_mftip" group="left_middle_finger" parent_group="left_fingers" />
