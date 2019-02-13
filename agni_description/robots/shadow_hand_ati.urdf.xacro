@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="shadow_hand" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="../urdf/sr_gazebo.urdf.xacro" />
+  <xacro:include filename="$(find sr_description)/materials.urdf.xacro" />
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.urdf.xacro" />
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.tactile.xacro" />
 

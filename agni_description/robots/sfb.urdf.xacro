@@ -14,7 +14,6 @@
 	<xacro:frame parent="${parent}"/>
 
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
-	<xacro:include filename="$(find sr_description)/materials.urdf.xacro" />
 
 	<xacro:arm_with_tool parent="frame" prefix="r"
 	                     arm_type="pa10c" tool_type="shadow_motor_right"/>
