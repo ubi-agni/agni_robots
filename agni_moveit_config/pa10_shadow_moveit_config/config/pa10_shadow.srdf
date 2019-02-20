@@ -128,26 +128,26 @@
         <joint name="la_W2" value="0" />
     </group_state>
     <group_state name="home" group="right_first_finger">
-        <joint name="rh_FFJ1" value="0" />
-        <joint name="rh_FFJ2" value="0" />
+        <joint name="rh_FFJ1" value="0.09" />
+        <joint name="rh_FFJ2" value="0.09" />
         <joint name="rh_FFJ3" value="0" />
         <joint name="rh_FFJ4" value="0" />
     </group_state>
     <group_state name="home" group="right_middle_finger">
-        <joint name="rh_MFJ1" value="0" />
-        <joint name="rh_MFJ2" value="0" />
+        <joint name="rh_MFJ1" value="0.09" />
+        <joint name="rh_MFJ2" value="0.09" />
         <joint name="rh_MFJ3" value="0" />
         <joint name="rh_MFJ4" value="0" />
     </group_state>
     <group_state name="home" group="right_ring_finger">
-        <joint name="rh_RFJ1" value="0" />
-        <joint name="rh_RFJ2" value="0" />
+        <joint name="rh_RFJ1" value="0.09" />
+        <joint name="rh_RFJ2" value="0.09" />
         <joint name="rh_RFJ3" value="0" />
         <joint name="rh_RFJ4" value="0" />
     </group_state>
     <group_state name="home" group="right_little_finger">
-        <joint name="rh_LFJ1" value="0" />
-        <joint name="rh_LFJ2" value="0" />
+        <joint name="rh_LFJ1" value="0.09" />
+        <joint name="rh_LFJ2" value="0.09" />
         <joint name="rh_LFJ3" value="0" />
         <joint name="rh_LFJ4" value="0" />
         <joint name="rh_LFJ5" value="0" />
@@ -160,26 +160,26 @@
         <joint name="rh_THJ5" value="0" />
     </group_state>
     <group_state name="home" group="left_first_finger">
-        <joint name="lh_FFJ1" value="0" />
-        <joint name="lh_FFJ2" value="0" />
+        <joint name="lh_FFJ1" value="0.09" />
+        <joint name="lh_FFJ2" value="0.09" />
         <joint name="lh_FFJ3" value="0" />
         <joint name="lh_FFJ4" value="0" />
     </group_state>
     <group_state name="home" group="left_middle_finger">
-        <joint name="lh_MFJ1" value="0" />
-        <joint name="lh_MFJ2" value="0" />
+        <joint name="lh_MFJ1" value="0.09" />
+        <joint name="lh_MFJ2" value="0.09" />
         <joint name="lh_MFJ3" value="0" />
         <joint name="lh_MFJ4" value="0" />
     </group_state>
     <group_state name="home" group="left_ring_finger">
-        <joint name="lh_RFJ1" value="0" />
-        <joint name="lh_RFJ2" value="0" />
+        <joint name="lh_RFJ1" value="0.09" />
+        <joint name="lh_RFJ2" value="0.09" />
         <joint name="lh_RFJ3" value="0" />
         <joint name="lh_RFJ4" value="0" />
     </group_state>
     <group_state name="home" group="left_little_finger">
-        <joint name="lh_LFJ1" value="0" />
-        <joint name="lh_LFJ2" value="0" />
+        <joint name="lh_LFJ1" value="0.09" />
+        <joint name="lh_LFJ2" value="0.09" />
         <joint name="lh_LFJ3" value="0" />
         <joint name="lh_LFJ4" value="0" />
         <joint name="lh_LFJ5" value="0" />
@@ -193,21 +193,21 @@
     </group_state>
 
     <group_state name="open" group="right_hand">
-        <joint name="rh_FFJ1" value="0" />
-        <joint name="rh_FFJ2" value="0" />
+        <joint name="rh_FFJ1" value="0.09" />
+        <joint name="rh_FFJ2" value="0.09" />
         <joint name="rh_FFJ3" value="0" />
         <joint name="rh_FFJ4" value="0" />
-        <joint name="rh_LFJ1" value="0" />
-        <joint name="rh_LFJ2" value="0" />
+        <joint name="rh_LFJ1" value="0.09" />
+        <joint name="rh_LFJ2" value="0.09" />
         <joint name="rh_LFJ3" value="0" />
         <joint name="rh_LFJ4" value="0" />
         <joint name="rh_LFJ5" value="0" />
-        <joint name="rh_MFJ1" value="0" />
-        <joint name="rh_MFJ2" value="0" />
+        <joint name="rh_MFJ1" value="0.09" />
+        <joint name="rh_MFJ2" value="0.09" />
         <joint name="rh_MFJ3" value="0" />
         <joint name="rh_MFJ4" value="0" />
-        <joint name="rh_RFJ1" value="0" />
-        <joint name="rh_RFJ2" value="0" />
+        <joint name="rh_RFJ1" value="0.09" />
+        <joint name="rh_RFJ2" value="0.09" />
         <joint name="rh_RFJ3" value="0" />
         <joint name="rh_RFJ4" value="0" />
         <joint name="rh_THJ1" value="0.2169" />
@@ -245,21 +245,21 @@
         <joint name="rh_WRJ2" value="0" />
     </group_state>
     <group_state name="open" group="left_hand">
-        <joint name="lh_FFJ1" value="0" />
-        <joint name="lh_FFJ2" value="0" />
+        <joint name="lh_FFJ1" value="0.09" />
+        <joint name="lh_FFJ2" value="0.09" />
         <joint name="lh_FFJ3" value="0" />
         <joint name="lh_FFJ4" value="0" />
-        <joint name="lh_LFJ1" value="0" />
-        <joint name="lh_LFJ2" value="0" />
+        <joint name="lh_LFJ1" value="0.09" />
+        <joint name="lh_LFJ2" value="0.09" />
         <joint name="lh_LFJ3" value="0" />
         <joint name="lh_LFJ4" value="0" />
         <joint name="lh_LFJ5" value="0" />
-        <joint name="lh_MFJ1" value="0" />
-        <joint name="lh_MFJ2" value="0" />
+        <joint name="lh_MFJ1" value="0.09" />
+        <joint name="lh_MFJ2" value="0.09" />
         <joint name="lh_MFJ3" value="0" />
         <joint name="lh_MFJ4" value="0" />
-        <joint name="lh_RFJ1" value="0" />
-        <joint name="lh_RFJ2" value="0" />
+        <joint name="lh_RFJ1" value="0.09" />
+        <joint name="lh_RFJ2" value="0.09" />
         <joint name="lh_RFJ3" value="0" />
         <joint name="lh_RFJ4" value="0" />
         <joint name="lh_THJ1" value="0.2169" />
@@ -297,21 +297,21 @@
         <joint name="lh_WRJ2" value="0" />
     </group_state>
     <group_state name="open" group="right_fingers">
-        <joint name="rh_FFJ1" value="0" />
-        <joint name="rh_FFJ2" value="0" />
+        <joint name="rh_FFJ1" value="0.09" />
+        <joint name="rh_FFJ2" value="0.09" />
         <joint name="rh_FFJ3" value="0" />
         <joint name="rh_FFJ4" value="0" />
-        <joint name="rh_LFJ1" value="0" />
-        <joint name="rh_LFJ2" value="0" />
+        <joint name="rh_LFJ1" value="0.09" />
+        <joint name="rh_LFJ2" value="0.09" />
         <joint name="rh_LFJ3" value="0" />
         <joint name="rh_LFJ4" value="0" />
         <joint name="rh_LFJ5" value="0" />
-        <joint name="rh_MFJ1" value="0" />
-        <joint name="rh_MFJ2" value="0" />
+        <joint name="rh_MFJ1" value="0.09" />
+        <joint name="rh_MFJ2" value="0.09" />
         <joint name="rh_MFJ3" value="0" />
         <joint name="rh_MFJ4" value="0" />
-        <joint name="rh_RFJ1" value="0" />
-        <joint name="rh_RFJ2" value="0" />
+        <joint name="rh_RFJ1" value="0.09" />
+        <joint name="rh_RFJ2" value="0.09" />
         <joint name="rh_RFJ3" value="0" />
         <joint name="rh_RFJ4" value="0" />
         <joint name="rh_THJ1" value="0.2169" />
@@ -345,21 +345,21 @@
         <joint name="rh_THJ5" value="-0.3529" />
     </group_state>
     <group_state name="open" group="left_fingers">
-        <joint name="lh_FFJ1" value="0" />
-        <joint name="lh_FFJ2" value="0" />
+        <joint name="lh_FFJ1" value="0.09" />
+        <joint name="lh_FFJ2" value="0.09" />
         <joint name="lh_FFJ3" value="0" />
         <joint name="lh_FFJ4" value="0" />
-        <joint name="lh_LFJ1" value="0" />
-        <joint name="lh_LFJ2" value="0" />
+        <joint name="lh_LFJ1" value="0.09" />
+        <joint name="lh_LFJ2" value="0.09" />
         <joint name="lh_LFJ3" value="0" />
         <joint name="lh_LFJ4" value="0" />
         <joint name="lh_LFJ5" value="0" />
-        <joint name="lh_MFJ1" value="0" />
-        <joint name="lh_MFJ2" value="0" />
+        <joint name="lh_MFJ1" value="0.09" />
+        <joint name="lh_MFJ2" value="0.09" />
         <joint name="lh_MFJ3" value="0" />
         <joint name="lh_MFJ4" value="0" />
-        <joint name="lh_RFJ1" value="0" />
-        <joint name="lh_RFJ2" value="0" />
+        <joint name="lh_RFJ1" value="0.09" />
+        <joint name="lh_RFJ2" value="0.09" />
         <joint name="lh_RFJ3" value="0" />
         <joint name="lh_RFJ4" value="0" />
         <joint name="lh_THJ1" value="0.2169" />
