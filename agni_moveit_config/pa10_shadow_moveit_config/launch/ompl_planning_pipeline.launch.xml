@@ -8,6 +8,7 @@
                                        default_planner_request_adapters/FixStartStateBounds
                                        default_planner_request_adapters/FixStartStateCollision
                                        default_planner_request_adapters/FixStartStatePathConstraints
+                                       chomp/OptimizerAdapter
                                        default_planner_request_adapters/AddTimeParameterization
                                        " />
 
