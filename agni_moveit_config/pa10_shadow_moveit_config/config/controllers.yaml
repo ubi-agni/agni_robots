@@ -26,6 +26,7 @@ controller_list:
      position: -1
      velocity: -1
      acceleration: -1
+   goal_time_tolerance: 2.0
 
  - name: lh/lh_hand_trajectory_controller
    action_ns: follow_joint_trajectory
@@ -44,3 +45,4 @@ controller_list:
      position: -1
      velocity: -1
      acceleration: -1
+   goal_time_tolerance: 2.0
