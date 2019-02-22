@@ -1,0 +1,159 @@
+# ~50% of max PA10 velocity only
+
+joint_limits:
+  la_S1:
+    <<: &ARM_DEFAULTS
+      has_velocity_limits: true
+      has_acceleration_limits: true
+      max_acceleration: 0.5 # 30deg/s/s
+    max_velocity: 0.05
+  la_S2:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.05
+  la_S3:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.1
+  la_E1:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.1
+  la_E2:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.31
+  la_W1:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.31
+    min_position: -1.74
+    max_position: 1.74
+  la_W2:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.31
+    min_position: -4.45
+    max_position: 4.45
+
+  ra_S1:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.05
+  ra_S2:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.05
+  ra_S3:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.1
+  ra_E1:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.1
+  ra_E2:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.31
+  ra_W1:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.31
+    min_position: -1.74
+    max_position: 1.74
+  ra_W2:
+    <<: *ARM_DEFAULTS
+    max_velocity: 0.31
+    min_position: -4.45
+    max_position: 4.45
+
+  lh_WRJ1:
+    <<: &HAND_DEFAULTS
+      has_velocity_limits: true
+      max_velocity: 1.0
+      has_acceleration_limits: false
+      max_acceleration: 0
+  lh_WRJ2:
+    <<: *HAND_DEFAULTS
+  lh_THJ5:
+    <<: *HAND_DEFAULTS
+  lh_THJ4:
+    <<: *HAND_DEFAULTS
+  lh_THJ3:
+    <<: *HAND_DEFAULTS
+  lh_THJ2:
+    <<: *HAND_DEFAULTS
+  lh_THJ1:
+    <<: *HAND_DEFAULTS
+  lh_FFJ4:
+    <<: *HAND_DEFAULTS
+  lh_FFJ3:
+    <<: *HAND_DEFAULTS
+  lh_FFJ2:
+    <<: *HAND_DEFAULTS
+  lh_FFJ1:
+    <<: *HAND_DEFAULTS
+  lh_MFJ4:
+    <<: *HAND_DEFAULTS
+  lh_MFJ3:
+    <<: *HAND_DEFAULTS
+  lh_MFJ2:
+    <<: *HAND_DEFAULTS
+  lh_MFJ1:
+    <<: *HAND_DEFAULTS
+  lh_RFJ4:
+    <<: *HAND_DEFAULTS
+  lh_RFJ3:
+    <<: *HAND_DEFAULTS
+  lh_RFJ2:
+    <<: *HAND_DEFAULTS
+  lh_RFJ1:
+    <<: *HAND_DEFAULTS
+  lh_LFJ5:
+    <<: *HAND_DEFAULTS
+  lh_LFJ4:
+    <<: *HAND_DEFAULTS
+  lh_LFJ3:
+    <<: *HAND_DEFAULTS
+  lh_LFJ2:
+    <<: *HAND_DEFAULTS
+  lh_LFJ1:
+    <<: *HAND_DEFAULTS
+
+  rh_WRJ1:
+    <<: *HAND_DEFAULTS
+  rh_WRJ2:
+    <<: *HAND_DEFAULTS
+  rh_THJ5:
+    <<: *HAND_DEFAULTS
+  rh_THJ4:
+    <<: *HAND_DEFAULTS
+  rh_THJ3:
+    <<: *HAND_DEFAULTS
+  rh_THJ2:
+    <<: *HAND_DEFAULTS
+  rh_THJ1:
+    <<: *HAND_DEFAULTS
+  rh_FFJ4:
+    <<: *HAND_DEFAULTS
+  rh_FFJ3:
+    <<: *HAND_DEFAULTS
+  rh_FFJ2:
+    <<: *HAND_DEFAULTS
+  rh_FFJ1:
+    <<: *HAND_DEFAULTS
+  rh_MFJ4:
+    <<: *HAND_DEFAULTS
+  rh_MFJ3:
+    <<: *HAND_DEFAULTS
+  rh_MFJ2:
+    <<: *HAND_DEFAULTS
+  rh_MFJ1:
+    <<: *HAND_DEFAULTS
+  rh_RFJ4:
+    <<: *HAND_DEFAULTS
+  rh_RFJ3:
+    <<: *HAND_DEFAULTS
+  rh_RFJ2:
+    <<: *HAND_DEFAULTS
+  rh_RFJ1:
+    <<: *HAND_DEFAULTS
+  rh_LFJ5:
+    <<: *HAND_DEFAULTS
+  rh_LFJ4:
+    <<: *HAND_DEFAULTS
+  rh_LFJ3:
+    <<: *HAND_DEFAULTS
+  rh_LFJ2:
+    <<: *HAND_DEFAULTS
+  rh_LFJ1:
+    <<: *HAND_DEFAULTS
