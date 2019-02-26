@@ -119,10 +119,10 @@
         <joint name="ra_W2" value="0" />
     </group_state>
     <group_state name="home" group="left_arm">
-        <joint name="la_E1" value="-1.3963" />
-        <joint name="la_E2" value="-1.3963" />
+        <joint name="la_E1" value="-1.517" />
+        <joint name="la_E2" value="-1.40" />
         <joint name="la_S1" value="1.57" />
-        <joint name="la_S2" value="1.1868" />
+        <joint name="la_S2" value="1.294" />
         <joint name="la_S3" value="0" />
         <joint name="la_W1" value="-1.4835" />
         <joint name="la_W2" value="0" />
