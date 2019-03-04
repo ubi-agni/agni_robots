@@ -115,6 +115,18 @@
 
 
 			<!-- virtual fence -->
+			<!-- left pane -->
+			<collision>
+				<origin xyz="${-(width+thickness)/2} ${depth/2} ${height/2}"
+				        rpy="0 0 0"/>
+				<geometry><box size="${thickness} ${depth} ${height}"/></geometry>
+			</collision>
+			<!-- right pane -->
+			<collision>
+				<origin xyz="${+(width+thickness)/2} ${depth/2} ${height/2}"
+				        rpy="0 0 0"/>
+				<geometry><box size="${thickness} ${depth} ${height}"/></geometry>
+			</collision>
 			<!-- top plane -->
 			<collision>
 				<origin xyz="0 ${depth/2} ${height+(thickness)/2-0.27}" 
