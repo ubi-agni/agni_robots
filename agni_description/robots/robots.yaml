@@ -15,7 +15,7 @@ arms:
     macro: kuka_arm
     props:
       port: 49940
-      init_joint_pos: "-0.541 0.977 -0.0 -0.13 -0.052 -0.13 0.035"
+      init_joint_pos: "-1.86 -0.41 0.11 1.36 1.0 -1.15 0.0"
       auto_on: 1
   kukaR:
     file:  ../robots/kuka_arm.urdf.xacro
