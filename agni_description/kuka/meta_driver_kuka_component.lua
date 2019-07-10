@@ -8,11 +8,12 @@ package.path = lua_path..'/scripts'..'/?.lua;' .. package.path
 -- agni functionalities (wait for peer, etc)
 require "agni_tools"
 
-function kuka_driver_deploy(d, namespace, driver_name, driver_script, port, timestep, cutoff_freq)
+function kuka_driver_deploy(d, namespace, driver_name, driver_script, port, timestep, cutoff_freq, fake)
   name = namespace..driver_name
   -- backward compatibility with default values for timestep and cutoff_freq
   timestep = timestep or 0.001
   cutoff_freq = cutoff_freq or 10.0
+  fake = fake or false
   
   if hasPeer(d, name) then
     print(name.." already loaded")
@@ -31,6 +32,7 @@ function kuka_driver_deploy(d, namespace, driver_name, driver_script, port, time
     
     -- configure the component
     driver:getProperty("namespace"):set(namespace)
+    driver:getProperty("fake"):set(fake)
     driver:getProperty("port"):set(port)
     driver:getProperty("timestep"):set(timestep)
     driver:getProperty("filter_cutoff_freq"):set(cutoff_freq)

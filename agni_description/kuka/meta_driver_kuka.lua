@@ -15,6 +15,7 @@ iface_spec = {
    properties={
       { name='namespace', datatype='string', desc="namespace as prefix" },
       { name='port', datatype='int', desc="port on which FRI listens (default 49938)" },
+      { name='fake', datatype='bool', desc="if true, FRI loops cmds to msr" },
       { name='filter_cutoff_freq', datatype='float', desc="filter cutoff frequency (default 10.0)" },
       { name='timestep', datatype='float', desc="timestep of FRI (default 0.001)" },
       { name='in_portmap', datatype='agni_rtt_services/ControlIOMap', desc="input port mapping" },
@@ -57,6 +58,12 @@ function configureHook()
   if cutoff == 0 then
     cutoff = 10.0
   end
+  fake = iface.props.fake:get()
+  if fake then
+    print("FRI will be started in fake mode")
+  else
+    print("FRI will be started in normal mode")
+  end
  
   -- advertize the type of controller you set (useful for controller_manager)
   controller_type = tc:getProperty("controller_type")
@@ -83,6 +90,7 @@ function configureHook()
   d:setActivity(friname, 0, 80, rtt.globals.ORO_SCHED_RT)
   fri = d:getPeer(friname)
   fri:getProperty("fri_port"):set(port)
+  fri:getProperty("fake_fri"):set(fake)
   if fri:configure() then
 
     -- add fri to the parent component peers
