@@ -8,8 +8,9 @@ package.path = lua_path..'/scripts'..'/?.lua;' .. package.path
 -- agni functionalities (wait for peer, etc)
 require "agni_tools"
 
-function shadow_driver_deploy(d, namespace, driver_name, driver_script)
+function shadow_driver_deploy(d, namespace, driver_name, driver_script, fake)
   name = namespace..driver_name
+  fake = fake or false
   if hasPeer(d, name) then
     print(name.." already loaded")
   else
@@ -28,6 +29,7 @@ function shadow_driver_deploy(d, namespace, driver_name, driver_script)
     -- configure the component
     driver:getProperty("namespace"):set(namespace)
     driver:getProperty("controller_name"):set(namespace..driver_name)
+    driver:getProperty("fake"):set(fake)
 
     if driver:configure() then
       -- stat the component
