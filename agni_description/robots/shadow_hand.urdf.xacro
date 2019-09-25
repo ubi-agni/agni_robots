@@ -6,6 +6,7 @@
 
   <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
                                           tactile:=${props.get('tactile','ubi')}
+                                          palm_tactile:=${props.get('palm_tactile','fabric')}
                                           side:=${props.get('side','right')}
                                           prefix:=''
                                           lf:=${props.get('lf','True')} ">
@@ -32,7 +33,8 @@
     <!-- add tactile markers -->
     <xacro:shadowhand_tactile reflect="${1 if side=='right' else -1}"
                               prefix="${prefix_}"
-                              lf="${lf}" />
+                              lf="${lf}"
+                              palm_tactile="${palm_tactile}" />
 
     <xacro:shadow_gazebo_controller_manager namespace="${prefix}" />
   </xacro:macro>

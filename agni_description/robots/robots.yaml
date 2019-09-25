@@ -48,6 +48,7 @@ tools:
     props:
       model:   motor
       tactile: ubi
+      palm_tactile: baro
       side:    left
       mass:  3.8
       cog: "0.0 0.0 0.17"
@@ -59,6 +60,7 @@ tools:
     props:
       model:   motor
       tactile: ubi
+      palm_tactile: baro
       side:    left
       #lf: false
       ati_adapter_thickness: 0.0094
