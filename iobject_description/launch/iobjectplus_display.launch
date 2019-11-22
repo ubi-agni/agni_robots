@@ -1,0 +1,12 @@
+<launch>
+  <arg name="ns" default="iobjectplus"/>
+  <!-- robot description -->
+  <group ns="$(arg ns)">
+    <include file="$(find iobject_description)/launch/iobjectplus_upload.launch" />
+    <node name="iobjectplus_jsp" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node name="iobjectplus_rsp" pkg="robot_state_publisher" type="robot_state_publisher"/>    
+  </group>
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iobject_description)/launch/iobjectplus.rviz" output="screen" />
+</launch>
+

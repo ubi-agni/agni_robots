@@ -1,0 +1,5 @@
+<launch>
+  <!-- robot_description -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find iobject_description)/robots/iobjectplus.urdf.xacro'" />
+</launch>
+

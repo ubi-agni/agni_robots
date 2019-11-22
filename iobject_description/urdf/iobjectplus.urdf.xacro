@@ -1,0 +1,68 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="iobjectplus_tactile_board" params="name parent angle radius:=^">
+    <xacro:property name="theta" value="${(angle+90)/180.0*pi}" />
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0.0" />
+        <geometry>
+          <box size="0.02 0.0005 0.12" />
+        </geometry>
+        <material name="darkgrey">
+          <color rgba="0.2 0.2 0.2 1.0" />
+        </material>
+      </visual>
+    </link>
+    <joint name="${name}_joint" type="fixed" >
+      <parent link="${parent}" />
+      <child link="${name}_link" />
+      <origin xyz="${cos(theta)*radius} ${sin(theta)*radius} 0.0" rpy="0.0 0.0 ${angle/180.0*pi}" />
+    </joint>
+    <sensor name="${name}_sensor" update_rate="100">
+      <xacro:property name="cell_size" value="0.005" />
+      <xacro:property name="cell_spacing" value="0.005" />
+      <xacro:property name="tactile_board_size_x" value="4" />
+      <xacro:property name="tactile_board_size_y" value="24" />
+      <parent link="${name}_link"/>
+      <origin xyz="0 -0.0026 0" rpy="${pi/2.0} ${pi/2.0} 0.0" />
+      <tactile channel="${name}">
+        <array rows="${tactile_board_size_y}" cols="${tactile_board_size_x}"
+            order="row-major" size="${cell_size} ${cell_size}" 
+            offset="${cell_spacing * (tactile_board_size_y -1.0)/2.0} ${cell_spacing * (tactile_board_size_x -1.0)/2.0}">
+        </array>
+      </tactile>
+    </sensor>
+  </xacro:macro>
+
+  <xacro:macro name="iobjectplus">
+    <xacro:property name="radius" value="0.0373" />
+    <link name="iobjectplus_base">
+      <visual>
+        <origin xyz="0 0 -0.0665" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iobject_description/urdf/meshes/iobjectplus_outer.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white">
+          <color rgba="1.0 1.0 1.0 1.0" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iobject_description/urdf/meshes/iobjectplus_outer.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:iobjectplus_tactile_board name="board0" parent="iobjectplus_base" angle="0.0"/>
+    <xacro:iobjectplus_tactile_board name="board1" parent="iobjectplus_base" angle="-36.0"/>
+    <xacro:iobjectplus_tactile_board name="board2" parent="iobjectplus_base" angle="-72.0"/>
+    <xacro:iobjectplus_tactile_board name="board3" parent="iobjectplus_base" angle="-108.0"/>
+    <xacro:iobjectplus_tactile_board name="board4" parent="iobjectplus_base" angle="-144.0"/>
+    <xacro:iobjectplus_tactile_board name="board5" parent="iobjectplus_base" angle="-180.0"/>
+    <xacro:iobjectplus_tactile_board name="board6" parent="iobjectplus_base" angle="-216.0"/>
+    <xacro:iobjectplus_tactile_board name="board7" parent="iobjectplus_base" angle="-252.0"/>
+    <xacro:iobjectplus_tactile_board name="board8" parent="iobjectplus_base" angle="-288.0"/>
+    <xacro:iobjectplus_tactile_board name="board9" parent="iobjectplus_base" angle="-324.0"/>
+  </xacro:macro>  
+</robot>
+
