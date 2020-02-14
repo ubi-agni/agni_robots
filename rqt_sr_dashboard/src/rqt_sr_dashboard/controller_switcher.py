@@ -19,11 +19,14 @@ class ControllerSwitcher(object):
     def __init__(self, namespace, only_low_level_ctrl=False):
 
         self.namespace = namespace+"/"
+        rospy.loginfo("controller switcher using ns:" + self.namespace)
         self.traj_controller_name = None
         self.only_low_level_ctrl = only_low_level_ctrl
         self.managed_controllers = []
         self.list_controllers = rospy.ServiceProxy(self.namespace + 'controller_manager/list_controllers',
                                                    ListControllers)
+        self.switch_controllers = rospy.ServiceProxy(self.namespace + 'controller_manager/switch_controller',
+                                                     SwitchController)
         self.init_controller_list()
 
     def init_controller_list(self):
@@ -52,6 +55,8 @@ class ControllerSwitcher(object):
                     if self.only_low_level_ctrl and c.type == TRAJ_CTRL_NAME:
                         continue
                     self.managed_controllers.append(c.name)
+            rospy.logdebug("managed_controllers: ")
+            rospy.logdebug(self.managed_controllers)
         else:
             rospy.logwarn("did not find the controller manager service: controller_manager/list_controllers")
 
@@ -71,13 +76,16 @@ class ControllerSwitcher(object):
                 if c.state == "running" and c.name in self.managed_controllers]
 
             controllers_to_start = [""]
+            req = SwitchControllerRequest()
+            req.start_controllers = controllers_to_start
+            req.stop_controllers = controllers_to_stop
+            req.strictness = SwitchControllerRequest.BEST_EFFORT
+            # only for newest control messages, using defaults for now
+            # req.start_asap = False
+            # req.timeout =  0.0
 
-            switch_controllers = rospy.ServiceProxy(self.namespace +
-                                                    'controller_manager/switch_controller', SwitchController)
             try:
-                resp1 = switch_controllers(
-                    controllers_to_start, controllers_to_stop,
-                    SwitchControllerRequest.BEST_EFFORT)
+                resp1 = self.switch_controllers.call(req)
             except rospy.ServiceException:
                 success = False
 
@@ -101,16 +109,23 @@ class ControllerSwitcher(object):
         if success:
             controllers_to_start = [
                 c.name for c in resp1.controller
-                if c.state == "stopped" and c.name in self.managed_controllers]
+                if (c.state == "stopped" or c.state == "initialized") and c.name in self.managed_controllers]
 
+            if len(controllers_to_start)==0:
+                rospy.logwarn("no controllers to start, check their state")
+            rospy.logdebug(controllers_to_start)
             controllers_to_stop = [""]
 
-            switch_controllers = rospy.ServiceProxy(self.namespace +
-                                                    'controller_manager/switch_controller', SwitchController)
+            req = SwitchControllerRequest()
+            req.start_controllers = controllers_to_start
+            req.stop_controllers = controllers_to_stop
+            req.strictness = SwitchControllerRequest.BEST_EFFORT
+            # only for newest control messages, using defaults for now
+            # req.start_asap = False
+            # req.timeout =  0.0
+
             try:
-                resp1 = switch_controllers(
-                    controllers_to_start, controllers_to_stop,
-                    SwitchControllerRequest.BEST_EFFORT)
+                resp1 = resp1 = self.switch_controllers.call(req)
             except rospy.ServiceException:
                 success = False
 
