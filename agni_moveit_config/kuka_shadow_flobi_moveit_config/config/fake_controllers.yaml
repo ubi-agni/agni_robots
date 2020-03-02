@@ -368,3 +368,7 @@ controller_list:
       - ra_arm_4_joint
       - ra_arm_5_joint
       - ra_arm_6_joint
+
+initial:
+  - group: upper_body
+    pose: upperbody_home
