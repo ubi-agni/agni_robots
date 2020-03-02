@@ -45,7 +45,10 @@
     <param name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
     <param name="max_safe_path_cost" value="$(arg max_safe_path_cost)"/>
     <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
-
+    <!-- capabilities for MTC-->
+    <param name="capabilities" value="move_group/ApplyPlanningSceneService
+                                      move_group/ExecuteTaskSolutionCapability
+                                      "/>
     <!-- load these non-default MoveGroup capabilities -->
     <!--
     <param name="capabilities" value="
