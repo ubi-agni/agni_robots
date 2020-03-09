@@ -5,42 +5,164 @@
 -->
 
 <robot name="arm_hand_shadow">
-    
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
-    <group name="left_armhand">
-        <joint name="la_arm_mount" />
-        <joint name="la_arm_0_joint" />
-        <joint name="la_arm_1_joint" />
-        <joint name="la_arm_2_joint" />
-        <joint name="la_arm_3_joint" />
-        <joint name="la_arm_4_joint" />
-        <joint name="la_arm_5_joint" />
-        <joint name="la_arm_6_joint" />
-        <joint name="la_arm_hand_fixed_joint" />
-        <joint name="lh_tool_mount" />
-        <joint name="lh_WRJ2" />
-        <joint name="lh_WRJ1" />
-        <chain base_link="la_arm_base_link" tip_link="lh_palm" />
+    <group name="right_first_finger">
+        <chain base_link="rh_palm" tip_link="rh_fftip" />
     </group>
-    <group name="right_armhand">
-        <joint name="ra_arm_mount" />
-        <joint name="ra_arm_0_joint" />
-        <joint name="ra_arm_1_joint" />
-        <joint name="ra_arm_2_joint" />
-        <joint name="ra_arm_3_joint" />
-        <joint name="ra_arm_4_joint" />
-        <joint name="ra_arm_5_joint" />
-        <joint name="ra_arm_6_joint" />
-        <joint name="ra_arm_hand_fixed_joint" />
-        <joint name="rh_tool_mount" />
+    <group name="right_middle_finger">
+        <chain base_link="rh_palm" tip_link="rh_mftip" />
+    </group>
+    <group name="right_ring_finger">
+        <chain base_link="rh_palm" tip_link="rh_rftip" />
+    </group>
+    <group name="right_little_finger">
+        <chain base_link="rh_palm" tip_link="rh_lftip" />
+    </group>
+    <group name="right_thumb">
+        <chain base_link="rh_palm" tip_link="rh_thtip" />
+    </group>
+    <group name="right_fingers">
+        <group name="right_first_finger" />
+        <group name="right_middle_finger" />
+        <group name="right_ring_finger" />
+        <group name="right_little_finger" />
+        <group name="right_thumb" />
+    </group>
+    <group name="right_hand">
+        <link name="rh_forearm" />
+        <link name="rh_wrist" />
+        <link name="rh_palm" />
         <joint name="rh_WRJ2" />
         <joint name="rh_WRJ1" />
+        <joint name="rh_FFJ4" />
+        <joint name="rh_FFJ3" />
+        <joint name="rh_FFJ2" />
+        <joint name="rh_FFJ1" />
+        <joint name="rh_FFtip" />
+        <joint name="rh_LFJ5" />
+        <joint name="rh_LFJ4" />
+        <joint name="rh_LFJ3" />
+        <joint name="rh_LFJ2" />
+        <joint name="rh_LFJ1" />
+        <joint name="rh_LFtip" />
+        <joint name="rh_MFJ4" />
+        <joint name="rh_MFJ3" />
+        <joint name="rh_MFJ2" />
+        <joint name="rh_MFJ1" />
+        <joint name="rh_MFtip" />
+        <joint name="rh_RFJ4" />
+        <joint name="rh_RFJ3" />
+        <joint name="rh_RFJ2" />
+        <joint name="rh_RFJ1" />
+        <joint name="rh_RFtip" />
+        <joint name="rh_THJ5" />
+        <joint name="rh_THJ4" />
+        <joint name="rh_THJ3" />
+        <joint name="rh_THJ2" />
+        <joint name="rh_THJ1" />
+        <joint name="rh_thtip" />
+    </group>
+
+    <group name="left_first_finger">
+        <chain base_link="lh_palm" tip_link="lh_fftip" />
+    </group>
+    <group name="left_middle_finger">
+        <chain base_link="lh_palm" tip_link="lh_mftip" />
+    </group>
+    <group name="left_ring_finger">
+        <chain base_link="lh_palm" tip_link="lh_rftip" />
+    </group>
+    <group name="left_little_finger">
+        <chain base_link="lh_palm" tip_link="lh_lftip" />
+    </group>
+    <group name="left_thumb">
+        <chain base_link="lh_palm" tip_link="lh_thtip" />
+    </group>
+    <group name="left_fingers">
+        <group name="left_first_finger" />
+        <group name="left_middle_finger" />
+        <group name="left_ring_finger" />
+        <group name="left_little_finger" />
+        <group name="left_thumb" />
+    </group>
+    <group name="left_hand">
+        <link name="lh_forearm" />
+        <link name="lh_wrist" />
+        <link name="lh_palm" />
+        <joint name="lh_WRJ2" />
+        <joint name="lh_WRJ1" />
+        <joint name="lh_FFJ4" />
+        <joint name="lh_FFJ3" />
+        <joint name="lh_FFJ2" />
+        <joint name="lh_FFJ1" />
+        <joint name="lh_FFtip" />
+        <joint name="lh_LFJ5" />
+        <joint name="lh_LFJ4" />
+        <joint name="lh_LFJ3" />
+        <joint name="lh_LFJ2" />
+        <joint name="lh_LFJ1" />
+        <joint name="lh_LFtip" />
+        <joint name="lh_MFJ4" />
+        <joint name="lh_MFJ3" />
+        <joint name="lh_MFJ2" />
+        <joint name="lh_MFJ1" />
+        <joint name="lh_MFtip" />
+        <joint name="lh_RFJ4" />
+        <joint name="lh_RFJ3" />
+        <joint name="lh_RFJ2" />
+        <joint name="lh_RFJ1" />
+        <joint name="lh_RFtip" />
+        <joint name="lh_THJ5" />
+        <joint name="lh_THJ4" />
+        <joint name="lh_THJ3" />
+        <joint name="lh_THJ2" />
+        <joint name="lh_THJ1" />
+        <joint name="lh_thtip" />
+    </group>
+    <group name="both_hands">
+        <group name="left_hand" />
+        <group name="right_hand" />
+    </group>
+
+    <group name="right_arm">
+        <chain base_link="ra_arm_base_link" tip_link="rh_tool_frame" />
+    </group>
+    <group name="left_arm">
+        <chain base_link="la_arm_base_link" tip_link="lh_tool_frame" />
+    </group>
+    <group name="both_arms">
+        <group name="left_arm" />
+        <group name="right_arm" />
+    </group>
+
+    <group name="right_arm_palm">
         <chain base_link="ra_arm_base_link" tip_link="rh_palm" />
     </group>
+    <group name="left_arm_palm">
+        <chain base_link="la_arm_base_link" tip_link="lh_palm" />
+    </group>
+    <group name="both_arms_palm">
+        <group name="left_arm_palm" />
+        <group name="right_arm_palm" />
+    </group>
+
+    <group name="right_arm_hand">
+        <group name="right_arm_palm" />
+        <group name="right_fingers" />
+    </group>
+    <group name="left_arm_hand">
+        <group name="left_arm_palm" />
+        <group name="left_fingers" />
+    </group>
+    <group name="both_arms_hand">
+        <group name="left_arm_hand" />
+        <group name="right_arm_hand" />
+    </group>
+
     <group name="flobi">
         <joint name="flobi_base_joint" />
         <joint name="flobi_NECK_PAN" />
@@ -51,242 +173,17 @@
         <joint name="flobi_EYES_RIGHT_LR" />
         <joint name="flobi_EYES_RIGHT_UD_VIRTUAL" />
     </group>
-    <group name="left_hand">
-        <joint name="lh_WRJ2" />
-        <joint name="lh_WRJ1" />
-        <joint name="lh_FFJ4" />
-        <joint name="lh_FFJ3" />
-        <joint name="lh_FFJ2" />
-        <joint name="lh_FFJ1" />
-        <joint name="lh_FFtip" />
-        <joint name="lh_LFJ5" />
-        <joint name="lh_LFJ4" />
-        <joint name="lh_LFJ3" />
-        <joint name="lh_LFJ2" />
-        <joint name="lh_LFJ1" />
-        <joint name="lh_LFtip" />
-        <joint name="lh_MFJ4" />
-        <joint name="lh_MFJ3" />
-        <joint name="lh_MFJ2" />
-        <joint name="lh_MFJ1" />
-        <joint name="lh_MFtip" />
-        <joint name="lh_RFJ4" />
-        <joint name="lh_RFJ3" />
-        <joint name="lh_RFJ2" />
-        <joint name="lh_RFJ1" />
-        <joint name="lh_RFtip" />
-        <joint name="lh_THJ5" />
-        <joint name="lh_THJ4" />
-        <joint name="lh_THJ3" />
-        <joint name="lh_THJ2" />
-        <joint name="lh_THJ1" />
-        <joint name="lh_thtip" />
-        <group name="left_fingers" />
-    </group>
-    <group name="right_hand">
-        <joint name="rh_WRJ2" />
-        <joint name="rh_WRJ1" />
-        <joint name="rh_FFJ4" />
-        <joint name="rh_FFJ3" />
-        <joint name="rh_FFJ2" />
-        <joint name="rh_FFJ1" />
-        <joint name="rh_FFtip" />
-        <joint name="rh_LFJ5" />
-        <joint name="rh_LFJ4" />
-        <joint name="rh_LFJ3" />
-        <joint name="rh_LFJ2" />
-        <joint name="rh_LFJ1" />
-        <joint name="rh_LFtip" />
-        <joint name="rh_MFJ4" />
-        <joint name="rh_MFJ3" />
-        <joint name="rh_MFJ2" />
-        <joint name="rh_MFJ1" />
-        <joint name="rh_MFtip" />
-        <joint name="rh_RFJ4" />
-        <joint name="rh_RFJ3" />
-        <joint name="rh_RFJ2" />
-        <joint name="rh_RFJ1" />
-        <joint name="rh_RFtip" />
-        <joint name="rh_THJ5" />
-        <joint name="rh_THJ4" />
-        <joint name="rh_THJ3" />
-        <joint name="rh_THJ2" />
-        <joint name="rh_THJ1" />
-        <joint name="rh_thtip" />
-        <group name="right_fingers" />
-    </group>
-    <group name="left_fingers">
-        <joint name="lh_FFJ4" />
-        <joint name="lh_FFJ3" />
-        <joint name="lh_FFJ2" />
-        <joint name="lh_FFJ1" />
-        <joint name="lh_FFtip" />
-        <joint name="lh_LFJ5" />
-        <joint name="lh_LFJ4" />
-        <joint name="lh_LFJ3" />
-        <joint name="lh_LFJ2" />
-        <joint name="lh_LFJ1" />
-        <joint name="lh_LFtip" />
-        <joint name="lh_MFJ4" />
-        <joint name="lh_MFJ3" />
-        <joint name="lh_MFJ2" />
-        <joint name="lh_MFJ1" />
-        <joint name="lh_MFtip" />
-        <joint name="lh_RFJ4" />
-        <joint name="lh_RFJ3" />
-        <joint name="lh_RFJ2" />
-        <joint name="lh_RFJ1" />
-        <joint name="lh_RFtip" />
-        <joint name="lh_THJ5" />
-        <joint name="lh_THJ4" />
-        <joint name="lh_THJ3" />
-        <joint name="lh_THJ2" />
-        <joint name="lh_THJ1" />
-        <joint name="lh_thtip" />
-        <group name="left_first_finger" />
-        <group name="left_middle_finger" />
-        <group name="left_ring_finger" />
-        <group name="left_little_finger" />
-        <group name="left_thumb" />
-    </group>
-    <group name="right_fingers">
-        <joint name="rh_FFJ4" />
-        <joint name="rh_FFJ3" />
-        <joint name="rh_FFJ2" />
-        <joint name="rh_FFJ1" />
-        <joint name="rh_FFtip" />
-        <joint name="rh_LFJ5" />
-        <joint name="rh_LFJ4" />
-        <joint name="rh_LFJ3" />
-        <joint name="rh_LFJ2" />
-        <joint name="rh_LFJ1" />
-        <joint name="rh_LFtip" />
-        <joint name="rh_MFJ4" />
-        <joint name="rh_MFJ3" />
-        <joint name="rh_MFJ2" />
-        <joint name="rh_MFJ1" />
-        <joint name="rh_MFtip" />
-        <joint name="rh_RFJ4" />
-        <joint name="rh_RFJ3" />
-        <joint name="rh_RFJ2" />
-        <joint name="rh_RFJ1" />
-        <joint name="rh_RFtip" />
-        <joint name="rh_THJ5" />
-        <joint name="rh_THJ4" />
-        <joint name="rh_THJ3" />
-        <joint name="rh_THJ2" />
-        <joint name="rh_THJ1" />
-        <joint name="rh_thtip" />
-        <group name="right_first_finger" />
-        <group name="right_middle_finger" />
-        <group name="right_ring_finger" />
-        <group name="right_little_finger" />
-        <group name="right_thumb" />
-    </group>
-    <group name="upper_body">
-        <group name="left_arm" />
-        <group name="left_armhand" />
-        <group name="left_hand" />
-        <group name="right_arm" />
-        <group name="right_armhand" />
-        <group name="right_hand" />
-    </group>
-    <group name="right_first_finger">
-        <joint name="rh_FFJ4" />
-        <joint name="rh_FFJ3" />
-        <joint name="rh_FFJ2" />
-        <joint name="rh_FFJ1" />
-        <joint name="rh_FFtip" />
-        <chain base_link="rh_palm" tip_link="rh_fftip" />
-    </group>
-    <group name="right_middle_finger">
-        <joint name="rh_MFJ4" />
-        <joint name="rh_MFJ3" />
-        <joint name="rh_MFJ2" />
-        <joint name="rh_MFJ1" />
-        <joint name="rh_MFtip" />
-        <chain base_link="rh_palm" tip_link="rh_mftip" />
-    </group>
-    <group name="right_ring_finger">
-        <joint name="rh_RFJ4" />
-        <joint name="rh_RFJ3" />
-        <joint name="rh_RFJ2" />
-        <joint name="rh_RFJ1" />
-        <joint name="rh_RFtip" />
-        <chain base_link="rh_palm" tip_link="rh_rftip" />
-    </group>
-    <group name="right_little_finger">
-        <chain base_link="rh_palm" tip_link="rh_lftip" />
-    </group>
-    <group name="right_thumb">
-        <chain base_link="rh_palm" tip_link="rh_thtip" />
-    </group>
-    <group name="left_first_finger">
-        <joint name="lh_FFJ4" />
-        <joint name="lh_FFJ3" />
-        <joint name="lh_FFJ2" />
-        <joint name="lh_FFJ1" />
-        <joint name="lh_FFtip" />
-        <chain base_link="lh_palm" tip_link="lh_fftip" />
-    </group>
-    <group name="left_middle_finger">
-        <joint name="lh_MFJ4" />
-        <joint name="lh_MFJ3" />
-        <joint name="lh_MFJ2" />
-        <joint name="lh_MFJ1" />
-        <joint name="lh_MFtip" />
-        <chain base_link="lh_palm" tip_link="lh_mftip" />
-    </group>
-    <group name="left_ring_finger">
-        <joint name="lh_RFJ4" />
-        <joint name="lh_RFJ3" />
-        <joint name="lh_RFJ2" />
-        <joint name="lh_RFJ1" />
-        <joint name="lh_RFtip" />
-        <chain base_link="lh_palm" tip_link="lh_rftip" />
-    </group>
-    <group name="left_little_finger">
-        <joint name="lh_LFJ5" />
-        <joint name="lh_LFJ4" />
-        <joint name="lh_LFJ3" />
-        <joint name="lh_LFJ2" />
-        <joint name="lh_LFJ1" />
-        <joint name="lh_LFtip" />
-        <chain base_link="lh_palm" tip_link="lh_lftip" />
-    </group>
-    <group name="left_thumb">
-        <joint name="lh_THJ5" />
-        <joint name="lh_THJ4" />
-        <joint name="lh_THJ3" />
-        <joint name="lh_THJ2" />
-        <joint name="lh_THJ1" />
-        <joint name="lh_thtip" />
-        <chain base_link="lh_palm" tip_link="lh_thtip" />
-    </group>
-    <group name="left_arm">
-        <chain base_link="la_arm_base_link" tip_link="lh_tool_frame" />
-    </group>
-    <group name="right_arm">
-        <chain base_link="ra_arm_base_link" tip_link="rh_tool_frame" />
-    </group>
     <group name="flobi_eyes">
         <link name="flobi_EYES_LEFT_LR_LINK" />
         <link name="flobi_EYES_LEFT_UD_VIRTUAL_LINK" />
         <link name="flobi_EYES_RIGHT_LR_LINK" />
         <link name="flobi_EYES_RIGHT_UD_VIRTUAL_LINK" />
     </group>
-    <group name="both_hands">
-        <group name="left_hand" />
-        <group name="right_hand" />
+
+    <group name="upper_body">
+        <group name="both_arms_hand" />
     </group>
-    <group name="both_armhand">
-        <group name="left_armhand" />
-        <group name="right_armhand" />
-    </group>
-    <group name="both_arms">
-        <group name="left_arm" />
-        <group name="right_arm" />
-    </group>
+
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="upperbody_parked" group="upper_body">
         <joint name="lh_FFJ1" value="0" />
@@ -434,7 +331,7 @@
         <joint name="ra_arm_5_joint" value="0.9487" />
         <joint name="ra_arm_6_joint" value="-0.0329" />
     </group_state>
-    <group_state name="home" group="left_armhand">
+    <group_state name="home" group="left_arm_palm">
         <joint name="lh_WRJ1" value="0" />
         <joint name="lh_WRJ2" value="0" />
         <joint name="la_arm_0_joint" value="0.0659" />
@@ -445,7 +342,7 @@
         <joint name="la_arm_5_joint" value="0.8099" />
         <joint name="la_arm_6_joint" value="0.3953" />
     </group_state>
-    <group_state name="home" group="right_armhand">
+    <group_state name="home" group="right_arm_palm">
         <joint name="rh_WRJ1" value="0" />
         <joint name="rh_WRJ2" value="0" />
         <joint name="ra_arm_0_joint" value="-0.0659" />
@@ -747,24 +644,28 @@
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="ra_tool_mount" parent_link="ra_tool_mount" group="right_hand" parent_group="right_arm" />
     <end_effector name="rh_tool_frame" parent_link="rh_tool_frame" group="right_hand" parent_group="right_arm" />
+    <end_effector name="rh_palm" parent_link="rh_palm" group="right_fingers" parent_group="right_arm_palm" />
+    <end_effector name="right_hand" parent_link="ra_arm_7_link" group="right_hand" parent_group="right_arm" />
+
     <end_effector name="la_tool_mount" parent_link="la_tool_mount" group="left_hand" parent_group="left_arm" />
     <end_effector name="lh_tool_frame" parent_link="lh_tool_frame" group="left_hand" parent_group="left_arm" />
+    <end_effector name="lh_palm" parent_link="lh_palm" group="left_fingers" parent_group="left_arm_palm" />
     <end_effector name="left_hand" parent_link="la_arm_7_link" group="left_hand" parent_group="left_arm" />
-    <end_effector name="right_hand" parent_link="ra_arm_7_link" group="right_hand" parent_group="right_arm" />
-    <end_effector name="left_palm" parent_link="lh_palm" group="left_fingers" parent_group="left_armhand" />
-    <end_effector name="right_palm" parent_link="rh_palm" group="right_fingers" parent_group="right_armhand" />
-    <end_effector name="left_hand_first_finger" parent_link="lh_fftip" group="left_first_finger" parent_group="left_hand" />
-    <end_effector name="right_hand_first_finger" parent_link="rh_fftip" group="right_first_finger" parent_group="right_hand" />
-    <end_effector name="left_hand_middle_finger" parent_link="lh_mftip" group="left_middle_finger" parent_group="left_hand" />
-    <end_effector name="left_hand_ring_finger" parent_link="lh_rftip" group="left_ring_finger" parent_group="left_hand" />
-    <end_effector name="left_hand_little_finger" parent_link="lh_lftip" group="left_little_finger" parent_group="left_hand" />
-    <end_effector name="left_hand_thumb" parent_link="lh_thtip" group="left_thumb" parent_group="left_hand" />
-    <end_effector name="right_hand_middle_finger" parent_link="rh_mftip" group="right_middle_finger" parent_group="right_hand" />
-    <end_effector name="right_hand_ring_finger" parent_link="rh_rftip" group="right_ring_finger" parent_group="right_hand" />
-    <end_effector name="right_hand_little_finger" parent_link="rh_lftip" group="right_little_finger" parent_group="right_hand" />
-    <end_effector name="right_hand_thumb" parent_link="rh_thtip" group="right_thumb" parent_group="right_hand" />
+
+    <end_effector name="left_hand_first_finger" parent_link="lh_fftip" group="left_first_finger" parent_group="left_fingers" />
+    <end_effector name="left_hand_middle_finger" parent_link="lh_mftip" group="left_middle_finger" parent_group="left_fingers" />
+    <end_effector name="left_hand_ring_finger" parent_link="lh_rftip" group="left_ring_finger" parent_group="left_fingers" />
+    <end_effector name="left_hand_little_finger" parent_link="lh_lftip" group="left_little_finger" parent_group="left_fingers" />
+    <end_effector name="left_hand_thumb" parent_link="lh_thtip" group="left_thumb" parent_group="left_fingers" />
+    
+    <end_effector name="right_hand_first_finger" parent_link="rh_fftip" group="right_first_finger" parent_group="right_fingers" />
+    <end_effector name="right_hand_middle_finger" parent_link="rh_mftip" group="right_middle_finger" parent_group="right_fingers" />
+    <end_effector name="right_hand_ring_finger" parent_link="rh_rftip" group="right_ring_finger" parent_group="right_fingers" />
+    <end_effector name="right_hand_little_finger" parent_link="rh_lftip" group="right_little_finger" parent_group="right_fingers" />
+    <end_effector name="right_hand_thumb" parent_link="rh_thtip" group="right_thumb" parent_group="right_fingers" />
+
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
-    <virtualh_joint name="bimanual_frame" type="fixed" parent_frame="world" child_link="frame" />
+
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="flobi_EYES_LEFT_LR_LINK" link2="flobi_EYES_RIGHT_LR_LINK" reason="Never" />
     <disable_collisions link1="flobi_EYES_LEFT_LR_LINK" link2="flobi_NECK_ROLL_LINK" reason="Adjacent" />

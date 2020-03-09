@@ -1,5 +1,14 @@
 controller_list:
-  - name: fake_left_armhand_controller
+  - name: fake_right_arm_controller
+    joints:
+      - ra_arm_0_joint
+      - ra_arm_1_joint
+      - ra_arm_2_joint
+      - ra_arm_3_joint
+      - ra_arm_4_joint
+      - ra_arm_5_joint
+      - ra_arm_6_joint
+  - name: fake_left_arm_controller
     joints:
       - la_arm_0_joint
       - la_arm_1_joint
@@ -8,9 +17,7 @@ controller_list:
       - la_arm_4_joint
       - la_arm_5_joint
       - la_arm_6_joint
-      - lh_WRJ2
-      - lh_WRJ1
-  - name: fake_right_armhand_controller
+  - name: fake_right_armpalm_controller
     joints:
       - ra_arm_0_joint
       - ra_arm_1_joint
@@ -21,6 +28,17 @@ controller_list:
       - ra_arm_6_joint
       - rh_WRJ2
       - rh_WRJ1
+  - name: fake_left_armpalm_controller
+    joints:
+      - la_arm_0_joint
+      - la_arm_1_joint
+      - la_arm_2_joint
+      - la_arm_3_joint
+      - la_arm_4_joint
+      - la_arm_5_joint
+      - la_arm_6_joint
+      - lh_WRJ2
+      - lh_WRJ1
   - name: fake_floka_controller
     joints:
       - floka_neck_pan_joint
@@ -194,6 +212,72 @@ controller_list:
       - rh_THJ3
       - rh_THJ2
       - rh_THJ1
+  - name: fake_left_armhand_controller
+    joints:
+      - la_S1
+      - la_S2
+      - la_S3
+      - la_E1
+      - la_E2
+      - la_W1
+      - la_W2
+      - lh_WRJ2
+      - lh_WRJ1
+      - lh_FFJ4
+      - lh_FFJ3
+      - lh_FFJ2
+      - lh_FFJ1
+      - lh_LFJ5
+      - lh_LFJ4
+      - lh_LFJ3
+      - lh_LFJ2
+      - lh_LFJ1
+      - lh_MFJ4
+      - lh_MFJ3
+      - lh_MFJ2
+      - lh_MFJ1
+      - lh_RFJ4
+      - lh_RFJ3
+      - lh_RFJ2
+      - lh_RFJ1
+      - lh_THJ5
+      - lh_THJ4
+      - lh_THJ3
+      - lh_THJ2
+      - lh_THJ1
+  - name: fake_right_armhand_controller
+    joints:
+      - ra_S1
+      - ra_S2
+      - ra_S3
+      - ra_E1
+      - ra_E2
+      - ra_W1
+      - ra_W2
+      - rh_WRJ2
+      - rh_WRJ1
+      - rh_FFJ4
+      - rh_FFJ3
+      - rh_FFJ2
+      - rh_FFJ1
+      - rh_LFJ5
+      - rh_LFJ4
+      - rh_LFJ3
+      - rh_LFJ2
+      - rh_LFJ1
+      - rh_MFJ4
+      - rh_MFJ3
+      - rh_MFJ2
+      - rh_MFJ1
+      - rh_RFJ4
+      - rh_RFJ3
+      - rh_RFJ2
+      - rh_RFJ1
+      - rh_THJ5
+      - rh_THJ4
+      - rh_THJ3
+      - rh_THJ2
+      - rh_THJ1
   - name: fake_right_first_finger_controller
     joints:
       - rh_FFJ4
@@ -258,24 +342,7 @@ controller_list:
       - lh_THJ3
       - lh_THJ2
       - lh_THJ1
-  - name: fake_la_arm_controller
-    joints:
-      - la_arm_0_joint
-      - la_arm_1_joint
-      - la_arm_2_joint
-      - la_arm_3_joint
-      - la_arm_4_joint
-      - la_arm_5_joint
-      - la_arm_6_joint
-  - name: fake_ra_arm_controller
-    joints:
-      - ra_arm_0_joint
-      - ra_arm_1_joint
-      - ra_arm_2_joint
-      - ra_arm_3_joint
-      - ra_arm_4_joint
-      - ra_arm_5_joint
-      - ra_arm_6_joint
+
   - name: fake_floka_eyes_controller
     joints:
       - floka_eyes_left_lr_joint
@@ -370,5 +437,9 @@ controller_list:
       - ra_arm_6_joint
 
 initial:
+  - group: left_arm
+    pose: home
+  - group: right_arm
+    pose: home
   - group: upper_body
     pose: upperbody_home
