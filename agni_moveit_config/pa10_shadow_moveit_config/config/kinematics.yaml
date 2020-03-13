@@ -4,9 +4,7 @@ right_first_finger: &FINGER_DEFAULT
   kinematics_solver_timeout: 0.005
   kinematics_solver_attempts: 1
   epsilon: 0.001
-  tolerance/rotx: 0.1
-  tolerance/roty: 0.1
-  tolerance/rotz: 0.1
+  orientation_vs_position: 0.1
 
 right_middle_finger: *FINGER_DEFAULT
 right_ring_finger: *FINGER_DEFAULT
@@ -25,9 +23,7 @@ left_arm: &ARM_DEFAULT
   kinematics_solver_timeout: 0.005
   kinematics_solver_attempts: 3
   epsilon: 0.001
-  tolerance/rotx: 0.1
-  tolerance/roty: 0.1
-  tolerance/rotz: 0.1
+  orientation_vs_position: 0.1
 
 right_arm: *ARM_DEFAULT
 left_arm_palm: *ARM_DEFAULT
