@@ -117,6 +117,7 @@ function configureHook()
     register_port(out_portmap, 'CURJNTPOS', bridgename..".JointPosition")
     register_port(out_portmap, 'CURJNTVEL', bridgename..".JointVelocity")
     register_port(out_portmap, 'CURJNTEFF', bridgename..".JointEffort")
+    register_port(out_portmap, 'CURJNT', bridgename..".CurrentJoint")
 
     -- store the mapping in the properties
     storeMapping("in_portmap",in_portmap)
