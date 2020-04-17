@@ -67,8 +67,26 @@
     <xacro:property name="tool_parent" value="${parent}"/>
 
     <xacro:if value="${arm_type not in ['','-']}">
-      <!-- load arm calibration and instantiate arm -->
-      <xacro:include filename="../calibration/$(arg CALIB)/${arm_type}_cal.xml"/>
+      <!-- load arm calibration --> 
+      <xacro:if value="${('cal_file' in settings['arms'][arm_type])}">
+        <!-- auto = use tool name for calib_file -->
+        <xacro:if value="${('auto' in settings['arms'][arm_type]['cal_file'])}">      
+          <!-- in the future, test if exist and have a fallback to default -->
+          <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/${arm_type}_cal.xml"/>
+        </xacro:if>
+        <xacro:unless value="${('auto' in settings['arms'][arm_type]['cal_file'])}">
+          <!-- in the future, test if exist and have a fallback to default -->
+          <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/${settings['arms'][arm_type]['cal_file']}"/>
+        </xacro:unless>
+      </xacro:if>
+      <!-- no cal_file given use origin -->
+      <xacro:unless value="${('cal_file' in settings['arms'][arm_type])}">
+        <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/origin.xml"/>
+      </xacro:unless>
+      
+      <xacro:include filename="${arm_cal_filename}"/>
+      
+      <!-- instantiate arm -->
       <xacro:arm type="${arm_type}" prefix="${arm_prefix}" controller="$(arg SIM)">
         <origin xyz="${cal_x} ${cal_y} ${cal_z}"
                 rpy="${cal_roll} ${cal_pitch} ${cal_yaw}"/>
@@ -83,8 +101,26 @@
     </xacro:unless>
 
     <xacro:if value="${tool_type not in ['','-']}">
-      <!-- load tool calibration and instantiate tool -->
-      <xacro:include filename="../calibration/$(arg CALIB)/${tool_type}_cal.xml"/>
+      <!-- load tool calibration -->
+      <xacro:if value="${('cal_file' in settings['tools'][tool_type])}">
+        <!-- auto = use tool name for calib_file -->
+        <xacro:if value="${('auto' in settings['tools'][tool_type]['cal_file'])}">      
+          <!-- in the future, test if exist and have a fallback to default -->
+          <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/${tool_type}_cal.xml"/>
+        </xacro:if>
+        <xacro:unless value="${('auto' in settings['tools'][tool_type]['cal_file'])}">
+          <!-- in the future, test if exist and have a fallback to default -->
+          <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/${settings['tools'][tool_type]['cal_file']}"/>
+        </xacro:unless>
+      </xacro:if>
+      <!-- no cal_file given use origin -->
+      <xacro:unless value="${('cal_file' in settings['tools'][tool_type])}">
+        <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/origin.xml"/>
+      </xacro:unless>
+
+      <xacro:include filename="${tool_cal_filename}"/>
+
+      <!-- instantiate tool -->
       <xacro:tool type="${tool_type}" prefix="${tool_prefix}" parent="${tool_parent}">
         <origin xyz="${cal_x} ${cal_y} ${cal_z}"
                 rpy="${cal_roll} ${cal_pitch} ${cal_yaw}"/>
