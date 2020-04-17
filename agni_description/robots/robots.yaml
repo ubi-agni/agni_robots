@@ -54,7 +54,10 @@ tools:
     mount: forearm
     props:
       model:   motor
-      tactile: ubi
+      palm_sensor: ubi_fabric
+      tip_sensor: ubi
+      prox_sensor: ubi
+      mid_sensor: ubi
       side:    left
       mass:  3.8
       cog: "0.0 0.0 0.17"
@@ -66,9 +69,11 @@ tools:
     mount: ft_sensor_link
     props:
       model:   motor
-      tactile: ubi
+      palm_sensor: ubi_fabric
+      tip_sensor: ubi
+      prox_sensor: ubi
+      mid_sensor: ubi
       side:    left
-      #lf: false
       ati_adapter_thickness: 0.0094
       mass:  4.055
       cog: "0.0 0.0 0.20"
@@ -80,9 +85,11 @@ tools:
     mount: ft_sensor_link
     props:
       model:   motor
-      tactile: ubi
+      palm_sensor: ubi_fabric
+      tip_sensor: ubi
+      prox_sensor: ubi
+      mid_sensor: ubi
       side:    left
-      #lf: false
       ati_adapter_thickness: 0.0253  # 9.4 + 15.9mm for FCS
       mass:  4.055
       cog: "0.0 0.0 0.20"
@@ -94,12 +101,29 @@ tools:
     mount: forearm
     props:
       model:   motor
-      tactile: ubi
+      palm_sensor: ubi_fabric
+      tip_sensor: ubi
+      prox_sensor: ubi
+      mid_sensor: ubi
       side:    right
-      #lf: false
       mass:  3.8
       cog: "0.0 0.0 0.17"
-      
+
+  shadow_motor_right_tip_only:
+    file: ../robots/shadow_hand.urdf.xacro
+    cal_file: shadow_motor_right_cal.xml
+    macro: shadow_hand
+    mount: forearm
+    props:
+      model:   motor
+      palm_sensor: none
+      tip_sensor: ubi
+      prox_sensor: none
+      mid_sensor: none
+      side:    right
+      mass:  3.8
+      cog: "0.0 0.0 0.17"
+
   shadow_motor_right_ati:
     file: ../robots/shadow_hand_ati.urdf.xacro
     cal_file: shadow_motor_right_cal.xml
@@ -107,9 +131,11 @@ tools:
     mount: ft_sensor_link
     props:
       model:   motor
-      tactile: ubi
+      palm_sensor: ubi_fabric
+      tip_sensor: ubi
+      prox_sensor: ubi
+      mid_sensor: ubi
       side:    right
-      #lf: false
       ati_adapter_thickness: 0.0094
       mass:  4.055
       cog: "0.0 0.0 0.20"
@@ -121,7 +147,10 @@ tools:
     mount: forearm
     props:
       model:   muscle
-      tactile: pst
+      palm_sensor: none
+      tip_sensor: pst
+      prox_sensor: none
+      mid_sensor: none
       side:    left
 
   shadow_muscle_right:
@@ -131,7 +160,10 @@ tools:
     mount: forearm
     props:
       model:   muscle
-      tactile: shadow
+      palm_sensor: none
+      tip_sensor: shadow
+      prox_sensor: none
+      mid_sensor: none
       side:    right
 
   schunk_hand_right:
@@ -151,7 +183,7 @@ tools:
     props:
       mass:  1.95
       cog: "0.0 0.0 0.0813"
-      
+
   schunk_hand_left_ati:
     file: ../robots/schunk_hand_ati.urdf.xacro
     cal_file: schunk_hand_cal.xml
@@ -202,16 +234,16 @@ tools:
     macro: poking_stick
     mount: poking_stick
     props:
-      tactile: ubi
+      tip_sensor: ubi
       mass:  0.505
       cog: "0.0 0.0 0.0161" # from bottom of poking stick = mount flange
-  
+
   poking_stick_ubi_ati:
     file: ../robots/poking_stick_ati.urdf.xacro
     macro: poking_stick
     mount: ft_sensor_link
     props:
-      tactile: ubi
+      tip_sensor: ubi
       mass:  0.760
       ati_adapter_thickness: 0.008
       cog: "0.0 0.0 0.0412" # from bottom of ati = mount flange
@@ -224,16 +256,16 @@ tools:
       mass:  0.427
       cog: "0.0 0.0 0.0124" #from bottom of poking stick = kuka flange
       tactile: ""
-      
+
   poking_stick_rigid_ati:
     file: ../robots/poking_stick_ati.urdf.xacro
     macro: poking_stick
     mount: ft_sensor_link
     props:
-      tactile: ""
+      tip_sensor: ""
       mass:  0.682
       cog: "0.0 0.0 0.0374" # from bottom of ati = mount flange
-      
+
   calibration_tool:
     file: ../robots/calibration_tool.urdf.xacro
     cal_file: auto

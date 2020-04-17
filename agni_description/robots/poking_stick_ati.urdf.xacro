@@ -10,10 +10,10 @@
 
     <!-- poking stick -->
     <xacro:include filename="../models/poking_stick.urdf.xacro" />
-    <xacro:poking_stick_generic prefix="${prefix_}" tactile="${props['tactile']}"/>
+    <xacro:poking_stick_generic prefix="${prefix_}" tip_sensor="${props['tip_sensor']}"/>
 
-    <xacro:if value="${props['tactile'] in ['bio', 'ubi', 'eli']}">
-      <xacro:include filename="$(find sr_description)/hand/xacro/tactile.${props['tactile']}.xacro" />
+    <xacro:if value="${props['tip_sensor'] in ['bio', 'ubi', 'eli']}">
+      <xacro:include filename="$(find sr_description)/hand/xacro/tactile.${props['tip_sensor']}.xacro" />
       <!-- tactile marker mapping description -->
 
       <xacro:property name="prefix" value="${prefix_}"/>

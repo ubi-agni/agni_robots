@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <robot name="poking_stick" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="poking_stick_generic" params="prefix tactile">
+  <xacro:macro name="poking_stick_generic" params="prefix tip_sensor">
   <link name="${prefix}poking_stick">
     
-    <xacro:if value="${'ubi' in tactile}">
+    <xacro:if value="${'ubi' in tip_sensor}">
       <inertial>
           <mass value="0.505" /> <!-- mass of metal + stick + ubi -->
           <origin xyz="0 0 0.0161" /> <!-- from bottom of poking stick = mount flange -->
@@ -12,7 +12,7 @@
        iyy="0.000651" iyz="0.0" izz="0.000896" />
       </inertial>
     </xacro:if>
-    <xacro:unless value="${'ubi' in tactile}">
+    <xacro:unless value="${'ubi' in tip_sensor}">
       <inertial>
           <mass value="0.427" /> <!-- mass of metal + stick -->
           <origin xyz="0 0 0.0124" /> <!-- from bottom of poking stick = mount flange -->
@@ -24,11 +24,11 @@
       <origin xyz="0 0 0" 
           rpy="0 0 0"/>
       <geometry>
-        <xacro:if value="${'ubi' in tactile}">
+        <xacro:if value="${'ubi' in tip_sensor}">
         <mesh scale="0.001 0.001 0.001" 
 					 filename="package://agni_description/models/meshes/poking_stick_for_ubi.dae"/>
         </xacro:if>
-        <xacro:unless value="${'ubi' in tactile}">
+        <xacro:unless value="${'ubi' in tip_sensor}">
         <mesh scale="0.001 0.001 0.001" 
 					 filename="package://agni_description/models/meshes/poking_stick.dae"/>
         </xacro:unless>
@@ -55,7 +55,7 @@
         <cylinder radius="0.025" length="0.01"/>
       </geometry>
     </collision>
-    <xacro:if value="${'ubi' in tactile}">
+    <xacro:if value="${'ubi' in tip_sensor}">
       <collision>
         <origin xyz="0 0 0.07375" 
             rpy="0 0 0"/>
@@ -64,7 +64,7 @@
         </geometry>
       </collision> 
     </xacro:if>
-    <xacro:unless value="${'ubi' in tactile}">
+    <xacro:unless value="${'ubi' in tip_sensor}">
       <collision>
         <origin xyz="0 0 0.08875" 
             rpy="0 0 0"/>
@@ -82,7 +82,7 @@
     </xacro:unless>
   </link>
   
-  <xacro:if value="${'ubi' in tactile}">
+  <xacro:if value="${'ubi' in tip_sensor}">
     <joint name="${prefix}stick_to_ubi" type="fixed">
       <origin xyz="0 0 0.13605" rpy="0 0 0"/>
       <parent link="${prefix}poking_stick"/>
