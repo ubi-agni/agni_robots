@@ -15,11 +15,10 @@
       <origin rpy="0 0 0" xyz="0.0 0.0 ${cable_fcs_adapter_thickness}"/>
     </joint>
     <link name="${prefix_}cable_adapter_frame" >
-      <inertial>
-        <mass value="${cable_fcs_adapter_mass}"/> <!-- estimated not measured -->
+      <!-- mass estimated not measured -->
+      <xacro:cylinder_inertial length="${cable_fcs_adapter_thickness}" radius="0.038" mass="${cable_fcs_adapter_mass}">
         <origin xyz="0 0 ${-cable_fcs_adapter_thickness/2.0}"/>
-        <xacro:cylinder_inertia_def length="${cable_fcs_adapter_thickness}" radius="0.038" mass="${cable_fcs_adapter_mass}"/>
-      </inertial>
+      </xacro:cylinder_inertial> 
       <visual>
         <origin xyz="0 0 ${-cable_fcs_adapter_thickness/2.0}" rpy="0 0 0"/>
         <geometry>
