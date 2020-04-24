@@ -31,7 +31,7 @@ arms:
 
   lwrL:
     file:  ../robots/kuka_arm.urdf.xacro
-    cal_file: kukaL
+    cal_file: kukaL_cal.xml
     macro: kuka_arm
     props:
       port: 49940
@@ -39,7 +39,7 @@ arms:
       auto_on: 0
   lwrR:
     file:  ../robots/kuka_arm.urdf.xacro
-    cal_file: kukaR
+    cal_file: kukaR_cal.xml
     macro: kuka_arm
     props:
       port: 49938
