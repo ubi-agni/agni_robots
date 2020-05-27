@@ -94,6 +94,21 @@ tools:
       mass:  4.055
       cog: "0.0 0.0 0.20"
 
+  shadow_motor_left_baro:
+    file: ../robots/shadow_hand.urdf.xacro
+    cal_file: shadow_motor_left_cal.xml
+    macro: shadow_hand
+    mount: forearm
+    props:
+      model:   motor
+      palm_sensor: ubi_baro
+      tip_sensor: ubi
+      prox_sensor: ubi
+      mid_sensor: ubi
+      side:    left
+      mass:  3.8
+      cog: "0.0 0.0 0.17"
+
   shadow_motor_right:
     file: ../robots/shadow_hand.urdf.xacro
     cal_file: shadow_motor_right_cal.xml
