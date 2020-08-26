@@ -1,0 +1,50 @@
+<launch>
+  <arg name="parent_frame" default="world"/>
+  <arg name="gui" default="false"/>
+  <arg name="jsp" default="false"/>
+  <arg name="rig_device" default="/dev/ttyACM0"/>  <!-- where the rig teensyboard is connected -->
+  <arg name="myrmex_device" default="/dev/video0"/> <!-- where the myrmex USB video is connected -->
+  <!-- generate myrmex description for rig -->
+  <param name="rig_description" command="xacro '$(find myrmex_description)/robots/myrmex_2d_rig.urdf.xacro'"/>
+
+  <group if="$(arg jsp)">
+    <!-- publish joint values -->
+    <node name="joint_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="use_gui" value="true"/>
+      <remap from="robot_description" to="rig_description" />
+    </node>
+  </group>
+  <group unless="$(arg jsp)">
+      <!-- start teensyboard driver that should publish joint values, -->
+      <include file="$(find agni_serial_protocol)/launch/sp_to_ros.launch">
+        <arg name="device" value="$(arg rig_device)"/>
+      </include>      
+  </group>
+  
+  <!-- publish transforms of myrmex links -->
+  <node name="myrmex_rig_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="10.0"/>
+    <remap from="robot_description" to="rig_description" />
+  </node>
+
+  <!-- link the rig end-effector to the hand of god frame -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="myrmex_to_hog_static" args="0 0 0 0 0 0  /rig_myrmex_quick_mount /rig_myrmex_quick_mount_desired"/>
+
+  <!-- link between rig frame and tactile_sensor sim frame (to display something in rviz) -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="myrmex_to_tactile_static" args="0 0 0.034 0 0 0  /rig_myrmex_quick_mount /myrmex_quick_mount"/>
+
+  <!-- real myrmex driver -->
+  <include file="$(find rtt_myrmex_driver)/launch/myrmex.launch">
+    <arg name="device" value="$(arg myrmex_device)"/>
+  </include>
+
+  <group if="$(arg gui)">
+    <!-- rviz with settings -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find myrmex_description)/launch/myrmex_2d_rig.rviz" output="screen" />
+    <!-- image view of raw myrmex -->
+    <node name="image_view" pkg="image_view" type="image_view" output="screen" >
+      <param name="" type="string" value="/myrmex/image"/>
+    </node>
+
+  </group>
+</launch>
