@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot name="myrmex_3x3_board" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find myrmex_description)/models/myrmex_quick_mount.urdf.xacro" />
+   
+  <xacro:arg name="pos_xyz" default="0 0 0"/>
+  <xacro:arg name="ori_rpy" default="0 0 0"/>
+  <xacro:property name="bar_thickness" value="0.02"/>
+  <xacro:property name="base_width" value="0.155"/>
+  <xacro:property name="base_depth" value="0.120"/>
+  <xacro:property name="arm_len" value="0.240"/>
+  <xacro:property name="arm_z_offset" value="0.032"/>
+  <xacro:property name="carriage_offset" value="0.034"/>
+  <xacro:property name="hand_len" value="0.085"/>
+  <xacro:property name="hand_z_offset" value="0.056"/>
+
+  <link name="world"/>
+
+  <joint name="rig_base_joint" type="fixed">
+      <parent link="world" />
+      <child link="rig_base" />
+      <origin xyz="$(arg pos_xyz)" rpy="$(arg ori_rpy)"/>
+  </joint>
+  <link name="rig_base">
+    <!-- front bar -->
+    <visual>
+      <origin xyz="0 ${-base_depth/2.0} ${bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_width} ${bar_thickness} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+    <!-- back bar -->
+    <visual>
+      <origin xyz="0 ${base_depth/2.0} ${bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_width} ${bar_thickness} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+    <!-- left bar -->
+    <visual>
+      <origin xyz="${-base_width/2.0} 0 ${bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${bar_thickness} ${base_depth} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+    <!-- right bar -->
+    <visual>
+      <origin xyz="${base_width/2.0} 0 ${bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${bar_thickness} ${base_depth} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- rig_carriage_joint -->
+  <joint name="pos_1" type="prismatic">
+      <axis xyz="1 0 0"/>
+      <parent link="rig_base" />
+      <child link="rig_carriage" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <limit effort="30" velocity="10.0" lower="0.004" upper="0.210" />
+  </joint>
+
+  <link name="rig_carriage">
+    <!-- side bar -->
+    <visual>
+      <origin xyz="${carriage_offset+base_width/2.0} 0 ${bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${bar_thickness} ${base_depth} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+    <!-- arm attachment bar -->
+    <visual>
+      <origin xyz="${carriage_offset+base_width/2.0} 0 ${arm_z_offset/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${bar_thickness} ${bar_thickness} ${arm_z_offset}"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- rig_arm_joint -->
+  <joint name="pos_2" type="revolute">
+      <axis xyz="0 1 0"/>
+      <parent link="rig_carriage" />
+      <child link="rig_arm" />
+      <origin xyz="${carriage_offset+base_width/2.0} 0 ${arm_z_offset}" rpy="0 0 0"/>
+      <limit effort="30" velocity="10.0" lower="0.0" upper="${pi}" />
+  </joint>
+
+  <link name="rig_arm">
+    <!-- arm bar -->
+    <visual>
+      <origin xyz="${-arm_len/2} 0 ${bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${arm_len} ${bar_thickness} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- rig_hand_joint -->
+  <joint name="pos_3" type="revolute">
+      <axis xyz="0 1 0"/>
+      <parent link="rig_arm" />
+      <child link="rig_hand" />
+      <origin xyz="${-arm_len} 0 0" rpy="0 0 0"/>
+      <limit effort="30" velocity="10.0" lower="${-pi/2.0}" upper="${pi/2.0}" />
+  </joint>
+
+  <link name="rig_hand">
+    <!-- arm bar -->
+    <visual>
+      <origin xyz="${-hand_len/2} 0 ${-bar_thickness/2.0}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${hand_len} ${bar_thickness} ${bar_thickness}"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rig_myrmex_joint" type="fixed">
+      <parent link="rig_hand" />
+      <child link="rig_myrmex_quick_mount" />
+      <origin xyz="${-hand_len} 0 ${-hand_z_offset+0.03034}" rpy="0 ${-pi} 0"/>
+  </joint>
+
+  <xacro:myrmex_quick_mount prefix="rig"/>
+
+  <xacro:myrmex_tactile_markers parent="rig_hand" prefix="rig" channel="myrmex">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:myrmex_tactile_markers>
+  
+</robot>

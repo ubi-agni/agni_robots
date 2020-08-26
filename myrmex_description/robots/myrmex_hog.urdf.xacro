@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot name="myrmex_3x3_board" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:include filename="$(find myrmex_description)/models/myrmex_quick_mount.urdf.xacro" />
+    <xacro:myrmex_quick_mount prefix=""/> 
+    <xacro:myrmex_tactile_markers parent="myrmex_quick_mount" prefix="" channel="myrmex">
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    </xacro:myrmex_tactile_markers>
+    <gazebo>
+      <plugin name="gazebo_hog" filename="libgazebo_ros_hand_of_god.so">
+        <alwaysOn>true</alwaysOn>
+        <robotNamespace></robotNamespace>
+        <linkName>myrmex_quick_mount</linkName>
+        <frameId>rig_myrmex_quick_mount</frameId>
+        <kl>20</kl>
+        <ka>20</ka>
+      </plugin>
+    </gazebo> 
+</robot>
