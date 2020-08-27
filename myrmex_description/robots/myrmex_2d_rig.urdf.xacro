@@ -1,3 +1,4 @@
+
 <?xml version="1.0"?>
 <robot name="myrmex_3x3_board" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="$(find myrmex_description)/models/myrmex_quick_mount.urdf.xacro" />
@@ -116,7 +117,7 @@
   <joint name="rig_myrmex_joint" type="fixed">
       <parent link="rig_hand" />
       <child link="rig_myrmex_quick_mount" />
-      <origin xyz="${-hand_len} 0 ${-hand_z_offset+0.03034}" rpy="0 ${-pi} 0"/>
+      <origin xyz="${-hand_len} 0 ${-hand_z_offset+0.03034}" rpy="0 ${-pi} ${pi/2.0}"/>
   </joint>
 
   <xacro:myrmex_quick_mount prefix="rig"/>

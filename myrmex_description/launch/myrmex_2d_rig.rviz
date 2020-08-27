@@ -158,7 +158,7 @@ Visualization Manager:
         range lambda: 0.9994999766349792
         release decay: 0.05000000074505806
       display timeout: 1
-      robot description: rig_description
+      robot description: robot_description
       sensors:
         Value: true
         rig_myrmex_sensor:
