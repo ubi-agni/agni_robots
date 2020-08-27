@@ -3,7 +3,7 @@
 	<arg name="prefix" default="r"/>
   <!-- load robot_description -->
   <group ns="$(arg namespace)" >
-    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro'  
+    <param name="robot_description" command="xacro --inorder '$(find agni_description)/robots/single.urdf.xacro'  
       PREFIX:=$(arg prefix) TOOL:=poking_stick_ubi" />
   </group>
 </launch>

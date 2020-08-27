@@ -6,6 +6,6 @@
   <arg name="prefix" default="prefix"/>
 
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
+  <param name="robot_description" command="xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
           PREFIX:=$(arg prefix) ARM:=$(arg arm_type) SIM:=$(arg sim) CALIB:=$(arg calib)" />
 </launch>

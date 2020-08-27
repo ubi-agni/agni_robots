@@ -5,11 +5,11 @@
 -->
 
   <!-- set various robot descriptions -->
-  <param name="frame" command="$(find xacro)/xacro.py '$(find agni_description)/robots/kuka_frame.urdf.xacro'" />
+  <param name="frame" command="xacro '$(find agni_description)/robots/kuka_frame.urdf.xacro'" />
 
   <group ns="right">
 	 <!-- load robot_description -->
-	 <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/kuka_right.urdf.xacro'" />
+	 <param name="robot_description" command="xacro '$(find agni_description)/robots/kuka_right.urdf.xacro'" />
 
 	 <!-- publish joint values, open gui if use_gui=True -->
 	 <node name="joint_publisher"
@@ -33,7 +33,7 @@
 
   <group ns="left">
 	 <!-- load robot_description -->
-	 <param name="robot_description" command="$(find xacro)/xacro.py '$(find agni_description)/robots/kuka_left.urdf.xacro'" />
+	 <param name="robot_description" command="xacro '$(find agni_description)/robots/kuka_left.urdf.xacro'" />
 
 	 <!-- publish joint values, open gui if use_gui=True -->
 	 <node name="joint_publisher"

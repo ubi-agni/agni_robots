@@ -2,6 +2,6 @@
   <arg name="prefix" default="r"/>
   <arg name="tool_type"/>
   <!-- load robot_description -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
+  <param name="robot_description" command="xacro --inorder '$(find agni_description)/robots/single.urdf.xacro' 
           PREFIX:=$(arg prefix) TOOL:=$(arg tool_type) SIM:=0 CALIB:=default PARENT:='-' " />
 </launch>
