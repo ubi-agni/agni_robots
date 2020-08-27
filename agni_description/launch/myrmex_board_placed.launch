@@ -8,7 +8,7 @@
   <!-- generate myrmex description  -->
   <group if="$(eval true if arg('namespace') else false)" >
     <group ns="$(arg namespace)">
-      <param name="robot_description" command="xacro --inorder '$(find myrmex_description)/robots/myrmex_board.urdf.xacro' ns:=$(arg namespace)
+      <param name="robot_description" command="xacro '$(find myrmex_description)/robots/myrmex_board.urdf.xacro' ns:=$(arg namespace)
                                                board_row_nb:=$(arg board_row_nb) board_col_nb:=$(arg board_col_nb) pos_xyz:='$(arg pos_xyz)' ori_rpy:='$(arg ori_rpy)'"/>
 
       <!-- spawn the camera model -->
@@ -31,7 +31,7 @@
   </group>
   
   <group unless="$(eval true if arg('namespace') else false)" >
-    <param name="robot_description" command="xacro --inorder '$(find myrmex_description)/robots/myrmex_board.urdf.xacro' 
+    <param name="robot_description" command="xacro '$(find myrmex_description)/robots/myrmex_board.urdf.xacro' 
                                                board_row_nb:=$(arg board_row_nb) board_col_nb:=$(arg board_col_nb) pos_xyz:='$(arg pos_xyz)' ori_rpy:='$(arg ori_rpy)'"/>
 
     <!-- spawn the camera model -->

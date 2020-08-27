@@ -8,7 +8,7 @@
        mounted on right and left arms respectively -->
 
   <!-- set robot description semantic for combined table + robot arm and end-effector  -->
-  <param name="robot_description_semantic" command="xacro --inorder '$(find agni_generic_moveit_config)/config/generic_bimanual_platform.srdf.xacro' 
+  <param name="robot_description_semantic" command="xacro '$(find agni_generic_moveit_config)/config/generic_bimanual_platform.srdf.xacro' 
               ARM_R:=$(arg ARM_R) ARM_L:=$(arg ARM_L) TOOL_R:=$(arg TOOL_R) TOOL_L:=$(arg TOOL_L)" />
 
 </launch>

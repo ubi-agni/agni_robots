@@ -3,7 +3,7 @@
   <arg name="parent_frame" default="world"/>
   <arg name="gui" default="false"/>
   <!-- generate myrmex description  -->
-  <param name="robot_description" command="xacro --inorder '$(find myrmex_description)/robots/myrmex_board.urdf.xacro'"/>
+  <param name="robot_description" command="xacro '$(find myrmex_description)/robots/myrmex_board.urdf.xacro'"/>
 
   <!-- spawn the camera model -->
   <node name="spawn_myrmexboard" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model myrmex_3x3_board" respawn="false" output="screen" />

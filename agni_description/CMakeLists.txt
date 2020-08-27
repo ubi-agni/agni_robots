@@ -13,68 +13,68 @@ catkin_package(
 )
 
 
-xacro_add_xacro_file(robots/sfb.urdf.xacro INORDER)
+xacro_add_xacro_file(robots/sfb.urdf.xacro)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 if(flobi_description_FOUND)
-  xacro_add_xacro_file(robots/famula.urdf.xacro INORDER)
+  xacro_add_xacro_file(robots/famula.urdf.xacro)
   list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-  xacro_add_xacro_file(robots/moveable_famula.urdf.xacro INORDER)
+  xacro_add_xacro_file(robots/moveable_famula.urdf.xacro)
   list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 endif()
 
 # sfb frame
-xacro_add_xacro_file(robots/single.urdf.xacro robots/sfb_frame.urdf INORDER REMAP FRAME:=sfb)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/sfb_frame.urdf REMAP FRAME:=sfb)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # famula frame
-xacro_add_xacro_file(robots/single.urdf.xacro robots/famula_frame.urdf INORDER REMAP FRAME:=famula)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/famula_frame.urdf REMAP FRAME:=famula)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_famula_frame.urdf INORDER REMAP FRAME:=moveable_famula)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_famula_frame.urdf REMAP FRAME:=moveable_famula)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right pa10
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10c PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10.urdf REMAP CALIB:=sfb ARM:=pa10c PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10.urdf REMAP CALIB:=sfb ARM:=pa10a PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/bimanual.urdf.xacro robots/pa10.urdf INORDER REMAP  FRAME:=sfb ARM_R:=pa10c ARM_L:=pa10a FLOBI:=0 TOOL_R:=- TOOL_L:=- SIM:=1)
+xacro_add_xacro_file(robots/bimanual.urdf.xacro robots/pa10.urdf REMAP  FRAME:=sfb ARM_R:=pa10c ARM_L:=pa10a FLOBI:=0 TOOL_R:=- TOOL_L:=- SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 # left right kuka
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaR PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka.urdf REMAP CALIB:=famula ARM:=kukaR PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf INORDER REMAP CALIB:=famula ARM:=kukaL PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka.urdf REMAP CALIB:=famula ARM:=kukaL PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})           
-xacro_add_xacro_file(robots/bimanual.urdf.xacro robots/kuka.urdf INORDER REMAP  FRAME:=famula ARM_R:=kukaR ARM_L:=kukaL FLOBI:=0 TOOL_R:=- TOOL_L:=- SIM:=1)
+xacro_add_xacro_file(robots/bimanual.urdf.xacro robots/kuka.urdf REMAP  FRAME:=famula ARM_R:=kukaR ARM_L:=kukaL FLOBI:=0 TOOL_R:=- TOOL_L:=- SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right lwr (no auto_on)
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_lwr.urdf INORDER REMAP CALIB:=famula ARM:=lwrR PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_lwr.urdf REMAP CALIB:=famula ARM:=lwrR PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_lwr.urdf INORDER REMAP CALIB:=famula ARM:=lwrL PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_lwr.urdf REMAP CALIB:=famula ARM:=lwrL PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right shadow motor hand
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_right PREFIX:=r PARENT:=-)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_shadow_hand_motor_ubi.urdf REMAP TOOL:=shadow_motor_right PREFIX:=r PARENT:=-)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_shadow_hand_motor_ubi.urdf INORDER REMAP TOOL:=shadow_motor_left PREFIX:=l PARENT:=-)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_shadow_hand_motor_ubi.urdf REMAP TOOL:=shadow_motor_left PREFIX:=l PARENT:=-)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right pa10 shadow_hand_motor_ubi
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=sfb ARM:=pa10c TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_pa10_shadow_hand_motor_ubi.urdf REMAP CALIB:=sfb ARM:=pa10c TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=sfb ARM:=pa10a TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_pa10_shadow_hand_motor_ubi.urdf REMAP CALIB:=sfb ARM:=pa10a TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right kuka shadow_hand_motor_ubi
-xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/right_kuka_shadow_hand_motor_ubi.urdf REMAP CALIB:=famula ARM:=kukaR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=famula ARM:=kukaL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/left_kuka_shadow_hand_motor_ubi.urdf REMAP CALIB:=famula ARM:=kukaL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 # left right kuka shadow_hand_motor_ubi moveable platform
-xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_right_lwr_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=lwrR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_right_lwr_shadow_hand_motor_ubi.urdf REMAP CALIB:=moveable_famula ARM:=lwrR TOOL:=shadow_motor_right PREFIX:=r SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
-xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_left_lwr_shadow_hand_motor_ubi.urdf INORDER REMAP CALIB:=moveable_famula ARM:=lwrL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
+xacro_add_xacro_file(robots/single.urdf.xacro robots/moveable_left_lwr_shadow_hand_motor_ubi.urdf REMAP CALIB:=moveable_famula ARM:=lwrL TOOL:=shadow_motor_left PREFIX:=l SIM:=1)
 list(APPEND xacro_outputs ${XACRO_OUTPUT_FILE})
 
 
@@ -121,6 +121,6 @@ foreach(arm - pa10a pa10c kukaL kukaR)
   foreach(tool - shadow_motor_left shadow_motor_right shadow_muscle_left shadow_muscle_right schunk_hand_right schunk_hand_left myrmex poking_stick_ubi poking_stick_rigid)
     add_test(
       NAME test-${arm}-${tool}
-      COMMAND ${CATKIN_ENV} ${_xacro_py} -o /dev/null --inorder ${CMAKE_CURRENT_SOURCE_DIR}/robots/single.urdf.xacro ARM:=${arm} TOOL:=${tool})
+      COMMAND ${CATKIN_ENV} ${_xacro_py} -o /dev/null ${CMAKE_CURRENT_SOURCE_DIR}/robots/single.urdf.xacro ARM:=${arm} TOOL:=${tool})
   endforeach()
 endforeach()
