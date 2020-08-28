@@ -1,4 +1,3 @@
-
 <?xml version="1.0"?>
 <robot name="myrmex_3x3_board" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="$(find myrmex_description)/models/myrmex_quick_mount.urdf.xacro" />
