@@ -167,6 +167,7 @@ function configureHook()
       d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
       d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
+      d:connect(filtername..".JointImpedance", friname..".JointImpedanceCommand", rtt.Variable("ConnPolicy"))
 
       -- ROS in out
       local ros=rtt.provides("ros")
@@ -177,6 +178,7 @@ function configureHook()
       d:stream(friname..".CartesianPositionStamped",ros:topic(namespace.."/cartesian_position_stamped"))
       d:stream(friname..".fromKRL",ros:topic(namespace.."/fromKRL"))
       d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
+      d:stream(filtername..".DesiredImpedance",ros:topic(namespace.."/filter_impedance"))
 
       print(namespace.."kuka_controller configured")
       return true
