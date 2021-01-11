@@ -145,13 +145,28 @@ function configureHook()
        
       filter:configure()
 
-      -- register ports for the compound controller
+      -- register ports on the compound controller
       register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
       register_port(out_portmap, 'LOG', filtername..".Log")
-      register_port(out_portmap, 'CURJNT', filtername..".CurrentJoint")
 
       -- add filter to the parent component peers
-      d:addPeer(tcName, filtername) 
+      d:addPeer(tcName, filtername)
+
+
+      -- deploy the converter and advertize its output
+      convertname = namespace.."Convert"
+      d:loadComponent(convertname, "FLWRConvert")
+      d:setActivity(convertname, 0, 70, rtt.globals.ORO_SCHED_RT)
+
+      -- set velocity and acceleration limits
+      convert = d:getPeer(convertname)
+      convert:configure()
+
+      -- register ports on the compound controller
+      register_port(out_portmap, 'CURJNT', convertname..".CurrentJoint")
+
+      -- add converter to the parent component peers
+      d:addPeer(tcName, convertname) 
 
       -- store the mapping in the properties
       storeMapping("in_portmap",in_portmap)
@@ -162,10 +177,14 @@ function configureHook()
       d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointVelocity", jspname..".JointVelocity", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".JointPosition", convertname..".FRIJointPos", rtt.Variable("ConnPolicy"))
+      d:connect(friname..".JointVelocity", convertname..".FRIJointVel", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
       d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
+      -- Guillaume:No idea why we did not connect vel to the filter, maybe because velocity data in sim was bad ?
+      -- d:connect(friname..".JointVelocity", convertname..".JointVelocity", rtt.Variable("ConnPolicy"))
       d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
       d:connect(filtername..".JointImpedance", friname..".JointImpedanceCommand", rtt.Variable("ConnPolicy"))
 
