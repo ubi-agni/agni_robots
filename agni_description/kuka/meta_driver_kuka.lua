@@ -43,6 +43,7 @@ function configureHook()
   d:import("rtt_sensor_msgs")
   d:import("rtt_geometry_msgs")
   d:import("rtt_diagnostic_msgs")
+  d:import("rtt_trajectory_msgs")
 
   -- retrieve the properties from the interface parameters
   namespace = iface.props.namespace:get()
@@ -102,6 +103,7 @@ function configureHook()
     register_port(out_portmap, 'CURJNTPOS', friname..".JointPosition")
     register_port(out_portmap, 'CURCARTPOSE', friname..".CartesianPosition")
     register_port(out_portmap, 'CURCARTWRE', friname..".CartesianWrench")
+    register_port(out_portmap, 'CURJNT', friname..".CurrentJoint")
 
     -- deploy joint state publisher
     jspname = namespace.."JntPub"
@@ -154,19 +156,19 @@ function configureHook()
 
 
       -- deploy the converter and advertize its output
-      convertname = namespace.."Convert"
-      d:loadComponent(convertname, "FLWRConvert")
-      d:setActivity(convertname, 0, 70, rtt.globals.ORO_SCHED_RT)
+      --convertname = namespace.."Convert"
+      --d:loadComponent(convertname, "FLWRConvert")
+      --d:setActivity(convertname, 0, 70, rtt.globals.ORO_SCHED_RT)
 
       -- set velocity and acceleration limits
-      convert = d:getPeer(convertname)
-      convert:configure()
+      --convert = d:getPeer(convertname)
+      --convert:configure()
 
       -- register ports on the compound controller
-      register_port(out_portmap, 'CURJNT', convertname..".CurrentJoint")
+      --register_port(out_portmap, 'CURJNT', convertname..".CurrentJoint")
 
       -- add converter to the parent component peers
-      d:addPeer(tcName, convertname) 
+      --d:addPeer(tcName, convertname) 
 
       -- store the mapping in the properties
       storeMapping("in_portmap",in_portmap)
@@ -177,8 +179,8 @@ function configureHook()
       d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointVelocity", jspname..".JointVelocity", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".JointPosition", convertname..".FRIJointPos", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".JointVelocity", convertname..".FRIJointVel", rtt.Variable("ConnPolicy"))
+      --d:connect(friname..".JointPosition", convertname..".FRIJointPos", rtt.Variable("ConnPolicy"))
+      --d:connect(friname..".JointVelocity", convertname..".FRIJointVel", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
       d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
       d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
@@ -197,7 +199,10 @@ function configureHook()
       d:stream(friname..".CartesianPositionStamped",ros:topic(namespace.."/cartesian_position_stamped"))
       d:stream(friname..".fromKRL",ros:topic(namespace.."/fromKRL"))
       d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
+      --d:stream(convertname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
+      d:stream(friname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
       d:stream(filtername..".DesiredImpedance",ros:topic(namespace.."/filter_impedance"))
+      d:stream(filtername..".FilteredJoint",ros:topic(namespace.."/filter_desired_joint"))
 
       print(namespace.."kuka_controller configured")
       return true
