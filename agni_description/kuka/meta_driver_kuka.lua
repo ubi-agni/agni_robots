@@ -92,6 +92,7 @@ function configureHook()
   fri = d:getPeer(friname)
   fri:getProperty("fri_port"):set(port)
   fri:getProperty("fake_fri"):set(fake)
+  fri:getProperty("timestep"):set(timestep) -- used for fake AND for other component to read from it
   if fri:configure() then
 
     -- add fri to the parent component peers
@@ -120,7 +121,7 @@ function configureHook()
       joint_names[i] = namespace.."_arm_"..i.."_joint"
       resources[i] = joint_names[i]
     end 
-    
+
     if jsp:configure() then
       -- add jsp to the parent component peers
       d:addPeer(tcName, jspname) 
@@ -144,7 +145,7 @@ function configureHook()
         vel_limits[i] = 0.8
        acc_limits[i] = 4.0
       end
-       
+
       filter:configure()
 
       -- register ports on the compound controller
