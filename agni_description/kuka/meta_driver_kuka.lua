@@ -105,6 +105,7 @@ function configureHook()
     register_port(out_portmap, 'CURCARTPOSE', friname..".CartesianPosition")
     register_port(out_portmap, 'CURCARTWRE', friname..".CartesianWrench")
     register_port(out_portmap, 'CURJNT', friname..".CurrentJoint")
+    register_port(in_portmap, 'CMDJNT', friname..".JointCommand")
 
     -- deploy joint state publisher
     jspname = namespace.."JntPub"
@@ -149,7 +150,8 @@ function configureHook()
       filter:configure()
 
       -- register ports on the compound controller
-      register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
+      -- AvoidFilterCompletely
+      --register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
       register_port(out_portmap, 'LOG', filtername..".Log")
 
       -- add filter to the parent component peers
@@ -183,13 +185,14 @@ function configureHook()
       --d:connect(friname..".JointPosition", convertname..".FRIJointPos", rtt.Variable("ConnPolicy"))
       --d:connect(friname..".JointVelocity", convertname..".FRIJointVel", rtt.Variable("ConnPolicy"))
       d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
+      -- AvoidFilterCompletely
+      --d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
+      --d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
+      --d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
       -- Guillaume:No idea why we did not connect vel to the filter, maybe because velocity data in sim was bad ?
-      -- d:connect(friname..".JointVelocity", convertname..".JointVelocity", rtt.Variable("ConnPolicy"))
-      d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
-      d:connect(filtername..".JointImpedance", friname..".JointImpedanceCommand", rtt.Variable("ConnPolicy"))
+      ---- d:connect(friname..".JointVelocity", convertname..".JointVelocity", rtt.Variable("ConnPolicy"))
+      --d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
+      --d:connect(filtername..".JointImpedance", friname..".JointImpedanceCommand", rtt.Variable("ConnPolicy"))
 
       -- ROS in out
       local ros=rtt.provides("ros")
@@ -202,8 +205,9 @@ function configureHook()
       d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
       --d:stream(convertname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
       d:stream(friname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
-      d:stream(filtername..".DesiredImpedance",ros:topic(namespace.."/filter_impedance"))
-      d:stream(filtername..".FilteredJoint",ros:topic(namespace.."/filter_desired_joint"))
+      -- AvoidFilterCompletely
+      --d:stream(filtername..".DesiredImpedance",ros:topic(namespace.."/filter_impedance"))
+      --d:stream(filtername..".FilteredJoint",ros:topic(namespace.."/filter_desired_joint"))
 
       print(namespace.."kuka_controller configured")
       return true
