@@ -208,6 +208,7 @@ function configureHook()
       -- AvoidFilterCompletely
       --d:stream(filtername..".DesiredImpedance",ros:topic(namespace.."/filter_impedance"))
       --d:stream(filtername..".FilteredJoint",ros:topic(namespace.."/filter_desired_joint"))
+      d:stream(friname..".JointCommand",ros:topic(namespace.."/joint_command"))
 
       print(namespace.."kuka_controller configured")
       return true
