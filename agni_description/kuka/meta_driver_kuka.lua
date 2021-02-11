@@ -39,6 +39,7 @@ function configureHook()
   d:import("lwr_fri")
   d:import("oro_joint_state_publisher")
   d:import("flwr_filter")
+  d:import("agni_jnt_controller")
   d:import("agni_rtt_services")
   d:import("rtt_sensor_msgs")
   d:import("rtt_geometry_msgs")
@@ -105,7 +106,8 @@ function configureHook()
     register_port(out_portmap, 'CURCARTPOSE', friname..".CartesianPosition")
     register_port(out_portmap, 'CURCARTWRE', friname..".CartesianWrench")
     register_port(out_portmap, 'CURJNT', friname..".CurrentJoint")
-    register_port(in_portmap, 'CMDJNT', friname..".JointCommand")
+    register_port(out_portmap, 'NXTJNT', friname..".NextJoint")
+    --register_port(in_portmap, 'CMDJNT', friname..".JointCommand")
 
     -- deploy joint state publisher
     jspname = namespace.."JntPub"
@@ -127,91 +129,94 @@ function configureHook()
       -- add jsp to the parent component peers
       d:addPeer(tcName, jspname) 
 
-      -- deploy the filter and advertize its input/output
-      filtername = namespace.."Filter"
-      d:loadComponent(filtername, "FLWRFilter")
-      d:setActivity(filtername, 0, 70, rtt.globals.ORO_SCHED_RT)
+      -- deploy the limiter
+      limitername = namespace.."Limiter"
+      d:loadComponent(limitername, "FLWRLimiter")
+      d:setActivity(limitername, 0, 70, rtt.globals.ORO_SCHED_RT)
 
       -- set velocity and acceleration limits
-      filter = d:getPeer(filtername)
-      filter:getProperty("CUTOFF_FREQUENCY"):set(cutoff)
-      filter:getProperty("TIMESTEP"):set(timestep)
-      filter:getProperty("MODE"):set(1)
-      vel_limits=filter:getProperty("VELOCITY_LIMITS")
+      limiter = d:getPeer(limitername)
+      limiter:getProperty("TIMESTEP"):set(timestep)
+      limiter:getProperty("MODE"):set(1) -- scaling
+      vel_limits=limiter:getProperty("VELOCITY_LIMITS")
       vel_limits:get():resize(7)
-      acc_limits=filter:getProperty("ACCEL_LIMITS")
+      acc_limits=limiter:getProperty("ACCEL_LIMITS")
       acc_limits:get():resize(7)
       -- TODO: Read from file of better request from URDF
       for i=0,6,1 do 
         vel_limits[i] = 0.8
-       acc_limits[i] = 4.0
+        acc_limits[i] = 4.0
       end
 
-      filter:configure()
+      if limiter:configure() then
 
-      -- register ports on the compound controller
-      -- AvoidFilterCompletely
-      --register_port(in_portmap, 'CMDJNT', filtername..".DesiredJoint")
-      register_port(out_portmap, 'LOG', filtername..".Log")
+        -- add filter to the parent component peers
+        d:addPeer(tcName, limitername)
 
-      -- add filter to the parent component peers
-      d:addPeer(tcName, filtername)
+        -- deploy the JntCtrl and advertize its input
+        jntctrlname = namespace.."JntCtrl"
+        d:loadComponent(jntctrlname, "AgniJntController")
+        d:setActivity(jntctrlname, 0, 70, rtt.globals.ORO_SCHED_RT)
+        jntctrl = d:getPeer(jntctrlname)
+        jntctrl:getProperty("timestep"):set(timestep)
+        jntctrl:getProperty("dof"):set(7)
 
+        if jntctrl:configure() then
 
-      -- deploy the converter and advertize its output
-      --convertname = namespace.."Convert"
-      --d:loadComponent(convertname, "FLWRConvert")
-      --d:setActivity(convertname, 0, 70, rtt.globals.ORO_SCHED_RT)
+          print(namespace.."jnt_ctrl configured")
+          register_port(in_portmap, 'CMDJNT', jntctrlname..".TargetJoint")
 
-      -- set velocity and acceleration limits
-      --convert = d:getPeer(convertname)
-      --convert:configure()
+          -- add joint controller to the parent component peers
+          d:addPeer(tcName, jntctrlname) 
 
-      -- register ports on the compound controller
-      --register_port(out_portmap, 'CURJNT', convertname..".CurrentJoint")
+          -- store the mapping in the properties
+          storeMapping("in_portmap",in_portmap)
+          storeMapping("out_portmap",out_portmap)
 
-      -- add converter to the parent component peers
-      --d:addPeer(tcName, convertname) 
+          -- internal connection
+          d:connect(friname..".RobotState", diagname..".RobotState", rtt.Variable("ConnPolicy"))
+          d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
+          d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
+          d:connect(friname..".JointVelocity", jspname..".JointVelocity", rtt.Variable("ConnPolicy"))
+          d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
+          -- use next joint to have the controller run on the lastest state
+          d:connect(friname..".NextJoint", jntctrlname..".CurrentJoint", rtt.Variable("ConnPolicy"))
+          d:connect(jntctrlname..".DesiredJoint", limitername..".DesiredJoint", rtt.Variable("ConnPolicy")) -- makes segfault on undeploy
+          d:connect(limitername..".LimitedJoint", friname..".JointCommand", rtt.Variable("ConnPolicy"))
+          -- ROS in out
+          local ros=rtt.provides("ros")
+          d:stream(diagname..".Diagnostics",ros:topic(namespace.."/diagnostics"))
+          d:stream(jspname..".joint_state",ros:topic(namespace.."/joint_states"))
+          d:stream(friname..".CartesianPosition",ros:topic(namespace.."/cartesian_position"))
+          d:stream(friname..".CartesianWrench",ros:topic(namespace.."/cartesian_wrench"))
+          d:stream(friname..".CartesianPositionStamped",ros:topic(namespace.."/cartesian_position_stamped"))
+          d:stream(friname..".fromKRL",ros:topic(namespace.."/fromKRL"))
+          d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
+          d:stream(friname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
+          d:stream(friname..".NextJoint",ros:topic(namespace.."/next_joint"))
 
-      -- store the mapping in the properties
-      storeMapping("in_portmap",in_portmap)
-      storeMapping("out_portmap",out_portmap)
+          d:stream(jntctrlname..".TargetJoint",ros:topic(namespace.."/joint_target"))
+          d:stream(jntctrlname..".DesiredJoint",ros:topic(namespace.."/desired_joint"))
+          d:stream(limitername..".LimitedJoint",ros:topic(namespace.."/limited_joint"))
+          d:stream(friname..".JointCommand",ros:topic(namespace.."/joint_command"))
 
-      -- internal connection
-      d:connect(friname..".RobotState", diagname..".RobotState", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".FRIState", diagname..".FRIState", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".JointPosition", jspname..".JointPosition", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".JointVelocity", jspname..".JointVelocity", rtt.Variable("ConnPolicy"))
-      --d:connect(friname..".JointPosition", convertname..".FRIJointPos", rtt.Variable("ConnPolicy"))
-      --d:connect(friname..".JointVelocity", convertname..".FRIJointVel", rtt.Variable("ConnPolicy"))
-      d:connect(friname..".JointTorque", jspname..".JointEffort", rtt.Variable("ConnPolicy"))
-      -- AvoidFilterCompletely
-      --d:connect(friname..".RobotState", filtername..".RobotState", rtt.Variable("ConnPolicy"))
-      --d:connect(friname..".FRIState", filtername..".FRIState", rtt.Variable("ConnPolicy"))
-      --d:connect(friname..".JointPosition", filtername..".FRIJointPos", rtt.Variable("ConnPolicy"))
-      -- Guillaume:No idea why we did not connect vel to the filter, maybe because velocity data in sim was bad ?
-      ---- d:connect(friname..".JointVelocity", convertname..".JointVelocity", rtt.Variable("ConnPolicy"))
-      --d:connect(filtername..".FilteredJointPos", friname..".JointPositionCommand", rtt.Variable("ConnPolicy"))
-      --d:connect(filtername..".JointImpedance", friname..".JointImpedanceCommand", rtt.Variable("ConnPolicy"))
-
-      -- ROS in out
-      local ros=rtt.provides("ros")
-      d:stream(diagname..".Diagnostics",ros:topic(namespace.."/diagnostics"))
-      d:stream(jspname..".joint_state",ros:topic(namespace.."/joint_states"))
-      d:stream(friname..".CartesianPosition",ros:topic(namespace.."/cartesian_position"))
-      d:stream(friname..".CartesianWrench",ros:topic(namespace.."/cartesian_wrench"))
-      d:stream(friname..".CartesianPositionStamped",ros:topic(namespace.."/cartesian_position_stamped"))
-      d:stream(friname..".fromKRL",ros:topic(namespace.."/fromKRL"))
-      d:stream(friname..".toKRL",ros:topic(namespace.."/toKRL"))
-      --d:stream(convertname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
-      d:stream(friname..".CurrentJoint",ros:topic(namespace.."/current_joint"))
-      -- AvoidFilterCompletely
-      --d:stream(filtername..".DesiredImpedance",ros:topic(namespace.."/filter_impedance"))
-      --d:stream(filtername..".FilteredJoint",ros:topic(namespace.."/filter_desired_joint"))
-      d:stream(friname..".JointCommand",ros:topic(namespace.."/joint_command"))
-
-      print(namespace.."kuka_controller configured")
-      return true
+          print(namespace.."kuka_controller configured")
+          return true
+        else
+          print(namespace.."JntCtrl could not be configured, unloading it")
+          d:unloadComponent(jntctrlname)
+          d:unloadComponent(limitername)
+          d:unloadComponent(jspname)
+          d:unloadComponent(friname)
+          return false
+        end
+      else
+        print(namespace.."Limiter could not be configured, unloading it")
+        d:unloadComponent(limitername)
+        d:unloadComponent(jspname)
+        d:unloadComponent(friname)
+        return false
+      end
     else
       print(namespace.."JSP could not be configured, unloading it")
       d:unloadComponent(jspname)
