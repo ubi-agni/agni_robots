@@ -55,9 +55,9 @@ tools:
     props:
       model:   motor
       palm_sensor: ubi_fabric
-      tip_sensor: ubi
-      prox_sensor: ubi
-      mid_sensor: ubi
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      mid_sensors: ['ubi','ubi','ubi','ubi','ubi']
       side:    left
       mass:  3.8
       cog: "0.0 0.0 0.17"
@@ -70,9 +70,9 @@ tools:
     props:
       model:   motor
       palm_sensor: ubi_fabric
-      tip_sensor: ubi
-      prox_sensor: ubi
-      mid_sensor: ubi
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      mid_sensors: ['ubi','ubi','ubi','ubi','ubi']
       side:    left
       ati_adapter_thickness: 0.0094
       mass:  4.055
@@ -86,9 +86,9 @@ tools:
     props:
       model:   motor
       palm_sensor: ubi_fabric
-      tip_sensor: ubi
-      prox_sensor: ubi
-      mid_sensor: ubi
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      mid_sensors: ['ubi','ubi','ubi','ubi','ubi']
       side:    left
       ati_adapter_thickness: 0.0253  # 9.4 + 15.9mm for FCS
       mass:  4.055
@@ -102,9 +102,9 @@ tools:
     props:
       model:   motor
       palm_sensor: ubi_baro
-      tip_sensor: ubi
-      prox_sensor: ubi
-      mid_sensor: ubi
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      mid_sensors: ['ubi','ubi','ubi','ubi','ubi']
       side:    left
       mass:  3.8
       cog: "0.0 0.0 0.17"
@@ -117,9 +117,9 @@ tools:
     props:
       model:   motor
       palm_sensor: ubi_fabric
-      tip_sensor: ubi
-      prox_sensor: ubi
-      mid_sensor: ubi
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      mid_sensors: ['ubi','ubi','ubi','ubi','ubi']
       side:    right
       mass:  3.8
       cog: "0.0 0.0 0.17"
@@ -132,9 +132,9 @@ tools:
     props:
       model:   motor
       palm_sensor: none
-      tip_sensor: ubi
-      prox_sensor: none
-      mid_sensor: none
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['none','none','none','none','none']
+      mid_sensors: ['none','none','none','none','none']
       side:    right
       mass:  3.8
       cog: "0.0 0.0 0.17"
@@ -147,9 +147,9 @@ tools:
     props:
       model:   motor
       palm_sensor: ubi_fabric
-      tip_sensor: ubi
-      prox_sensor: ubi
-      mid_sensor: ubi
+      tip_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      prox_sensors: ['ubi','ubi','ubi','ubi','ubi']
+      mid_sensors: ['ubi','ubi','ubi','ubi','ubi']
       side:    right
       ati_adapter_thickness: 0.0094
       mass:  4.055
@@ -163,9 +163,9 @@ tools:
     props:
       model:   muscle
       palm_sensor: none
-      tip_sensor: pst
-      prox_sensor: none
-      mid_sensor: none
+      tip_sensors: ['pst','pst','pst','pst','pst']
+      prox_sensors: ['none','none','none','none','none']
+      mid_sensors: ['none','none','none','none','none']
       side:    left
 
   shadow_muscle_right:
@@ -176,9 +176,9 @@ tools:
     props:
       model:   muscle
       palm_sensor: none
-      tip_sensor: shadow
-      prox_sensor: none
-      mid_sensor: none
+      tip_sensors: ['pst','pst','pst','pst','pst']
+      prox_sensors: ['none','none','none','none','none']
+      mid_sensors: ['none','none','none','none','none']
       side:    right
 
   schunk_hand_right:
