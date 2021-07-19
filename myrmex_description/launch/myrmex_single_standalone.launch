@@ -18,6 +18,6 @@
       <param name="publish_frequency" type="double" value="10.0"/>
     </node>
     <!-- rviz with settings -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find myrmex_description)/launch/myrmex.rviz" output="screen" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find myrmex_description)/launch/myrmex_v2.rviz" output="screen" />
   </group>
 </launch>
