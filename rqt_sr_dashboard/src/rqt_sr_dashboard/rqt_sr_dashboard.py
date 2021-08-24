@@ -27,8 +27,9 @@
 import rospy
 import functools
 import time
+from collections import OrderedDict
+import operator
 from rqt_robot_dashboard.dashboard import Dashboard
-
 
 from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import QSize, QRect, Qt, QTimer, \
@@ -71,7 +72,7 @@ class RqtSrDashboard(Dashboard):
         self.name = 'Shadow Robot Buttons Dashboard'
         self.max_icon_size = QSize(50, 30)
 
-        self._state_buttons = {}
+        self._state_buttons = OrderedDict()
         self._cs = {}
         self._widget_initialized = False
 
@@ -95,7 +96,7 @@ class RqtSrDashboard(Dashboard):
         header_labels = ["Joint"]
         line_labels = [""]*(1+len(joints))
         self._force_display = {}
-        for i, prefix in enumerate(joints):
+        for i, prefix in enumerate(sorted(joints.keys())):
             self._prefix_to_col[prefix] = 1 + i
             header_labels.append(prefix)
             for joint in joints[prefix]:
@@ -109,21 +110,24 @@ class RqtSrDashboard(Dashboard):
                     self._joint_list.addTopLevelItem(self._force_display[base_jointname])
         self._joint_list.setHeaderLabels(header_labels)
 
-        # create as many buttons as hands found
-        for hand in hand_parameters.mapping:
-            self._state_buttons[hand_parameters.mapping[hand]] = ControlStateButton(hand_parameters.mapping[hand], self)
+        # create as many buttons as hands found, sort them alphabetically to have left come first
+        for hand_id, hand_prefix in sorted(hand_parameters.mapping.items(), key=operator.itemgetter(1)):
+            print(hand_id, hand_prefix)
+            self._state_buttons[hand_parameters.mapping[hand_id]] = ControlStateButton(hand_parameters.mapping[hand_id], self)
 
             # we do not consider the trajectory controllers
-            self._cs[hand_parameters.mapping[hand]] = ControllerSwitcher(namespace=hand_parameters.mapping[hand],
+            self._cs[hand_parameters.mapping[hand_id]] = ControllerSwitcher(namespace=hand_parameters.mapping[hand_id],
                                                                          only_low_level_ctrl=True)
-            self._hand_names.append(hand_parameters.mapping[hand])
-            self._driver_started[hand_parameters.mapping[hand]] = False
-            self._driver_running[hand_parameters.mapping[hand]] = False
-            self._ctrl_state[hand_parameters.mapping[hand]] = NOT_RUNNING
-            self._last_seen[hand_parameters.mapping[hand]] = rospy.Time(0)
+            self._hand_names.append(hand_parameters.mapping[hand_id])
+            self._driver_started[hand_parameters.mapping[hand_id]] = False
+            self._driver_running[hand_parameters.mapping[hand_id]] = False
+            self._ctrl_state[hand_parameters.mapping[hand_id]] = NOT_RUNNING
+            self._last_seen[hand_parameters.mapping[hand_id]] = rospy.Time(0)
 
         self._main_widget = QWidget()
         self._main_widget.setWindowTitle("SR Dashboard")
+        self._main_widget.setObjectName("SR Dashboard")
+
         vlayout = QVBoxLayout()
 
         # create buttons
