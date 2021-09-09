@@ -30,8 +30,8 @@ macro(xacro file)
 endmacro()
 
 xacro(robots/sfb.urdf.xacro DEPENDS pa10_7a_description pa10_7c_description sr_description)
-xacro(robots/famula.urdf.xacro DEPENDS flobi_description)
-xacro(robots/moveable_famula.urdf.xacro DEPENDS flobi_description)
+xacro(robots/famula.urdf.xacro DEPENDS lwr_description flobi_description)
+xacro(robots/moveable_famula.urdf.xacro DEPENDS lwr_description flobi_description)
 
 # sfb frame
 xacro(robots/single.urdf.xacro robots/sfb_frame.urdf REMAP FRAME:=sfb)
