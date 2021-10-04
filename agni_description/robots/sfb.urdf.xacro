@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="arm_hand_shadow" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
+	<xacro:property name="settings" value="${xacro.load_yaml('robots.yaml')}" />
 
 	<xacro:arg name="SIM" default="1"/>
 	<xacro:arg name="CALIB" default="sfb"/>

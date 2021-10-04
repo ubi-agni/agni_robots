@@ -3,9 +3,9 @@
 
   <xacro:include filename="../urdf/gazebo_camera.urdf.xacro"/>
   <!-- do not name the macro 'camera', it conflicts with gazebo camera tag -->
-  <xacro:macro name="camera_body" params="parent name fps hfov width height cx:=0 cy:=0 hfov2:=- width2:=- height2:=- cx2:=- cy2:=- 
+  <xacro:macro name="camera_body" params="parent name fps hfov width height cx:=0 cy:=0 hfov2:=- width2:=- height2:=- cx2:=- cy2:=-
                                           has_depth *origin has_second_origin:=0 *second_origin">
-    <xacro:if value="${1 if 'world' in parent else 0}">
+    <xacro:if value="${1 if parent == 'world' else 0}">
       <link name="${parent}" />
     </xacro:if>
     <xacro:if value="${has_depth}">
@@ -40,7 +40,7 @@
           iyy="0.0001" iyz="0.0"
           izz="0.00001" />
         </inertial>
-      </link> 
+      </link>
 
       <joint name="base_${name}_camera_depth_joint" type="fixed">
         <origin xyz="0 -0.018 0" rpy="0 0 0" />
@@ -48,7 +48,7 @@
         <child link="${name}_camera_link" />
       </joint>
     </xacro:if>
-    
+
     <link name="${name}_camera_link">
       <inertial>
         <mass value="0.01" />
@@ -80,7 +80,7 @@
         </geometry>
       </collision>
     </link>
-    
+
     <xacro:if value="${has_depth}">
       <xacro:unless value="${has_second_origin}">
         <!-- attach rgb to camera_link if has depth but not attached to parent -->
@@ -123,7 +123,7 @@
           <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
           <parent link="${name}_camera_rgb_optical_frame" />
           <child link="${name}_camera_rgb_frame" />
-        </joint>      
+        </joint>
       </xacro:if>
       <xacro:unless value="${has_second_origin}">
         <!-- attach in this order if rgb not attached to parent -->
@@ -140,9 +140,9 @@
         <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0 " />
         <parent link="${name}_camera_rgb_optical_frame" />
         <child link="${name}_camera_rgb_frame" />
-      </joint>      
+      </joint>
     </xacro:unless>
-    
+
     <xacro:if value="${has_depth}">
       <xacro:if value="${has_second_origin}">
         <!-- attach rgb to parent -->
@@ -165,7 +165,7 @@
     <!-- Gazebo camera sensor for simulation -->
     <!-- if second origin is given, then create separate sensors (one depth, one rgb) and not a kinect with embedded color/depth -->
     <xacro:if value="${has_depth and not has_second_origin}">
-      <xacro:gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" cx="${cx}" cy="${cy}" has_depth="1" has_color="1"/> 
+      <xacro:gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" cx="${cx}" cy="${cy}" has_depth="1" has_color="1"/>
     </xacro:if>
     <xacro:if value="${has_depth and has_second_origin}">
       <xacro:property name="second_hfov" value="${hfov if hfov2=='-' else hfov2}" />
@@ -173,12 +173,12 @@
       <xacro:property name="second_height" value="${height if height2=='-' else height2}" />
       <xacro:property name="second_cx" value="${cx if cx2=='-' else cx2}" />
       <xacro:property name="second_cy" value="${cy if cy2=='-' else cy2}" />
-      
-      <xacro:gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" cx="${cx}" cy="${cy}" has_depth="1" has_color="0"/> 
-      <xacro:gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${second_hfov}" width="${second_width}" height="${second_height}" cx="${second_cx}" cy="${second_cy}" has_depth="0" has_color="1"/> 
+
+      <xacro:gazebo_camera linkref="${name}_camera_depth_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" cx="${cx}" cy="${cy}" has_depth="1" has_color="0"/>
+      <xacro:gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${second_hfov}" width="${second_width}" height="${second_height}" cx="${second_cx}" cy="${second_cy}" has_depth="0" has_color="1"/>
     </xacro:if>
     <xacro:if value="${not has_depth}">
-      <xacro:gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" cx="${cx}" cy="${cy}" has_depth="0" has_color="1"/> 
+      <xacro:gazebo_camera linkref="${name}_camera_rgb_frame" name="${name}" fps="${fps}" hfov="${hfov}" width="${width}" height="${height}" cx="${cx}" cy="${cy}" has_depth="0" has_color="1"/>
     </xacro:if>
   </xacro:macro>
 
