@@ -2,11 +2,11 @@
 <helpers xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="arm" params="type prefix:='' parent:='world' controller *origin">
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
-    <xacro:property name="props" value="${settings['arms'][type]['props'] if 'props' in settings['arms'][type] else dict()}"/>
+    <xacro:property name="props" value="${settings.arms[type].props if 'props' in settings.arms[type] else dict()}"/>
 
     <!-- include urdf file and call macro to generate arm -->
-    <xacro:include filename="${settings['arms'][type]['file']}"/>
-    <xacro:call macro="${settings['arms'][type]['macro']}"
+    <xacro:include filename="${settings.arms[type].file}"/>
+    <xacro:call macro="${settings.arms[type].macro}"
                 prefix="${prefix}" controller="${controller}"/>
 
     <!-- attach arm to parent link -->
@@ -22,18 +22,18 @@
 
   <xacro:macro name="tool" params="type prefix:='' parent:='world' *origin">
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}"/>
-    <xacro:property name="props" value="${settings['tools'][type]['props'] if 'props' in settings['tools'][type] else dict()}"/>
+    <xacro:property name="props" value="${settings.tools[type].props if 'props' in settings.tools[type] else dict()}"/>
 
     <!-- include urdf file and call macro to generate tool -->
-    <xacro:include filename="${settings['tools'][type]['file']}"/>
-    <xacro:call macro="${settings['tools'][type]['macro']}"
+    <xacro:include filename="${settings.tools[type].file}"/>
+    <xacro:call macro="${settings.tools[type].macro}"
                 prefix="${prefix}" />
 
     <!-- attach tool to parent link -->
     <xacro:if value="${parent not in ['','-']}">
       <joint name="${prefix_}tool_mount" type="fixed">
         <parent link="${parent}"/>
-        <child link="${prefix_}${settings['tools'][type]['mount']}"/>
+        <child link="${prefix_}${settings.tools[type].mount}"/>
         <xacro:insert_block name="origin" />
       </joint>
     </xacro:if>
@@ -58,34 +58,34 @@
 
     <!-- add payload mass if available -->
     <xacro:if value="${(tool_type not in ['','-']) and
-                     ('props' in settings['tools'][tool_type]) and
-                     ('mass' in settings['tools'][tool_type]['props'])}">
-      <xacro:property name="payload_mass" value="${settings['tools'][tool_type]['props']['mass']}"/>
-      <xacro:property name="payload_cog" value="${settings['tools'][tool_type]['props']['cog']}"/>
+                     ('props' in settings.tools[tool_type]) and
+                     ('mass' in settings.tools[tool_type].props)}">
+      <xacro:property name="payload_mass" value="${settings.tools[tool_type].props['mass']}"/>
+      <xacro:property name="payload_cog" value="${settings.tools[tool_type].props['cog']}"/>
     </xacro:if>
 
     <xacro:property name="tool_parent" value="${parent}"/>
 
     <xacro:if value="${arm_type not in ['','-']}">
-      <!-- load arm calibration --> 
-      <xacro:if value="${('cal_file' in settings['arms'][arm_type])}">
+      <!-- load arm calibration -->
+      <xacro:if value="${('cal_file' in settings.arms[arm_type])}">
         <!-- auto = use tool name for calib_file -->
-        <xacro:if value="${('auto' in settings['arms'][arm_type]['cal_file'])}">      
+        <xacro:if value="${('auto' in settings.arms[arm_type].cal_file)}">
           <!-- in the future, test if exist and have a fallback to default -->
           <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/${arm_type}_cal.xml"/>
         </xacro:if>
-        <xacro:unless value="${('auto' in settings['arms'][arm_type]['cal_file'])}">
+        <xacro:unless value="${('auto' in settings.arms[arm_type].cal_file)}">
           <!-- in the future, test if exist and have a fallback to default -->
-          <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/${settings['arms'][arm_type]['cal_file']}"/>
+          <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/${settings.arms[arm_type].cal_file}"/>
         </xacro:unless>
       </xacro:if>
       <!-- no cal_file given use origin -->
-      <xacro:unless value="${('cal_file' in settings['arms'][arm_type])}">
+      <xacro:unless value="${('cal_file' in settings.arms[arm_type])}">
         <xacro:property name="arm_cal_filename" value="../calibration/$(arg CALIB)/origin.xml"/>
       </xacro:unless>
-      
+
       <xacro:include filename="${arm_cal_filename}"/>
-      
+
       <!-- instantiate arm -->
       <xacro:arm type="${arm_type}" prefix="${arm_prefix}" controller="$(arg SIM)">
         <origin xyz="${cal_x} ${cal_y} ${cal_z}"
@@ -102,19 +102,19 @@
 
     <xacro:if value="${tool_type not in ['','-']}">
       <!-- load tool calibration -->
-      <xacro:if value="${('cal_file' in settings['tools'][tool_type])}">
+      <xacro:if value="${('cal_file' in settings.tools[tool_type])}">
         <!-- auto = use tool name for calib_file -->
-        <xacro:if value="${('auto' in settings['tools'][tool_type]['cal_file'])}">      
+        <xacro:if value="${('auto' in settings.tools[tool_type].cal_file)}">
           <!-- in the future, test if exist and have a fallback to default -->
           <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/${tool_type}_cal.xml"/>
         </xacro:if>
-        <xacro:unless value="${('auto' in settings['tools'][tool_type]['cal_file'])}">
+        <xacro:unless value="${('auto' in settings.tools[tool_type].cal_file)}">
           <!-- in the future, test if exist and have a fallback to default -->
-          <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/${settings['tools'][tool_type]['cal_file']}"/>
+          <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/${settings.tools[tool_type].cal_file}"/>
         </xacro:unless>
       </xacro:if>
       <!-- no cal_file given use origin -->
-      <xacro:unless value="${('cal_file' in settings['tools'][tool_type])}">
+      <xacro:unless value="${('cal_file' in settings.tools[tool_type])}">
         <xacro:property name="tool_cal_filename" value="../calibration/$(arg CALIB)/origin.xml"/>
       </xacro:unless>
 
