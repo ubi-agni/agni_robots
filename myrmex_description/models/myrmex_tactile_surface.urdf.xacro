@@ -63,14 +63,14 @@
   </xacro:macro>
   
 
-  <xacro:macro name="myrmex_tactile_markers" params="parent channel prefix:='' size_x:=1 size_y:=1 *origin">
+  <xacro:macro name="myrmex_tactile_markers" params="parent channel name:='myrmex_sensor' prefix:='' size_x:=1 size_y:=1 *origin">
     <xacro:property name="cell_size" value="0.005" />
     <xacro:property name="cell_spacing" value="0.005" />
     <xacro:property name="myrmex_size_x" value="${16*size_x}" />
     <xacro:property name="myrmex_size_y" value="${16*size_y}" />
     <xacro:property name="prefix_" value="${prefix + '_' if prefix else ''}" />
     <!-- tactile marker mapping description -->
-    <sensor name="${prefix_}myrmex_sensor" update_rate="100">
+    <sensor name="${prefix_}${name}" update_rate="100">
       <parent link="${parent}"/>
       <xacro:insert_block name="origin"/>
       <tactile channel="${prefix_}${channel}">

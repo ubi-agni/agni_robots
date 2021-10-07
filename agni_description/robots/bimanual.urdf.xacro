@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="bimanual" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
+	<xacro:property name="settings" value="${xacro.load_yaml('robots.yaml')}" />
 
 	<xacro:arg name="FRAME" default="-"/>
 	<xacro:arg name="ARM_L" default="-"/>
@@ -8,7 +8,7 @@
 	<xacro:arg name="TOOL_L" default="-"/>
 	<xacro:arg name="TOOL_R" default="-"/>
 	<xacro:arg name="PARENT" default="world"/>
-	
+
 	<xacro:arg name="SIM" default="1"/>
 	<xacro:include filename="../urdf/CALIB.from.FRAME.xacro"/>
 
@@ -27,7 +27,7 @@
 			<xacro:include filename="../urdf/frame.urdf.xacro"/>
 		</xacro:if>
 
-		<!-- if FRAME defined, but none of these two, 
+		<!-- if FRAME defined, but none of these two,
 		    FRAME can still be used for finding CALIB folders -->
 		<xacro:if value="${FRAME in ['famula', 'sfb']}">
 			<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
@@ -38,9 +38,9 @@
 	<xacro:include filename="../urdf/helpers.urdf.xacro" />
 
 	<!-- LEFT ARM with TOOL -->
-	<xacro:arm_with_tool parent="${parent}" prefix="l" 
+	<xacro:arm_with_tool parent="${parent}" prefix="l"
 	                     arm_type="$(arg ARM_L)" tool_type="$(arg TOOL_L)"/>
 	<!-- RIGHT ARM with TOOL -->
-	<xacro:arm_with_tool parent="${parent}" prefix="r" 
+	<xacro:arm_with_tool parent="${parent}" prefix="r"
 	                     arm_type="$(arg ARM_R)" tool_type="$(arg TOOL_R)"/>
 </robot>

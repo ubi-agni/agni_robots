@@ -4,18 +4,16 @@
   <xacro:macro name="calibration_tool_generic" params="prefix">
   <link name="${prefix}calibration_tool">
     <visual>
-      <origin xyz="0 0 0" 
-          rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh scale="0.001 0.001 0.001" 
+        <mesh scale="0.001 0.001 0.001"
           filename="package://agni_description/models/meshes/calibration_tool.dae"/>
       </geometry>
-    </visual> 
+    </visual>
       <collision>
-        <origin xyz="0 0 0.0" 
-            rpy="0 0 0"/>
+        <origin xyz="0 0 0.0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="0.001 0.001 0.001" 
+          <mesh scale="0.001 0.001 0.001"
           filename="package://agni_description/models/meshes/calibration_tool.dae"/>
         </geometry>
       </collision>

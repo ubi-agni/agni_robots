@@ -5,16 +5,16 @@
   <xacro:include filename="$(find sr_description)/hand/xacro/full_hand.tactile.xacro" />
 
   <xacro:macro name="shadow_hand" params="model:=${props.get('model','motor')}
-                                          tip_sensors:=${props.get('tip_sensor',['ubi','ubi','ubi','ubi','ubi'])}
-                                          mid_sensors:=${props.get('mid_sensor',['ubi','ubi','ubi','ubi','ubi'])}
-                                          prox_sensors:=${props.get('prox_sensor',['ubi','ubi','ubi','ubi','ubi'])}
+                                          tip_sensors:=${props.get('tip_sensor','ubi')}
+                                          mid_sensors:=${props.get('mid_sensor','ubi')}
+                                          prox_sensors:=${props.get('prox_sensor','ubi')}
                                           palm_sensor:=${props.get('palm_sensor','ubi_fabric')}
                                           side:=${props.get('side','right')}
                                           prefix:='' ">
     <xacro:property name="ns" value="${prefix}"/>
     <xacro:property name="prefix_" value="${'' if prefix=='' else prefix+'_'}"/>
     <xacro:property name="hand_type" value="${'hand_e' if model=='motor' else 'hand_m' if model=='muscle' else model}"/>
-    <xacro:shadowhand hand_type="${hand_type}"                      
+    <xacro:shadowhand hand_type="${hand_type}"
                       tip_sensors="${tip_sensors}"
                       mid_sensors="${mid_sensors}"
                       prox_sensors="${prox_sensors}"

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="single" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:property name="settings" value="${load_yaml('robots.yaml')}" />
+	<xacro:property name="settings" value="${xacro.load_yaml('robots.yaml')}" />
 
 	<xacro:arg name="FRAME" default="-"/>
 	<xacro:arg name="ARM" default="-"/>
@@ -16,7 +16,7 @@
 	<xacro:if value="${parent not in ['', '-' ]}">
 		<link name="${parent}"/>
 	</xacro:if>
-	
+
 	<!-- FRAME -->
 	<xacro:if value="${FRAME not in ['', '-']}">
 		<xacro:if value="${FRAME == 'famula'}">
@@ -28,7 +28,7 @@
 		<xacro:if value="${FRAME == 'sfb'}">
 			<xacro:include filename="../urdf/frame.urdf.xacro"/>
 		</xacro:if>
-		<!-- if FRAME defined, but none of these two, 
+		<!-- if FRAME defined, but none of these two,
 		FRAME can still be used for finding CALIB folders -->
 		<xacro:if value="${FRAME in ['famula', 'sfb', 'moveable_famula']}">
 			<xacro:include filename="../calibration/${FRAME}_frame_cal.xml"/>
