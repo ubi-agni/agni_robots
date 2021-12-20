@@ -6,7 +6,6 @@
 	<xacro:arg name="ARM" default="-"/>
 	<xacro:arg name="TOOL" default="-"/>
 	<xacro:arg name="PARENT" default="world"/>
-	<xacro:arg name="FIX_HANDS" default="1"/>
 
 	<xacro:arg name="PREFIX" default="-"/>
 	<xacro:arg name="SIM" default="1"/>
