@@ -1,7 +1,8 @@
 <launch>
   <arg name="prefix" default="r"/>
   <arg name="tool_type"/>
+  <arg name="parent" default="-"/>
   <!-- load robot_description -->
   <param name="robot_description" command="xacro '$(find agni_description)/robots/single.urdf.xacro' 
-          PREFIX:=$(arg prefix) TOOL:=$(arg tool_type) SIM:=0 CALIB:=default PARENT:='-' " />
+          PREFIX:=$(arg prefix) TOOL:=$(arg tool_type) SIM:=0 CALIB:=default PARENT:=$(arg parent) " />
 </launch>
