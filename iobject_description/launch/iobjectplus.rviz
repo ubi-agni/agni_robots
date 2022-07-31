@@ -109,7 +109,7 @@ Visualization Manager:
           Value: true
         board9_sensor:
           Value: true
-      topic: /iobject_myrmex
+      Topic: /iobject_myrmex
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
